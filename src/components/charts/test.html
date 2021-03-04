@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 100px auto;">
+<div id="container" style="height: 500px; width: 1000px; margin: 0 auto;"></div>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    var hours = ['1a', '2a', '3a', '4a', '5a'];
+    var days = ['Saturday', '订单', 'Thursday',
+        'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
+    var data = [
+        // X轴、Y轴、圆形大小
+        [0, 0, 8, '后面还还可以随便加：例如：item[4], item[5]'],
+        [0, 1, 8, '这里加了，下面的map也得加'],
+        [0, 2, 8, '也可以在这里传数据，在formatter处理数据'],
+        [0, 3, 8, '哈哈哈'], [0, 4, 10, '哈哈哈']
+    ];
+
+    data = data.map(function (item) {
+        return [item[1], item[0], item[2], item[3]];
+    });
+
+    var data1 = [[2, 0, 8], [2, 1, 8], [2, 2, 8], [2, 3, 8], [2, 4, 8]];
+    data1 = data1.map(function (item) {
+        return [item[1], item[0], item[2]];
+    });
+    option = {
+        // 标题
+        title: {
+            // 正标题
+            text: '散点图',
+            // 副标题
+            "subtext":"echarts踩坑"
+        },
+        // 数据和图形的关联
+        legend: {
+            data: ['单证时间', '记账时间'],
+            left: 'right'
+        },
+        tooltip: {
+            position: 'top',
+            // 鼠标可以进入tooltip提示框并点击提示框内部的信息
+            enterable: true,
+            formatter: function (params) {
+                // 滑过圆点显示的数据
+                if (params.seriesName === '单证时间') {
+                    return params.value[3];
+                } else if (params.seriesName === '记账时间') {
+                    return params.value[2];
+                }
+            }
+        },
+        grid: {
+            left: 2,
+            bottom: 10,
+            right: 10,
+            containLabel: true
+        },
+        // X轴的数据
+        xAxis: {
+            type: 'category',
+            data: hours,
+            // 标签和数据点都会在两个刻度之间的带(band)中间
+            boundaryGap: false,
+            // 线的样式
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: 'rgba(204,204,204,0.30)',
+                    type: 'solid',
+                }
+            },
+            // X轴字体样式
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    color: '#333',
+                    type: 'solid',
+                }
+            }
+        },
+        // 圆点的颜色
+        color: ['#7460ee', '#66cd2e'],
+        // Y轴的数据
+        yAxis: {
+            type: 'category',
+            data: days,
+            boundaryGap: false,
+            // 控制网线
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    color: 'rgba(204,204,204,0.30)',
+                    type: 'dash',
+                }
+            },
+            // Y轴的颜色和字体宽度
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    color: 'rgba(204,204,204,0.30)',
+                    type: 'solid'
+                }
+            },
+            // 字体样式
+            axisLabel: {
+                show: true,
+                textStyle: {
+                    color: 'red'
+                }
+            },
+            // xAxis或者yAxis的属性triggerEvent 置为 true 添加点击事件
+            triggerEvent: true
+        },
+        // 数据系列，一个图表可能包含多个系列，每一个系列可能包含多个数据
+        series: [
+            {
+                name: '单证时间',
+                type: 'scatter',
+                // 是否开启鼠标 hover 的提示动画效果
+                hoverAnimation: false,
+                symbolSize: function (val) {
+                    return val[2] * 2;
+                },
+                data: data,
+                animationDelay: function (idx) {
+                    return idx * 5;
+                },
+                // emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                emphasis: {
+                    itemStyle: {
+                        borderColor: 'rgba(116,96,238,0.30)',
+                        borderWidth: 10,
+                        areaStyle: {color: '#7460ee'}
+                    }
+                }
+            },
+            {
+                name: '记账时间',
+                type: 'scatter',
+                // 是否开启鼠标 hover 的提示动画效果
+                hoverAnimation: false,
+                symbolSize: function (val) {
+                    return val[2] * 2;
+                },
+                data: data1,
+                animationDelay: function (idx) {
+                    return idx * 5;
+                },
+                // emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时。
+                emphasis: {
+                    itemStyle: {
+                        borderColor: 'rgba(102,205,46,0.30)',
+                        borderWidth: 8,
+                        areaStyle: {color: '#66cd2e'}
+                    }
+                },
+                // 圆形样式
+                color: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 1,
+                    y2: 0,
+                    colorStops: [{
+                        offset: 0, color: '#00CCFF' // 0% 处的颜色
+                    }, {
+                        offset: 1, color: 'rgba(255, 173, 119, 1)' // 100% 处的颜色
+                    }],
+                    globalCoord: true // 缺省为 false
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    // triggerEvent为true时，触发点击事件
+    myChart.on('click', function (params) {
+        // console.log(params)
+        if (params.value === '订单') {
+            console.log(params.value)
+        }
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+pipeline {
+    agent any
+
+    environment {
+        ver = "2.0.0"
+        image_name = "xy_netmgr_front"
+        registryCredential="harbor_repository"
+        dockerRegistry="http://harbor.xy.tc"
+    }
+
+    tools{
+         nodejs 'node'
+    }
+
+    stages {
+        stage('Checkout'){
+            steps {
+               checkout scm
+               echo '拉取代码'
+            }
+        }
+
+        stage('Build') {
+            when {
+               anyOf{
+                  branch 'dev';  branch 'fat'; branch 'uat'; branch 'pro';
+               }
+            }
+           steps {
+                sh 'npm install --registry=https://registry.npm.taobao.org  --ignore-scripts'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deploy-Dev') {
+            when {
+                branch 'dev'
+            }
+
+            steps {
+                echo '开始发布dev分支'
+                sh 'ssh root@172.23.6.122 "mkdir -p /home/nginx/www/netmgr||true" '
+                sh 'ssh root@172.23.6.122 "rm -rf /home/nginx/www/netmgr/*" '
+                sh 'scp -r dist/index.html dist/favicon.ico dist/getUserInfo.json dist/static/ root@172.23.6.122:/home/nginx/www/netmgr'
+            }
+        }
+        stage('Deploy-Fat') {
+                    when {
+                        branch 'fat'
+                    }
+                    steps {
+                        echo '开始发布fat分支'
+                        sh 'ssh root@172.23.6.121 "mkdir -p /home/nginx/www/netmgr||true" '
+                        sh 'ssh root@172.23.6.121 "rm -rf /home/nginx/www/netmgr/*" '
+                        sh 'scp -r dist/index.html dist/favicon.ico dist/getUserInfo.json dist/static/ root@172.23.6.121:/home/nginx/www/netmgr'
+                    }
+                }
+        stage('Deploy-Uat') {
+                    when {
+                        branch 'uat'
+                    }
+                    steps {
+                        echo '开始发布uat分支'
+                        sh 'ssh root@10.150.5.40 "mkdir -p /home/nginx/www/netmgr||true" '
+                        sh 'ssh root@10.150.5.40 "rm -rf /home/nginx/www/netmgr/*" '
+                        sh 'scp -r dist/index.html dist/favicon.ico dist/getUserInfo.json dist/static/ root@10.150.5.40:/home/nginx/www/netmgr'
+                    }
+                }
+
+
+        stage('DOCKER-RMI') {
+            when {
+                branch 'pro'
+            }
+            steps {
+                script {
+                    sh 'docker rmi harbor.xy.tc/cloud/${image_name}:$ver'
+                }
+            }
+        }
+    }
+
+     post {
+         always {
+             echo 'one way or another, I have finished'
+         }
+         success {
+             echo 'I succeeeded!'
+             updateGitlabCommitStatus name: 'build', state: 'success'
+         }
+         unstable {
+             echo 'I am unstable'
+         }
+         failure {
+             echo 'I failed'
+             updateGitlabCommitStatus name: 'build', state: 'failed'
+         }
+         changed {
+             echo 'Things were different before...'
+         }
+     }
+}
