@@ -33,10 +33,8 @@
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="此处用逗号分隔,填写参数ID,如果是查询表明 响应的字段,如果是控制 表明 控制的字段
-            必须按照顺序填写" prop="itfDataFormat">
-                            <Input v-model="Interface.itfDataFormat"  placeholder="请输入此处用逗号分隔,填写参数ID,如果是查询表明 响应的字段,如果是控制 表明 控制的字段
-            必须按照顺序填写"></Input>
+                        <FormItem label="数据格式" prop="itfDataFormat">
+                            <Input v-model="Interface.itfDataFormat"  placeholder="数据格式"></Input>
                         </FormItem>
                         </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
@@ -81,8 +79,7 @@
                             {required: true, message: '接口状态不能为空', trigger: 'blur'}
                         ],
                             itfDataFormat: [
-                            {required: true, message: '此处用逗号分隔,填写参数ID,如果是查询表明 响应的字段,如果是控制 表明 控制的字段
-            必须按照顺序填写不能为空', trigger: 'blur'}
+                            {required: true, message: '数据格式', trigger: 'blur'}
                         ],
                 }
             }
