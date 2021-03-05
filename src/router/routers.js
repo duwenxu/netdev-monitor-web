@@ -27,7 +27,7 @@ export default [
     },
     component: () => import('@/view/system/login/login.vue')
   },
-  {
+  /*{
     name: '/index/large',
     path: '/ghome',
     meta: {
@@ -53,7 +53,7 @@ export default [
       hideInMenu: false
     },
     component: () => import('@/view/single-page/home/xaghigh.vue')
-  },
+  },*/
   {
     path: '/home',
     name: '_home',

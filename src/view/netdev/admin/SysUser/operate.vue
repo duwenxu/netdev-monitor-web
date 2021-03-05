@@ -77,9 +77,7 @@
 
     import {addUser, editUser} from '@/api/admin/sysUser'
     import {queryAllDepartList} from '@/api/admin/sysDepart'
-    import {queryAllCstmrList} from '@/api/cstmr/cstmrInfo'
     import {queryAllRoles} from '@/api/admin/sysRole'
-    import {queryAllStationList} from '@/api/base/stationInfo'
 
     export default {
         name: 'operate',
@@ -138,8 +136,6 @@
             this.getUserType();
             this.getAllRoles();
             this.getAllDeparts();
-            this.getAllCstmrs();
-            this.getAllStations();
         },
         methods: {
             operateRow(obj) {
@@ -177,19 +173,6 @@
                 if (success) {
                     this.deptList=result;
                 }
-            },
-            async getAllCstmrs(){
-                let id =0;
-                let {result, success, message} = await queryAllCstmrList(id)
-                if (success) {
-                    this.cstmrList=result;
-                }
-            },
-            async getAllStations(){
-              let {result, success, message} = await queryAllStationList()
-              if (success) {
-                this.stationList=result;
-              }
             },
             selectUserType(userType){
                 if(userType == '0004002'){

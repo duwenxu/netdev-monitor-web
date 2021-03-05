@@ -17,8 +17,8 @@ module.exports = {
   publicPath: BASE_URL,
   // 配置端口
   devServer: {
-    //host:'172.21.3.13',
-     host: 'localhost',
+    // host:'172.21.3.13',
+    host: 'localhost',
     port: 8081 // 端口
     // 设置代理
     // proxy: {
@@ -32,7 +32,7 @@ module.exports = {
     //   },
     // }
   },
-  
+
   assetsDir: 'static',
   // 如果你不需要使用eslint，把lintOnSave设为false即可
   lintOnSave: false,
