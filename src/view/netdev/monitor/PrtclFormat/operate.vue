@@ -4,7 +4,10 @@
             <Row>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                            <Input v-model="PrtclFormat.devType"  placeholder="请输入设备类型"></Input>
+                            <Select clearable placeholder="请选择设备类型" v-model="PrtclFormat.devType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
+                              </Option>
+                            </Select>
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -72,7 +75,9 @@
         data () {
             return {
                 updateMark: false,
-                    PrtclFormat: {},
+                PrtclFormat: {},
+                //设备类型列表：
+                devTypeList:[],
                 validateList:[],
                 rulePro: {
                             devType: [
@@ -107,6 +112,7 @@
             this.$xy.vector.$off('operateRow', this.operateRow)
         },
         mounted () {
+          this.getDeviceTypes()
         },
         methods: {
             operateRow (obj) {
@@ -150,6 +156,11 @@
             cancel () {
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
+            },
+            async getDeviceTypes () {
+              this.$xy.getParamGroup('0020').then(res => {
+                this.devTypeList = res
+              })
             }
         }
     }
