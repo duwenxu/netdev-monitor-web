@@ -228,7 +228,7 @@
             operate(Interface) {
                 this.name = Interface == null ? '添加设备接口' : '编辑设备接口'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', Interface)
+                this.$xy.vector.$emit('operateRow', Interface)
             }
         }
     }

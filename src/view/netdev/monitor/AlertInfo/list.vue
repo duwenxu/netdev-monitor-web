@@ -233,7 +233,7 @@
             operate(AlertInfo) {
                 this.name = AlertInfo == null ? '添加告警信息' : '编辑告警信息'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', AlertInfo)
+                this.$xy.vector.$emit('operateRow', AlertInfo)
             }
         }
     }

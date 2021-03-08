@@ -56,12 +56,12 @@
                             },
                             {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
                                 title: '访问权限',
-                                key: 'ndpaAccessRight',
+                                key: 'ndpaAccessRight_paraName',
                                 width: 100
                             },
                             {
@@ -71,7 +71,7 @@
                             },
                             {
                                 title: '参数数据类型',
-                                key: 'ndpaDatatype',
+                                key: 'ndpaDatatype_paraName',
                                 width: 100
                             },
                             {
@@ -116,22 +116,22 @@
                             },
                             {
                                 title: '参数状态',
-                                key: 'ndpaStatus',
+                                key: 'ndpaStatus_paraName',
                                 width: 100
                             },
                             {
-                                title: '是否该字段提供给54所访问',
-                                key: 'ndpaOutterStatus',
+                                title: '供54所访问',
+                                key: 'ndpaOutterStatus_paraName',
                                 width: 100
                             },
                             {
-                                title: '提供给54所时 数据映射规则',
+                                title: '数据映射规则',
                                 key: 'ndpaTransRule',
                                 width: 100
                             },
                             {
-                                title: '该字段是否是表明设备是否故障',
-                                key: 'ndpaAlertPara',
+                                title: '设备是否故障',
+                                key: 'ndpaAlertPara_paraName',
                                 width: 100
                             },
                             {
@@ -168,7 +168,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.delete(rows.row.ParaInfoId)//id需要修改
+                                                  this.delete(rows.row.ndpaId)//id需要修改
                                                 }
                                             }
                                         })
@@ -298,7 +298,7 @@
             operate(ParaInfo) {
                 this.name = ParaInfo == null ? '添加设备参数' : '编辑设备参数'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', ParaInfo)
+                this.$xy.vector.$emit('operateRow', ParaInfo)
             }
         }
     }
