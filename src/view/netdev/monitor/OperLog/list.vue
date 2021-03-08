@@ -233,7 +233,7 @@
             operate(OperLog) {
                 this.name = OperLog == null ? '添加操作日志信息' : '编辑操作日志信息'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', OperLog)
+                this.$xy.vector.$emit('operateRow', OperLog)
             }
         }
     }

@@ -37,17 +37,17 @@
                             {
                               title: '设备编号',
                               key: 'devNo',
-                              width: 100
+                              width: 150
                             },
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '设备名称',
                                 key: 'devName',
-                                width: 100
+                                width: 180
                             },
                             {
                                 title: '设备状态',
@@ -57,7 +57,7 @@
                             {
                                 title: '设备所属公司',
                                 key: 'devCorp_paraName',
-                                width: 100
+                                width: 190
                             },
                             {
                                 title: '设备版本',
@@ -67,7 +67,7 @@
                             {
                                 title: '设备IP地址',
                                 key: 'devIpAddr',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '设备内部地址',
@@ -82,7 +82,7 @@
                             {
                                 title: '上级设备编号',
                                 key: 'devParentNo',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '设备访间隔时间(毫秒)',
@@ -123,7 +123,8 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.delete(rows.row.BaseInfoId)//id需要修改
+                                                  console.log('-----------'+rows.row.ndpaId)
+                                                    this.delete(rows.row.ndpaId)//id需要修改
                                                 }
                                             }
                                         })
@@ -248,7 +249,7 @@
             operate(BaseInfo) {
                 this.name = BaseInfo == null ? '添加设备信息' : '编辑设备信息'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', BaseInfo)
+                this.$xy.vector.$emit('operateRow', BaseInfo)
             }
         }
     }

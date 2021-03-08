@@ -247,7 +247,7 @@
             operate(PrtclFormat) {
                 this.name = PrtclFormat == null ? '添加协议格式' : '编辑协议格式'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', PrtclFormat)
+                this.$xy.vector.$emit('operateRow', PrtclFormat)
             }
         }
     }
