@@ -1,5 +1,6 @@
 import axios from '@/libs/api.request'
 import xy from '../../libs/url'
+import qs from 'qs'
 
 /**
  * 查询分页数据
@@ -8,7 +9,7 @@ export const queryPrtclFormatPageList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/prtclFormat/list',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -19,7 +20,7 @@ export const queryPrtclFormatAllList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/prtclFormat/allList',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -41,7 +42,7 @@ export const addPrtclFormat = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/prtclFormat',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -53,7 +54,7 @@ export const editPrtclFormat = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/prtclFormat',
         method: 'put',
-        data: info
+        data: qs.stringify(info)
     })
 }
 

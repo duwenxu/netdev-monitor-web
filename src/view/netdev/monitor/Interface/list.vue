@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryInterfaceList, deleteInterface} from '@/api/monitor/Interface'
+    import {queryInterfacePageList, deleteInterface} from '@/api/monitor/Interface'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -166,7 +166,7 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryInterfaceList(searchAll)
+                let {result, success, message} = await queryInterfacePageList(searchAll)
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1

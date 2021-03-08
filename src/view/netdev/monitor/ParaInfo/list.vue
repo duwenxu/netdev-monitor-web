@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryParaInfoList, deleteParaInfo} from '@/api/monitor/ParaInfo'
+    import {queryParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -180,11 +180,11 @@
                 searchData: [//搜索框根据需要自定义添加
                     {
                         type: 2,
-                        key: 'isValidate',
-                        name: '是否有效',
+                        key: 'devTypes',
+                        name: '设备类型',
                         value: '',
                         data:[] ,
-                        placeholder: '是否有效'
+                        placeholder: '设备类型'
                     }
                 ],
                 search: {
@@ -211,8 +211,14 @@
         },
         mounted() {
             this.init();
+            this.initSelect();
         },
         methods: {
+            initSelect() {
+              this.$xy.getParamGroup('0020').then(res => {
+                this.searchData[0].data = res
+              })
+            },
             rowClassName(row, index) {
                 return 'demo-table-info-row'
             },
@@ -229,21 +235,20 @@
                 this.doQuery();
             },
             async doQuery() {
-                let searchAll = this.page
-                searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryParaInfoList(searchAll)
-                if (success) {
-                    this.infos = result.records
-                    this.page.current = result.current ? result.current : result.current + 1
-                    this.otherPage.total = result.total
-                }else {
-                    let notice = this.$Notice;
-                    notice.error({
-                    title: '失败',
-                    desc: message,
-                    duration: 3
-                    })
-                };
+              let searchAll = this.page
+              searchAll = Object.assign(searchAll, this.search)
+              let {result, success, message} = await queryParaInfoPageList(searchAll)
+              if (success) {
+                this.infos = result.records
+                this.current = result.current ? result.current : result.current + 1
+                this.otherPage.total = result.total
+              }else {
+                this.$Notice.error({
+                  title: '失败',
+                  desc: message,
+                  duration: 3
+                })
+              };
             },
             skipPage: function (page) {
                 this.page.current = page

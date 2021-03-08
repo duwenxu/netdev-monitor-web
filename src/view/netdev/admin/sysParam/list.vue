@@ -173,7 +173,7 @@
             },
             closeParam() {
                 this.operateModal = false
-                this.init()
+                this.doQuery();
             },
             sendReq: function (obj) {
                 this.search = Object.assign(this.search, obj)
