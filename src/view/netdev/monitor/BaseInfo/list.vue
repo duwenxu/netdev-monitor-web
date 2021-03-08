@@ -35,8 +35,13 @@
                 name: '',
                 columns1: [
                             {
+                              title: '设备编号',
+                              key: 'devNo',
+                              width: 100
+                            },
+                            {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
@@ -46,12 +51,12 @@
                             },
                             {
                                 title: '设备状态',
-                                key: 'devStatus',
+                                key: 'devStatus_paraName',
                                 width: 100
                             },
                             {
                                 title: '设备所属公司',
-                                key: 'devCorp',
+                                key: 'devCorp_paraName',
                                 width: 100
                             },
                             {
