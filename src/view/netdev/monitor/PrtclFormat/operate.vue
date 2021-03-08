@@ -79,31 +79,23 @@
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
                         ],
                             fmtSkey: [
-                            {required: true, message: '查询关键字不能为空', trigger: 'blur'}
                         ],
                             fmtCkey: [
-                            {required: true, message: '控制关键字不能为空', trigger: 'blur'}
                         ],
                             fmtCckey: [
-                            {required: true, message: '控制响应关键字不能为空', trigger: 'blur'}
                         ],
                             fmtSckey: [
-                            {required: true, message: '查询响应关键字不能为空', trigger: 'blur'}
                         ],
                             fmtScNum: [
-                            {required: true, message: '查询响应条数不能为空', trigger: 'blur'}
                         ],
                             fmtCcNum: [
-                            {required: true, message: '控制响应条数不能为空', trigger: 'blur'}
                         ],
                             fmtHandlerClass: [
                             {required: true, message: '格式处理类不能为空', trigger: 'blur'}
                         ],
                             fmtScType: [
-                            {required: true, message: '查询响应类型不能为空', trigger: 'blur'}
                         ],
                             fmtCcType: [
-                            {required: true, message: '控制响应类型不能为空', trigger: 'blur'}
                         ],
                 }
             }
