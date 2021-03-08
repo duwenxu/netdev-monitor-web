@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryBaseInfoList, deleteBaseInfo} from '@/api/monitor/BaseInfo'
+    import {queryBaseInfoPageList, deleteBaseInfo} from '@/api/monitor/BaseInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -35,8 +35,13 @@
                 name: '',
                 columns1: [
                             {
+                              title: '设备编号',
+                              key: 'devNo',
+                              width: 100
+                            },
+                            {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
@@ -46,12 +51,12 @@
                             },
                             {
                                 title: '设备状态',
-                                key: 'devStatus',
+                                key: 'devStatus_paraName',
                                 width: 100
                             },
                             {
                                 title: '设备所属公司',
-                                key: 'devCorp',
+                                key: 'devCorp_paraName',
                                 width: 100
                             },
                             {
@@ -181,7 +186,8 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryBaseInfoList(searchAll)
+                let {result, success, message} = await queryBaseInfoPageList(searchAll)
+                console.log("00000")
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1
