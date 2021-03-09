@@ -3,6 +3,11 @@
         <Form ref="form" :model="BaseInfo" :rules="rulePro" :label-width="150">
             <Row>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
+                        <FormItem label="设备编号" prop="devNo">
+                          <Input v-model="BaseInfo.devNo"  placeholder="请输入设备编号"></Input>
+                        </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
                             <Input v-model="BaseInfo.devType"  placeholder="请输入设备类型"></Input>
                         </FormItem>
@@ -75,6 +80,9 @@
                     BaseInfo: {},
                 validateList:[],
                 rulePro: {
+                            devNo: [
+                          {required: true, message: '设备类型不能为空', trigger: 'blur'}
+                        ],
                             devType: [
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
                         ],
@@ -88,22 +96,16 @@
                             {required: true, message: '设备所属公司不能为空', trigger: 'blur'}
                         ],
                             devVer: [
-                            {required: true, message: '设备版本不能为空', trigger: 'blur'}
                         ],
                             devIpAddr: [
-                            {required: true, message: '设备IP地址不能为空', trigger: 'blur'}
                         ],
                             devLocalAddr: [
-                            {required: true, message: '设备内部地址不能为空', trigger: 'blur'}
                         ],
                             devPort: [
-                            {required: true, message: '设备端口不能为空', trigger: 'blur'}
                         ],
                             devParentNo: [
-                            {required: true, message: '上级设备编号不能为空', trigger: 'blur'}
                         ],
                             devIntervalTime: [
-                            {required: true, message: '设备访间隔时间(毫秒)不能为空', trigger: 'blur'}
                         ],
                 }
             }

@@ -13,7 +13,7 @@
           <Col :xs="21" :sm="21" :lg="21" :md="21">
             <span class="pre_name">星邑空间</span>
             <span class="middle_name"> | </span>
-            <span class="last_name"> 运管云平台</span>
+            <span class="last_name"> 网络设备监控</span>
           </Col>
         </Row>
         <Row style="margin-left: 12px">

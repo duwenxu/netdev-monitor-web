@@ -14,12 +14,13 @@ export const setToken = (token) => {//token过期时间
 }
 
 export const getToken = () => {
-  const token = Cookies.get(TOKEN_KEY)//配合登录
-  if (token) return token
-  else return false
+  const token = Cookies.get(TOKEN_KEY, {expires: cookieExpires || 10})
+  if (token && token !== 'undefined') {
+    return token
+  } else {
+    return false
+  }
 }
-
-
 
 
 

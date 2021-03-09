@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryOperLogList, deleteOperLog} from '@/api/monitor/OperLog'
+    import {queryOperLogPageList, deleteOperLog} from '@/api/monitor/OperLog'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -171,7 +171,7 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryOperLogList(searchAll)
+                let {result, success, message} = await queryOperLogPageList(searchAll)
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1
@@ -233,7 +233,7 @@
             operate(OperLog) {
                 this.name = OperLog == null ? '添加操作日志信息' : '编辑操作日志信息'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', OperLog)
+                this.$xy.vector.$emit('operateRow', OperLog)
             }
         }
     }

@@ -4,7 +4,10 @@
             <Row>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                            <Input v-model="PrtclFormat.devType"  placeholder="请输入设备类型"></Input>
+                            <Select clearable placeholder="请选择设备类型" v-model="PrtclFormat.devType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
+                              </Option>
+                            </Select>
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -72,38 +75,32 @@
         data () {
             return {
                 updateMark: false,
-                    PrtclFormat: {},
+                PrtclFormat: {},
+                //设备类型列表：
+                devTypeList:[],
                 validateList:[],
                 rulePro: {
                             devType: [
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
                         ],
                             fmtSkey: [
-                            {required: true, message: '查询关键字不能为空', trigger: 'blur'}
                         ],
                             fmtCkey: [
-                            {required: true, message: '控制关键字不能为空', trigger: 'blur'}
                         ],
                             fmtCckey: [
-                            {required: true, message: '控制响应关键字不能为空', trigger: 'blur'}
                         ],
                             fmtSckey: [
-                            {required: true, message: '查询响应关键字不能为空', trigger: 'blur'}
                         ],
                             fmtScNum: [
-                            {required: true, message: '查询响应条数不能为空', trigger: 'blur'}
                         ],
                             fmtCcNum: [
-                            {required: true, message: '控制响应条数不能为空', trigger: 'blur'}
                         ],
                             fmtHandlerClass: [
                             {required: true, message: '格式处理类不能为空', trigger: 'blur'}
                         ],
                             fmtScType: [
-                            {required: true, message: '查询响应类型不能为空', trigger: 'blur'}
                         ],
                             fmtCcType: [
-                            {required: true, message: '控制响应类型不能为空', trigger: 'blur'}
                         ],
                 }
             }
@@ -115,6 +112,7 @@
             this.$xy.vector.$off('operateRow', this.operateRow)
         },
         mounted () {
+          this.getDeviceTypes()
         },
         methods: {
             operateRow (obj) {
@@ -158,6 +156,11 @@
             cancel () {
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
+            },
+            async getDeviceTypes () {
+              this.$xy.getParamGroup('0020').then(res => {
+                this.devTypeList = res
+              })
             }
         }
     }
