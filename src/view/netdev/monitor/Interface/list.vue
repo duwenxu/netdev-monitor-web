@@ -104,7 +104,7 @@
                                         h('Button', {
                                             props: {
                                                 icon:'ios-browsers-outline',
-                                                type: 'primary'
+                                                type: 'success'
                                             },
                                             attrs:{
                                                 title:'选择参数'
