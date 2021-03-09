@@ -128,7 +128,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.delete(rows.row.InterfaceId)//id需要修改
+                                                    this.delete(rows.row.itfId)//id需要修改
                                                 }
                                             }
                                         })
