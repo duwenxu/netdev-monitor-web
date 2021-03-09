@@ -34,6 +34,11 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="接口命令标识" prop="itfCmdMark">
+            <Input v-model="Interface.itfCmdMark" placeholder="请输入接口命令标识"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="接口状态" prop="itfStatus">
             <Select v-model="Interface.itfStatus" clearable>
               <Option v-for='choose in isDefaultList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
@@ -72,6 +77,7 @@
                     itfCode:'',
                     itfName:'',
                     itfType:'',
+                    itfCmdMark:'',
                     itfStatus:'',
                     itfDataFormat:''
                 },
