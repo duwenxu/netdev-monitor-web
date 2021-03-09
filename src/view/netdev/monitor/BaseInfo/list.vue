@@ -1,8 +1,8 @@
 <template>
     <div class="content-box">
         <Row>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
             <search :search-data='searchData'></search>
+            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 490px" type="primary" @click="operate()">新增</Button>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -123,8 +123,8 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                  console.log('-----------'+rows.row.ndpaId)
-                                                    this.delete(rows.row.ndpaId)//id需要修改
+                                                  console.log('-----------'+rows.row.devNo)
+                                                    this.delete(rows.row.devNo)//id需要修改
                                                 }
                                             }
                                         })
@@ -134,14 +134,30 @@
                 ],
                 infos: [],
                 searchData: [//搜索框根据需要自定义添加
-                    {
-                        type: 2,
-                        key: 'isValidate',
-                        name: '是否有效',
-                        value: '',
-                        data:[] ,
-                        placeholder: '是否有效'
-                    }
+                  {
+                    type:2,
+                    key:'devType_paraName',
+                    name:'设备类型',
+                    value:'',
+                    data:[],
+                    placeholder:'请输入设备类型'
+                  },
+                  {
+                    type:1,
+                    key:'devName',
+                    name:'设备名称',
+                    value:'',
+                    data:[],
+                    placeholder:'请输入设备名称'
+                  },
+                  {
+                    type:2,
+                    key:'devCorp_paraName',
+                    name:'设备所属公司',
+                    value:'',
+                    data:[],
+                    placeholder:'请输入设备所属公司'
+                  },
                 ],
                 search: {
 
@@ -167,6 +183,7 @@
         },
         mounted() {
             this.init();
+            this.initSelect();
         },
         methods: {
             rowClassName(row, index) {
@@ -177,11 +194,15 @@
                 this.doQuery();
             },
             sendReq: function (obj) {
+              console.warn(666)
+              console.warn(obj)
                 this.search = Object.assign(this.search, obj)
                 this.init()
             },
             async init() {
+                /*this.page.current = 0;*/
                 this.page.current = 1;
+                /*this.page.current = 2;*/
                 this.doQuery();
             },
             async doQuery() {
@@ -209,7 +230,7 @@
                 this.page.current = page
                 this.doQuery()
             },
-            delete(id) {
+            delete(devNo) {
                 let that = this
                 let modal = that.$Modal;
                 let notice = that.$Notice;
@@ -217,7 +238,7 @@
                 title: '你确定要删除这条设备信息吗?',
                 content: '删除后将无法撤销！',
                 onOk: () => {
-                that.deleteData(id)
+                that.deleteData(devNo)
                 },
                 onCancel: () => {
                     notice.warning({
@@ -228,8 +249,8 @@
                 }
                 })
             },
-            async deleteData(id) {
-                let {data, code, msg} = await deleteBaseInfo(id)
+            async deleteData(devNo) {
+                let {data, code, msg} = await deleteBaseInfo(devNo)
                 let notice = this.$Notice;
                 if (code == 200) {
                     notice.success({
@@ -250,7 +271,18 @@
                 this.name = BaseInfo == null ? '添加设备信息' : '编辑设备信息'
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', BaseInfo)
-            }
+            },
+          initSelect() {
+            this.$xy.getParamGroup('0020').then(res => {
+              this.searchData[0].data = res
+              this.init()
+            })
+            this.$xy.getParamGroup('0010').then(res =>{
+              this.searchData[2].data = res
+              this.init()
+            })
+          },
+
         }
     }
 </script>

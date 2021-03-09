@@ -7,7 +7,7 @@ const Setting = {}
 Setting.vector = new Vue()
 let proto = document.location.protocol
 
-Setting.SPACE_URL = ('https:' == proto ? '' : 'http://localhost:8080')
+Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.100:8083')
 // if (location.hostname == '172.23.4.31' ||  location.hostname == 'ybtest.xy.in') {
 //   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8081/api/v1.0');
 //   Setting.FORMULA_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8082/dsl-service/v1.0');

@@ -1,8 +1,8 @@
 <template>
     <div class="content-box">
         <Row>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
             <search :search-data='searchData'></search>
+            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 1050px" type="primary" @click="operate()">新增</Button>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -36,57 +36,57 @@
                 columns1: [
                             {title: '格式ID',
                               key: 'fmtId',
-                              width: 100
+                              width: 120
                             },
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '查询关键字',
                                 key: 'fmtSkey',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '控制关键字',
                                 key: 'fmtCkey',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '控制响应关键字',
                                 key: 'fmtCckey',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '查询响应关键字',
                                 key: 'fmtSckey',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '查询响应条数',
                                 key: 'fmtScNum',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '控制响应条数',
                                 key: 'fmtCcNum',
-                                width: 100
+                                width: 130
                             },
                             {
                                 title: '格式处理类',
                                 key: 'fmtHandlerClass',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '查询响应类型',
                                 key: 'fmtScType',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '控制响应类型',
                                 key: 'fmtCcType',
-                                width: 100
+                                width: 120
                             },
                             {
                                 title: '操作',
@@ -122,7 +122,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.delete(rows.row.PrtclFormatId)//id需要修改
+                                                    this.delete(rows.row.fmtId)//id需要修改
                                                 }
                                             }
                                         })
@@ -207,7 +207,7 @@
                 this.page.current = page
                 this.doQuery()
             },
-            delete(id) {
+            delete(fmtId) {
                 let that = this
                 let modal = that.$Modal;
                 let notice = that.$Notice;
@@ -215,7 +215,7 @@
                 title: '你确定要删除这条协议格式吗?',
                 content: '删除后将无法撤销！',
                 onOk: () => {
-                that.deleteData(id)
+                that.deleteData(fmtId)
                 },
                 onCancel: () => {
                     notice.warning({
@@ -226,8 +226,8 @@
                 }
                 })
             },
-            async deleteData(id) {
-                let {data, code, msg} = await deletePrtclFormat(id)
+            async deleteData(fmtId) {
+                let {data, code, msg} = await deletePrtclFormat(fmtId)
                 let notice = this.$Notice;
                 if (code == 200) {
                     notice.success({

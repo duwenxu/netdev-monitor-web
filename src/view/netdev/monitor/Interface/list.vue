@@ -1,8 +1,8 @@
 <template>
     <div class="content-box">
         <Row>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
             <search :search-data='searchData'></search>
+            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -37,37 +37,37 @@
                             {
                                 title: '设备类型',
                                 key: 'devType',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '格式ID',
                                 key: 'fmtId',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '接口编码',
                                 key: 'itfCode',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '接口名称',
                                 key: 'itfName',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '接口类型',
                                 key: 'itfType',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '接口状态',
                                 key: 'itfStatus',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '数据格式',
                                 key: 'itfDataFormat',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '操作',
