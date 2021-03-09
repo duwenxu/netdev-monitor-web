@@ -1,86 +1,107 @@
 <template>
-    <div class="content-box">
-        <Form ref="form" :model="Interface" :rules="rulePro" :label-width="150">
-            <Row>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="设备类型" prop="devType">
-                            <Input v-model="Interface.devType"  placeholder="请输入设备类型"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="格式ID" prop="fmtId">
-                            <Input v-model="Interface.fmtId"  placeholder="请输入格式ID"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="接口编码" prop="itfCode">
-                            <Input v-model="Interface.itfCode"  placeholder="请输入接口编码"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="接口名称" prop="itfName">
-                            <Input v-model="Interface.itfName"  placeholder="请输入接口名称"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="接口类型" prop="itfType">
-                            <Input v-model="Interface.itfType"  placeholder="请输入接口类型"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="接口状态" prop="itfStatus">
-                            <Input v-model="Interface.itfStatus"  placeholder="请输入接口状态"></Input>
-                        </FormItem>
-                        </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="数据格式" prop="itfDataFormat">
-                            <Input v-model="Interface.itfDataFormat"  placeholder="数据格式"></Input>
-                        </FormItem>
-                        </Col>
-                <Col :xs="20" :sm="16" :md="16" :lg="15">
-                <FormItem>
-                    <Button type="primary" @click="handleSubmit()">保存</Button>
-                    <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>
-                </FormItem>
-                </Col>
-            </Row>
-        </Form>
-    </div>
+  <div class="content-box">
+    <Form ref="form" :model="Interface" :rules="rulePro" :label-width="150">
+      <Row>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="设备类型" prop="devType">
+            <Select v-model="Interface.devType" clearable>
+              <Option v-for='choose in devTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="解析协议" prop="fmtId">
+            <Select v-model="Interface.fmtId" clearable>
+              <Option v-for='choose in prtclList.filter(value => {return value.devType == Interface.devType})' :value='choose.fmtId' :key="choose.fmtId">{{choose.fmtName}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="接口编码" prop="itfCode">
+            <Input v-model="Interface.itfCode" placeholder="请输入接口编码"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="接口名称" prop="itfName">
+            <Input v-model="Interface.itfName" placeholder="请输入接口名称"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="接口类型" prop="itfType">
+            <Select v-model="Interface.itfType" clearable>
+              <Option v-for='choose in devInterList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="接口状态" prop="itfStatus">
+            <Select v-model="Interface.itfStatus" clearable>
+              <Option v-for='choose in isDefaultList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <!--<Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="数据格式" prop="itfDataFormat">
+            <Input v-model="Interface.itfDataFormat" placeholder="数据格式"></Input>
+          </FormItem>
+        </Col>-->
+        <Col :xs="20" :sm="16" :md="16" :lg="15">
+          <FormItem>
+            <Button type="primary" @click="handleSubmit()">保存</Button>
+            <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>
+          </FormItem>
+        </Col>
+      </Row>
+    </Form>
+  </div>
 </template>
 
 <script>
 
-    import { addInterface, editInterface } from '@/api/monitor/Interface'
+    import {addInterface, editInterface} from '@/api/monitor/Interface'
+    import {queryPrtclFormatAllList} from '@/api/monitor/PrtclFormat'
 
     export default {
         name: 'operate',
-        data () {
+        data() {
             return {
                 updateMark: false,
-                    Interface: {},
-                validateList:[],
+                Interface: {
+                    fmtId:'',
+                    devType:'',
+                    itfCode:'',
+                    itfName:'',
+                    itfType:'',
+                    itfStatus:'',
+                    itfDataFormat:''
+                },
+                validateList: [],
+                isDefaultList:[],
+                devInterList:[],   //设备接口类型
+                devTypeList:[],    //设备类型
+                prtclList:[],      //协议列表
                 rulePro: {
-                            devType: [
-                            {required: true, message: '设备类型不能为空', trigger: 'blur'}
-                        ],
-                            fmtId: [
-                            {required: true, message: '格式ID不能为空', trigger: 'blur'}
-                        ],
-                            itfCode: [
-                            {required: true, message: '接口编码不能为空', trigger: 'blur'}
-                        ],
-                            itfName: [
-                            {required: true, message: '接口名称不能为空', trigger: 'blur'}
-                        ],
-                            itfType: [
-                            {required: true, message: '接口类型不能为空', trigger: 'blur'}
-                        ],
-                            itfStatus: [
-                            {required: true, message: '接口状态不能为空', trigger: 'blur'}
-                        ],
-                            itfDataFormat: [
-                            {required: true, message: '数据格式', trigger: 'blur'}
-                        ],
+                    devType: [
+                        {required: true, message: '设备类型不能为空', trigger: 'blur'}
+                    ],
+                    fmtId: [
+                        {required: true, type:'number', message: '解析协议不能为空', trigger: 'blur'}
+                    ],
+                    itfCode: [
+                        {required: true, message: '接口编码不能为空', trigger: 'blur'}
+                    ],
+                    itfName: [
+                        {required: true, message: '接口名称不能为空', trigger: 'blur'}
+                    ],
+                    itfType: [
+                        {required: true, message: '接口类型不能为空', trigger: 'blur'}
+                    ],
+                    itfStatus: [
+                        {required: true, message: '接口状态不能为空', trigger: 'blur'}
+                    ],
+                    itfDataFormat: [
+                        {required: true, message: '数据格式', trigger: 'blur'}
+                    ],
                 }
             }
         },
@@ -90,19 +111,29 @@
         beforeDestroy: function () {
             this.$xy.vector.$off('operateRow', this.operateRow)
         },
-        mounted () {
+        mounted() {
+            this.getDefaultType();
+            this.getInterTypeList();
+            this.getDevTypeList();
+            this.getPrtclList();
         },
         methods: {
-            operateRow (obj) {
+            async init() {
+                this.getDefaultType();
+                this.getInterTypeList();
+                this.getDevTypeList();
+                this.getPrtclList();
+            },
+            operateRow(obj) {
                 if (obj != null) {
                     this.Interface = obj;
                     this.updateMark = true
-                }else{
+                } else {
                     this.updateMark = false
                 }
             },
             handleSubmit() {
-                let form  = this.$refs['form']
+                let form = this.$refs['form']
                 form.validate((valid) => {
                     if (valid) {
                         this.save(name)
@@ -111,13 +142,13 @@
                     }
                 })
             },
-            async save (name) {
+            async save(name) {
                 let data = (this.updateMark) ? editInterface(this.Interface) : addInterface(this.Interface);
-                let { result, success, message } = await data
+                let {result, success, message} = await data
                 let notice = this.$Notice;
                 if (success) {
                     notice.success({
-                        title:'成功',
+                        title: '成功',
                         desc: message,
                         duration: 1
                     })
@@ -131,10 +162,36 @@
                     })
                 }
             },
-            cancel () {
+            cancel() {
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
-            }
+            },
+            //查询状态
+            async getDefaultType(){
+                this.$xy.getParamGroup('0001').then(res=>{
+                    this.isDefaultList = res;
+                })
+            },
+            //查询接口类型
+            async getInterTypeList(){
+                this.$xy.getParamGroup('0027').then(res=>{
+                    this.devInterList = res;
+                })
+            },
+            //查询设备类型
+            async getDevTypeList(){
+                this.$xy.getParamGroup('0020').then(res=>{
+                    this.devTypeList = res;
+                })
+            },
+            //查询协议列表
+            async getPrtclList(){
+                let that = this
+                let {result, success, message} = await queryPrtclFormatAllList()
+                if (success) {
+                    that.prtclList = result
+                }
+            },
         }
     }
 </script>
