@@ -1,33 +1,43 @@
 <template>
-    <div class="content-box">
-        <Row>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
-            <search :search-data='searchData'></search>
-            <Col :xs="24" :sm="24" :md="24" :lg="24">
-            <Table  :columns="columns1" :data="infos"></Table>
-            <div class="text-right page">
-                <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
-                      :page-size-opts='otherPage.pageSize'
-                      show-elevator @on-change='changePage'
-                      @on-page-size-change='skipPage'></Page>
-            </div>
-            </Col>
-        </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
-            <operate-row></operate-row>
-        </Modal>
-    </div>
+  <div class="content-box">
+    <Row>
+      <Col :xs="24" :sm="24" :md="24" :lg="24">
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增
+        </Button>
+        <search :search-data='searchData'></search>
+      </Col>
+      <Col :xs="24" :sm="24" :md="24" :lg="24">
+        <Table :columns="columns1" :data="infos"></Table>
+        <div class="text-right page">
+          <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
+                :page-size-opts='otherPage.pageSize'
+                show-elevator @on-change='changePage'
+                @on-page-size-change='skipPage'></Page>
+        </div>
+      </Col>
+    </Row>
+    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+      <operate-row></operate-row>
+    </Modal>
+
+    <Modal v-model="transModal" width="800" title="绑定参数" footer-hide :mask-closable="false">
+      <trans left-name="未绑定参数" right-name="绑定参数"></trans>
+    </Modal>
+  </div>
 </template>
 
 <script>
-    import {queryInterfaceList, deleteInterface} from '@/api/monitor/Interface'
+    import {queryInterfacePageList, deleteInterface,getUnlinkedParams,getLinkedParams,editInterface} from '@/api/monitor/Interface'
     import search from '@/components/tables/search'
     import operateRow from './operate'
+    import trans from '@/components/tables/trans'
+    import {queryPrtclFormatAllList} from '@/api/monitor/PrtclFormat'
 
     export default {
         components: {
             search,
-            operateRow
+            operateRow,
+            trans
         },
         data() {
             return {
@@ -36,38 +46,36 @@
                 columns1: [
                             {
                                 title: '设备类型',
-                                key: 'devType',
-                                width: 100
+                                key: 'devType_paraName',
                             },
                             {
-                                title: '格式ID',
+                                title: '解析协议',
                                 key: 'fmtId',
-                                width: 100
+                                width: 300,
+                                render:(h,params) =>{
+                                    return h('span',this.handlerPrtFomat(params.row.fmtId));
+                                },
                             },
                             {
                                 title: '接口编码',
                                 key: 'itfCode',
-                                width: 100
                             },
                             {
                                 title: '接口名称',
                                 key: 'itfName',
-                                width: 100
                             },
                             {
                                 title: '接口类型',
-                                key: 'itfType',
-                                width: 100
+                                key: 'itfType_paraName',
                             },
                             {
                                 title: '接口状态',
-                                key: 'itfStatus',
-                                width: 100
+                                key: 'itfStatus_paraName',
                             },
                             {
                                 title: '数据格式',
                                 key: 'itfDataFormat',
-                                width: 100
+                                width: 300,
                             },
                             {
                                 title: '操作',
@@ -95,6 +103,23 @@
                                         }),
                                         h('Button', {
                                             props: {
+                                                icon:'ios-browsers-outline',
+                                                type: 'primary'
+                                            },
+                                            attrs:{
+                                                title:'选择参数'
+                                            },
+                                            style: {
+                                                marginRight: '10px',
+                                            },
+                                            on: {
+                                                click: () => {
+                                                    this.editParam(rows.row.itfId)
+                                                }
+                                            }
+                                        }),
+                                        h('Button', {
+                                            props: {
                                                 icon:'md-trash',
                                                 type: 'error'
                                             },
@@ -115,17 +140,16 @@
                 searchData: [//搜索框根据需要自定义添加
                     {
                         type: 2,
-                        key: 'isValidate',
-                        name: '是否有效',
+                        key: 'devType',
+                        name: '设备类型',
                         value: '',
                         data:[] ,
-                        placeholder: '是否有效'
+                        placeholder: '设备类型'
                     }
                 ],
                 search: {
-
+                    devType:''
                 },
-                current: 1,
                 page: {
                     current: 1,
                     size: 10
@@ -133,16 +157,25 @@
                 otherPage: {
                     total: 0,
                     pageSize: [10, 20, 30]
-                }
+                },
+                transModal: false,
+                prtclList:[],   //协议列表
+                eventInfos:{
+                    itfId:''
+                },
             }
         },
         created: function () {
             this.$xy.vector.$on('closeModal', this.closeModal)
             this.$xy.vector.$on('sendReq', this.sendReq)
+            this.$xy.vector.$on('closeTrans', this.closeTrans)
+            this.$xy.vector.$on('saveTrans', this.saveTrans)
         },
         beforeDestroy: function () {
             this.$xy.vector.$off('closeModal', this.closeModal)
             this.$xy.vector.$off('sendReq', this.sendReq)
+            this.$xy.vector.$off('closeTrans', this.closeTrans)
+            this.$xy.vector.$off('saveTrans', this.saveTrans)
         },
         mounted() {
             this.init();
@@ -162,11 +195,13 @@
             async init() {
                 this.page.current = 1;
                 this.doQuery();
+                this.getInterTypeList();
+                this.getPrtclList();
             },
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryInterfaceList(searchAll)
+                let {result, success, message} = await queryInterfacePageList(searchAll)
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1
@@ -228,7 +263,87 @@
             operate(Interface) {
                 this.name = Interface == null ? '添加设备接口' : '编辑设备接口'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', Interface)
+                this.$xy.vector.$emit('operateRow', Interface)
+            },
+            //编辑弹出窗口关闭按钮触发方法
+            closeModal() {
+                this.operateModal = false
+                this.doQuery();
+            },
+            //绑定弹出窗口关闭按钮触发方法
+            closeTrans(){
+                this.transModal = false;
+                this.doQuery()
+            },
+            //绑定参数
+            async editParam(id) {
+                this.transModal = true;
+                this.eventInfos.itfId = id;
+                this.getUnLinkedParam(id);
+                this.getLinkedParam(id);
+            },
+            //查询未绑定参数
+            async getUnLinkedParam(id) {
+                let {result, success, msg} = await getUnlinkedParams(id);
+                if (success) {
+                    this.leftInfos = result;
+                    this.$xy.vector.$emit('initLeft', {leftInfos: this.leftInfos})
+                }
+            },
+            //查询绑定参数
+            async getLinkedParam(id) {
+                let {result, success, msg} = await getLinkedParams(id);
+                if (success) {
+                    this.rightInfos = result;
+                    this.$xy.vector.$emit('initRight', {rightInfos: this.rightInfos})
+                }
+            },
+            //保存绑定的数据格式：设备参数
+            saveTrans: async function (obj) {
+                var params='';
+                if(obj.length>0){
+                    obj.forEach(trans => {
+                        params=params+trans.id+",";
+                    })
+                    //剔除掉最后一个逗号
+                    params = params.substr(0,params.length-1)
+                }
+                var devInter = {itfId:this.eventInfos.itfId,
+                          itfDataFormat:params};
+                let {result, success, message} = await editInterface(devInter);
+                if (success) {
+                    this.transModal = false;
+                    this.$Notice.success({
+                        title: '成功',
+                        desc: message,
+                        duration: 3
+                    });
+                }
+                this.init();
+            },
+            //查询接口类型
+            async getInterTypeList(){
+                this.$xy.getParamGroup('0020').then(res=>{
+                    this.searchData[0].data = res
+                })
+            },
+            //查询协议列表
+            async getPrtclList(){
+                let that = this
+                let {result, success, message} = await queryPrtclFormatAllList()
+                if (success) {
+                    that.prtclList = result
+                }
+            },
+            //协议id和名称转换
+            handlerPrtFomat(prtId){
+                let lists = this.prtclList
+                for(var value in lists){
+                    if(lists[value].fmtId = prtId){
+                        return lists[value].fmtName
+                    }
+                    return ''
+                }
             }
         }
     }
