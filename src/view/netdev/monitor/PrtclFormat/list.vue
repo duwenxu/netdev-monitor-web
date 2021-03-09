@@ -34,9 +34,13 @@
                 operateModal: false,
                 name: '',
                 columns1: [
+                            {title: '格式ID',
+                              key: 'fmtId',
+                              width: 100
+                            },
                             {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
