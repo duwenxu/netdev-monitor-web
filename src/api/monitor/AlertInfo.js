@@ -1,5 +1,6 @@
 import axios from '@/libs/api.request'
 import xy from '../../libs/url'
+import qs from "qs";
 
 /**
  * 查询分页数据
@@ -8,7 +9,7 @@ export const queryAlertInfoPageList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/alertInfo/list',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -19,7 +20,7 @@ export const queryAlertInfoAllList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/alertInfo/allList',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -41,7 +42,7 @@ export const addAlertInfo = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/alertInfo',
         method: 'post',
-        data: info
+        data: qs.stringify(info)
     })
 }
 
@@ -53,7 +54,7 @@ export const editAlertInfo = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/alertInfo',
         method: 'put',
-        data: info
+        data: qs.stringify(info)
     })
 }
 

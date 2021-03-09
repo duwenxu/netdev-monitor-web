@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryParaInfoList, deleteParaInfo} from '@/api/monitor/ParaInfo'
+    import {queryParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -56,12 +56,12 @@
                             },
                             {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
                                 title: '访问权限',
-                                key: 'ndpaAccessRight',
+                                key: 'ndpaAccessRight_paraName',
                                 width: 100
                             },
                             {
@@ -71,7 +71,7 @@
                             },
                             {
                                 title: '参数数据类型',
-                                key: 'ndpaDatatype',
+                                key: 'ndpaDatatype_paraName',
                                 width: 100
                             },
                             {
@@ -116,22 +116,22 @@
                             },
                             {
                                 title: '参数状态',
-                                key: 'ndpaStatus',
+                                key: 'ndpaStatus_paraName',
                                 width: 100
                             },
                             {
-                                title: '是否该字段提供给54所访问',
-                                key: 'ndpaOutterStatus',
+                                title: '供54所访问',
+                                key: 'ndpaOutterStatus_paraName',
                                 width: 100
                             },
                             {
-                                title: '提供给54所时 数据映射规则',
+                                title: '数据映射规则',
                                 key: 'ndpaTransRule',
                                 width: 100
                             },
                             {
-                                title: '该字段是否是表明设备是否故障',
-                                key: 'ndpaAlertPara',
+                                title: '设备是否故障',
+                                key: 'ndpaAlertPara_paraName',
                                 width: 100
                             },
                             {
@@ -168,7 +168,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.delete(rows.row.ParaInfoId)//id需要修改
+                                                  this.delete(rows.row.ndpaId)//id需要修改
                                                 }
                                             }
                                         })
@@ -180,11 +180,11 @@
                 searchData: [//搜索框根据需要自定义添加
                     {
                         type: 2,
-                        key: 'isValidate',
-                        name: '是否有效',
+                        key: 'devTypes',
+                        name: '设备类型',
                         value: '',
                         data:[] ,
-                        placeholder: '是否有效'
+                        placeholder: '设备类型'
                     }
                 ],
                 search: {
@@ -211,8 +211,14 @@
         },
         mounted() {
             this.init();
+            this.initSelect();
         },
         methods: {
+            initSelect() {
+              this.$xy.getParamGroup('0020').then(res => {
+                this.searchData[0].data = res
+              })
+            },
             rowClassName(row, index) {
                 return 'demo-table-info-row'
             },
@@ -229,21 +235,20 @@
                 this.doQuery();
             },
             async doQuery() {
-                let searchAll = this.page
-                searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryParaInfoList(searchAll)
-                if (success) {
-                    this.infos = result.records
-                    this.page.current = result.current ? result.current : result.current + 1
-                    this.otherPage.total = result.total
-                }else {
-                    let notice = this.$Notice;
-                    notice.error({
-                    title: '失败',
-                    desc: message,
-                    duration: 3
-                    })
-                };
+              let searchAll = this.page
+              searchAll = Object.assign(searchAll, this.search)
+              let {result, success, message} = await queryParaInfoPageList(searchAll)
+              if (success) {
+                this.infos = result.records
+                this.current = result.current ? result.current : result.current + 1
+                this.otherPage.total = result.total
+              }else {
+                this.$Notice.error({
+                  title: '失败',
+                  desc: message,
+                  duration: 3
+                })
+              };
             },
             skipPage: function (page) {
                 this.page.current = page
@@ -293,7 +298,7 @@
             operate(ParaInfo) {
                 this.name = ParaInfo == null ? '添加设备参数' : '编辑设备参数'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', ParaInfo)
+                this.$xy.vector.$emit('operateRow', ParaInfo)
             }
         }
     }

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryPrtclFormatList, deletePrtclFormat} from '@/api/monitor/PrtclFormat'
+    import {queryPrtclFormatPageList, deletePrtclFormat} from '@/api/monitor/PrtclFormat'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -34,9 +34,13 @@
                 operateModal: false,
                 name: '',
                 columns1: [
+                            {title: '格式ID',
+                              key: 'fmtId',
+                              width: 100
+                            },
                             {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                                 width: 100
                             },
                             {
@@ -181,7 +185,7 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryPrtclFormatList(searchAll)
+                let {result, success, message} = await queryPrtclFormatPageList(searchAll)
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1
@@ -243,7 +247,7 @@
             operate(PrtclFormat) {
                 this.name = PrtclFormat == null ? '添加协议格式' : '编辑协议格式'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', PrtclFormat)
+                this.$xy.vector.$emit('operateRow', PrtclFormat)
             }
         }
     }

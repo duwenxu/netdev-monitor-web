@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryInterfaceList, deleteInterface} from '@/api/monitor/Interface'
+    import {queryInterfacePageList, deleteInterface} from '@/api/monitor/Interface'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -166,7 +166,7 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryInterfaceList(searchAll)
+                let {result, success, message} = await queryInterfacePageList(searchAll)
                 if (success) {
                     this.infos = result.records
                     this.page.current = result.current ? result.current : result.current + 1
@@ -228,7 +228,7 @@
             operate(Interface) {
                 this.name = Interface == null ? '添加设备接口' : '编辑设备接口'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateParam', Interface)
+                this.$xy.vector.$emit('operateRow', Interface)
             }
         }
     }
