@@ -41,7 +41,7 @@
                             },
                             {
                                 title: '设备类型',
-                                key: 'devType_paraName',
+                                key: 'devType',
                                 width: 150
                             },
                             {
@@ -51,7 +51,7 @@
                             },
                             {
                                 title: '设备状态',
-                                key: 'devStatus_paraName',
+                                key: 'devStatus',
                                 width: 100
                             },
                             {
