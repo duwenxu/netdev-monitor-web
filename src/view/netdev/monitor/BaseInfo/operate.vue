@@ -69,6 +69,11 @@
                             <Input v-model="BaseInfo.devIntervalTime"  placeholder="请输入设备访间隔时间(毫秒)"></Input>
                         </FormItem>
                         </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="网络协议" prop="devNetPtcl">
+                            <Input v-model="BaseInfo.devNetPtcl"  placeholder="请输入网络协议"></Input>
+                          </FormItem>
+                        </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
                 <FormItem>
                     <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -122,6 +127,9 @@
                         ],
                             devIntervalTime: [
                         ],
+                            devNetPtcl: [
+                              {required: true, message: '网络协议不能为空', trigger: 'blur'}
+                         ],
                 }
             }
         },
