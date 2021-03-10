@@ -34,9 +34,15 @@
                 operateModal: false,
                 name: '',
                 columns1: [
-                            {title: '格式ID',
+                            {
+                              title: '格式ID',
                               key: 'fmtId',
                               width: 120
+                            },
+                            {
+                              title: '协议名称',
+                              key: 'fmtName',
+                              width: 100
                             },
                             {
                                 title: '设备类型',
@@ -78,11 +84,19 @@
                                 key: 'fmtHandlerClass',
                                 width: 120
                             },
+
                             {
                                 title: '查询响应类型',
                                 key: 'fmtScType',
                                 width: 120
                             },
+
+                            // {
+                            //     title: '查询响应类型',
+                            //     key: 'fmtScType',
+                            //     width: 100
+                            // },
+
                             {
                                 title: '控制响应类型',
                                 key: 'fmtCcType',

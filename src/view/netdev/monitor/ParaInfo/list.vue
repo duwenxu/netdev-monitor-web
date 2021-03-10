@@ -130,7 +130,7 @@
                                 width: 100
                             },
                             {
-                                title: '设备是否故障',
+                                title: '字段类型',
                                 key: 'ndpaAlertPara_paraName',
                                 width: 100
                             },
