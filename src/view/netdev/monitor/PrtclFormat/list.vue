@@ -62,17 +62,17 @@
             {
               title: '控制响应关键字',
               key: 'fmtCckey',
-              width: 130
+              width: 135
             },
             {
               title: '查询响应关键字',
               key: 'fmtSckey',
-              width: 130
+              width: 135
             },
             {
               title: '查询响应条数',
               key: 'fmtScNum',
-              width: 120
+              width: 100
             },
             {
               title: '控制响应条数',
@@ -156,7 +156,7 @@
             },
             {
               type: 2,
-              key: 'devType_paraName',
+              key: 'devType',
               name: '设备类型',
               value: '',
               data: [],
@@ -274,7 +274,7 @@
         initSelect() {
           this.$xy.getParamGroup('0020').then(res => {
             this.searchData[1].data = res
-            this.init()
+            this.doQuery()
           })
         }
       }

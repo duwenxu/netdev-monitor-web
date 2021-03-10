@@ -56,7 +56,7 @@
                             },
                             {
                                 title: '设备所属公司',
-                                key: 'devCorp_paraName',
+                                key: 'devCorp',
                                 width: 190
                             },
                             {
@@ -136,7 +136,7 @@
                 searchData: [//搜索框根据需要自定义添加
                   {
                     type:2,
-                    key:'devType_paraName',
+                    key:'devType',
                     name:'设备类型',
                     value:'',
                     data:[],
@@ -152,7 +152,7 @@
                   },
                   {
                     type:2,
-                    key:'devCorp_paraName',
+                    key:'devCorp',
                     name:'设备所属公司',
                     value:'',
                     data:[],
