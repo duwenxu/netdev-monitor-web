@@ -133,6 +133,7 @@ export default {
                 let deviceRouter = treeDevice(data.result)
                 let result = deviceRouter.concat(res.result.menu)
                 let routers = backendMenusToRouters(result)
+                console.log(routers)
                 sessionStorage.setItem('menuList',JSON.stringify(result))
                 commit('setRouters', routers)
                 commit('setHasGetRouter', true)

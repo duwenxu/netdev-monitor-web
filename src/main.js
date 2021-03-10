@@ -3,29 +3,24 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
+import store from '@/store'
 import iView from 'view-design'
-import url from './libs/url'
+import url from '@/libs/url'
 import i18n from '@/locale'
 import config from '@/config'
 import TreeTable from 'tree-table-vue'
-import qs from 'qs'
+import bread from './libs/bread'
 
 import installPlugin from '@/plugin'
 import './index.less'
 import '@/assets/icons/iconfont.css'
+import '@/assets/icons/home/iconfont.css'
+import '@/assets/themes/themeColor.less'
+import '@/assets/css/common.less'
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
-import 'view-design/dist/styles/iview.css' // 使用 CSS
-import bread from './libs/bread'
-import axios  from 'axios'
-import './assets/common.css'
-import pbcss from './assets/css/common.css'
-Vue.prototype.$axios=axios
-
-
-// 实际打包时应该不引入mock
-/* eslint-disable */
-// if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
@@ -60,6 +55,4 @@ new Vue({
   render: h => h(App)
 })
 
-// 引入echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+

@@ -1,4 +1,4 @@
-.emulate-theme-light (
+.deviceMonitor-theme-light (
   @font-color-menu,
   @font-color-title,
   @font-color-text,
@@ -35,7 +35,8 @@
   @bg-home-img,
   @bg-home-user-background,
   @bread-color,
-  @divider-color
+  @divider-color,
+  @main-header
 ) {
   @font-color: rgba(0, 0, 0, 1);
   @color-white: #fff; //不变
@@ -55,29 +56,89 @@
   @padding-menu: 30px;
   @search-placeholder: rgba(120, 127, 161, 1);
 
-  .port-detail {
-    background: @bg-home-background;
-    border: 1px solid @bg-home-border;
-    padding: 30px 20px;
-  }
-
   .ivu-table .demo-table-info-row td {
     background-color: rgba(70, 107, 255, 0.2) !important; //不变
     color: #fff;
   }
+  .tag-nav-wrapper {
+    height: 40px;
+    background: @bg-color-card;
+    .contextmenu {
+      z-index: 9999;
+      background: @bg-color-card;
+      li:hover {
+        background: @color-blue;
+      }
+    }
+    .ivu-tag {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 17px;
+      color: @font-color-text;
+      background: @bg-color-card;
+      border-color:  #F1F2F3;
+      position: relative;
+      cursor: pointer;
+      margin: 2px 0;
+      //.ivu-icon-ios-close {
+      //  position: absolute;
+      //  right: 11px;
+      //  top: 8px;
+      //  color: #fff;
+      //}
+      .ivu-tag-text {
+        width: 140px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: @font-color-text;
+      }
+    }
 
-  .checkBoxParam {
-    .ivu-checkbox-wrapper {
-      border-color: @border-color-input !important;
+    .ivu-btn-text {
+      background: transparent;
+      color: rgba(120, 127, 161, 0.5);
+
+      &:focus {
+        box-shadow: none;
+        color: rgba(120, 127, 161, 1);
+
+      }
+    }
+
+    /*tag*/
+
+    .ivu-tag-primary {
+      background: #009688;
+      //width: 160px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 12px;
+      color: @color-white;
+    }
+
+    .tags-nav {
+      border: none;
+
+      .right-btn,
+      .left-btn {
+        border: none;
+      }
+
+      .scroll-outer {
+        box-shadow: none;
+        overflow: hidden;
+      }
+
+      .close-con {
+        display: none;
+      }
+
+      .select-wp {
+        right: 0;
+      }
     }
   }
-
-
-  .playLine {
-    border-left: 5px solid @color-blue;
-  }
-
-
   & ~ div {
 
     .spin-icon-load {
@@ -313,8 +374,9 @@
 
 
   .main-logo {
+    background: @main-header;
     span {
-      color: @color-logo;
+      color: @font-color-text;
     }
   }
 
@@ -885,7 +947,7 @@
     .main-header {
       height: @height-header;
       line-height: @height-header;
-      background: @bg-color-menu;
+      background:  @main-header;
 
       .user-avatar-dropdown {
         margin-right: 60px;
@@ -913,7 +975,7 @@
     }
 
     .main-view-wrapper {
-      padding: @padding-content;
+      //padding: 35px 30px 10px 32px;
       background: @bg-color-bgC;
     }
 
@@ -923,7 +985,7 @@
 
     .ivu-menu-dark,
     .left-slider {
-      background: @bg-color-menu;
+      background:#393d49;
     }
 
   }
@@ -931,36 +993,36 @@
   /*菜单*/
   .side-menu-wrapper {
     .ivu-menu {
-      background: @bg-color-menu;
+      background: #393d49;
 
       .ivu-menu-item {
         font-size: @font-size-text;
         margin-top: 1px;
-        color: @font-color-menu;
+        color: #F1F2F3;
 
         &:hover {
-          background: @color-blue;
-          color: @color-white;
+          background:#009688;
+          color:#F1F2F3;
         }
 
         &.ivu-menu-item-active:not(.ivu-menu-submenu) {
-          background: @color-blue;
-          color: @color-white;
+          background: #009688;
+          color:#F1F2F3;
         }
       }
 
       &.ivu-menu-light {
         .ivu-menu-submenu {
-          color: @font-color-menu;
+          color:#F1F2F3;
 
           &.ivu-menu-opened { // 打开组
             & > ul {
-              background: @bg-color-menu-group;
+              background: #282b33;
             }
 
             & > .ivu-menu-submenu-title {
-              background: @color-blue;
-              color: @color-white;
+              background: #009688;
+              color: #F1F2F3;
             }
           }
 
@@ -972,8 +1034,8 @@
             margin-top: 1px;
 
             &:hover {
-              background: @color-blue;
-              color: @color-white;
+              background: #009688;
+              color: #F1F2F3;
             }
           }
         }
@@ -999,7 +1061,7 @@
     overflow: auto !important;
 
     .ivu-layout-sider-children { // 防止闪动
-      background: @bg-color-menu;
+      background: #393d49;
       color: @font-color-text;
       font-size: 14px;
     }

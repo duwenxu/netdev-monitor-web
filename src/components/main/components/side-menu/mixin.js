@@ -1,8 +1,12 @@
 import CommonIcon from '_c/common-icon'
 import { showTitle } from '@/libs/util'
+
 export default {
   components: {
     CommonIcon
+  },
+  data () {
+    return {}
   },
   methods: {
     showTitle (item) {

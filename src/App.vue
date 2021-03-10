@@ -1,40 +1,39 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div id="app" :class="themeClass" class="monitorDeviceClass">
+    <router-view/>
   </div>
 </template>
 
-
 <script>
- //import LoginForm  from '@/components/login-form'
- //import LoginForm  from '@/view/single-page/home'
 import LoginForm  from '@/view/system/login/login'
-
-  export default {
-    name: 'App',
-    components: {
-      'LoginForm': LoginForm
-    },
-    data() {
-      return {}
+import { mapState } from 'vuex'
+export default {
+  comments:{LoginForm},
+  name: 'App',
+  computed: {
+    ...mapState({
+      theme: state => state.user.theme
+    }),
+    themeClass () {
+      return `deviceMonitor-theme-${this.theme}`
     }
   }
+}
 </script>
 
-
-
 <style lang="less">
-.size{
+.size {
   width: 100%;
   height: 100%;
 }
-html,body{
+
+html, body {
   .size;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  //background-image: url('./assets/images/theme/背景.jpg'); ;
 }
+
 #app {
   .size;
 }

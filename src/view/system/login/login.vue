@@ -145,20 +145,6 @@
     margin: 0;
   }
 
-  @font-face {
-    font-family: sanFont;
-    src: url('../../../assets/font/sanFont.ttf');
-  }
-
-  @font-face {
-    font-family: sanLight;
-    src: url('../../../assets/font/san_light.ttf');
-  }
-
-  /*@font-face {*/
-  /*font-family: loginTTF;*/
-  /*src: url('../assets/font/pingName.ttf');*/
-  /*}*/
 
   .login {
     width: 100%;
