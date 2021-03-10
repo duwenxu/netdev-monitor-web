@@ -1,0 +1,1135 @@
+.emulate-theme-light (
+  @font-color-menu,
+  @font-color-title,
+  @font-color-text,
+  @font-color-placeholder,
+  @font-color-1,
+  @font-color-2,
+  @font-color-3,
+  @bg-color-bgC,
+  @bg-color-menu,
+  @bg-color-menu-group,
+  @bg-color-card,
+  @bg-color-box,
+  @bg-color-input,
+  @bg-color-table-header,
+  @bg-color-btn-search,
+  @bg-color-btn-reset,
+  @bg-color-btn-edit,
+  @bg-color-btn-aync,
+  @bg-color-btn-delete,
+  @border-color-icon,
+  @border-color-input,
+  @border-table-td,
+  @border-table-th,
+  @color-logo,
+  @border-color-select,
+  @bg-modal,
+  @border-modal-table-th,
+  @bg-card,
+
+  @bg-home-background,
+  @bg-home-border,
+  @bg-home-name-color,
+  @bg-home-text,
+  @bg-home-img,
+  @bg-home-user-background,
+  @bread-color,
+  @divider-color
+) {
+  @font-color: rgba(0, 0, 0, 1);
+  @color-white: #fff; //不变
+  @color-blue: rgba(70, 107, 255, 1); //不变
+  @color-green: rgba(57, 221, 132, 1); //不变
+  @font-size-text: 14px; //正文
+  @font-size-menu: 14px; //
+  @font-size-title: 16px; //表头
+  @font-size-big: 38px; //表头
+  @font-size-logo: 20px; //表头
+  @height-header: 80px;
+  @height-menu-item: 50px;
+  @height-menu-icon: 50px;
+  @width-menu: 50px;
+  @padding-content: 20px;
+  @padding-card: 20px;
+  @padding-menu: 30px;
+  @search-placeholder: rgba(120, 127, 161, 1);
+
+  .port-detail {
+    background: @bg-home-background;
+    border: 1px solid @bg-home-border;
+    padding: 30px 20px;
+  }
+
+  .ivu-table .demo-table-info-row td {
+    background-color: rgba(70, 107, 255, 0.2) !important; //不变
+    color: #fff;
+  }
+
+  .checkBoxParam {
+    .ivu-checkbox-wrapper {
+      border-color: @border-color-input !important;
+    }
+  }
+
+
+  .playLine {
+    border-left: 5px solid @color-blue;
+  }
+
+
+  & ~ div {
+
+    .spin-icon-load {
+      animation: ani-demo-spin 1s linear infinite;
+    }
+
+    &.tooltip-playback {
+      .ivu-tooltip-inner {
+        max-width: 500px;
+      }
+    }
+
+    &.playback-dropdown {
+      background: @bg-color-card;
+      width: 300px;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        border: 1px solid @border-table-th;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: @color-blue;
+      }
+
+      .search-wp {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        color: @font-color-text;
+      }
+
+      .playback-dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: @font-color-text;
+        &:hover {
+          background: @color-blue;
+        }
+
+        .icon {
+          color: @color-blue;
+        }
+      }
+    }
+
+    .ivu-modal {
+
+      .ivu-page {
+        text-align: right;
+        margin-top: 10px;
+
+        .ivu-page-options-elevator input,
+        .ivu-page-item a,
+        .ivu-page-item,
+        .ivu-page-next,
+        .ivu-page-prev {
+          border-color: transparent;
+          background-color: transparent;
+          color: @font-color-text;
+        }
+
+        .ivu-page-item-active {
+          background: @color-blue;
+
+          a {
+            color: @color-white;
+          }
+        }
+
+        .ivu-page-options-elevator {
+          input {
+            font-size: @font-size-text;
+            color: @font-color-text;
+          }
+        }
+      }
+
+      .ivu-modal-content {
+        background-color: @bg-modal !important;
+        border-radius: 2px;
+
+        .ivu-modal-header {
+          color: @font-color-text;
+          background: @bg-modal;
+          border-bottom-color: @border-table-td;
+
+          .ivu-modal-header-inner {
+
+            color: @font-color-text;
+          }
+        }
+
+        .ivu-modal-body {
+          font-size: @font-size-text;
+          color: @font-color-text;
+
+          p {
+            word-wrap: break-word;
+            word-break: normal;
+          }
+        }
+
+        .ivu-modal-footer {
+          border-top-color: @border-table-td;
+        }
+
+        .ivu-btn {
+          &.ivu-btn-primary {
+            background-color: @bg-color-btn-search;
+            border-color: @bg-color-btn-search;
+          }
+
+          &.ivu-btn-text {
+            &.ivu-btn-large {
+              color: @font-color-text;
+              background: transparent;
+
+              &:hover {
+                color: @color-blue;
+              }
+            }
+          }
+
+          &.ivu-btn-ghost {
+            border-color: @bg-color-btn-search;
+            color: @bg-color-btn-search;
+          }
+        }
+      }
+    }
+
+    .ivu-modal-mask {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .ivu-table-wrapper {
+      border: none;
+
+      .ivu-table {
+        &:before,
+        &:after {
+          background: transparent;
+        }
+
+        color: @font-color-text;
+        background: transparent;
+        border-color: @border-table-th;
+
+        th {
+          color: @font-color-text;
+          border-bottom-color: rgba(27, 29, 35, 0.2);
+          background: transparent;
+          font-size: @font-size-text;
+        }
+
+        td {
+          background: transparent;
+          border-bottom-color: rgba(27, 29, 35, 0.2);
+          font-size: @font-size-text;
+        }
+      }
+    }
+
+    .ivu-card {
+      margin-bottom: 16px;
+      background: @bg-card;
+      border-color: @bg-card;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .ivu-card-head {
+        p {
+          color: @font-color-text;
+        }
+      }
+
+      .ivu-page {
+        text-align: right;
+        margin-top: 10px;
+
+        .ivu-page-options-elevator input,
+        .ivu-page-item a,
+        .ivu-page-item,
+        .ivu-page-next,
+        .ivu-page-prev {
+          border-color: transparent;
+          background-color: transparent;
+          color: @font-color-text;
+        }
+
+        .ivu-page-item-active {
+          background: @color-blue;
+
+          a {
+            color: @color-white;
+          }
+        }
+
+        .ivu-page-options-elevator {
+          input {
+            font-size: @font-size-text;
+            color: @font-color-text;
+          }
+        }
+      }
+    }
+
+    .ivu-checkbox-checked {
+      .ivu-checkbox-inner {
+        border-color: @color-blue;
+        background-color: @color-blue;
+      }
+    }
+
+    .ivu-switch-checked {
+      background-color: @color-blue;
+      border-color: @color-blue;
+
+    }
+
+    .ivu-form-item-label {
+      color: @font-color-text;
+    }
+  }
+
+  .ivu-switch-checked {
+    background-color: @color-blue;
+    border-color: @color-blue;
+  }
+
+
+  .main-logo {
+    span {
+      color: @color-logo;
+    }
+  }
+
+
+
+  .resultText {
+    border-color: @border-color-input;
+    color: @border-color-input;
+  }
+
+  .ivu-checkbox-checked {
+    .ivu-checkbox-inner {
+      background-color: @color-blue;
+      border-color: @color-blue;
+    }
+  }
+
+  .title-info-name {
+    color: @color-blue;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  /*--------------------------公共组件------------------*/
+  .ivu-form {
+    .ivu-form-item-label {
+      color: @font-color-text !important;
+    }
+  }
+
+  /*tabs*/
+  .ivu-tabs-bar {
+    border-color: @border-table-th;
+
+    .ivu-tabs-nav {
+      .ivu-tabs-ink-bar {
+        background: @color-blue;
+      }
+
+      .ivu-tabs-tab {
+        color: @font-color-text;
+
+        &.ivu-tabs-tab-active {
+          color: @color-blue;
+        }
+      }
+    }
+  }
+
+  .ivu-table-cell-tree {
+    background-color: transparent;
+    &:hover {
+      color: @color-blue;
+      border-color: @color-blue;
+    }
+  }
+  .ivu-tag-primary {
+    background: @color-blue;
+  }
+
+  .ivu-tree {
+    color: @font-color-text;
+
+    .ivu-tree-title {
+      color: @font-color-text;
+
+      &:hover {
+        background: @color-blue;
+        color: @color-white;
+      }
+    }
+
+    .ivu-tree-title-selected {
+      background: @color-blue;
+      color: @color-white;
+
+      &:hover {
+        background: @color-blue;
+        color: @color-white;
+      }
+    }
+  }
+
+  p {
+    font-size: @font-size-text;
+    color: @font-color-text;
+  }
+
+  /*遮罩*/
+  .ivu-modal-mask {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  /*modal*/
+  .ivu-modal {
+
+    .ivu-modal-content {
+      background-color: @bg-modal !important;
+      border-radius: 2px;
+
+      .ivu-modal-header {
+        color: @font-color-text;
+        background: @bg-modal;
+        border-bottom-color: @border-table-td;
+
+        .ivu-modal-header-inner {
+
+          color: @font-color-text;
+        }
+      }
+
+      .ivu-modal-body {
+        color: @font-color-text;
+      }
+
+      .ivu-modal-footer {
+        border-top-color: @border-table-td;
+      }
+
+      .ivu-btn {
+        &.ivu-btn-text {
+          &.ivu-btn-large {
+            color: @font-color-text;
+            background: transparent;
+
+            &:hover {
+              color: @color-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ivu-card {
+    margin-bottom: 16px;
+    background: @bg-card;
+    border-color: @bg-card;
+
+    .ivu-table-wrapper {
+      border: none;
+
+      .ivu-table {
+        &:before,
+        &:after {
+          background: transparent;
+        }
+
+        color: @font-color-text;
+        background: transparent;
+        border-color: @border-table-th;
+
+        th {
+          color: @font-color-text;
+          border-bottom-color: rgba(27, 29, 35, 0.2);
+          background: transparent;
+          font-size: @font-size-text;
+        }
+
+        td {
+          background: transparent;
+          border-bottom-color: rgba(27, 29, 35, 0.2);
+          font-size: @font-size-text;
+        }
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .ivu-card-head {
+      p {
+        color: @font-color-text;
+      }
+    }
+
+    .ivu-card-body {
+    }
+
+    .ivu-page {
+      .ivu-page-options-elevator input,
+      .ivu-page-item a,
+      .ivu-page-item,
+      .ivu-page-next,
+      .ivu-page-prev {
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      .ivu-page-item-active {
+        background: @color-blue;
+
+      }
+
+      .ivu-page-options-elevator {
+        input {
+          font-size: @font-size-text;
+          color: @font-color-text;
+        }
+      }
+    }
+
+  }
+
+  /*滚动条样式*/
+  //::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的
+  //::-webkit-scrollbar-button 滚动条两端的按钮
+  //::-webkit-scrollbar-track  外层轨道
+  //::-webkit-scrollbar-track-piece  内层滚动槽
+  //::-webkit-scrollbar-thumb 滚动的滑块
+  //::-webkit-scrollbar-corner 边角
+  //::-webkit-resizer 定义右下角拖动块的样式
+  ::-webkit-scrollbar {
+    width: 2px;
+    border: 1px solid @border-table-th;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: @color-blue;
+  }
+
+  /*----input---placeholder-----*/
+  .ivu-input {
+    background: @bg-color-card;
+    color: @font-color-2;
+    border-color: @border-color-input
+  }
+
+  ::-webkit-input-placeholder {
+    color: @font-color-placeholder;
+  }
+
+  /*select*/
+  .ivu-select-selection {
+    border-color: @border-color-input;
+    background: @bg-color-card;
+    border-radius: 4px;
+
+    .ivu-select-placeholder {
+      color: @font-color-placeholder;
+    }
+
+    .ivu-select-selected-value {
+      color: @font-color-text;
+    }
+  }
+
+  /*table*/
+  .ivu-table-wrapper {
+    border: none;
+
+    .ivu-table {
+      &:before,
+      &:after {
+        background: transparent;
+      }
+
+      color: @font-color-text;
+      background: @bg-color-card;
+      border-color: @border-table-th;
+
+      th {
+        color: @font-color-text;
+        border-bottom-color: @border-table-th;
+        background: @bg-color-table-header;
+        font-size: @font-size-text;
+        word-break: keep-all;
+        white-space: nowrap;
+      }
+
+      td {
+        background: @bg-color-card;
+        border-bottom-color: @border-table-td;
+        font-size: @font-size-text;
+        word-break: keep-all;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .ivu-btn-ghost.ivu-btn-default {
+    color: @font-color-2;
+    border: none;
+
+    &:hover {
+      color: @color-blue;
+    }
+  }
+
+  /*分页*/
+  .ivu-page {
+    text-align: right;
+    margin-top: 10px;
+    color: @font-color-text;
+
+    .ivu-page-item a,
+    .ivu-page-next,
+    .ivu-page-prev {
+      background: @bg-color-card;
+      border: none;
+      color: @font-color-text;
+    }
+
+    .ivu-page-item-active {
+      background: @color-blue;
+      border: none;
+
+      a {
+        background: @color-blue;
+        color: @color-white;
+      }
+    }
+
+    .ivu-page-options {
+      .ivu-page-options-elevator {
+        input {
+          font-size: @font-size-text;
+          color: @font-color-text;
+        }
+      }
+    }
+
+  }
+
+  /*日期选择*/
+  .ivu-date-picker-cells-cell:hover em {
+    background: @color-blue;
+    color: @font-color-text;
+  }
+
+  .ivu-date-picker-cells-focused em {
+    box-shadow: none;
+    background: @color-blue;
+    color: @color-white;
+  }
+
+  .ivu-date-picker-cells-cell-today em:after {
+    background: @color-green;
+  }
+
+  /*日期下拉框*/
+  .ivu-picker-panel-body {
+    color: @font-color-text;
+
+    .ivu-date-picker-header {
+      border-bottom-color: @font-color-3;
+
+      .ivu-picker-panel-icon-btn {
+        color: @font-color-3;
+      }
+    }
+
+    .ivu-picker-panel-content {
+      .ivu-date-picker-cells-cell {
+        &.ivu-date-picker-cells-cell-today {
+          em:after {
+            background: @color-green;
+          }
+        }
+        &.ivu-date-picker-cells-focused {
+          em {
+            box-shadow: 0 0 0 1px @color-blue inset;
+          }
+        }
+        &.ivu-date-picker-cells-cell-selected {
+          em {
+            background: @color-blue;
+          }
+        }
+        &:hover em {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+
+
+
+      .ivu-date-picker-cells-header span {
+        color: @font-color-3;
+      }
+
+      .ivu-date-picker-cells-cell-next-month em {
+        color: @font-color-3;
+      }
+    }
+
+    .ivu-time-picker-cells-list {
+      border-left-color: @font-color-3;
+    }
+
+    .ivu-picker-confirm {
+      border-top-color: @font-color-3;
+
+      .ivu-btn.ivu-btn-default.ivu-btn-small {
+        border-color: @font-color-3;
+        background: transparent;
+        color: @font-color-text;
+      }
+
+      .ivu-btn-text {
+        color: @font-color-text;
+
+        &:hover {
+          background: transparent;
+          color: @color-blue;
+
+        }
+      }
+
+    }
+
+  }
+
+  .ivu-select-dropdown {
+    background: @bg-color-card !important;
+
+  }
+
+  /*下拉框*/
+  .ivu-select-dropdown {
+    background: @bg-color-card;
+
+    .ivu-select-item {
+      color: @font-color-text;
+      margin-top: 1px;
+      box-sizing: border-box;
+    }
+    .ivu-select-item-focus {
+      background: @color-blue;
+    }
+
+    .ivu-dropdown-item {
+      color: @font-color-text;
+      margin-top: 1px;
+
+      &:hover {
+        background: @color-blue;
+        color: @color-white;
+      }
+    }
+
+    .ivu-select-item-selected,
+    .ivu-select-item-selected:hover,
+    .ivu-select-item:hover {
+      background: @color-blue;
+      color: @color-white;
+    }
+  }
+
+  /*搜索*/
+  .ivu-select {
+    .ivu-select-selection {
+      border-color: @border-color-input;
+      background: @bg-color-card;
+
+      .ivu-select-input {
+        color: @font-color-text;
+      }
+    }
+  }
+
+  /*input*/
+  .ivu-input {
+    font-size: @font-size-text;
+    border-color: @border-color-input;
+    background: @bg-color-card !important;
+    color: @font-color-text;
+  }
+
+  /*input-number*/
+  .ivu-input-number {
+    background: @bg-color-card;
+    border-color: @border-color-input;
+
+    .ivu-input-number-input-wrap {
+      .ivu-input-number-input {
+        background: @bg-color-card;
+        color: @font-color-text;
+        border-color: @border-color-input;
+      }
+    }
+  }
+
+  /*page*/
+  .ivu-page {
+    .ivu-page-options-elevator input,
+    .ivu-page-item,
+    .ivu-page-next,
+    .ivu-page-prev {
+      background: @bg-color-card;
+      border: none;
+      color: @color-white;
+    }
+
+    .ivu-page-item-active {
+      background: @color-blue;
+      border: none;
+
+      a {
+        color: @color-white;
+      }
+    }
+  }
+
+  /*button*/
+  .ivu-btn-primary {
+    font-size: @font-color-text;
+    background: @bg-color-btn-search;
+    border-color: @bg-color-btn-search;
+    color: @color-white;
+  }
+
+  .ivu-btn-warning {
+    background: @bg-color-btn-reset;
+    border-color: @bg-color-btn-reset;
+    color: @color-white;
+  }
+
+  .ivu-btn-success {
+    background: @bg-color-btn-aync;
+    border-color: @bg-color-btn-aync;
+    color: @color-white;
+  }
+
+  .ivu-btn.disabled,
+  .ivu-btn.disabled.active,
+  .ivu-btn.disabled:active,
+  .ivu-btn.disabled:focus,
+  .ivu-btn.disabled:hover,
+  .ivu-btn[disabled],
+  .ivu-btn[disabled].active,
+  .ivu-btn[disabled]:active,
+  .ivu-btn[disabled]:focus,
+  .ivu-btn[disabled]:hover {
+    color: #c5c8ce;
+    background-color: #f7f7f7;
+    border-color: #dcdee2;
+  }
+
+  /*ivu-divider*/
+  .ivu-divider {
+    .ivu-divider-inner-text {
+      color: @divider-color
+    }
+  }
+
+  /*ivu-breadcrumb*/
+  .ivu-breadcrumb {
+    color: @font-color-text;
+    a {
+      color: @bread-color;
+    }
+
+    span {
+      &:last-child {
+        color: @font-color-text
+      }
+    }
+  }
+
+  /*--------------------------------------------------------main*/
+  .main {
+    font-size: @font-size-text;
+    color: @font-color-text;
+    background: @bg-color-bgC;
+
+    .main-header {
+      height: @height-header;
+      line-height: @height-header;
+      background: @bg-color-menu;
+
+      .user-avatar-dropdown {
+        margin-right: 60px;
+        font-size: 16px;
+      }
+
+      .ivu-avatar,
+      .themestatus i,
+      .full-screen-btn-con .ivu-tooltip-rel i {
+        width: @height-menu-icon;
+        height: @height-menu-icon;
+        line-height: @height-menu-icon;
+        border-color: @border-color-icon !important;
+        border-radius: 50%;
+      }
+
+      //.ivu-breadcrumb-item-link,
+      .main-trigger a {
+        color: @font-color-text;
+
+        &:hover {
+          color: @color-blue;
+        }
+      }
+    }
+
+    .main-view-wrapper {
+      padding: @padding-content;
+      background: @bg-color-bgC;
+    }
+
+    .content {
+      background: @bg-color-card;
+    }
+
+    .ivu-menu-dark,
+    .left-slider {
+      background: @bg-color-menu;
+    }
+
+  }
+
+  /*菜单*/
+  .side-menu-wrapper {
+    .ivu-menu {
+      background: @bg-color-menu;
+
+      .ivu-menu-item {
+        font-size: @font-size-text;
+        margin-top: 1px;
+        color: @font-color-menu;
+
+        &:hover {
+          background: @color-blue;
+          color: @color-white;
+        }
+
+        &.ivu-menu-item-active:not(.ivu-menu-submenu) {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+
+      &.ivu-menu-light {
+        .ivu-menu-submenu {
+          color: @font-color-menu;
+
+          &.ivu-menu-opened { // 打开组
+            & > ul {
+              background: @bg-color-menu-group;
+            }
+
+            & > .ivu-menu-submenu-title {
+              background: @color-blue;
+              color: @color-white;
+            }
+          }
+
+          .ivu-menu-submenu-title {
+            font-size: @font-size-text;
+            height: @height-menu-item;
+            line-height: @height-menu-item;
+            padding: 0 @padding-menu;
+            margin-top: 1px;
+
+            &:hover {
+              background: @color-blue;
+              color: @color-white;
+            }
+          }
+        }
+
+        &.ivu-menu-vertical {
+          &:after {
+            width: 0;
+          }
+
+          .ivu-menu-item-active:not(.ivu-menu-submenu):after {
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  .ivu-layout-sider {
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    overflow: auto !important;
+
+    .ivu-layout-sider-children { // 防止闪动
+      background: @bg-color-menu;
+      color: @font-color-text;
+      font-size: 14px;
+    }
+  }
+
+  /*icon-菜单*/
+  .side-menu-wrapper a.drop-menu-a {
+    height: @height-menu-item;
+    line-height: @height-menu-item;
+
+    i {
+      color: @font-color-menu !important;
+    }
+  }
+
+  .login {
+    color: @font-color;
+
+    ::-webkit-input-placeholder {
+      color: #8e8e8e !important;
+      opacity: 0.5;
+    }
+
+    .ivu-form-item-content {
+      .ivu-checkbox-wrapper {
+        a {
+          color: @color-blue !important;
+        }
+      }
+    }
+  }
+
+  /*icon-首页*/
+ .home_page{
+   overflow: hidden;
+   .text_color {
+     color: @color-blue;
+     padding: 20px;
+     font-size: 15px;
+   }
+   .fre_wrapper{
+     height: 360px;
+     width: 100%;
+     background-color: @bg-color-card;
+   }
+   .send_wrapper {
+     height: 360px;
+     width: 98%;
+     background-color: @bg-color-card;
+   }
+
+   .center_top {
+     height: 130px;
+     .top_wrapper {
+       height: 130px;
+       min-width: 350px;
+       background-color: @bg-color-card;
+       img {
+         opacity: 0.8;
+         background: @bg-home-img;
+       }
+     }
+     .center_top_long {
+       cursor: pointer;
+       background-color: @bg-color-card;
+       height: 130px;
+       width: 95%;
+       .img_class {
+         width: 100%;
+         height: 130px;
+         display: table;
+         .imgBox {
+           display: table-cell;
+           vertical-align: middle;
+           text-align: center;
+           img {
+             opacity: 0.8;
+             background: @bg-home-img;
+           }
+         }
+       }
+     }
+   }
+ }
+
+  .send-msg-class{
+    .pro_title {
+      color: @font-color-text;
+      font-size: 14px;
+    }
+
+    .device_class {
+      padding: 5px 5px;
+      color:  @font-color-text;
+      font-size: 14px;
+    }
+    .other_color {
+      color:  @font-color-text;
+    }
+    .log_content {
+      margin-bottom: 20px;
+      height: 350px;
+      border: 1px solid @bg-home-border;
+    }
+
+  }
+  .inside_border{
+    .pro_color {
+      color: @font-color-text;
+    }
+    .pro_title {
+      color: @font-color-text;
+      font-size: 14px;
+    }
+  }
+  .spin-icon-load {
+    animation: ani-demo-spin 1s linear infinite;
+  }
+  @keyframes ani-demo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+}
+
+
