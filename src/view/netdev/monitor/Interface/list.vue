@@ -51,7 +51,7 @@
                             {
                                 title: '解析协议',
                                 key: 'fmtId',
-                                width: 300,
+                                width: 400,
                                 render:(h,params) =>{
                                     return h('span',this.handlerPrtFomat(params.row.fmtId));
                                 },
@@ -63,20 +63,25 @@
                             {
                                 title: '接口名称',
                                 key: 'itfName',
+                                width: 300
                             },
                             {
                                 title: '接口类型',
                                 key: 'itfType_paraName',
                             },
                             {
+                                title: '接口命令标识',
+                                key: 'itfCmdMark',
+                            },
+                            {
                                 title: '接口状态',
                                 key: 'itfStatus_paraName',
                             },
-                            {
+                            /*{
                                 title: '数据格式',
                                 key: 'itfDataFormat',
                                 width: 300,
-                            },
+                            },*/
                             {
                                 title: '操作',
                                 key: 'action',
