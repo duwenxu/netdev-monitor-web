@@ -10,13 +10,14 @@ import {
   getRouteTitleHandled,
   localSave,
   localRead,
-  backendMenusToRouters
+  backendMenusToRouters,
+  treeDevice
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
 import routers from '@/router/routers'
 import config from '@/config'
-import { get_user_menus } from '@/api/user'
+import { get_user_menus ,get_user_device} from '@/api/user'
 const { homeName } = config
 
 const closePage = (state, route) => {
@@ -128,13 +129,15 @@ export default {
             resolve(routers)
           }else{
             get_user_menus().then(res => {
-              console.log(res)
-              console.log('this is menuList')
-              let routers = backendMenusToRouters(res.result.menu)
-              sessionStorage.setItem('menuList',JSON.stringify(res.result.menu))
-              commit('setRouters', routers)
-              commit('setHasGetRouter', true)
-              resolve(routers)
+              get_user_device().then(data=>{
+                let deviceRouter = treeDevice(data.result)
+                let result = deviceRouter.concat(res.result.menu)
+                let routers = backendMenusToRouters(result)
+                sessionStorage.setItem('menuList',JSON.stringify(result))
+                commit('setRouters', routers)
+                commit('setHasGetRouter', true)
+                resolve(routers)
+              })
             }).catch(err => {
               reject(err)
             })
