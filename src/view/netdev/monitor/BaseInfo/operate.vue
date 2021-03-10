@@ -9,7 +9,11 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                            <Input v-model="BaseInfo.devType"  placeholder="请输入设备类型"></Input>
+                            <!--<Input v-model="BaseInfo.devType"  placeholder="请输入设备类型"></Input>-->
+                          <Select clearable placeholder="请选择设备类型" v-model="BaseInfo.devType">
+                            <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
+                            </Option>
+                          </Select>
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -19,12 +23,20 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备状态" prop="devStatus">
-                            <Input v-model="BaseInfo.devStatus"  placeholder="请输入设备状态"></Input>
+                            <!--<Input v-model="BaseInfo.devStatus"  placeholder="请输入设备状态"></Input>-->
+                          <Select clearable placeholder="请选择设备状态" v-model="BaseInfo.devStatus">
+                            <Option :key="choose.id" :value='choose.value' v-for='choose in devStatusList'>{{choose.name}}
+                            </Option>
+                          </Select>
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备所属公司" prop="devCorp">
-                            <Input v-model="BaseInfo.devCorp"  placeholder="请输入设备所属公司"></Input>
+                            <!--<Input v-model="BaseInfo.devCorp"  placeholder="请输入设备所属公司"></Input>-->
+                          <Select clearable placeholder="请选择设备所属公司" v-model="BaseInfo.devCorp">
+                            <Option :key="choose.id" :value='choose.value' v-for='choose in devCorpList'>{{choose.name}}
+                            </Option>
+                          </Select>
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -78,6 +90,9 @@
             return {
                 updateMark: false,
                     BaseInfo: {},
+              devTypeList:[],
+              devStatusList:[],
+              devCorpList:[],
                 validateList:[],
                 rulePro: {
                             devNo: [
@@ -117,6 +132,9 @@
             this.$xy.vector.$off('operateRow', this.operateRow)
         },
         mounted () {
+          this.getDeviceTypes();
+          this.getDeviceStatus();
+          this.getDeviceCorp();
         },
         methods: {
             operateRow (obj) {
@@ -160,7 +178,22 @@
             cancel () {
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
-            }
+            },
+          async getDeviceTypes () {
+            this.$xy.getParamGroup('0020').then(res => {
+              this.devTypeList = res
+            })
+          },
+          async getDeviceStatus () {
+            this.$xy.getParamGroup('0028').then(res => {
+              this.devStatusList = res
+            })
+          },
+          async getDeviceCorp () {
+            this.$xy.getParamGroup('0010').then(res => {
+              this.devCorpList = res
+            })
+          }
         }
     }
 </script>
