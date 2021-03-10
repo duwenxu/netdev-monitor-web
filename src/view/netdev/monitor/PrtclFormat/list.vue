@@ -46,7 +46,7 @@
             },
             {
               title: '设备类型',
-              key: 'devType',
+              key: 'devType_paraName',
               width: 100
             },
             {
