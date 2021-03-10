@@ -67,6 +67,24 @@ export const deleteInterface = id => {
         method: 'delete'
     })
 }
+/**
+ * 查询绑定参数
+ */
+export const getLinkedParams = id => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/interface/linked/'+id,
+    method: 'get'
+  })
+}
+/**
+ * 查询未绑定参数
+ */
+export const getUnlinkedParams = id => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/interface/unlinked/'+id,
+    method: 'get'
+  })
+}
 
 
 

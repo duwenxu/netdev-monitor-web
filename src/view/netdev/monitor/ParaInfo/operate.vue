@@ -55,7 +55,9 @@
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="显示模式" prop="ndpaShowMode">
-            <Input v-model="ParaInfo.ndpaShowMode" placeholder="请输入显示模式"></Input>
+            <Select v-model="ParaInfo.ndpaShowMode" clearable   placeholder="请选择显示模式">
+              <Option  v-for='choose in paraStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -108,8 +110,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="设备是否故障" prop="ndpaAlertPara">
-            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择设备是否故障">
+          <FormItem label="字段类型" prop="ndpaAlertPara">
+            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
               <Option  v-for='choose in alertParaStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -142,6 +144,7 @@
         paraStatus: [],
         outterStatus: [],
         alertParaStatus: [],
+        displayModels:[],
         rulePro: {
           fmtId: [
             {required: false}
@@ -219,6 +222,7 @@
       this.getDevTypes();
       this.getAlertParaStatus();
       this.getOutterStatus();
+      this.getDisplayModels();
     },
     methods: {
       async getDevTypes(){
@@ -248,8 +252,14 @@
       },
 
       async getAlertParaStatus(){
-        this.$xy.getParamGroup('0003').then(res=>{
+        this.$xy.getParamGroup('0029').then(res=>{
           this.alertParaStatus = res;
+        })
+      },
+
+      async getDisplayModels(){
+        this.$xy.getParamGroup('0024').then(res=>{
+          this.displayModels = res;
         })
       },
 
