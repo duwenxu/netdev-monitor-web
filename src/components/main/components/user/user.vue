@@ -46,6 +46,7 @@ export default {
       'handleLogOut'
     ]),
     logout () {
+      localStorage.tagNaveList = []
       this.handleLogOut().then((value) => {
         this.$router.push({
           name: 'login'
