@@ -37,6 +37,13 @@ export const get_user_menus = () => {
   })
 }
 
+export const get_user_device = () => {
+  return axios.request({
+    url:xy.Setting.SPACE_URL + '/monitor/baseInfo/baseMenu',
+    method: 'get'
+  })
+}
+
 export const logout = (token) => {
   return axios.request({
     url: 'logout',

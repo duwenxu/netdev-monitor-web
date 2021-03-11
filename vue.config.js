@@ -1,5 +1,6 @@
 const path = require('path')
-
+const {name} = require('./package');
+var webpack = require('webpack')
 const resolve = dir => {
   return path.join(__dirname, dir)
 }
@@ -11,15 +12,16 @@ const resolve = dir => {
 // 如果您的应用程序部署在子路径中，则需要在这指定子路径
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '/'
+// const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '/'
 
 module.exports = {
-  publicPath: BASE_URL,
+  // publicPath: BASE_URL,
   // 配置端口
   devServer: {
-    // host:'172.21.3.13',
-    host: 'localhost',
-    port: 8081 // 端口
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    port: 8085 // 端口
     // 设置代理
     // proxy: {
     //   '/sys': {
@@ -32,14 +34,28 @@ module.exports = {
     //   },
     // }
   },
-
   assetsDir: 'static',
   // 如果你不需要使用eslint，把lintOnSave设为false即可
   lintOnSave: false,
+  configureWebpack: {
+    output: {
+      // 把子应用打包成 umd 库格式
+      library: `${name}-[name]`,
+      libraryTarget: 'umd',
+      jsonpFunction: `webpackJsonp_${name}`,
+    }
+  },
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
       .set('_c', resolve('src/components'))
+    config.module
+      .rule("fonts")
+      .test(/.(ttf|otf|eot|woff|woff2)$/)
+      .use("url-loader")
+      .loader("url-loader")
+      .tap(options => ({name: "/fonts/[name].[hash:8].[ext]"}))
+      .end();
   },
   // 设为false打包时不生成.map文件
   productionSourceMap: false

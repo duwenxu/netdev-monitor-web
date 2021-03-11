@@ -1,8 +1,8 @@
 <template>
   <div class="error-store">
     <Badge dot :count="countComputed">
-      <Tooltip content="消息中心" placement="bottom" @click="openErrorLoggerPage" style="cursor: pointer;">
-        <Icon :size="30" type="ios-mail"/>
+      <Tooltip content="消息中心" placement="bottom" @click="openErrorLoggerPage" style="cursor: pointer;  color: white;">
+        <Icon :size="25" type="ios-mail"/>
       </Tooltip>
     </Badge>
   </div>

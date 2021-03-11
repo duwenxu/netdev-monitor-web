@@ -1,27 +1,30 @@
 <template>
-  <div class="user-avator-dropdown">
-    <Dropdown @on-click="handleClick">
-      <Badge :dot="!!messageUnreadCount">
-        <Avatar :src="userAvator"/>
-      </Badge>
-      <Icon :size="18" type="md-arrow-dropdown"></Icon>
-      <DropdownMenu slot="list" >
-        <!--<DropdownItem name="message">
-          消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
-        </DropdownItem>--->
-        <DropdownItem name="logout">退出登录</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  </div>
+    <div class="user-avatar-dropdown" >
+        <Dropdown @on-click="handleClick">
+            <Badge :dot="!!messageUnreadCount">
+<!--                <Avatar :src="userAvatar"  style="margin-right: 10px"/>-->
+                <Avatar :src="avatarImg" style="margin-right: 10px"/>
+                {{userName}}
+            </Badge>
+            <Icon :size="18" type="md-arrow-dropdown"></Icon>
+            <DropdownMenu slot="list">
+                <!--<DropdownItem name="message">-->
+                <!--消息中心-->
+                <!--<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>-->
+                <!--</DropdownItem>-->
+                <DropdownItem name="logout">退出登录</DropdownItem>
+            </DropdownMenu>
+        </Dropdown>
+    </div>
 </template>
-
 <script>
 import './user.less'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'User',
   props: {
-    userAvator: {
+    userAvatar: {
       type: String,
       default: ''
     },
@@ -30,12 +33,21 @@ export default {
       default: 0
     }
   },
+  computed: {
+    ...mapState({
+      userName: state => state.user.userName
+    }),
+    avatarImg () {
+      return this.userAvatar ? this.userAvatar : require('@/assets/images/male.png')
+    }
+  },
   methods: {
     ...mapActions([
       'handleLogOut'
     ]),
     logout () {
-      this.handleLogOut().then(() => {
+      localStorage.tagNaveList = []
+      this.handleLogOut().then((value) => {
         this.$router.push({
           name: 'login'
         })
@@ -48,14 +60,14 @@ export default {
     },
     handleClick (name) {
       switch (name) {
-        case 'logout': this.logout()
+        case 'logout':
+          this.logout()
           break
-        case 'message': this.message()
+        case 'message':
+          this.message()
           break
       }
     }
   }
 }
 </script>
-
-

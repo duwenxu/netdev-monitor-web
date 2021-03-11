@@ -9,7 +9,7 @@ import {
   restoreTrash,
   getUnreadCount
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { setToken, getToken,localSave } from '@/libs/util'
 
 export default {
   state: {
@@ -26,9 +26,14 @@ export default {
     messageUnreadList: [],
     messageReadedList: [],
     messageTrashList: [],
-    messageContentStore: {}
+    messageContentStore: {},
+    theme: ''
   },
   mutations: {
+    setTheme (state, value) {
+      state.theme = value
+      localSave('themeColor', value)
+    },
     setAvator (state, avatorPath) {
       state.avatorImgPath = avatorPath
     },

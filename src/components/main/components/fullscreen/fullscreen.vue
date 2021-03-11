@@ -1,7 +1,7 @@
 <template>
   <div v-if="showFullScreenBtn" class="full-screen-btn-con">
     <Tooltip :content="value ? '退出全屏' : '全屏'" placement="bottom">
-      <Icon @click.native="handleChange" :type="value ? 'md-contract' : 'md-expand'" :size="23"></Icon>
+      <Icon @click.native="handleChange" :type="value ? 'md-contract' : 'md-expand'" :size="22"></Icon>
     </Tooltip>
   </div>
 </template>
@@ -11,14 +11,15 @@ export default {
   name: 'Fullscreen',
   computed: {
     showFullScreenBtn () {
-      return window.navigator.userAgent.indexOf('MSIE') < 0
+      return window.navigator.userAgent.indexOf('MSIE') < 0 && this.screenWidth > 768
     }
   },
   props: {
     value: {
       type: Boolean,
       default: false
-    }
+    },
+    screenWidth: 0
   },
   methods: {
     handleFullscreen () {
@@ -74,11 +75,24 @@ export default {
 </script>
 
 <style lang="less">
-.full-screen-btn-con .ivu-tooltip-rel{
-  height: 64px;
-  line-height: 56px;
-  i{
-    cursor: pointer;
+.full-screen-btn-con {
+  height: 100%;
+  .ivu-tooltip {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .ivu-tooltip-rel{
+      height: 100%;
+      i{
+        cursor: pointer;
+        border-radius: 50%;
+        text-align: center;
+        box-sizing: border-box;
+        border: 1px solid;
+      }
+    }
   }
 }
 </style>
