@@ -1,7 +1,7 @@
 {
   "name": "xy-admin",
   "version": "1.0.0",
-  "author": "Phoenix <zazz1987@163.com>",
+  "author": "xy",
   "private": false,
   "scripts": {
     "dev": "vue-cli-service serve --open",

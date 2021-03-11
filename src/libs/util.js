@@ -36,6 +36,46 @@ const showThisMenuEle = (item, access) => {
 }
 
 
+export const treeDevice = (data) => {
+  let result = []
+  for (var item in data) {
+    data[item].meta = {}
+    data[item].name = data[item].devNo
+    data[item].meta.title = data[item].devName
+    data[item].meta.icon = "ios-body"
+    data[item].meta.hideInMenu = false
+    if ('subMap' in data[item]) {
+      let array = []
+      for (var temp in data[item]['subMap']) {
+        data[item].path = 'list/'+data[item]['subMap'].devNo
+        data[item].component ='view/netdev/test.vue'
+        array.push(data[item]['subMap'][temp])
+      }
+      data[item].path = 'list'
+      data[item].component ='components/parent-view'
+      data[item].children = array
+      treeDevice(data[item]['subMap'])
+    }else{
+      data[item].path = 'list/'+data[item].devNo
+      data[item].component ='view/netdev/test.vue'
+    }
+    result.push(data[item])
+  }
+  let router = [{
+    path: '/devices',
+    name: 'devices',
+    meta: {
+      icon: 'ios-browsers',
+      title: '设备',
+      hideInBread:true,
+      access: ["1"]
+    },
+    component: 'components/main',
+    children: result
+  },]
+  return router
+}
+
 /**
  * @description 将后端菜单树转换为路由树
  * @param {Array} menus

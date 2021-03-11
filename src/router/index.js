@@ -24,8 +24,6 @@ const turnTo = (to, access, next) => {
 
 router.beforeEach((to, from, next) => {
 
-  // iView.LoadingBar.start()
-  // turnTo(to, ['super_admin'], next)
   const token = getToken()
   if (!token && to.name !== LOGIN_PAGE_NAME && to.name!== LARGE_HOME) {
     console.log('login--------------------')

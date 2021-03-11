@@ -1,6 +1,6 @@
 <template>
   <div class="searchPar" @keyup.enter="init">
-    <template v-for='(data,index) in searchData'>{{data.name}}
+    <template v-for='(data,index) in searchData'>
       <template v-if='data.type==1 && !data.isHide'>
         <Input v-model.trim="data.value" :name='data.key'
                :placeholder="data.placeholder" :readonly="data.readonly" clearable style="width: 200px;margin-right: 15px"></Input>
