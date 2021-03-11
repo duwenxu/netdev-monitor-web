@@ -86,5 +86,15 @@ export const getUnlinkedParams = id => {
   })
 }
 
+/**
+ * 查询未绑定参数
+ */
+export const updateCache = () => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/interface/updateCache',
+    method: 'get'
+  })
+}
+
 
 
