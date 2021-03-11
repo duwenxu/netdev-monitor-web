@@ -344,11 +344,11 @@
             handlerPrtFomat(prtId){
                 let lists = this.prtclList
                 for(var value in lists){
-                    if(lists[value].fmtId = prtId){
+                    if(lists[value].fmtId == prtId){
                         return lists[value].fmtName
                     }
-                    return ''
                 }
+                return ''
             }
         }
     }
