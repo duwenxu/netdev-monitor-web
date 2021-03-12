@@ -116,6 +116,13 @@
             </Select>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="告警级别" prop="ndpaAlertLevel">
+            <Select v-model="ParaInfo.ndpaAlertLevel" clearable   placeholder="请选择字段类型">
+              <Option  v-for='choose in ndpaAlertLevels' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -145,6 +152,7 @@
         outterStatus: [],
         alertParaStatus: [],
         displayModels:[],
+        ndpaAlertLevels:[],
         rulePro: {
           fmtId: [
             {required: false}
@@ -204,8 +212,11 @@
             {required: false}
           ],
           ndpaAlertPara: [
-            {required: true, message: '设备是否故障不能为空', trigger: 'blur'}
+            {required: true, message: '字段类型不能为空', trigger: 'blur'}
           ],
+          ndpaAlertLevel: [
+            {required: true, message: '报警级别不能为空', trigger: 'blur'}
+          ]
         }
       }
     },
@@ -223,6 +234,7 @@
       this.getAlertParaStatus();
       this.getOutterStatus();
       this.getDisplayModels();
+      this.getNdpaAlertLevels();
     },
     methods: {
       async getDevTypes(){
@@ -260,6 +272,12 @@
       async getDisplayModels(){
         this.$xy.getParamGroup('0024').then(res=>{
           this.displayModels = res;
+        })
+      },
+
+      async getNdpaAlertLevels(){
+        this.$xy.getParamGroup('0021').then(res=>{
+          this.ndpaAlertLevels = res;
         })
       },
 
