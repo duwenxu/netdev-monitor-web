@@ -96,6 +96,11 @@
                               width: 100
                             },
                             {
+                              title: '设备部署类型',
+                              key: 'devDeployType_paraName',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
                                 width: 180,
