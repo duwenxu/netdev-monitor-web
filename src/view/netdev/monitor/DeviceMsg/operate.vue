@@ -4,7 +4,10 @@
 
 <script>
 export default {
-name: "test"
+name: "test",
+  mounted(){
+   console.log(this.$route)
+  }
 }
 </script>
 
