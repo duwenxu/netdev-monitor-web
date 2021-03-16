@@ -187,7 +187,6 @@ export default {
     },
     turnToPage(route) {
       let tag = false
-      console.log(route)
       let {name, params, query} = {}
       if (typeof route === 'string') name = route
       else {
@@ -253,7 +252,6 @@ export default {
     },
     '$route' (newRoute) {
       const { name, query, params, meta } = newRoute
-      console.log(newRoute)
       this.addTag({
         route: { name, query, params, meta },
         type: 'push'
