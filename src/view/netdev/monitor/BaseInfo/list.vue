@@ -2,6 +2,7 @@
     <div class="content-box">
         <Row>
             <search :search-data='searchData'></search>
+            <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="downFile">下载</Button>
             <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 490px" type="primary" @click="operate()">新增</Button>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-    import {queryBaseInfoPageList, deleteBaseInfo} from '@/api/monitor/BaseInfo'
+    import {queryBaseInfoPageList, deleteBaseInfo,downDevFile} from '@/api/monitor/BaseInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -272,6 +273,18 @@
                     })
                 }
             },
+            //下载所有设备模型定义文件
+            async downFile(){
+                await downDevFile().then(res=>{
+                    let fileName = res.headers.filename;
+                    let blob = new Blob([res.data]);
+                    let link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = fileName+'.xml';
+                    link.click();
+                    link.remove();
+                })
+            },
             operate(BaseInfo) {
                 this.name = BaseInfo == null ? '添加设备信息' : '编辑设备信息'
                 this.operateModal = true
@@ -287,7 +300,6 @@
               this.init()
             })
           },
-
         }
     }
 </script>
