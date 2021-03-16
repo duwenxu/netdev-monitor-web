@@ -135,6 +135,11 @@
                                 width: 100
                             },
                             {
+                              title: '报警级别',
+                              key: 'ndpaAlertLevel_paraName',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
                                 width: 180,
