@@ -156,7 +156,8 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 180,
+                                width: 150,
+                                fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [

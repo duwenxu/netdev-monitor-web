@@ -56,7 +56,7 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="显示模式" prop="ndpaShowMode">
             <Select v-model="ParaInfo.ndpaShowMode" clearable   placeholder="请选择显示模式">
-              <Option  v-for='choose in paraStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+              <Option  v-for='choose in displayModels' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
