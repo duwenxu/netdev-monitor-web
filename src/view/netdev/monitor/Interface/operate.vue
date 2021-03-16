@@ -93,9 +93,9 @@
                     fmtId: [
                         {required: true, type:'number', message: '解析协议不能为空', trigger: 'blur'}
                     ],
-                    itfCode: [
+                    /*itfCode: [
                         {required: true, message: '接口编码不能为空', trigger: 'blur'}
-                    ],
+                    ],*/
                     itfName: [
                         {required: true, message: '接口名称不能为空', trigger: 'blur'}
                     ],

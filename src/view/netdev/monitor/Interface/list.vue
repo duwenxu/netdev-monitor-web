@@ -2,8 +2,8 @@
   <div class="content-box">
     <Row>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增
-        </Button>
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="updateCache()">更新</Button>
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
         <search :search-data='searchData'></search>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {queryInterfacePageList, deleteInterface,getUnlinkedParams,getLinkedParams,editInterface} from '@/api/monitor/Interface'
+    import {queryInterfacePageList, deleteInterface,getUnlinkedParams,getLinkedParams,editInterface,updateCache} from '@/api/monitor/Interface'
     import search from '@/components/tables/search'
     import operateRow from './operate'
     import trans from '@/components/tables/trans'
@@ -85,7 +85,7 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 180,
+                                width: 200,
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
@@ -344,10 +344,29 @@
             handlerPrtFomat(prtId){
                 let lists = this.prtclList
                 for(var value in lists){
-                    if(lists[value].fmtId = prtId){
+                    if(lists[value].fmtId == prtId){
                         return lists[value].fmtName
                     }
-                    return ''
+                }
+                return ''
+            },
+            //更新缓存
+            async updateCache() {
+                let {data, code, msg} = await updateCache()
+                let notice = this.$Notice;
+                if (code == 200) {
+                    notice.success({
+                        title: '成功',
+                        desc: '删除成功！',
+                        duration: 3
+                    })
+                    this.doQuery();
+                } else {
+                    notice.error({
+                        title: '失败',
+                        desc: msg,
+                        duration: 3
+                    })
                 }
             }
         }
