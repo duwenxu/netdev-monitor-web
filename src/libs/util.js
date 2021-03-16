@@ -1,16 +1,15 @@
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
-import { forEach, hasOneOf, objEqual } from '@/libs/tools'
+import {forEach, hasOneOf, objEqual} from '@/libs/tools'
 
 
-
-const { title, cookieExpires, useI18n } = config
+const {title, cookieExpires, useI18n} = config
 
 export const TOKEN_KEY = 'token'
 
 export const setToken = (token) => {//token过期时间
-  Cookies.set(TOKEN_KEY, token, { expires: cookieExpires || 10 })//token过期时间1天
+  Cookies.set(TOKEN_KEY, token, {expires: cookieExpires || 10})//token过期时间1天
 }
 
 export const getToken = () => {
@@ -21,7 +20,6 @@ export const getToken = () => {
     return false
   }
 }
-
 
 
 export const hasChild = (item) => {
@@ -44,20 +42,21 @@ export const treeDevice = (data) => {
     data[item].meta.title = data[item].devName
     data[item].meta.icon = "ios-body"
     data[item].meta.hideInMenu = false
+    data[item].meta.notCache = true
     if ('subMap' in data[item]) {
       let array = []
       for (var temp in data[item]['subMap']) {
-        data[item].path = 'list/'+data[item]['subMap'].devNo
-        data[item].component ='view/netdev/test.vue'
+        data[item].path = 'list/' + data[item]['subMap'].devNo
+        data[item].component = 'view/netdev/monitor/DeviceMsg/operate.vue'
         array.push(data[item]['subMap'][temp])
       }
       data[item].path = 'list'
-      data[item].component ='components/parent-view'
+      data[item].component = 'components/parent-view'
       data[item].children = array
       treeDevice(data[item]['subMap'])
-    }else{
-      data[item].path = 'list/'+data[item].devNo
-      data[item].component ='view/netdev/test.vue'
+    } else {
+      data[item].path = 'list/' + data[item].devNo
+      data[item].component = 'view/netdev/monitor/DeviceMsg/operate.vue'
     }
     result.push(data[item])
   }
@@ -67,8 +66,9 @@ export const treeDevice = (data) => {
     meta: {
       icon: 'ios-browsers',
       title: '设备',
-      hideInBread:true,
-      access: ["1"]
+      hideInBread: true,
+      access: ["1"],
+      notCache: true
     },
     component: 'components/main',
     children: result
@@ -105,8 +105,8 @@ const backendMenuToRoute = (menu) => {
   // 原先routers写法是component: () => import('@/view/error-page/404.vue')
   // 经过json数据转换，这里会丢失，所以需要按照上面提过的做转换，下面只写了核心点，其他自行处理
   let route = Object.assign({}, menu)
-  if(route.meta.access && route.children){
-    route.children.forEach(v=>{
+  if (route.meta.access && route.children) {
+    route.children.forEach(v => {
       v.meta.access = route.meta.access
     })
   }
@@ -143,13 +143,13 @@ export const getMenuByRouter = (list, access) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
-  let homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
+  let homeItem = {...homeRoute, icon: homeRoute.meta.icon}
   let routeMetched = route.matched
   if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
   let res = routeMetched.filter(item => {
     return item.meta === undefined || !item.meta.hideInBread
   }).map(item => {
-    let meta = { ...item.meta }
+    let meta = {...item.meta}
     if (meta.title && typeof meta.title === 'function') {
       meta.__titleIsFunction__ = true
       meta.title = meta.title(route)
@@ -167,12 +167,12 @@ export const getBreadCrumbList = (route, homeRoute) => {
     return item.meta.needInBread ? true : !item.meta.hideInMenu
   })
 
-  return [{ ...homeItem, to: homeRoute.path }, ...res]
+  return [{...homeItem, to: homeRoute.path}, ...res]
 }
 
 export const getRouteTitleHandled = (route) => {
-  let router = { ...route }
-  let meta = { ...route.meta }
+  let router = {...route}
+  let meta = {...route.meta}
   let title = ''
   if (meta.title) {
     if (typeof meta.title === 'function') {
@@ -186,7 +186,7 @@ export const getRouteTitleHandled = (route) => {
 }
 
 export const showTitle = (item, vm) => {
-  let { title, __titleIsFunction__ } = item.meta
+  let {title, __titleIsFunction__} = item.meta
   if (!title) return
   if (useI18n) {
     if (title.includes('{{') && title.includes('}}') && useI18n) title = title.replace(/({{[\s\S]+?}})/, (m, str) => str.replace(/{{([\s\S]*)}}/, (m, _) => vm.$t(_.trim())))
@@ -236,10 +236,10 @@ export const getHomeRoute = (routers, homeName = 'home') => {
  * @description 如果该newRoute已经存在则不再添加
  */
 export const getNewTagList = (list, newRoute) => {
-  const { name, path, meta } = newRoute
+  const {name, path, meta} = newRoute
   let newList = [...list]
   if (newList.findIndex(item => item.name === name) >= 0) return newList
-  else newList.push({ name, path, meta })
+  else newList.push({name, path, meta})
   return newList
 }
 
@@ -500,13 +500,23 @@ export const setTitle = (routeItem, vm) => {
 }
 
 
-
-
 /**
- 当前页面路由权限是否存在用户
+ 根据传入分隔符分割字符串
  */
-export const compareArr = (userArr, routeArr) => {
-
+export const splitCharacter = (splitStr, str) => {
+  var codes = [];
+  splitStr.replace(/\{(.+?)\}/g, function (match, param, offset, string) {
+    codes.push(param)
+  })
+  var infoChar = codes[0];
+  for (var i = 1; i < codes.length; i++) {
+    str = str.split(codes[i]).join(infoChar);
+  }
+  str = str.split(infoChar);
+  let result = str.filter(v => {
+    return v
+  });
+  return result;
 }
 
 
