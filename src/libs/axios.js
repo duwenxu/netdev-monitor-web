@@ -45,7 +45,12 @@ class HttpRequest {
 
     /*响应结果处理*/
     instance.interceptors.response.use((res) => {
-      return res.data
+      if(res.config.responseType == 'blob'){
+        //特别注意：开放设备模型文件下载
+        return res;
+      }else{
+        return res.data
+      }
     }, (error) => {
       if (error && error.response) {
         switch (error.response.status) {

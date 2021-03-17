@@ -70,3 +70,17 @@ export const deleteParaInfo = id => {
 
 
 
+
+/**
+ * 修改参数值
+ */
+export const editParamValue = (info) => {
+    return axios.request({
+        url: xy.Setting.SPACE_URL + '/monitor/paraInfo/paraCtrl',
+        method: 'post',
+        data:qs.stringify(info)
+    })
+}
+
+
+

@@ -37,7 +37,7 @@
                             {
                                 title: '格式ID',
                                 key: 'fmtId',
-                                width: 100
+                                width: 80
                             },
                             {
                                 title: '参数编号',
@@ -47,12 +47,14 @@
                             {
                                 title: '参数编码',
                                 key: 'ndpaCode',
-                                width: 100
+                                width: 110
+
                             },
                             {
                                 title: '参数名称',
                                 key: 'ndpaName',
-                                width: 100
+                                tooltip: true,
+                                width: 150
                             },
                             {
                                 title: '设备类型',
@@ -81,7 +83,7 @@
                             },
                             {
                                 title: '显示模式',
-                                key: 'ndpaShowMode',
+                                key: 'ndpaShowMode_paraName',
                                 width: 100
                             },
                             {
@@ -102,6 +104,7 @@
                             {
                                 title: '下拉值域',
                                 key: 'ndpaSelectData',
+                                tooltip: true,
                                 width: 100
                             },
                             {
@@ -114,11 +117,11 @@
                                 key: 'ndpaCmdMark',
                                 width: 100
                             },
-                            {
+                            /*{
                                 title: '参数状态',
                                 key: 'ndpaStatus_paraName',
                                 width: 100
-                            },
+                            },*/
                             {
                                 title: '供54所访问',
                                 key: 'ndpaOutterStatus_paraName',
@@ -127,10 +130,11 @@
                             {
                                 title: '数据映射规则',
                                 key: 'ndpaTransRule',
+                                tooltip: true,
                                 width: 100
                             },
                             {
-                                title: '字段类型',
+                                title: '状态上报类型',
                                 key: 'ndpaAlertPara_paraName',
                                 width: 100
                             },
@@ -140,9 +144,20 @@
                               width: 100
                             },
                             {
+                              title: '拼装样式',
+                              key: 'ndpaSpellFmt',
+                              width: 100
+                            },
+                            {
+                              title: '显示样式',
+                              key: 'ndpaViewFmt',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
-                                width: 180,
+                                width: 150,
+                                fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
@@ -184,12 +199,36 @@
                 infos: [],
                 searchData: [//搜索框根据需要自定义添加
                     {
+                      type: 1,
+                      key: 'ndpaName',
+                      name: '参数名称',
+                      value: '',
+                      data:[] ,
+                      placeholder: '参数名称'
+                    },
+                    {
                         type: 2,
-                        key: 'devTypes',
+                        key: 'devType',
                         name: '设备类型',
                         value: '',
                         data:[] ,
                         placeholder: '设备类型'
+                    },
+                    {
+                      type: 2,
+                      key: 'ndpaAlertPara',
+                      name: '上报类型',
+                      value: '',
+                      data:[] ,
+                      placeholder: '状态上报类型'
+                    },
+                    {
+                      type: 2,
+                      key: 'ndpaAlertLevel',
+                      name: '告警级别',
+                      value: '',
+                      data:[] ,
+                      placeholder: '告警级别'
                     },
 
                 ],
@@ -222,7 +261,13 @@
         methods: {
             initSelect() {
               this.$xy.getParamGroup('0020').then(res => {
-                this.searchData[0].data = res
+                this.searchData[1].data = res
+              })
+              this.$xy.getParamGroup('0029').then(res => {
+                this.searchData[2].data = res
+              })
+              this.$xy.getParamGroup('0021').then(res => {
+                this.searchData[3].data = res
               })
             },
             rowClassName(row, index) {

@@ -2,7 +2,7 @@
   <div class="content-box">
     <Row>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="updateCache()">更新</Button>
+        <Button icon="ios-repeat" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="updateCache()">刷新缓存</Button>
         <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
         <search :search-data='searchData'></search>
       </Col>
@@ -85,7 +85,7 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 180,
+                                width: 200,
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [

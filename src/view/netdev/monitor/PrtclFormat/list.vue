@@ -85,21 +85,14 @@
               width: 120
             },
 
-            {
-              title: '查询响应类型',
-              key: 'fmtScType',
-              width: 120
-            },
-
             // {
             //     title: '查询响应类型',
             //     key: 'fmtScType',
             //     width: 100
             // },
-
             {
               title: '控制响应类型',
-              key: 'fmtCcType',
+              key: 'fmtCcType_paraName',
               width: 120
             },
             {

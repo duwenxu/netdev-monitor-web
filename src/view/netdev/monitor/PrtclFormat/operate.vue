@@ -45,14 +45,17 @@
                             <Input v-model="PrtclFormat.fmtHandlerClass"  placeholder="请输入格式处理类"></Input>
                         </FormItem>
                         </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                        <FormItem label="查询响应类型" prop="fmtScType">
-                            <Input v-model="PrtclFormat.fmtScType"  placeholder="请输入查询响应类型"></Input>
-                        </FormItem>
-                        </Col>
+<!--                        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--                        <FormItem label="查询响应类型" prop="fmtScType">-->
+<!--                            <Input v-model="PrtclFormat.fmtScType"  placeholder="请输入查询响应类型"></Input>-->
+<!--                        </FormItem>-->
+<!--                        </Col>-->
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="控制响应类型" prop="fmtCcType">
-                            <Input v-model="PrtclFormat.fmtCcType"  placeholder="请输入控制响应类型"></Input>
+                            <Select clearable placeholder="请输入控制响应类型" v-model="PrtclFormat.fmtCcType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in fmtCcTypeList'>{{choose.name}}
+                              </Option>
+                            </Select>
                         </FormItem>
                         </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
@@ -79,6 +82,7 @@
                 //设备类型列表：
                 devTypeList:[],
                 validateList:[],
+                fmtCcTypeList:[],
                 rulePro: {
                             devType: [
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
@@ -113,6 +117,7 @@
         },
         mounted () {
           this.getDeviceTypes()
+          this.getFmtCcTypeList()
         },
         methods: {
             operateRow (obj) {
@@ -160,6 +165,11 @@
             async getDeviceTypes () {
               this.$xy.getParamGroup('0020').then(res => {
                 this.devTypeList = res
+              })
+            },
+            async getFmtCcTypeList () {
+              this.$xy.getParamGroup('0011').then(res => {
+                this.fmtCcTypeList = res
               })
             }
         }

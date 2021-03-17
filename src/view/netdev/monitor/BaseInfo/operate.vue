@@ -71,7 +71,18 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                           <FormItem label="网络协议" prop="devNetPtcl">
-                            <Input v-model="BaseInfo.devNetPtcl"  placeholder="请输入网络协议"></Input>
+                            <Select clearable placeholder="请输入网络协议" v-model="BaseInfo.devNetPtcl">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devNetPtclList'>{{choose.name}}
+                              </Option>
+                            </Select>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="设备部署类型" prop="devDeployType">
+                            <Select clearable placeholder="请输入设备部署类型" v-model="BaseInfo.devDeployType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devDeployTypeList'>{{choose.name}}
+                              </Option>
+                            </Select>
                           </FormItem>
                         </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
@@ -98,6 +109,8 @@
               devTypeList:[],
               devStatusList:[],
               devCorpList:[],
+              devNetPtclList:[],
+              devDeployTypeList:[],
                 validateList:[],
                 rulePro: {
                             devNo: [
@@ -127,9 +140,12 @@
                         ],
                             devIntervalTime: [
                         ],
-                            devNetPtcl: [
+                        devNetPtcl: [
                               {required: true, message: '网络协议不能为空', trigger: 'blur'}
                          ],
+                  devDeployType: [
+                          {required: true, message: '设备部署类型不能为空', trigger: 'blur'}
+                        ],
                 }
             }
         },
@@ -143,6 +159,8 @@
           this.getDeviceTypes();
           this.getDeviceStatus();
           this.getDeviceCorp();
+          this.getDevNetPtclList();
+          this.getDevDeployTypeList();
         },
         methods: {
             operateRow (obj) {
@@ -200,6 +218,16 @@
           async getDeviceCorp () {
             this.$xy.getParamGroup('0010').then(res => {
               this.devCorpList = res
+            })
+          },
+          async getDevNetPtclList () {
+            this.$xy.getParamGroup('0030').then(res => {
+              this.devNetPtclList = res
+            })
+          },
+          async getDevDeployTypeList () {
+            this.$xy.getParamGroup('0031').then(res => {
+              this.devDeployTypeList = res
             })
           }
         }

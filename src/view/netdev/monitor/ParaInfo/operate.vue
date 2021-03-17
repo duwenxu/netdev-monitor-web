@@ -56,7 +56,7 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="显示模式" prop="ndpaShowMode">
             <Select v-model="ParaInfo.ndpaShowMode" clearable   placeholder="请选择显示模式">
-              <Option  v-for='choose in paraStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+              <Option  v-for='choose in displayModels' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
@@ -73,11 +73,6 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="步进" prop="ndpaValStep">
             <Input v-model="ParaInfo.ndpaValStep" placeholder="请输入步进"></Input>
-          </FormItem>
-        </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="下拉值域" prop="ndpaSelectData">
-            <Input v-model="ParaInfo.ndpaSelectData" placeholder="请输入下拉值域"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -104,11 +99,7 @@
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="数据映射规则" prop="ndpaTransRule">
-            <Input v-model="ParaInfo.ndpaTransRule" placeholder="请输入数据映射规则"></Input>
-          </FormItem>
-        </Col>
+
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="字段类型" prop="ndpaAlertPara">
             <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
@@ -123,6 +114,27 @@
             </Select>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="下拉值域" prop="ndpaSelectData">
+            <Input v-model="ParaInfo.ndpaSelectData" type="textarea" placeholder="请输入下拉值域"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="数据映射规则" prop="ndpaTransRule" >
+            <Input v-model="ParaInfo.ndpaTransRule" type="textarea" placeholder="请输入数据映射规则"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="拼装样式" prop="ndpaSpellFmt">
+            <Input v-model="ParaInfo.ndpaSpellFmt" type="textarea" placeholder="请输入下拉值域"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="数据映射规则" prop="ndpaViewFmt" >
+            <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入数据映射规则"></Input>
+          </FormItem>
+        </Col>
+
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -216,6 +228,12 @@
           ],
           ndpaAlertLevel: [
             {required: true, message: '报警级别不能为空', trigger: 'blur'}
+          ],
+          ndpaSpellFmt: [
+            {required: false}
+          ],
+          ndpaViewFmt: [
+            {required: false}
           ]
         }
       }
