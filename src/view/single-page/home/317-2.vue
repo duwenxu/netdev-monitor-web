@@ -2,68 +2,73 @@
   <div class="home">
     <template v-for="equipment in equipments">
       <!--多个主设备-->
-      <div class="equipment_box" :key="equipment.devNo"
-           :style="devicePosition(equipment)">
+      <div class="equipment_box" :key="equipment.devNo" :style="{height: equipment.height}">
         <!--有子设备-->
         <template v-if="equipment.childList.length">
-          <div class="equipment_parent">
-            {{equipment.name}}
-          </div>
+          <Row>
+            <Col class="equipment_parent" span="24">
+              {{equipment.name}}
+            </Col>
+          </Row>
           <!--子设备-->
           <template v-for="device in equipment.childList">
-            <div class="equipment_child" :key="device.devNo"
-                 @click="pageJump(device)"
+            <Row class="equipment_child" :key="device.devNo"
                  :class="{'equipment_master_status': judgeMasterAndSlave(device)}">
-              <img :src="equipImgType[device.src]" alt="">
-              <div>
-                <div style="margin-right: 4px">{{device.name}}</div>
-                <span :style="judgeDeviceStatus(device, 0)"></span>
-              </div>
-            </div>
+              <Col span="24" class="equipment_name" >
+                <div @click="pageJump(device)">
+                  <img :src="equipImgType[device.src]" alt="">
+                  <div>
+                    <div style="margin-right: 4px">{{device.name}}</div>
+                    <span :style="judgeDeviceStatus(device, 0)"></span>
+                  </div>
+                </div>
+              </Col>
+            </Row>
           </template>
         </template>
         <!--没有子设备-->
         <template v-else>
-          <div class="equipment_child" @click="pageJump(equipment)">
-            <img :src="equipImgType[equipment.src]" alt="">
-            <div>
-              <div style="margin-right: 4px">{{equipment.name}}</div>
-              <!--                <p >{{judgeDeviceStatus(equipment, 1)}}</p>-->
-              <span :style="judgeDeviceStatus(equipment, 0)"></span>
-            </div>
-          </div>
+          <Row class="equipment_child" >
+            <Col span="24" class="equipment_name">
+              <div @click="pageJump(equipment)">
+                <img :src="equipImgType[equipment.src]" alt="">
+                <div>
+                  <div style="margin-right: 4px">{{equipment.name}}</div>
+                  <!--                <p >{{judgeDeviceStatus(equipment, 1)}}</p>-->
+                  <span :style="judgeDeviceStatus(equipment, 0)"></span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </template>
 
         <span></span>
       </div>
     </template>
 
-    <div class="line">
-      <svg width="100%" height="100%" version="1.1"
-           xmlns="http://www.w3.org/2000/svg">
+    <!--    <div class="line">-->
+    <!--      <svg width="100%" height="100%" version="1.1"-->
+    <!--           xmlns="http://www.w3.org/2000/svg">-->
 
-        <defs><!--引用的元素容器-->
-          <marker id="arrow"
-                  markerUnits="strokeWidth"
-                  markerWidth="12"
-                  markerHeight="12"
-                  viewBox="0 0 12 12"
-                  refX="6"
-                  refY="6"
-                  orient="auto">
-            <path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000000;" />
-          </marker>
-        </defs>
+    <!--        <defs>&lt;!&ndash;引用的元素容器&ndash;&gt;-->
+    <!--          <marker id="arrow"-->
+    <!--                  markerUnits="strokeWidth"-->
+    <!--                  markerWidth="12"-->
+    <!--                  markerHeight="12"-->
+    <!--                  viewBox="0 0 12 12"-->
+    <!--                  refX="6"-->
+    <!--                  refY="6"-->
+    <!--                  orient="auto">-->
+    <!--            <path d="M2,2 L10,6 L2,10 L6,6 L2,2" style="fill: #000000;" />-->
+    <!--          </marker>-->
+    <!--        </defs>-->
 
-        <!--        <line x1="0" y1="0" x2="200" y2="50"  stroke="red" stroke-width="2" marker-end="url(#arrow)"/>-->
+    <!--        <line x1="0" y1="0" x2="200" y2="50"  stroke="red" stroke-width="2" marker-end="url(#arrow)"/>-->
 
-        <path d="M20,70 T80,100 T160,80 T200,90" fill="white" stroke="red" stroke-width="2" marker-start="url(#arrow)"
-              marker-mid="url(#arrow)" marker-end="url(#arrow)"/>
+    <!--        <path d="M20,70 T80,100 T160,80 T200,90" fill="white" stroke="red" stroke-width="2" marker-start="url(#arrow)" marker-mid="url(#arrow)" marker-end="url(#arrow)"/>-->
 
-      </svg>
-
-
-    </div>
+    <!--      </svg>-->
+    <!--    </div>-->
   </div>
 </template>
 
@@ -74,56 +79,30 @@
     },
     data () {
       return {
-        heightType: {
-          1: '180px',
-          2: '365px',
-          3: '525px'
-        },
+        heightType: [
+
+        ],
         equipImgType: {
           1: require('@/assets/images/home/computer.png')
         },
-        position: {
-          '3001': {
-            top: '0px',
-            left: '0px',
-          },
-          '4001': {
-            top: '0px',
-            left: '200px',
-          },
-          '1001': {
-            top: '0px',
-            left: '400px',
-          },
-          '2001': {
-            top: '0px',
-            left: '600px',
-          },
-          '4002': {
-            top: '0px',
-            left: '800px',
-          }
-        },
-
-
 
         equipments:[
-          {height: '3',devNo: '3001', name: '冗余变频器', childList: [
-            /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
+          {height: '',devNo: '3001', name: '冗余变频器', childList: [
+              /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
               {devNo: '3201', name: '切换单元', isInterrupt:'0', workStatus: '1', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '3101', name: 'A变频器', isInterrupt:'1', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1}, //0是主用
               {devNo: '3102', name: 'B变频器', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 1}, //1是主用
             ],},
-          {height: '2',devNo: '4001', name: '调制解调器1', childList: [
+          {height: '365px',devNo: '4001', name: '调制解调器1', childList: [
               {devNo: '4101', name: 'A调制解调器1', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '4102', name: 'B调制解调器1', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 1},
             ]},
-          {height: '1',devNo: '1001', name: '天线控制单元', childList: [], isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:1},
-          {height: '2',devNo: '2001', name: '功放', childList: [
+          {height: '180px',devNo: '1001', name: '天线控制单元', childList: [], isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:1},
+          {height: '365px',devNo: '2001', name: '功放', childList: [
               {devNo: '2101', name: 'A功放', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '2102', name: 'B功放', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 1},
             ]},
-          {height: '2',devNo: '4002', name: '调制解调器2', childList: [
+          {height: '365px',devNo: '4002', name: '调制解调器2', childList: [
               {devNo: '4103', name: 'A调制解调器2', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '4104', name: 'B调制解调器2', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 1},
             ]},
@@ -139,13 +118,6 @@
     mounted () {
     },
     methods: {
-      devicePosition (equipment){
-        return {
-          // height: ,
-          top: this.position[equipment.devNo].top,
-          left: this.position[equipment.devNo].left
-        }
-      },
       /*设备路由跳转*/
       pageJump(device){
         if (device.devNo) {
@@ -218,90 +190,80 @@
 
 <style lang="less" scoped>
   .home {
-    border: 1px solid blue;
-    position: relative;
-    height: calc(~"100vh - 160px");
-
-
-    margin: 20px; //暂时
+    padding: 20px; //暂时
     color: #fff;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     .equipment_box {
-      position: absolute;
-      top: 0;
-      left: 0;
-
-
-      border: 1px solid red;
       background: #2e3039;
       padding: 15px;
       width: 11%;
-      /*margin-bottom: 20px;*/
-      /*margin-right: 20px;*/
+      margin-bottom: 20px;
+      margin-right: 20px;
       &:nth-of-type(5n + 0) {
         margin-right: 0;
         /*background: red;*/
       }
       .equipment_parent {
-        /*border-bottom: 1px solid #24262e;*/
-        margin-bottom: 5px;
-        text-align: center;
+        border-bottom: 1px solid #24262e;
+        margin-bottom: 6px;
       }
-
       .equipment_child {
-        text-align: center;
         border: 1px solid rgb(144, 144, 144);
         padding: 10px;
         margin-bottom: 10px;
-        &:last-child {
-          margin-bottom: 0 !important;
+        &:last-child{
+          margin-bottom: 0;
         }
-
         &.equipment_master_status {
           background: rgba(255, 142, 77, 0.32);
         }
+        .equipment_name {
+          &>div {
+            text-align: center;
+            img {
+              height: 100px;
+              width: 100px;
+            }
+            div {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              p{
+                color: #fff;
+                margin-right: 4px;
+              }
 
-        img {
-          height: 100px;
-          width: 100px;
-        }
-        div {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          p{
-            color: #fff;
-            margin-right: 4px;
-          }
-
-          span{
-            display: inline-block;
-            background: red;
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            &.equipment_active_status{
-              background: #009688;
+              span{
+                display: inline-block;
+                background: red;
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                &.equipment_active_status{
+                  background: #009688;
+                }
+              }
             }
           }
+
         }
       }
 
 
     }
 
+    position: relative;
 
     .line {
       border: 1px solid red;
-      height: 100%;
-      width: 100%;
+      height: 200px;
+      width: 300px;
       position: absolute;
       top: 460px;
-      left: 160px;
-      z-index: 99999;
+      left: 160px
 
     }
 

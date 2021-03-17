@@ -9,6 +9,7 @@ let proto = document.location.protocol
 
 // Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.100:8083')
 Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.190:8080')
+Setting.wsUrl = 'ws://172.21.5.226:9000/ws'
 // if (location.hostname == '172.23.4.31' ||  location.hostname == 'ybtest.xy.in') {
 //   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8081/api/v1.0');
 //   Setting.FORMULA_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8082/dsl-service/v1.0');
