@@ -170,7 +170,7 @@ export default {
         },
         {
           title: '原始数据',
-          width: 220,
+
           key: 'orignData',
         },
       ],
