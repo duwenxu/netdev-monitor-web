@@ -56,6 +56,26 @@
   @padding-menu: 30px;
   @search-placeholder: rgba(120, 127, 161, 1);
 
+  /*home页面——start*/
+  @bg_equipment_master_status: #e0e2e8;
+  .home {
+    color: @font-color-text;
+    .equipment_box {
+      border: 1px solid @border-color-input;
+      background: @bg-color-card;
+    }
+    .equipment_child {
+      border: 1px solid @border-color-input;
+      &.equipment_master_status {
+        background: @bg_equipment_master_status;
+      }
+    }
+  }
+  /*home页面——end*/
+
+
+
+
   .ivu-table .demo-table-info-row td {
     background-color: rgba(70, 107, 255, 0.2) !important; //不变
     color: #fff;
