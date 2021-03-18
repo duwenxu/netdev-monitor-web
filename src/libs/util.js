@@ -41,6 +41,7 @@ export const treeDevice = (data) => {
     data[item].name = data[item].devNo
     data[item].meta.title = data[item].devName
     data[item].meta.icon = "ios-body"
+    data[item].meta.noalive = true
     data[item].meta.hideInMenu = false
     data[item].meta.notCache = true
     if ('subMap' in data[item]) {
@@ -64,6 +65,7 @@ export const treeDevice = (data) => {
     path: '/devices',
     name: 'devices',
     meta: {
+      noalive:true,
       icon: 'ios-browsers',
       title: '设备',
       hideInBread: true,
@@ -512,7 +514,7 @@ export const splitCharacter = (splitStr, str) => {
   for (var i = 1; i < codes.length; i++) {
     str = str.split(codes[i]).join(infoChar);
   }
-  str = str.split(infoChar);
+  str = str.split(tempChar);
   let result = str.filter(v => {
     return v
   });

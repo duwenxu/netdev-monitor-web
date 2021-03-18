@@ -47,10 +47,15 @@
           <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div>
           <Content class="main-view-wrapper ">
-            <div class="dark-page-border" :class="{'content': !noShowBgRouteList.includes($route.name) }" >
-              <keep-alive :include="cacheList">
-                <router-view/>
-              </keep-alive>
+            <div class="dark-page-border" :class="{'content': !noShowBgRouteList.includes($route.name)}">
+              <template v-if="$route.meta.noalive">
+                <router-view :key="key"/>
+              </template>
+              <template v-else>
+                <keep-alive :include="cacheList">
+                  <router-view/>
+                </keep-alive>
+              </template>
             </div>
             <ABackTop :height="100" :bottom="80" :right="50" container=".main-view-wrapper"></ABackTop>
           </Content>
@@ -110,6 +115,9 @@ export default {
     ...mapState({
       theme: state => state.user.theme
     }),
+    key(){
+      return this.$route.path + Math.random();
+    },
     breadCrumbList () {
       let list = this.$store.state.app.breadCrumbList
       list.forEach((item, index) => {
@@ -215,6 +223,7 @@ export default {
           this.tagNavList.splice(1, 1)
         }
       }
+
     },
     handleCollapsedChange (state) {
       this.collapsed = state

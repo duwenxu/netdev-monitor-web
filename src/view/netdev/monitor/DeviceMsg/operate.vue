@@ -174,7 +174,7 @@ export default {
           key: 'orignData',
         },
       ],
-      logs: []
+      logs: [],
     }
   },
   mounted() {
@@ -187,13 +187,6 @@ export default {
     this.logSocket = null
     next()
   },
-  watch: {
-    '$route'(newRoute) {
-      if (!this.paramSocket && !this.logSocket) {
-        this.initWebSocket()
-      }
-    }
-  },
   methods: {
     initWebSocket() { //初始化weosocket
       const wsurl = 'ws://'+this.$xy.SOCKET_URL+'/ws'
@@ -202,9 +195,9 @@ export default {
       this.paramSocket.onopen = this.paramSendMsg
       this.paramSocket.onmessage = this.getParamMsg
       /*-----------------日志--------------*/
-      this.logSocket = new WebSocket(wsurl)
-      this.logSocket.onopen = this.logSendMsg
-      this.logSocket.onmessage = this.getLogMsg
+     this.logSocket = new WebSocket(wsurl)
+     this.logSocket.onopen = this.logSendMsg
+     this.logSocket.onmessage = this.getLogMsg
     },
     /*-----------------设备参数--------------*/
     paramSendMsg() {
@@ -359,7 +352,7 @@ export default {
     /*-----------------日志--------------*/
     logSendMsg() {
       let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.$route.name})
-      this.logSocket.send(obj)
+     this.logSocket.send(obj)
     },
     getLogMsg(frame) {
       let msg = JSON.parse(frame.data)

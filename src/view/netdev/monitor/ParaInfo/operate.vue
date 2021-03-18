@@ -271,7 +271,7 @@
         })
       },
       async getParaStatus(){
-        this.$xy.getParamGroup('0025').then(res=>{
+        this.$xy.getParamGroup('0001').then(res=>{
           this.paraStatus = res;
         })
       },
