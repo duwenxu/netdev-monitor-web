@@ -117,11 +117,11 @@
                                 key: 'ndpaCmdMark',
                                 width: 100
                             },
-                            /*{
+                            {
                                 title: '参数状态',
                                 key: 'ndpaStatus_paraName',
                                 width: 100
-                            },*/
+                            },
                             {
                                 title: '供54所访问',
                                 key: 'ndpaOutterStatus_paraName',
