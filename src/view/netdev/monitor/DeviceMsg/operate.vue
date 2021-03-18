@@ -9,16 +9,16 @@
                 <Col :xs="24" :lg="24" v-if="info.parahowMode == '0024001'">
                   <template v-if="info.paraSpellFmt">
                     <FormItem prop="paraVal">
-                      <span slot="label">{{ info.paraName }}：</span>
+                      <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
                       <Row>
                         <Col :xs="24" :lg="24">
                         <span style="cursor: pointer" @click="changeMode(info)">{{
-                            info.transViewFmt ? info.transViewFmt : '暂无数据'
+                            (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
                           }}&nbsp;&nbsp;<span
                             v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                         </Col>
                         <Col :xs="24" :lg="24" style="display: flex;margin-left: -60px">
-                          <template v-if="info.selected && info.accessRight == '0022003'">
+                          <template v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
                             <template v-for="temp in info.splitArr">
                               <Input v-model.trim="temp.value"  number>
                                 <span  slot="prepend">{{ temp.param }}</span>
@@ -37,16 +37,16 @@
                   </template>
                   <template v-else>
                     <FormItem prop="paraVal" :rules="info.ruleMap">
-                      <span slot="label">{{ info.paraName }}：</span>
+                      <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
                       <Row>
                         <Col :xs="24" :lg="6">
-                        <span style="cursor: pointer" @click="changeMode(info)">{{ info.oldVal ? info.oldVal : '暂无数据' }}&nbsp;&nbsp;<span
+                        <span style="cursor: pointer" @click="changeMode(info)">{{ (info.oldVal != null) ? info.oldVal : '暂无数据' }}&nbsp;&nbsp;<span
                           v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                         </Col>
                         <Col :xs="24" :lg="18" style="display: flex">
-                          <template v-if="info.selected && info.accessRight == '0022003'">
-                            <template
-                              v-if="info.paraDatatype == '0023001' ||info.paraDatatype == '0023002' ||info.paraDatatype == '0023003'">
+                          <template v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+
+                            <template  v-if="info.paraDatatype == '0023001' ||info.paraDatatype == '0023002' ||info.paraDatatype == '0023003'">
                               <template v-if="info.paraValMin || info.paraValMax">
                                 <Poptip trigger="focus" transfer>
                                   <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
@@ -63,10 +63,12 @@
                                   v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
                               </template>
                             </template>
+
                             <template v-else>
                               <Input v-model.trim="info.paraVal" :placeholder="info.paraName"> <span
                                 v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
                             </template>
+
                             <Button type="primary" @click="handleSubmit(info,index)">
                               <Icon type="md-checkmark" size="15"></Icon>
                             </Button>
@@ -81,7 +83,7 @@
                 </Col>
                 <Col :xs="24" :lg="24" v-else>
                   <FormItem prop="paraVal">
-                    <span slot="label">{{ info.paraName }}：</span>
+                    <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
                     <Row>
                       <Col :xs="24" :lg="4">
                         <template v-if="info.oldVal">
@@ -93,7 +95,7 @@
                           <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
                         </template>
                       </Col>
-                      <Col :xs="24" :lg="18" v-if="info.selected && info.accessRight == '0022003'"
+                      <Col :xs="24" :lg="18" v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                            style="display: flex">
                         <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
                           <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{
@@ -136,97 +138,66 @@ export default {
       paramInfo: {datas: []},
       logColumns: [
         {
-          title: '设备类型',
-          key: 'devType',
-        },
-        {
-          title: '设备编号',
-          key: 'devNo',
-        },
-        {
-          title: '时间',
+          title: '日志时间',
+          width: 200,
           key: 'logTime',
-          // render: (h, params) => {
-          //   return h('span', this.$xy.formatDate(params.row.logTime, true))
-          // }
-        },
-        {
-          title: '访问类型',
-          key: 'logAccessType',
-          render: (h, params) => {
-            return h('span', params.row.logAccessType == '0025001' ? '参数' : '接口')
-          }
         },
         {
           title: '访问类型名称',
+          width: 120,
           key: 'logAccessTypeName',
         },
         {
-          title: '操作类型',
-          key: 'logOperType',
-        },
-        {
           title: '操作类型名称',
+          width: 120,
           key: 'logOperTypeName',
         },
         {
-          title: '操作对象',
-          key: 'logOperObj',
-        },
-        {
           title: '命令标识符',
+          width: 120,
           key: 'logCmdMark',
         },
         {
           title: '操作对象名称',
+          width: 200,
           key: 'logOperObjName',
         },
         {
           title: '操作内容',
           key: 'logOperContent',
-        },
-        {
-          title: '操作人',
-          key: 'logUserId',
+
+          tooltip: true,
         },
         {
           title: '原始数据',
+
           key: 'orignData',
         },
       ],
-      logs: []
+      logs: [],
     }
   },
   mounted() {
     this.initWebSocket()
   },
   beforeRouteLeave(to, from, next) {
-    console.error('leave')
     this.paramSocket.close()
     this.logSocket.close()
     this.paramSocket = null
     this.logSocket = null
     next()
   },
-  watch: {
-    '$route'(newRoute) {
-      if (!this.paramSocket && !this.logSocket) {
-        this.initWebSocket()
-      }
-    }
-  },
   methods: {
     initWebSocket() { //初始化weosocket
-      console.log('链接')
       const wsurl = 'ws://'+this.$xy.SOCKET_URL+'/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
       this.paramSocket.onmessage = this.getParamMsg
       /*-----------------日志--------------*/
-      this.logSocket = new WebSocket(wsurl)
-      this.logSocket.onopen = this.logSendMsg
-      this.logSocket.onmessage = this.getLogMsg
+     this.logSocket = new WebSocket(wsurl)
+     this.logSocket.onopen = this.logSendMsg
+     this.logSocket.onmessage = this.getLogMsg
     },
     /*-----------------设备参数--------------*/
     paramSendMsg() {
@@ -234,54 +205,54 @@ export default {
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
-      let arr = [
-        {
-          accessRight: "0022003",
-          devNo: "DEV_Ku/L_A",
-          devType: "0020005",
-          devTypeCode: null,
-          paraCmdMark: "SPAA",
-          paraCode: "SPAA",
-          paraDatatype: "0023002",
-          paraId: 2,
-          paraName: "测试1",
-          paraNo: "998",
-          paraStrLen: null,
-          paraUnit: null,
-          paraVal: "X54.1Y276.2Z445.99",
-          paraValMax: 10,
-          paraValMin: 2,
-          paraValStep: null,
-          paraSpellFmt: '{X}[A]{Y}[B]{Z}[C]',
-          paraViewFmt: 'X[A]-Y[B]-Z[C]',
-          parahowMode: "0024001",
-          spinnerInfoList: null,
-        },
-        {
-          accessRight: "0022003",
-          devNo: "DEV_Ku/L_A",
-          devType: "0020005",
-          devTypeCode: null,
-          paraCmdMark: "SPAB",
-          paraCode: "SPAB",
-          paraDatatype: "0023004",
-          paraId: 2,
-          paraName: "测试2",
-          paraNo: "999",
-          paraStrLen: 5,
-          paraUnit: null,
-          paraVal: "2-3",
-          paraValMax: null,
-          paraValMin: null,
-          paraValStep: null,
-          paraSpellFmt: '[A]{-}[B]',
-          paraViewFmt: 'A[A]-B[B]',
-          parahowMode: "0024001",
-          spinnerInfoList: null,
-        },
-      ]
-      let data = JSON.parse(frame.data)
-      let msg = data.concat(arr)
+      // let arr = [
+      //   {
+      //     accessRight: "0022003",
+      //     devNo: "DEV_Ku/L_A",
+      //     devType: "0020005",
+      //     devTypeCode: null,
+      //     paraCmdMark: "SPAA",
+      //     paraCode: "SPAA",
+      //     paraDatatype: "0023002",
+      //     paraId: 2,
+      //     paraName: "测试1",
+      //     paraNo: "998",
+      //     paraStrLen: null,
+      //     paraUnit: null,
+      //     paraVal: "X54.1Y276.2Z445.99",
+      //     paraValMax: 10,
+      //     paraValMin: 2,
+      //     paraValStep: null,
+      //     paraSpellFmt: '{X}[A]{Y}[B]{Z}[C]',
+      //     paraViewFmt: 'X[A]-Y[B]-Z[C]',
+      //     parahowMode: "0024001",
+      //     spinnerInfoList: null,
+      //   },
+      //   {
+      //     accessRight: "0022003",
+      //     devNo: "DEV_Ku/L_A",
+      //     devType: "0020005",
+      //     devTypeCode: null,
+      //     paraCmdMark: "SPAB",
+      //     paraCode: "SPAB",
+      //     paraDatatype: "0023004",
+      //     paraId: 2,
+      //     paraName: "测试2",
+      //     paraNo: "999",
+      //     paraStrLen: 5,
+      //     paraUnit: null,
+      //     paraVal: "2-3",
+      //     paraValMax: null,
+      //     paraValMin: null,
+      //     paraValStep: null,
+      //     paraSpellFmt: '[A]{-}[B]',
+      //     paraViewFmt: 'A[A]-B[B]',
+      //     parahowMode: "0024001",
+      //     spinnerInfoList: null,
+      //   },
+      // ]
+      let msg = JSON.parse(frame.data)
+      // let msg = data.concat(arr)
       msg.forEach(v => {
         v.selected = false
         if (v.paraSpellFmt) {
@@ -292,16 +263,16 @@ export default {
           v.transViewFmt =  v.paraViewFmt.replace(/\[(.+?)\]/g,function (match,param,offset,string) {
             index++
             v.splitArr.push({param:v.copyFmt.substring(offset-1,offset),value:resultChar[index]})
-            return match = '['+ resultChar[index] +']'
+            return match =  resultChar[index]
           })
         } else {
           v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
           if (v.paraDatatype == '0023001' || v.paraDatatype == '0023002' || v.paraDatatype == '0023003') {
             if (!v.spinnerInfoList) {
               v.paraValStep = Number(v.paraValStep)
-              v.paraVal = Number(v.paraVal)
+              v.paraVal = v.paraVal == null?null : Number(v.paraVal)
               if (v.paraValMin && v.paraValMax) {
-                v.ruleMap = [{required: true, message: '必填'}, {
+                v.ruleMap = [{
                   message: '数值型',
                   trigger: 'blur',
                   pattern: /^(([1-9]\d{0,3})|0)(\.\d{0,2})?$/
@@ -314,7 +285,7 @@ export default {
               }
             }
           } else {
-            v.ruleMap = [{required: true, message: '必填', trigger: 'blur'}, {
+            v.ruleMap = [{
               Length: Number(v.paraStrLen),
               message: '长度为' + v.paraStrLen,
               trigger: 'blur'
@@ -325,7 +296,7 @@ export default {
       this.paramInfo.datas = msg
     },
     changeMode(info) {
-      if (info.paraVal) {
+      if (info.paraVal != null) {
         this.$set(info, 'selected', true)
       } else {
         this.$Message.error('无数据时无法更改，请稍后再试。')
@@ -360,25 +331,28 @@ export default {
       }else{
         obj.paraVal = info.paraVal
       }
-      let {result, success, message} = await editParamValue(obj)
-      if (success) {
-        this.$Notice.success({
-          title: '成功',
-          desc: message,
-          duration: 1
-        })
-      } else {
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
-        })
+      if(obj.paraVal){
+        let {result, success, message} = await editParamValue(obj)
+        if (success) {
+          this.$Notice.success({
+            title: '成功',
+            desc: message,
+            duration: 1
+          })
+        } else {
+          this.$Notice.error({
+            title: '失败',
+            desc: message,
+            duration: 3
+          })
+        }
       }
+
     },
     /*-----------------日志--------------*/
     logSendMsg() {
       let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.$route.name})
-      this.logSocket.send(obj)
+     this.logSocket.send(obj)
     },
     getLogMsg(frame) {
       let msg = JSON.parse(frame.data)
@@ -395,6 +369,5 @@ export default {
        margin-bottom: 10px;
      }
    }
-
  }
 </style>
