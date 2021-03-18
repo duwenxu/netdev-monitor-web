@@ -1,5 +1,3 @@
-import { mapState, mapMutations } from 'vuex'
-
 let mixin = {
   data () {
     return {
@@ -22,31 +20,23 @@ let mixin = {
       this.openHomePage();
     },
   },
-  computed: {
-    ...mapState({
-      // spacecraftWord: state => state.data.spacecraftWord,
-      // spacecraftCode: state => state.data.spacecraftCode,
-      // token: state => state.user.token
-    })
-  },
   mounted () {
     this.connectWs()
     this.openHomePage()
   },
   methods: {
-    ...mapMutations([
-      'removeToken'
-    ]),
+    clearWsStatus() {
+      this.reconnect.currentCount = 0;
+      if (this.reconnect.timer) {
+        clearTimeout(this.reconnect.timer);
+        this.reconnect.timer = null;
+      }
+    },
     connectWs () {
-      this.ws = new WebSocket(`${this.$xy.wsUrl}`)
+      this.ws = new WebSocket(`ws://${this.$xy.SOCKET_URL}/ws`)
       this.ws.onopen = (evt) => {
-        this.reconnect.currentCount = 0
-        if (this.reconnect.timer) {
-          clearTimeout(this.reconnect.timer)
-          this.reconnect.timer = null
-        }
-
         this.connectTag = true;
+        this.clearWsStatus()
         if (this.dataTag) {
           this.sendData();
           this.dataTag = false;
@@ -55,8 +45,7 @@ let mixin = {
       this.ws.onmessage = (evt) => {
         this.onmessage(evt)
       }
-      // this.ws.onerror = this.onError
-      this.ws.onclose = this.onError
+      this.ws.onclose = this.onClose
     },
     onmessage (evt) {
       if (evt.data) {
@@ -77,8 +66,6 @@ let mixin = {
     },
     dealData (info) {
       if (this.$route.name === 'home') {
-        console.warn(44444)
-        console.warn(info)
         this.$xy.vector.$emit("WS_homeInfo", info)
       }
     },
@@ -95,7 +82,7 @@ let mixin = {
         this.sendData()
       }
     },
-    onError () {
+    onClose () {
       if (this.reconnect.currentCount < this.reconnect.allCount) {
         this.reconnect.timer = setTimeout(() => {
           this.reconnect.currentCount++
