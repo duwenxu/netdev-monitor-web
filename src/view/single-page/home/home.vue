@@ -130,7 +130,7 @@
           {shape: 'circle', color: '#009688', description: '正常'},
           {shape: 'circle', color: '#ff1400', description: '中断'},
           {shape: 'circle', color: '#ffbe08', description: '维修'},
-          {shape: 'square', color: '#e0e2e8', description: '主机'},
+          {shape: 'square', color: 'rgba(201, 201, 201, 0.66)', description: '运行'},
         ]
       }
     },
@@ -176,9 +176,8 @@
       judgeMasterAndSlave(device) {
         let status = false
         if (device.masterOrSlave !== null) {
-          if (device.name.substr(0, 1)==="A" && device.masterOrSlave === '0') { // 0 主
-            status = true
-          } else if (device.name.substr(0, 1)==="B" && device.masterOrSlave === '1') { // 1 主
+          if ((device.devDeployType ==="0031002" && device.masterOrSlave === '0')
+            || (device.devDeployType ==="0031003" && device.masterOrSlave === '1')) {
             status = true
           }
         }
@@ -204,6 +203,7 @@
         }
       },
       setWSDate (data, obj) {
+        obj.devDeployType = data.devDeployType /*0031002 主设备运行 0031003 备设备运行*/
         obj.isInterrupt = data.isInterrupt
         obj.workStatus = data.workStatus
         obj.masterOrSlave = data.masterOrSlave
