@@ -12,7 +12,7 @@ let mixin = {
       dataTag: false,
       connectTag: false,
 
-      WSPages: ['home']
+      WSPages: ['home'],
     }
   },
   watch: {
@@ -84,12 +84,13 @@ let mixin = {
     },
     onClose () {
       if (this.reconnect.currentCount < this.reconnect.allCount) {
-        this.reconnect.timer = setTimeout(() => {
-          this.reconnect.currentCount++
-          this.connectWs()
-          this.reconnect.tag = true
-        }, this.reconnect.step)
-      }
+          this.reconnect.timer = setTimeout(() => {
+            this.reconnect.currentCount++
+            this.connectWs()
+            this.reconnect.tag = true
+          }, this.reconnect.step)
+        }
+
     }
   }
 }
