@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
+    import {queryParaInfoPageList,querySubParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -154,6 +154,16 @@
                               width: 100
                             },
                             {
+                              title: '复杂级别',
+                              key: 'ndpaCmplexLevel_paraName',
+                              width: 100
+                            },
+                            {
+                              title: '缺省值',
+                              key: 'ndpaDefaultVal',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
                                 width: 220,
@@ -203,7 +213,6 @@
                                           attrs: {
                                             title: '子参数'
                                           },
-
                                           style: {
                                             marginRight: '15px'
                                           }
@@ -377,7 +386,7 @@
             subParaInfoList(obj) {
               this.$router.push(
                 {
-                  path: '/monitor/SubParaInfo',
+                  path: '/monitor/subParaInfo',
                   query: {
                     ndpaNo: obj.ndpaNo,
                   }

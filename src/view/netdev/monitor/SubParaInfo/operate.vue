@@ -13,6 +13,11 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="上级参数编号" prop="ndpaParentNo">
+            <Input v-model="ParaInfo.ndpaParentNo" placeholder="请输入上级参数编号"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="参数编码" prop="ndpaCode">
             <Input v-model="ParaInfo.ndpaCode" placeholder="请输入参数编码"></Input>
           </FormItem>
@@ -92,13 +97,14 @@
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="供54所访问" prop="ndpaOutterStatus">
-            <Select v-model="ParaInfo.ndpaOutterStatus" clearable   placeholder="请选择是否供54所访问">
-              <Option  v-for='choose in outterStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
-            </Select>
-          </FormItem>
-        </Col>
+        <!--默认 false-->
+<!--        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--          <FormItem label="供54所访问" prop="ndpaOutterStatus">-->
+<!--            <Select v-model="ParaInfo.ndpaOutterStatus" clearable   placeholder="请选择是否供54所访问">-->
+<!--              <Option  v-for='choose in outterStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>-->
+<!--            </Select>-->
+<!--          </FormItem>-->
+<!--        </Col>-->
 
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="字段类型" prop="ndpaAlertPara">
@@ -146,6 +152,23 @@
             <Input v-model="ParaInfo.ndpaDefaultVal" type="textarea" placeholder="请输入缺省值"></Input>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="关联类型" prop="ndpaLinkType" >
+            <Select v-model="ParaInfo.ndpaLinkType" clearable   placeholder="请选择关联类型">
+              <Option  v-for='choose in ndpaLinkTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="关联参数编码" prop="ndpaLinkVal" >
+            <Input v-model="ParaInfo.ndpaLinkVal" type="textarea" placeholder="请输入关联参数编码"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="关联值" prop="ndpaLinkVal" >
+            <Input v-model="ParaInfo.ndpaLinkVal" type="textarea" placeholder="请输入关联值"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -177,11 +200,15 @@
         displayModels:[],
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
+        ndpaLinkTypeList:[],
         rulePro: {
           fmtId: [
             {required: false}
           ],
           ndpaNo: [
+            {required: true, message: '参数编号不能为空', trigger: 'blur'}
+          ],
+          ndpaParentNo: [
             {required: true, message: '参数编号不能为空', trigger: 'blur'}
           ],
           ndpaCode: [
@@ -252,6 +279,15 @@
           ],
           ndpaDefaultVal: [
             {required: false}
+          ],
+          ndpaLinkType: [
+            {required: false}
+          ],
+          ndpaLinkCode: [
+            {required: false}
+          ],
+          ndpaLinkVal: [
+            {required: false}
           ]
         }
       }
@@ -272,6 +308,7 @@
       this.getDisplayModels();
       this.getNdpaAlertLevels();
       this.getNdpaCmplexLevelList();
+      this.getNdpaLinkTypeList();
     },
     methods: {
       async getDevTypes(){
@@ -321,6 +358,11 @@
           this.ndpaCmplexLevelList = res;
         })
       },
+      async getNdpaLinkTypeList(){
+        this.$xy.getParamGroup('0018').then(res=>{
+          this.ndpaLinkTypeList = res;
+        })
+      },
       operateRow(obj) {
         if (obj != null) {
           this.ParaInfo = obj;
@@ -340,6 +382,7 @@
         })
       },
       async save(name) {
+        this.ParaInfo.ndpaOutterStatus ="0003002";
         let data = (this.updateMark) ? editParaInfo(this.ParaInfo) : addParaInfo(this.ParaInfo);
         let {result, success, message} = await data
         let notice = this.$Notice;
