@@ -47,8 +47,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="参数数据类型" prop="ndpaDatatype">
-            <Select v-model="ParaInfo.ndpaDatatype" clearable  placeholder="请选择参数数据类型">
+          <FormItem label="数据类型" prop="ndpaDatatype">
+            <Select v-model="ParaInfo.ndpaDatatype" clearable  placeholder="请选择数据类型">
               <Option  v-for='choose in paraDataTypes' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -135,11 +135,11 @@
             <Input v-model="ParaInfo.ndpaSpellFmt" type="textarea" placeholder="请输入下拉值域"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="数据映射规则" prop="ndpaViewFmt" >
-            <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入数据映射规则"></Input>
-          </FormItem>
-        </Col>
+<!--        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--          <FormItem label="数据映射规则" prop="ndpaViewFmt" >-->
+<!--            <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入数据映射规则"></Input>-->
+<!--          </FormItem>-->
+<!--        </Col>-->
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="参数复杂级别" prop="ndpaCmplexLevel" >
             <Select v-model="ParaInfo.ndpaCmplexLevel" clearable   placeholder="请选择参数复杂级别">
@@ -160,8 +160,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="关联参数编码" prop="ndpaLinkVal" >
-            <Input v-model="ParaInfo.ndpaLinkVal" type="textarea" placeholder="请输入关联参数编码"></Input>
+          <FormItem label="关联参数编码" prop="ndpaLinkCode" >
+            <Input v-model="ParaInfo.ndpaLinkCode" type="textarea" placeholder="请输入关联参数编码"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -227,7 +227,7 @@
             {required: false}
           ],
           ndpaDatatype: [
-            {required: true, message: '参数数据类型不能为空', trigger: 'blur'}
+            {required: true, message: '数据类型不能为空', trigger: 'blur'}
           ],
           ndpaStrLen: [
             {required: false}

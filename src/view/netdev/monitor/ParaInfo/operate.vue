@@ -42,8 +42,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="参数数据类型" prop="ndpaDatatype">
-            <Select v-model="ParaInfo.ndpaDatatype" clearable  placeholder="请选择参数数据类型">
+          <FormItem label="数据类型" prop="ndpaDatatype">
+            <Select v-model="ParaInfo.ndpaDatatype" clearable  placeholder="请选择数据类型">
               <Option  v-for='choose in paraDataTypes' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -200,7 +200,7 @@
             {required: false}
           ],
           ndpaDatatype: [
-            {required: true, message: '参数数据类型不能为空', trigger: 'blur'}
+            {required: true, message: '数据类型不能为空', trigger: 'blur'}
           ],
           ndpaStrLen: [
             {required: false}
@@ -318,6 +318,7 @@
       },
       async getNdpaCmplexLevelList(){
         this.$xy.getParamGroup('0019').then(res=>{
+          res = res.filter(e => e.id!=='0019004')
           this.ndpaCmplexLevelList = res;
         })
       },
