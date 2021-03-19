@@ -57,6 +57,11 @@
                                 width: 150
                             },
                             {
+                              title: '命令标识',
+                              key: 'ndpaCmdMark',
+                              width: 100
+                            },
+                            {
                                 title: '设备类型',
                                 key: 'devType_paraName',
                                 width: 100
@@ -72,7 +77,7 @@
                                 width: 100
                             },
                             {
-                                title: '参数数据类型',
+                                title: '数据类型',
                                 key: 'ndpaDatatype_paraName',
                                 width: 100
                             },
@@ -113,11 +118,6 @@
                                 width: 100
                             },
                             {
-                                title: '命令标识',
-                                key: 'ndpaCmdMark',
-                                width: 100
-                            },
-                            {
                                 title: '参数状态',
                                 key: 'ndpaStatus_paraName',
                                 width: 100
@@ -127,12 +127,13 @@
                                 key: 'ndpaOutterStatus_paraName',
                                 width: 100
                             },
-                            {
-                                title: '数据映射规则',
-                                key: 'ndpaTransRule',
-                                tooltip: true,
-                                width: 100
-                            },
+                            // {
+                            //     title: '数据映射规则',
+                            //     key: 'ndpaTransRule',
+                            //     tooltip: true,
+                            //     tooltip: true,
+                            //     width: 100
+                            // },
                             {
                                 title: '状态上报类型',
                                 key: 'ndpaAlertPara_paraName',
@@ -180,7 +181,7 @@
                                                 title:'编辑'
                                             },
                                             style: {
-                                                marginRight: '10px',
+                                                marginRight: '20px',
                                             },
                                             on: {
                                                 click: () => {
@@ -214,9 +215,9 @@
                                             title: '子参数'
                                           },
                                           style: {
-                                            marginRight: '15px'
-                                          }
-                                          ,
+                                            marginRight: '15px',
+                                            display: rows.row.ndpaCmplexLevel ==="0019003" ? 'inline-block':'none'
+                                          },
                                           on: {
                                             click: () => {
                                               this.subParaInfoList(rows.row)
