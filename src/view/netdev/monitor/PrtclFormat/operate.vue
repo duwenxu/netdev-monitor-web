@@ -3,6 +3,11 @@
         <Form ref="form" :model="PrtclFormat" :rules="rulePro" :label-width="150">
             <Row>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="协议名称" prop="fmtName">
+                            <Input v-model="PrtclFormat.fmtName"  placeholder="请输入协议名称"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
                             <Select clearable placeholder="请选择设备类型" v-model="PrtclFormat.devType">
                               <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
@@ -84,6 +89,9 @@
                 validateList:[],
                 fmtCcTypeList:[],
                 rulePro: {
+                            fmtName: [
+                          {required: true, message: '协议名称不能为空', trigger: 'blur'}
+                        ],
                             devType: [
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
                         ],

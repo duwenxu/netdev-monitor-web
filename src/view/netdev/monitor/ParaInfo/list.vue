@@ -156,7 +156,7 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 150,
+                                width: 220,
                                 fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
@@ -186,11 +186,33 @@
                                             attrs:{
                                                 title:'删除'
                                             },
+                                            style: {
+                                              marginRight: '10px',
+                                            },
                                             on: {
                                                 click: () => {
                                                   this.delete(rows.row.ndpaId)//id需要修改
                                                 }
                                             }
+                                        }),
+                                        h('Button', {
+                                          props: {
+                                            icon: 'md-settings',
+                                            type: 'primary'
+                                          },
+                                          attrs: {
+                                            title: '子参数'
+                                          },
+
+                                          style: {
+                                            marginRight: '15px'
+                                          }
+                                          ,
+                                          on: {
+                                            click: () => {
+                                              this.subParaInfoList(rows.row)
+                                            }
+                                          }
                                         })
                                     ])
                                 }
@@ -350,6 +372,17 @@
                 this.name = ParaInfo == null ? '添加设备参数' : '编辑设备参数'
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', ParaInfo)
+            },
+            //子参数查看
+            subParaInfoList(obj) {
+              this.$router.push(
+                {
+                  path: '/monitor/SubParaInfo',
+                  query: {
+                    ndpaNo: obj.ndpaNo,
+                  }
+                }
+              )
             }
         }
     }
