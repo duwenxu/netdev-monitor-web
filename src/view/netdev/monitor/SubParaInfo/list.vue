@@ -20,9 +20,9 @@
 </template>
 
 <script>
-  import {queryParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
+  import {querySubParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
   import search from '@/components/tables/search'
-  import operateRow from '@/view/netdev/monitor/ParaInfo/operate'
+  import operateRow from './operate'
 
   export default {
     components: {
@@ -42,6 +42,11 @@
           {
             title: '参数编号',
             key: 'ndpaNo',
+            width: 100
+          },
+          {
+            title: '上级参数编号',
+            key: 'ndpaParentNo',
             width: 100
           },
           {
@@ -151,6 +156,31 @@
           {
             title: '显示样式',
             key: 'ndpaViewFmt',
+            width: 100
+          },
+          {
+            title: '复杂级别',
+            key: 'ndpaCmplexLevel_paraName',
+            width: 100
+          },
+          {
+            title: '缺省值',
+            key: 'ndpaDefaultVal',
+            width: 100
+          },
+          {
+            title: '关联类型',
+            key: 'ndpaLinkType_paraName',
+            width: 100
+          },
+          {
+            title: '关联参数编码',
+            key: 'ndpaLinkCode',
+            width: 100
+          },
+          {
+            title: '关联值',
+            key: 'ndpaLinkVal',
             width: 100
           },
           {
@@ -290,8 +320,9 @@
       },
       async doQuery() {
         let searchAll = this.page
+        searchAll.ndpaParentNo = this.$route.query.ndpaNo
         searchAll = Object.assign(searchAll, this.search)
-        let {result, success, message} = await queryParaInfoPageList(searchAll)
+        let {result, success, message} = await querySubParaInfoPageList(searchAll)
         if (success) {
           this.infos = result.records
           this.current = result.current ? result.current : result.current + 1
