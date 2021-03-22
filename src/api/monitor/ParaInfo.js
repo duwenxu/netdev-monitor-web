@@ -14,6 +14,18 @@ export const queryParaInfoPageList = info => {
 }
 
 /**
+ *  查询子参数分页数据
+ */
+export const querySubParaInfoPageList = info => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/paraInfo/subList',
+    method: 'post',
+    data: qs.stringify(info)
+  })
+}
+
+
+/**
  * 查询所有数据
  */
 export const queryParaInfoAllList = info => {

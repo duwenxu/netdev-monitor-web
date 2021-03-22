@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {queryParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
+    import {queryParaInfoPageList,querySubParaInfoPageList, deleteParaInfo} from '@/api/monitor/ParaInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -57,6 +57,11 @@
                                 width: 150
                             },
                             {
+                              title: '命令标识',
+                              key: 'ndpaCmdMark',
+                              width: 100
+                            },
+                            {
                                 title: '设备类型',
                                 key: 'devType_paraName',
                                 width: 100
@@ -72,7 +77,7 @@
                                 width: 100
                             },
                             {
-                                title: '参数数据类型',
+                                title: '数据类型',
                                 key: 'ndpaDatatype_paraName',
                                 width: 100
                             },
@@ -113,11 +118,6 @@
                                 width: 100
                             },
                             {
-                                title: '命令标识',
-                                key: 'ndpaCmdMark',
-                                width: 100
-                            },
-                            {
                                 title: '参数状态',
                                 key: 'ndpaStatus_paraName',
                                 width: 100
@@ -127,12 +127,13 @@
                                 key: 'ndpaOutterStatus_paraName',
                                 width: 100
                             },
-                            {
-                                title: '数据映射规则',
-                                key: 'ndpaTransRule',
-                                tooltip: true,
-                                width: 100
-                            },
+                            // {
+                            //     title: '数据映射规则',
+                            //     key: 'ndpaTransRule',
+                            //     tooltip: true,
+                            //     tooltip: true,
+                            //     width: 100
+                            // },
                             {
                                 title: '状态上报类型',
                                 key: 'ndpaAlertPara_paraName',
@@ -154,9 +155,19 @@
                               width: 100
                             },
                             {
+                              title: '复杂级别',
+                              key: 'ndpaCmplexLevel_paraName',
+                              width: 100
+                            },
+                            {
+                              title: '缺省值',
+                              key: 'ndpaDefaultVal',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
-                                width: 150,
+                                width: 220,
                                 fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
@@ -170,7 +181,7 @@
                                                 title:'编辑'
                                             },
                                             style: {
-                                                marginRight: '10px',
+                                                marginRight: '20px',
                                             },
                                             on: {
                                                 click: () => {
@@ -186,11 +197,32 @@
                                             attrs:{
                                                 title:'删除'
                                             },
+                                            style: {
+                                              marginRight: '10px',
+                                            },
                                             on: {
                                                 click: () => {
                                                   this.delete(rows.row.ndpaId)//id需要修改
                                                 }
                                             }
+                                        }),
+                                        h('Button', {
+                                          props: {
+                                            icon: 'md-settings',
+                                            type: 'primary'
+                                          },
+                                          attrs: {
+                                            title: '子参数'
+                                          },
+                                          style: {
+                                            marginRight: '15px',
+                                            display: rows.row.ndpaCmplexLevel ==="0019003" ? 'inline-block':'none'
+                                          },
+                                          on: {
+                                            click: () => {
+                                              this.subParaInfoList(rows.row)
+                                            }
+                                          }
                                         })
                                     ])
                                 }
@@ -350,6 +382,17 @@
                 this.name = ParaInfo == null ? '添加设备参数' : '编辑设备参数'
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', ParaInfo)
+            },
+            //子参数查看
+            subParaInfoList(obj) {
+              this.$router.push(
+                {
+                  path: '/monitor/subParaInfo',
+                  query: {
+                    ndpaNo: obj.ndpaNo,
+                  }
+                }
+              )
             }
         }
     }
