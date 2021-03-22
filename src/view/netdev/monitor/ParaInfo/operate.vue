@@ -248,7 +248,7 @@
             {required: false}
           ],
           ndpaCmplexLevel: [
-            {required: false}
+            {required: true, message: '参数复杂级别不能为空', trigger: 'blur'}
           ],
           ndpaDefaultVal: [
             {required: false}
