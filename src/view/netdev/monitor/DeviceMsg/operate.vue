@@ -205,54 +205,7 @@ export default {
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
-      // let arr = [
-      //   {
-      //     accessRight: "0022003",
-      //     devNo: "DEV_Ku/L_A",
-      //     devType: "0020005",
-      //     devTypeCode: null,
-      //     paraCmdMark: "SPAA",
-      //     paraCode: "SPAA",
-      //     paraDatatype: "0023002",
-      //     paraId: 2,
-      //     paraName: "测试1",
-      //     paraNo: "998",
-      //     paraStrLen: null,
-      //     paraUnit: null,
-      //     paraVal: "X54.1Y276.2Z445.99",
-      //     paraValMax: 10,
-      //     paraValMin: 2,
-      //     paraValStep: null,
-      //     paraSpellFmt: '{X}[A]{Y}[B]{Z}[C]',
-      //     paraViewFmt: 'X[A]-Y[B]-Z[C]',
-      //     parahowMode: "0024001",
-      //     spinnerInfoList: null,
-      //   },
-      //   {
-      //     accessRight: "0022003",
-      //     devNo: "DEV_Ku/L_A",
-      //     devType: "0020005",
-      //     devTypeCode: null,
-      //     paraCmdMark: "SPAB",
-      //     paraCode: "SPAB",
-      //     paraDatatype: "0023004",
-      //     paraId: 2,
-      //     paraName: "测试2",
-      //     paraNo: "999",
-      //     paraStrLen: 5,
-      //     paraUnit: null,
-      //     paraVal: "2-3",
-      //     paraValMax: null,
-      //     paraValMin: null,
-      //     paraValStep: null,
-      //     paraSpellFmt: '[A]{-}[B]',
-      //     paraViewFmt: 'A[A]-B[B]',
-      //     parahowMode: "0024001",
-      //     spinnerInfoList: null,
-      //   },
-      // ]
       let msg = JSON.parse(frame.data)
-      // let msg = data.concat(arr)
       msg.forEach(v => {
         v.selected = false
         if (v.paraSpellFmt) {
@@ -260,9 +213,13 @@ export default {
           v.splitArr = []
           let resultChar = splitCharacter(v.paraSpellFmt,v.paraVal)
           let index = -1
+          let saveOffset = 0
           v.transViewFmt =  v.paraViewFmt.replace(/\[(.+?)\]/g,function (match,param,offset,string) {
-            index++
-            v.splitArr.push({param:v.copyFmt.substring(offset-1,offset),value:resultChar[index]})
+             let len = param.length
+             let pos = index == -1?0:saveOffset+len+2
+             index++
+             v.splitArr.push({param:v.copyFmt.substring(pos,offset),value:resultChar[index]})
+             saveOffset = offset
             return match =  resultChar[index]
           })
         } else {

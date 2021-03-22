@@ -514,7 +514,7 @@ export const splitCharacter = (splitStr, str) => {
   for (var i = 1; i < codes.length; i++) {
     str = str.split(codes[i]).join(infoChar);
   }
-  str = str.split(tempChar);
+  str = str.split(infoChar);
   let result = str.filter(v => {
     return v
   });
