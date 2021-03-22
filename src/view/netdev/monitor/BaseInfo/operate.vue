@@ -85,6 +85,14 @@
                             </Select>
                           </FormItem>
                         </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="设备使用状态" prop="devUseStatus">
+                            <Select clearable placeholder="请输入设备使用状态" v-model="BaseInfo.devUseStatus">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devUseStatusList'>{{choose.name}}
+                              </Option>
+                            </Select>
+                          </FormItem>
+                        </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
                 <FormItem>
                     <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -112,6 +120,7 @@
               devNetPtclList:[],
               devDeployTypeList:[],
                 validateList:[],
+              devUseStatusList:[],
                 rulePro: {
                             devNo: [
                           {required: true, message: '设备类型不能为空', trigger: 'blur'}
@@ -143,9 +152,12 @@
                         devNetPtcl: [
                               {required: true, message: '网络协议不能为空', trigger: 'blur'}
                          ],
-                  devDeployType: [
-                          {required: true, message: '设备部署类型不能为空', trigger: 'blur'}
-                        ],
+                        devDeployType: [
+                                {required: true, message: '设备部署类型不能为空', trigger: 'blur'}
+                              ],
+                        devUseStatus: [
+                          {required: true, message: '设备使用状态不能为空', trigger: 'blur'}
+                        ]
                 }
             }
         },
@@ -161,6 +173,7 @@
           this.getDeviceCorp();
           this.getDevNetPtclList();
           this.getDevDeployTypeList();
+          this.getDevUseStatusList();
         },
         methods: {
             operateRow (obj) {
@@ -228,6 +241,11 @@
           async getDevDeployTypeList () {
             this.$xy.getParamGroup('0031').then(res => {
               this.devDeployTypeList = res
+            })
+          },
+          async getDevUseStatusList () {
+            this.$xy.getParamGroup('0032').then(res => {
+              this.devUseStatusList = res
             })
           }
         }
