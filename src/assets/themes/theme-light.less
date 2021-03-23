@@ -36,7 +36,8 @@
   @bg-home-user-background,
   @bread-color,
   @divider-color,
-  @main-header
+  @main-header,
+  @bg-home-device
 ) {
   @font-color: rgba(0, 0, 0, 1);
   @color-white: #fff; //不变
@@ -57,24 +58,24 @@
   @search-placeholder: rgba(120, 127, 161, 1);
 
   /*home页面——start*/
-  @bg_equipment_master_status: rgba(201, 201, 201, 0.66);
+  //@bg_equipment_master_status: rgba(201, 201, 201, 0.66);
+  @bg_equipment_master_status: rgba(0,150,136,0.05);
   .home {
     color: @font-color-text;
     .equipment_box {
-      border: 1px solid @border-color-input;
-      background: @bg-color-card;
+      border: 1px solid rgba(111,121,150,0.3);
+
     }
     .equipment_child {
-      border: 1px solid @border-color-input;
+      border: 1px solid rgba(111,121,150,0.3);
+      background: @bg-home-device;
       &.equipment_master_status {
+        border: 1px solid #009688;
         background: @bg_equipment_master_status;
       }
     }
   }
   /*home页面——end*/
-
-
-
 
   .ivu-table .demo-table-info-row td {
     background-color: rgba(70, 107, 255, 0.2) !important; //不变
