@@ -97,7 +97,7 @@ export default {
   data () {
     return {
       noShowBgRouteList: [
-        'home'
+        // 'home'
       ],
       themesStatus: '',
       collapsed: false,

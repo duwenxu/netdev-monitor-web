@@ -4,7 +4,7 @@ let mixin = {
       reconnect: {
         timer: '',
         currentCount: 0,
-        allCount: 200,
+        allCount: 50,
         step: 3000,
         tag: false
       },
@@ -17,7 +17,9 @@ let mixin = {
   },
   watch: {
     $route() {
-      this.openHomePage();
+      if (this.$route.name === 'home') {
+        this.connectTag ? this.sendData() : this.connectWs()
+      }
     },
   },
   mounted () {
@@ -78,19 +80,21 @@ let mixin = {
       }
     },
     openHomePage () {
-      if (this.WSPages.includes(this.$route.name) && this.$route.name === 'home') {
+      if(this.$route.name === 'home') {
         this.sendData()
       }
     },
-    onClose () {
-      if (this.reconnect.currentCount < this.reconnect.allCount) {
+    onClose (event) {
+      this.connectTag = false
+      if (this.$route.name === 'home') {
+        if (this.reconnect.currentCount < this.reconnect.allCount) {
           this.reconnect.timer = setTimeout(() => {
             this.reconnect.currentCount++
             this.connectWs()
             this.reconnect.tag = true
           }, this.reconnect.step)
         }
-
+      }
     }
   }
 }
