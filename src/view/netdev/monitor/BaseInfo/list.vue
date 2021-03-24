@@ -101,6 +101,11 @@
                               width: 100
                             },
                             {
+                              title: '设备使用状态',
+                              key: 'devUseStatus_paraName',
+                              width: 100
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
                                 width: 180,
