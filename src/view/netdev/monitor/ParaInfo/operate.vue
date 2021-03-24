@@ -126,12 +126,12 @@
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="拼装样式" prop="ndpaSpellFmt">
-            <Input v-model="ParaInfo.ndpaSpellFmt" type="textarea" placeholder="请输入下拉值域"></Input>
+            <Input v-model="ParaInfo.ndpaSpellFmt" type="textarea" placeholder="请输入拼装样式"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="数据映射规则" prop="ndpaViewFmt" >
-            <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入数据映射规则"></Input>
+          <FormItem label="显示样式" prop="ndpaViewFmt" >
+            <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入显示样式"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -248,7 +248,7 @@
             {required: false}
           ],
           ndpaCmplexLevel: [
-            {required: false}
+            {required: true, message: '参数复杂级别不能为空', trigger: 'blur'}
           ],
           ndpaDefaultVal: [
             {required: false}
