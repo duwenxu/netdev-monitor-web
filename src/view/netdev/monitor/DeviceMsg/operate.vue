@@ -1,14 +1,17 @@
 <template>
   <div class="device-param">
-    <div style="border: 1px solid #009688;height: 500px;margin-bottom:10px;overflow: auto">
+
+    <div class="order-wrap" v-if="orderDatas.length">
+      <div style="margin-bottom: 5px">命令区</div>
+      <div  style="display: flex;margin-left: 20px;">
+        <Button v-for="(info,index) in orderDatas" @click="save(info,true)"
+                style="margin-right: 5px;background: #009688;color: white">
+          {{ info.paraName }}
+        </Button>
+      </div>
+    </div>
+    <div class="param-wrap" :style="{height:orderDatas.length?400+'px':450+'px'}">
       <Row>
-        <div v-if="orderDatas.length" style="display: flex;margin-top: 24px;margin-left: 20px">
-          <Button type="primary" v-for="(info,index) in orderDatas" @click="save(info)" style="margin-right: 5px">{{
-              info.paraName
-            }}
-          </Button>
-        </div>
-        <Divider v-if="orderDatas.length"/>
         <div v-for="(info,index) in textDatas">
           <Col :xs="24" :lg="6">
             <Row>
@@ -158,7 +161,7 @@
         </div>
       </Row>
     </div>
-    <div style="height: 240px;overflow: auto">
+    <div :style="{height:orderDatas.length?240+'px':300+'px',overflow:'auto'}">
       <Table disabled-hover :columns="logColumns" :data="logs"></Table>
     </div>
   </div>
@@ -313,7 +316,6 @@ export default {
       })
       this.orderDatas = oderArr
       this.textDatas = textArr
-      console.log(this.textDatas)
       this.selectDatas = selectArr
       this.viewDatas = viewArr
     },
@@ -341,6 +343,7 @@ export default {
           }
         })
       }
+      console.error(info)
       if (info.paraVal != null && info.paraVal) {
         this.$set(info, 'selected', true)
       } else {
@@ -422,7 +425,7 @@ export default {
         this.save(info)
       }
     },
-    async save(info) {
+    async save(info, tag) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -439,7 +442,7 @@ export default {
       } else {
         obj.paraVal = info.paraVal
       }
-      if (obj.paraVal) {
+      if (obj.paraVal || tag) {
         let {result, success, message} = await editParamValue(obj)
         if (success) {
           this.$Notice.success({
@@ -447,6 +450,7 @@ export default {
             desc: message,
             duration: 1
           })
+          this.$set(info, 'selected', false)
         } else {
           this.$Notice.error({
             title: '失败',
@@ -455,13 +459,9 @@ export default {
           })
         }
       } else {
-        this.$Notice.error({
-          title: '失败',
-          desc: '参数值为空！',
-          duration: 3
-        })
+        this.$set(info, 'paraVal', info.oldVal)
+        this.$set(info, 'selected', false)
       }
-
     },
     /*-----------------日志--------------*/
     logSendMsg() {
@@ -476,5 +476,22 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style scoped lang="less">
+.order-wrap {
+  border: 1px solid #009688;
+  height: 100px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: auto;
+  margin-bottom: 5px;
+}
+
+.param-wrap {
+  border: 1px solid #009688;
+  //height: 450px;
+  margin-bottom: 10px;
+  overflow: auto;
+  border-radius: 5px;
+  padding: 10px
+}
 </style>
