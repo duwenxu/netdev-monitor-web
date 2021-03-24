@@ -8,9 +8,10 @@ Setting.vector = new Vue()
 let proto = document.location.protocol
 
 // Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.100:8083')
-// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.190:8080')
-Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
-Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:9000')
+Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.184:8080')
+// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
+// Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
+Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.2.184:8888')
 // if (location.hostname == '172.23.4.31' ||  location.hostname == 'ybtest.xy.in') {
 //   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8081/api/v1.0');
 //   Setting.FORMULA_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8082/dsl-service/v1.0');
@@ -40,7 +41,7 @@ Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:9000')
 //   Setting.wsOrder = ('https:' == proto ? '' : 'http://172.21.2.61:8088/criteria/v1.0');
 // }
 
- Setting.getParamGroup = async(parentId) => {
+Setting.getParamGroup = async(parentId) => {
   let params = [];
   await queryParamByParentId(parentId).then(res=>{
     if (res.success) {
@@ -50,27 +51,27 @@ Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:9000')
       }
     }
   })
-   return params;
+  return params;
 },
 
-Setting.formatDate = function(time) {
-  let date=new Date(time);
-  let year=date.getFullYear();
-  let month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
-  let day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
-  let hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
-  let minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
-  let seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
-  return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-},
+  Setting.formatDate = function(time) {
+    let date=new Date(time);
+    let year=date.getFullYear();
+    let month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+    let day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+    let hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+    let minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+    let seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+    return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+  },
 
-Setting.error =   function(title,message) {
-  this.$Notice.error({
-    title: title,
-    desc: message,
-    duration: 3
-  })
-}
+  Setting.error =   function(title,message) {
+    this.$Notice.error({
+      title: title,
+      desc: message,
+      duration: 3
+    })
+  }
 
 Setting.warning =  function(title,message) {
   this.$Notice.warning({
