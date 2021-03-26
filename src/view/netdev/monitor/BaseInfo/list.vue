@@ -108,7 +108,8 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 180,
+                                width: 140,
+                                fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
@@ -121,7 +122,7 @@
                                                 title:'编辑'
                                             },
                                             style: {
-                                                marginRight: '10px',
+                                                marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {

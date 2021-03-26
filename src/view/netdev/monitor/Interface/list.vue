@@ -98,7 +98,7 @@
                                                 title:'编辑'
                                             },
                                             style: {
-                                                marginRight: '10px',
+                                                marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {
@@ -115,7 +115,7 @@
                                                 title:'选择参数'
                                             },
                                             style: {
-                                                marginRight: '10px',
+                                                marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {

@@ -167,7 +167,7 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 220,
+                                width: 180,
                                 fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
@@ -181,7 +181,7 @@
                                                 title:'编辑'
                                             },
                                             style: {
-                                                marginRight: '20px',
+                                                marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {
@@ -198,7 +198,7 @@
                                                 title:'删除'
                                             },
                                             style: {
-                                              marginRight: '10px',
+                                              marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {
@@ -215,7 +215,6 @@
                                             title: '子参数'
                                           },
                                           style: {
-                                            marginRight: '15px',
                                             display: rows.row.ndpaCmplexLevel ==="0019003" ? 'inline-block':'none'
                                           },
                                           on: {
