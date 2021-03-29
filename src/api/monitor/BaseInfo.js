@@ -25,6 +25,17 @@ export const queryBaseInfoAllList = info => {
 }
 
 /**
+ * 切换主备
+ */
+export const changeMaster = info =>{
+  return axios.request({
+        url: xy.Setting.SPACE_URL + '/monitor/baseInfo/changeMaster',
+        method: 'post',
+        data: qs.stringify(info)
+  })
+}
+
+/**
  * 根据ID查询数据
  */
 export const queryBaseInfoItem = id => {

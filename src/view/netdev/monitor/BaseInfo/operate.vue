@@ -9,7 +9,6 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                            <!--<Input v-model="BaseInfo.devType"  placeholder="请输入设备类型"></Input>-->
                           <Select clearable placeholder="请选择设备类型" v-model="BaseInfo.devType">
                             <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
                             </Option>
@@ -93,6 +92,14 @@
                             </Select>
                           </FormItem>
                         </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="设备型号" prop="devSubType">
+                            <Select clearable placeholder="请选择设备型号" v-model="BaseInfo.devSubType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devSubTypeList'>{{choose.name}}
+                              </Option>
+                            </Select>
+                          </FormItem>
+                        </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
                 <FormItem>
                     <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -121,6 +128,7 @@
               devDeployTypeList:[],
                 validateList:[],
               devUseStatusList:[],
+              devSubTypeList:[],
                 rulePro: {
                             devNo: [
                           {required: true, message: '设备类型不能为空', trigger: 'blur'}
@@ -157,7 +165,8 @@
                               ],
                         devUseStatus: [
                           {required: true, message: '设备使用状态不能为空', trigger: 'blur'}
-                        ]
+                        ],
+                        devSubType: [],
                 }
             }
         },
@@ -247,6 +256,16 @@
             this.$xy.getParamGroup('0032').then(res => {
               this.devUseStatusList = res
             })
+          },
+          async refreshDevSubTypeList (devType){
+            let {result, success, message} = await this.$xy.getParamGroup(devType)
+            let subDevType = result.map.remark3
+            if (subDevType!=null&&subDevType.length>=4){
+              let subTypeCode = subDevType.substring(0,4);
+              this.$xy.getParamGroup(subTypeCode).then(res => {
+                this.devSubTypeList = res
+              })
+            }
           }
         }
     }
