@@ -9,7 +9,7 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                          <Select clearable placeholder="请选择设备类型" v-model="BaseInfo.devType">
+                          <Select clearable placeholder="请选择设备类型" @on-change="refreshDevSubTypeList" v-model="BaseInfo.devType">
                             <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
                             </Option>
                           </Select>
@@ -114,6 +114,7 @@
 <script>
 
     import { addBaseInfo, editBaseInfo } from '@/api/monitor/BaseInfo'
+    import { queryParam} from '@/api/admin/sysMenu'
 
     export default {
         name: 'operate',
@@ -258,7 +259,9 @@
             })
           },
           async refreshDevSubTypeList (devType){
-            let {result, success, message} = await this.$xy.getParamGroup(devType)
+            console.log(console.log("saqssssssssssss1          "+ devType))
+            let result = await queryParam(devType)
+            console.log(console.log("saqssssssssssss          "+ result))
             let subDevType = result.map.remark3
             if (subDevType!=null&&subDevType.length>=4){
               let subTypeCode = subDevType.substring(0,4);
