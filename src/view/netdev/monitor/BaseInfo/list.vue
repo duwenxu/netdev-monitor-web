@@ -115,15 +115,15 @@
                                     return h('div', [
                                         h('Button', {
                                           props: {
-                                            icon:'切换使用',
-                                            type: 'primary',
+                                            icon:'ios-checkmark-circle',
+                                            type: 'success',
                                           },
                                           attrs:{
-                                            title:'切换使用'
+                                            title:'切换使用',
+                                            disabled:rows.row.devUseStatus != '0032002'? true:false,
                                           },
                                           style: {
                                             marginRight: '5px',
-                                            display: rows.row.devUseStatus === '0032002'? 'inline-block':'none'
                                           },
                                           on: {
                                             click: () => {
@@ -141,6 +141,7 @@
                                             },
                                             style: {
                                                 marginRight: '5px',
+
                                             },
                                             on: {
                                                 click: () => {
