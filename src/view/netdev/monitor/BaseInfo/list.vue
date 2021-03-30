@@ -106,6 +106,36 @@
                               width: 150
                             },
                             {
+                              title: '备注一描述',
+                              key: 'ndpaRemark1Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注一数据',
+                              key: 'ndpaRemark1Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注二描述',
+                              key: 'ndpaRemark2Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注二数据',
+                              key: 'ndpaRemark2Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注三描述',
+                              key: 'ndpaRemark3Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注三数据',
+                              key: 'ndpaRemark3Data',
+                              width: 120
+                            },
+                            {
                                 title: '操作',
                                 key: 'action',
                                 width: 200,
