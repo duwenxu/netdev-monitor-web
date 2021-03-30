@@ -124,7 +124,6 @@
                                           },
                                           style: {
                                             marginRight: '5px',
-                                            display: rows.row.devUseStatus === '0032002'? 'inline-block':'none'
                                           },
                                           on: {
                                             click: () => {
