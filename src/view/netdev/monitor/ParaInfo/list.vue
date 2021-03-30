@@ -208,14 +208,14 @@
                                         }),
                                         h('Button', {
                                           props: {
-                                            icon: 'md-settings',
-                                            type: 'primary'
+                                            icon: 'ios-settings',
+                                            type: 'success'
                                           },
                                           attrs: {
-                                            title: '子参数'
+                                            title: '子参数',
+                                            disabled:rows.row.ndpaCmplexLevel !== '0019003',
                                           },
                                           style: {
-                                            display: rows.row.ndpaCmplexLevel ==="0019003" ? 'inline-block':'none'
                                           },
                                           on: {
                                             click: () => {
