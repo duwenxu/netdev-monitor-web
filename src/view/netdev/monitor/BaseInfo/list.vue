@@ -120,7 +120,7 @@
                                           },
                                           attrs:{
                                             title:'切换使用',
-                                            disabled:rows.row.devUseStatus != '0032002'? true:false,
+                                            disabled:rows.row.devUseStatus !== '0032002',
                                           },
                                           style: {
                                             marginRight: '5px',

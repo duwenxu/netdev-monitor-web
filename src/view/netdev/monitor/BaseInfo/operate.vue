@@ -84,14 +84,14 @@
                             </Select>
                           </FormItem>
                         </Col>
-                        <Col :xs="20" :sm="16" :md="16" :lg="8">
-                          <FormItem label="设备使用状态" prop="devUseStatus">
-                            <Select clearable placeholder="请输入设备使用状态" v-model="BaseInfo.devUseStatus">
-                              <Option :key="choose.id" :value='choose.value' v-for='choose in devUseStatusList'>{{choose.name}}
-                              </Option>
-                            </Select>
-                          </FormItem>
-                        </Col>
+<!--                        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--                          <FormItem label="设备使用状态" prop="devUseStatus">-->
+<!--                            <Select clearable placeholder="请输入设备使用状态" v-model="BaseInfo.devUseStatus">-->
+<!--                              <Option :key="choose.id" :value='choose.value' v-for='choose in devUseStatusList'>{{choose.name}}-->
+<!--                              </Option>-->
+<!--                            </Select>-->
+<!--                          </FormItem>-->
+<!--                        </Col>-->
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                           <FormItem label="设备型号" prop="devSubType">
                             <Select clearable placeholder="请选择设备型号" v-model="BaseInfo.devSubType">
@@ -114,7 +114,7 @@
 <script>
 
     import { addBaseInfo, editBaseInfo } from '@/api/monitor/BaseInfo'
-    import { queryParam} from '@/api/admin/sysMenu'
+    import { queryParam} from '@/api/admin/sysParam'
 
     export default {
         name: 'operate',
@@ -259,15 +259,16 @@
             })
           },
           async refreshDevSubTypeList (devType){
-            console.log(console.log("saqssssssssssss1          "+ devType))
+            this.devSubTypeList = []
             let result = await queryParam(devType)
-            console.log(console.log("saqssssssssssss          "+ result))
-            let subDevType = result.map.remark3
-            if (subDevType!=null&&subDevType.length>=4){
-              let subTypeCode = subDevType.substring(0,4);
-              this.$xy.getParamGroup(subTypeCode).then(res => {
-                this.devSubTypeList = res
-              })
+            if (result.success && result.code===200){
+              let res = result.result;
+              if (res.remark3!=null && res.remark3.length>=4){
+                let subTypeCode = res.remark3.substring(0,4);
+                this.$xy.getParamGroup(subTypeCode).then(res => {
+                  this.devSubTypeList = res
+                })
+              }
             }
           }
         }
