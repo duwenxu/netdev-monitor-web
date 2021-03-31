@@ -131,7 +131,7 @@
                                                 title: '子接口'
                                             },
                                             style: {
-                                                display: rows.row.itfType ==="0027004" ? 'inline-block':'none'
+                                                display: rows.row.itfType ==="0027004" || rows.row.itfType == '0027005'? 'inline-block':'none'
                                             },
                                             on: {
                                                 click: () => {
