@@ -9,8 +9,7 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                            <!--<Input v-model="BaseInfo.devType"  placeholder="请输入设备类型"></Input>-->
-                          <Select clearable placeholder="请选择设备类型" v-model="BaseInfo.devType">
+                          <Select clearable placeholder="请选择设备类型" @on-change="refreshDevSubTypeList" v-model="BaseInfo.devType">
                             <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
                             </Option>
                           </Select>
@@ -85,12 +84,50 @@
                             </Select>
                           </FormItem>
                         </Col>
+<!--                        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--                          <FormItem label="设备使用状态" prop="devUseStatus">-->
+<!--                            <Select clearable placeholder="请输入设备使用状态" v-model="BaseInfo.devUseStatus">-->
+<!--                              <Option :key="choose.id" :value='choose.value' v-for='choose in devUseStatusList'>{{choose.name}}-->
+<!--                              </Option>-->
+<!--                            </Select>-->
+<!--                          </FormItem>-->
+<!--                        </Col>-->
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
-                          <FormItem label="设备使用状态" prop="devUseStatus">
-                            <Select clearable placeholder="请输入设备使用状态" v-model="BaseInfo.devUseStatus">
-                              <Option :key="choose.id" :value='choose.value' v-for='choose in devUseStatusList'>{{choose.name}}
+                          <FormItem label="设备型号" prop="devSubType">
+                            <Select clearable placeholder="请选择设备型号" v-model="BaseInfo.devSubType">
+                              <Option :key="choose.id" :value='choose.value' v-for='choose in devSubTypeList'>{{choose.name}}
                               </Option>
                             </Select>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注一描述" prop="ndpaRemark1Desc" >
+                            <Input v-model="BaseInfo.devRemark1Desc" type="textarea" placeholder="请输入"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注一数据" prop="ndpaRemark1Data" >
+                            <Input v-model="BaseInfo.devRemark1Data" type="textarea" placeholder="请输入"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注二描述" prop="ndpaRemark2Desc" >
+                            <Input v-model="BaseInfo.devRemark2Desc" type="textarea" placeholder="请输入"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注二数据" prop="ndpaRemark2Data" >
+                            <Input v-model="BaseInfo.devRemark2Data" type="textarea" placeholder="请输入"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注三描述" prop="ndpaRemark3Desc" >
+                            <Input v-model="BaseInfo.devRemark3Desc" type="textarea" placeholder="请输入"></Input>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="备注三数据" prop="ndpaRemark3Data" >
+                            <Input v-model="BaseInfo.devRemark3Data" type="textarea" placeholder="请输入"></Input>
                           </FormItem>
                         </Col>
                 <Col :xs="20" :sm="16" :md="16" :lg="15">
@@ -107,6 +144,7 @@
 <script>
 
     import { addBaseInfo, editBaseInfo } from '@/api/monitor/BaseInfo'
+    import { queryParam} from '@/api/admin/sysParam'
 
     export default {
         name: 'operate',
@@ -121,6 +159,7 @@
               devDeployTypeList:[],
                 validateList:[],
               devUseStatusList:[],
+              devSubTypeList:[],
                 rulePro: {
                             devNo: [
                           {required: true, message: '设备类型不能为空', trigger: 'blur'}
@@ -157,7 +196,26 @@
                               ],
                         devUseStatus: [
                           {required: true, message: '设备使用状态不能为空', trigger: 'blur'}
-                        ]
+                        ],
+                        devSubType: [],
+                        ndpaRemark1Desc: [
+                          {required: false}
+                        ],
+                        ndpaRemark1Data: [
+                          {required: false}
+                        ],
+                        ndpaRemark2Desc: [
+                          {required: false}
+                        ],
+                        ndpaRemark2Data: [
+                          {required: false}
+                        ],
+                        ndpaRemark3Desc: [
+                          {required: false}
+                        ],
+                        ndpaRemark3Data: [
+                          {required: false}
+                        ],
                 }
             }
         },
@@ -247,6 +305,19 @@
             this.$xy.getParamGroup('0032').then(res => {
               this.devUseStatusList = res
             })
+          },
+          async refreshDevSubTypeList (devType){
+            this.devSubTypeList = []
+            let result = await queryParam(devType)
+            if (result.success && result.code===200){
+              let res = result.result;
+              if (res.remark3!=null && res.remark3.length>=4){
+                let subTypeCode = res.remark3.substring(0,4);
+                this.$xy.getParamGroup(subTypeCode).then(res => {
+                  this.devSubTypeList = res
+                })
+              }
+            }
           }
         }
     }

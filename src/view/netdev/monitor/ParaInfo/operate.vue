@@ -146,6 +146,36 @@
             <Input v-model="ParaInfo.ndpaDefaultVal" type="textarea" placeholder="请输入缺省值"></Input>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注一描述" prop="ndpaRemark1Desc" >
+            <Input v-model="ParaInfo.ndpaRemark1Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注一数据" prop="ndpaRemark1Data" >
+            <Input v-model="ParaInfo.ndpaRemark1Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二描述" prop="ndpaRemark2Desc" >
+            <Input v-model="ParaInfo.ndpaRemark2Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" >
+            <Input v-model="ParaInfo.ndpaRemark2Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三描述" prop="ndpaRemark3Desc" >
+            <Input v-model="ParaInfo.ndpaRemark3Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三数据" prop="ndpaRemark3Data" >
+            <Input v-model="ParaInfo.ndpaRemark3Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -252,7 +282,25 @@
           ],
           ndpaDefaultVal: [
             {required: false}
-          ]
+          ],
+          ndpaRemark1Desc: [
+            {required: false}
+          ],
+          ndpaRemark1Data: [
+            {required: false}
+          ],
+          ndpaRemark2Desc: [
+            {required: false}
+          ],
+          ndpaRemark2Data: [
+            {required: false}
+          ],
+          ndpaRemark3Desc: [
+            {required: false}
+          ],
+          ndpaRemark3Data: [
+            {required: false}
+          ],
         }
       }
     },

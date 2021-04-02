@@ -64,7 +64,7 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width: 100
+                                width: 200
                             },
                             {
                                 title: '访问权限',
@@ -125,7 +125,7 @@
                             {
                                 title: '供54所访问',
                                 key: 'ndpaOutterStatus_paraName',
-                                width: 100
+                                width: 150
                             },
                             // {
                             //     title: '数据映射规则',
@@ -137,7 +137,7 @@
                             {
                                 title: '状态上报类型',
                                 key: 'ndpaAlertPara_paraName',
-                                width: 100
+                                width: 150
                             },
                             {
                               title: '报警级别',
@@ -162,7 +162,37 @@
                             {
                               title: '缺省值',
                               key: 'ndpaDefaultVal',
-                              width: 100
+                              width: 150
+                            },
+                            {
+                              title: '备注一描述',
+                              key: 'ndpaRemark1Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注一数据',
+                              key: 'ndpaRemark1Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注二描述',
+                              key: 'ndpaRemark2Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注二数据',
+                              key: 'ndpaRemark2Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注三描述',
+                              key: 'ndpaRemark3Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注三数据',
+                              key: 'ndpaRemark3Data',
+                              width: 120
                             },
                             {
                                 title: '操作',
@@ -208,14 +238,14 @@
                                         }),
                                         h('Button', {
                                           props: {
-                                            icon: 'md-settings',
-                                            type: 'primary'
+                                            icon: 'ios-settings',
+                                            type: 'success'
                                           },
                                           attrs: {
-                                            title: '子参数'
+                                            title: '子参数',
+                                            disabled:rows.row.ndpaCmplexLevel !== '0019003',
                                           },
                                           style: {
-                                            display: rows.row.ndpaCmplexLevel ==="0019003" ? 'inline-block':'none'
                                           },
                                           on: {
                                             click: () => {

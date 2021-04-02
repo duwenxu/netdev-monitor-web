@@ -3,8 +3,8 @@
     <Form ref="form" :model="Interface" :rules="rulePro" :label-width="150">
       <Row>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="设备类型" prop="devType">
-            <Select v-model="Interface.devType" clearable>
+          <FormItem label="设备类型">
+            <Select v-model="Interface.devType"  disabled clearable>
               <Option v-for='choose in devTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -27,8 +27,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="接口类型" prop="itfType">
-            <Select v-model="Interface.itfType" clearable>
+          <FormItem label="接口类型">
+            <Select v-model="Interface.itfType" disabled clearable>
               <Option v-for='choose in devInterList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -86,6 +86,7 @@
                     itfCmdMark:'',
                     itfStatus:'',
                     itfDataFormat:'',
+                    itfParentId: '',
                     itfPagePath:''
                 },
                 validateList: [],
@@ -94,15 +95,9 @@
                 devTypeList:[],    //设备类型
                 prtclList:[],      //协议列表
                 rulePro: {
-                    devType: [
-                        {required: true, message: '设备类型不能为空', trigger: 'blur'}
-                    ],
                     fmtId: [
                         {required: true, type:'number', message: '解析协议不能为空', trigger: 'blur'}
                     ],
-                    /*itfCode: [
-                        {required: true, message: '接口编码不能为空', trigger: 'blur'}
-                    ],*/
                     itfName: [
                         {required: true, message: '接口名称不能为空', trigger: 'blur'}
                     ],
@@ -137,9 +132,10 @@
                 this.getDevTypeList();
                 this.getPrtclList();
             },
-            operateRow(obj) {
-                if (obj != null) {
-                    this.Interface = obj;
+            operateRow(obj,type) {
+                this.Interface = obj;
+                this.Interface.itfType = '0027006'
+                if (type != 'add') {
                     this.updateMark = true
                 } else {
                     this.updateMark = false

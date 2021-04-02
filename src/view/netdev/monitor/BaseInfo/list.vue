@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {queryBaseInfoPageList, deleteBaseInfo,downDevFile} from '@/api/monitor/BaseInfo'
+    import {queryBaseInfoPageList, deleteBaseInfo,downDevFile,changeMaster} from '@/api/monitor/BaseInfo'
     import search from '@/components/tables/search'
     import operateRow from './operate'
 
@@ -38,7 +38,7 @@
                             {
                               title: '设备编号',
                               key: 'devNo',
-                              width: 150
+                              width: 100
                             },
                             {
                                 title: '设备类型',
@@ -56,9 +56,14 @@
                                 width: 100
                             },
                             {
+                              title: '设备使用状态',
+                              key: 'devUseStatus_paraName',
+                              width: 150
+                            },
+                            {
                                 title: '设备所属公司',
                                 key: 'devCorp_paraName',
-                                width: 190
+                                width: 150
                             },
                             {
                                 title: '设备版本',
@@ -73,7 +78,7 @@
                             {
                                 title: '设备内部地址',
                                 key: 'devLocalAddr',
-                                width: 100
+                                width: 150
                             },
                             {
                                 title: '设备端口',
@@ -88,7 +93,7 @@
                             {
                                 title: '设备访间隔时间(毫秒)',
                                 key: 'devIntervalTime',
-                                width: 100
+                                width: 200
                             },
                             {
                               title: '网络协议',
@@ -98,21 +103,64 @@
                             {
                               title: '设备部署类型',
                               key: 'devDeployType_paraName',
-                              width: 100
+                              width: 150
                             },
                             {
-                              title: '设备使用状态',
-                              key: 'devUseStatus_paraName',
-                              width: 100
+                              title: '备注一描述',
+                              key: 'ndpaRemark1Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注一数据',
+                              key: 'ndpaRemark1Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注二描述',
+                              key: 'ndpaRemark2Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注二数据',
+                              key: 'ndpaRemark2Data',
+                              width: 120
+                            },
+                            {
+                              title: '备注三描述',
+                              key: 'ndpaRemark3Desc',
+                              width: 120
+                            },
+                            {
+                              title: '备注三数据',
+                              key: 'ndpaRemark3Data',
+                              width: 120
                             },
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 140,
+                                width: 200,
                                 fixed: 'right',
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
+                                        h('Button', {
+                                          props: {
+                                            icon:'ios-checkmark-circle',
+                                            type: 'success',
+                                          },
+                                          attrs:{
+                                            title:'切换使用',
+                                            disabled:rows.row.devUseStatus !== '0032002',
+                                          },
+                                          style: {
+                                            marginRight: '5px',
+                                          },
+                                          on: {
+                                            click: () => {
+                                              this.changeMaster(rows.row)
+                                            }
+                                          }
+                                        }),
                                         h('Button', {
                                             props: {
                                                 icon:'md-create',
@@ -123,6 +171,7 @@
                                             },
                                             style: {
                                                 marginRight: '5px',
+
                                             },
                                             on: {
                                                 click: () => {
@@ -140,8 +189,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                  console.log('-----------'+rows.row.devNo)
-                                                    this.delete(rows.row.devNo)//id需要修改
+                                                    this.delete(rows.row.devNo)
                                                 }
                                             }
                                         })
@@ -301,6 +349,24 @@
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', BaseInfo)
             },
+          async changeMaster(BaseInfo){
+              let {data, code, msg} = await changeMaster(BaseInfo);
+              let notice = this.$Notice;
+              if (code === 200) {
+                notice.success({
+                  title: '成功',
+                  desc: '设备切换成功！',
+                  duration: 3
+                })
+                this.doQuery();
+              } else {
+                notice.error({
+                  title: '切换失败',
+                  desc: msg,
+                  duration: 3
+                })
+            }
+          },
           initSelect() {
             this.$xy.getParamGroup('0020').then(res => {
               this.searchData[0].data = res
