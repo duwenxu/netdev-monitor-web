@@ -329,7 +329,7 @@
                         params=params+trans.id+",";
                     })
                     //剔除掉最后一个逗号
-                    params = params.substr(0,params.length-1)
+                    //params = params.substr(0,params.length-1)
                 }
                 var devInter = {itfId:this.eventInfos.itfId,
                           itfDataFormat:params};

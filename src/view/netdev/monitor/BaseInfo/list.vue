@@ -334,15 +334,23 @@
             },
             //下载所有设备模型定义文件
             async downFile(){
-                await downDevFile().then(res=>{
-                    let fileName = res.headers.filename;
+                let {data, code, msg} = await downDevFile()
+                let notice = this.$Notice;
+                if (code == 500) {
+                    notice.error({
+                        title: '失败',
+                        desc: msg,
+                        duration: 3
+                    })
+                } else {
+                    let fileName = data.headers.filename;
                     let blob = new Blob([res.data]);
                     let link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
                     link.download = fileName+'.xml';
                     link.click();
                     link.remove();
-                })
+                }
             },
             operate(BaseInfo) {
                 this.name = BaseInfo == null ? '添加设备信息' : '编辑设备信息'
