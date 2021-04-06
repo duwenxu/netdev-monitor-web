@@ -101,16 +101,23 @@
         </Col>
 
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="字段类型" prop="ndpaAlertPara">
-            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
+          <FormItem label="状态上报类型" prop="ndpaAlertPara">
+            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择状态上报类型">
               <Option  v-for='choose in alertParaStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="告警级别" prop="ndpaAlertLevel">
-            <Select v-model="ParaInfo.ndpaAlertLevel" clearable   placeholder="请选择字段类型">
+            <Select v-model="ParaInfo.ndpaAlertLevel" clearable   placeholder="请选择告警级别">
               <Option  v-for='choose in ndpaAlertLevels' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="参数复杂级别" prop="ndpaCmplexLevel" >
+            <Select v-model="ParaInfo.ndpaCmplexLevel" clearable   placeholder="请选择参数复杂级别">
+              <Option  v-for='choose in ndpaCmplexLevelList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
@@ -132,13 +139,6 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="显示样式" prop="ndpaViewFmt" >
             <Input v-model="ParaInfo.ndpaViewFmt" type="textarea" placeholder="请输入显示样式"></Input>
-          </FormItem>
-        </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="参数复杂级别" prop="ndpaCmplexLevel" >
-            <Select v-model="ParaInfo.ndpaCmplexLevel" clearable   placeholder="请选择参数复杂级别">
-              <Option  v-for='choose in ndpaCmplexLevelList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
-            </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">

@@ -261,6 +261,13 @@
                 searchData: [//搜索框根据需要自定义添加
                     {
                       type: 1,
+                      key: 'ndpaCmdMark',
+                      name: '命令标识',
+                      value: '',
+                      placeholder: '命令标识'
+                    },
+                    {
+                      type: 1,
                       key: 'ndpaName',
                       name: '参数名称',
                       value: '',
@@ -274,22 +281,6 @@
                         value: '',
                         data:[] ,
                         placeholder: '设备类型'
-                    },
-                    {
-                      type: 2,
-                      key: 'ndpaAlertPara',
-                      name: '上报类型',
-                      value: '',
-                      data:[] ,
-                      placeholder: '状态上报类型'
-                    },
-                    {
-                      type: 2,
-                      key: 'ndpaAlertLevel',
-                      name: '告警级别',
-                      value: '',
-                      data:[] ,
-                      placeholder: '告警级别'
                     },
 
                 ],
@@ -322,13 +313,7 @@
         methods: {
             initSelect() {
               this.$xy.getParamGroup('0020').then(res => {
-                this.searchData[1].data = res
-              })
-              this.$xy.getParamGroup('0029').then(res => {
                 this.searchData[2].data = res
-              })
-              this.$xy.getParamGroup('0021').then(res => {
-                this.searchData[3].data = res
               })
             },
             rowClassName(row, index) {
