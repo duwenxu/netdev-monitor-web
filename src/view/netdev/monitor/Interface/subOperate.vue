@@ -27,8 +27,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="接口类型" prop="itfType">
-            <Select v-model="Interface.itfType" clearable>
+          <FormItem label="接口类型">
+            <Select v-model="Interface.itfType" disabled clearable>
               <Option v-for='choose in devInterList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
@@ -134,6 +134,7 @@
             },
             operateRow(obj,type) {
                 this.Interface = obj;
+                this.Interface.itfType = '0027006'
                 if (type != 'add') {
                     this.updateMark = true
                 } else {

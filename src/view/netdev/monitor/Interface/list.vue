@@ -45,6 +45,11 @@
                 name: '',
                 columns1: [
                             {
+                              title: '接口名称',
+                              key: 'itfName',
+                              width: 300
+                            },
+                            {
                                 title: '设备类型',
                                 key: 'devType_paraName',
                             },
@@ -60,11 +65,7 @@
                                 title: '接口编码',
                                 key: 'itfCode',
                             },
-                            {
-                                title: '接口名称',
-                                key: 'itfName',
-                                width: 300
-                            },
+
                             {
                                 title: '接口类型',
                                 key: 'itfType_paraName',
@@ -131,7 +132,8 @@
                                                 title: '子接口'
                                             },
                                             style: {
-                                                display: rows.row.itfType ==="0027004" ? 'inline-block':'none'
+                                                marginRight: '5px',
+                                                display: rows.row.itfType ==="0027004" || rows.row.itfType == '0027005'? 'inline-block':'none'
                                             },
                                             on: {
                                                 click: () => {
@@ -327,7 +329,7 @@
                         params=params+trans.id+",";
                     })
                     //剔除掉最后一个逗号
-                    params = params.substr(0,params.length-1)
+                    //params = params.substr(0,params.length-1)
                 }
                 var devInter = {itfId:this.eventInfos.itfId,
                           itfDataFormat:params};
