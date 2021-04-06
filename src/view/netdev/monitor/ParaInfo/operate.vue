@@ -162,7 +162,12 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="备注二数据" prop="ndpaRemark2Data" >
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="ParaInfo.devType==='0020012'">
+            <Select v-model="ParaInfo.ndpaRemark2Data" clearable   placeholder="请选择参数处理类">
+              <Option  v-for='choose in paraCodecList' :value='choose' :key="choose">{{choose}}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-else>
             <Input v-model="ParaInfo.ndpaRemark2Data" type="textarea" placeholder="请输入"></Input>
           </FormItem>
         </Col>
@@ -190,6 +195,8 @@
 <script>
 
   import {addParaInfo, editParaInfo} from '@/api/monitor/ParaInfo'
+  import axios from '@/libs/api.request'
+  import xy from "../../../../libs/url";
 
   export default {
     name: 'operate',
@@ -207,6 +214,7 @@
         displayModels:[],
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
+        paraCodecList:[],
         rulePro: {
           fmtId: [
             {required: false}
@@ -320,6 +328,7 @@
       this.getDisplayModels();
       this.getNdpaAlertLevels();
       this.getNdpaCmplexLevelList();
+      this.getParaCodecList();
     },
     methods: {
       async getDevTypes(){
@@ -368,6 +377,15 @@
         this.$xy.getParamGroup('0019').then(res=>{
           res = res.filter(e => e.id!=='0019004')
           this.ndpaCmplexLevelList = res;
+        })
+      },
+      async getParaCodecList(){
+        axios.request({
+          url: xy.Setting.SPACE_URL + '/monitor/paraInfo/paraCodec',
+          method: 'get'
+        })
+        .then(res=>{
+          this.paraCodecList = res.result;
         })
       },
       operateRow(obj) {
