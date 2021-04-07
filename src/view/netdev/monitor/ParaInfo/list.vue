@@ -82,9 +82,9 @@
                                 width: 100
                             },
                             {
-                                title: '参数长度',
-                                key: 'ndpaStrLen',
-                                width: 100
+                              title: '字节长度',
+                              key: 'ndpaByteLen',
+                              width: 100
                             },
                             {
                                 title: '显示模式',
@@ -113,9 +113,9 @@
                                 width: 100
                             },
                             {
-                                title: '字节长度',
-                                key: 'ndpaByteLen',
-                                width: 100
+                              title: '参数长度',
+                              key: 'ndpaStrLen',
+                              width: 100
                             },
                             {
                                 title: '参数状态',

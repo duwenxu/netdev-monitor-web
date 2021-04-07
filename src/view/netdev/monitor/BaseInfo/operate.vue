@@ -151,7 +151,7 @@
         data () {
             return {
                 updateMark: false,
-                    BaseInfo: {},
+                BaseInfo: {},
               devTypeList:[],
               devStatusList:[],
               devCorpList:[],
