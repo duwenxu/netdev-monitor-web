@@ -7,11 +7,11 @@
     <div class="login-con">
       <div class="login-header">
         <Row>
-          <Col :xs="3" :sm="3" :lg="3" :md="3">
+         <!-- <Col :xs="3" :sm="3" :lg="3" :md="3">
             <img class="img_pic" src="../../../assets/images/login/logo.png" width="32" height="35"/>
-          </Col>
+          </Col>-->
           <Col :xs="21" :sm="21" :lg="21" :md="21">
-            <span class="pre_name">星邑空间</span>
+            <span class="pre_name">中国电科</span>
             <span class="middle_name"> | </span>
             <span class="last_name"> 网络设备监控</span>
           </Col>
