@@ -82,10 +82,11 @@ export const deleteBaseInfo = id => {
 /**
  * 下载所有设备的模型定义文件
  */
-export const downDevFile = () => {
+export const downDevFile = (info) => {
   return axios.request({
     url: xy.Setting.SPACE_URL + '/monitor//baseInfo/downDevFile',
     method: 'post',
+    data: qs.stringify(info),
     responseType: 'blob'
   })
 }
