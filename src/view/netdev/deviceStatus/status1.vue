@@ -28,7 +28,7 @@
     <template v-for="equipment in equipments">
       <template v-if="equipment.childList.length">
         <div class="equipment_box" :key="equipment.devNo"
-           :style="devicePosition(equipment)">
+             :style="devicePosition(equipment)">
           <div class="equipment_parent">
             {{equipment.name}}
           </div>
@@ -45,7 +45,7 @@
               </div>
             </div>
           </template>
-      </div>
+        </div>
       </template>
       <template v-else>
         <div class="equipment_box equipment_child" :key="equipment.devNo"
@@ -73,8 +73,10 @@
 </template>
 
 <script>
+  import mixin from "./websocket";
+
   export default {
-    name: 'home',
+    mixins: [mixin],
     components: {
     },
     data () {
@@ -117,7 +119,7 @@
         },
         equipments:[
           {devNo: '5', name: '冗余变频器', childList: [
-            /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
+              /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
               {devNo: '8', name: '切换单元', isInterrupt:'0', workStatus: '1', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '6', name: 'A变频器', isInterrupt:'1', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 3}, //0是主用
               {devNo: '7', name: 'B变频器', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 3}, //1是主用
@@ -144,12 +146,12 @@
         ]
       }
     },
-    created() {
-      this.$xy.vector.$on('WS_homeInfo', this.getWSData)
-    },
-    beforeDestroy() {
-      this.$xy.vector.$off('WS_homeInfo', this.getWSData)
-    },
+    // created() {
+    //   this.$xy.vector.$on('WS_homeInfo', this.getWSData)
+    // },
+    // beforeDestroy() {
+    //   this.$xy.vector.$off('WS_homeInfo', this.getWSData)
+    // },
     mounted () {
     },
     methods: {
@@ -229,9 +231,6 @@
   .home {
     position: relative;
     height: calc(~"100vh - 180px");
-    /*border: 1px solid red;*/
-    /*margin: 20px;*/
-
     .equipment_box {
       position: absolute;
       top: 0;

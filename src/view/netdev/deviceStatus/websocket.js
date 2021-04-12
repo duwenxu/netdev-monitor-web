@@ -15,13 +15,6 @@ let mixin = {
       WSPages: ['home'],
     }
   },
-  watch: {
-    $route() {
-      if (this.$route.name === 'home') {
-        this.connectTag ? this.sendData() : this.connectWs()
-      }
-    },
-  },
   mounted () {
     this.connectWs()
     this.openHomePage()
@@ -58,9 +51,7 @@ let mixin = {
       }
     },
     dealData (info) {
-      if (this.$route.name === 'home') {
-        // this.$xy.vector.$emit("WS_homeInfo", info)
-      }
+      this.$xy.vector.$emit("WS_Info", info)
     },
     sendData(){
       if (this.connectTag) {
@@ -71,20 +62,16 @@ let mixin = {
       }
     },
     openHomePage () {
-      if(this.$route.name === 'home') {
-        this.sendData()
-      }
+      this.sendData()
     },
     onClose (event) {
       this.connectTag = false
-      if (this.$route.name === 'home') {
-        if (this.reconnect.currentCount < this.reconnect.allCount) {
-          this.reconnect.timer = setTimeout(() => {
-            this.reconnect.currentCount++
-            this.connectWs()
-            this.reconnect.tag = true
-          }, this.reconnect.step)
-        }
+      if (this.reconnect.currentCount < this.reconnect.allCount) {
+        this.reconnect.timer = setTimeout(() => {
+          this.reconnect.currentCount++
+          this.connectWs()
+          this.reconnect.tag = true
+        }, this.reconnect.step)
       }
     }
   }
