@@ -13,7 +13,7 @@
     <div class="param-wrap" :style="{height:orderDatas.length?400+'px':450+'px'}">
       <Row>
         <div v-for="(info,index) in textDatas">
-          <Col :xs="24" :lg="6">
+          <Col :xs="24" :xxl="6"  :xl="8" :lg="12" :sm="24">
             <Row>
               <Col :xs="11" :lg="11">
                 <div style="text-align: right">
@@ -70,7 +70,7 @@
           </Col>
         </div>
         <div v-for="(info,index) in selectDatas">
-          <Col :xs="24" :lg="6">
+          <Col :xs="24" :xxl="6"  :xl="8" :lg="12" :sm="24">
             <Row>
               <Col :xs="11" :lg="11">
                 <div style="text-align: right">
@@ -108,7 +108,7 @@
           </Col>
         </div>
         <div v-for="(info,index) in viewDatas">
-          <Col :xs="24" :lg="6">
+          <Col :xs="24" :xxl="6"  :xl="8" :lg="12" :sm="24">
             <Row>
               <Col :xs="11" :lg="11">
                 <div style="text-align: right">

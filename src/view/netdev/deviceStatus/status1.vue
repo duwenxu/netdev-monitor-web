@@ -76,6 +76,7 @@
   import mixin from "../../../components/common/websocket";
 
   export default {
+    name: 'home',
     mixins: [mixin],
     components: {
     },
@@ -228,102 +229,6 @@
 </script>
 
 <style lang="less" scoped>
-  .home {
-    position: relative;
-    height: calc(~"100vh - 180px");
-    .equipment_box {
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding: 15px 15px;
-      width: 180px;
-    }
-    .equipment_parent {
-      margin-bottom: 5px;
-      text-align: center;
-    }
-    .equipment_child {
-      text-align: center;
-      padding: 10px;
-      margin-bottom: 10px;
-      &:last-child {
-        margin-bottom: 0 !important;
-      }
-      .device_img {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-        /*width: 100px;*/
-        /*border: 1px solid red;*/
+  @import "./status.less";
 
-        img {
-          height: 70px;
-          width: 70px;
-          /*border: 1px solid red;*/
-        }
-      }
-
-
-      .device_title {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-        span{
-          display: inline-block;
-          background: #ccc;
-          height: 20px;
-          width: 20px;
-          border-radius: 50%;
-        }
-      }
-    }
-
-    .line {
-      height: 100%;
-      width: 100%;
-      svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
-    }
-
-    .legend {
-      position: absolute;
-      top: 0;
-      right: 0;
-      .legend_status {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 10px;
-
-        &:last-child{
-          margin-bottom: 0;
-          span {
-            border: 1px solid;
-          }
-        }
-        span {
-          display: inline-block;
-          background: #ccc;
-          height: 20px;
-          width: 20px;
-          margin-right: 5px;
-        }
-        .circle {
-          border-radius: 50%;
-        }
-        .square {
-
-        }
-      }
-
-    }
-  }
 </style>

@@ -233,15 +233,13 @@
   .home {
     position: relative;
     height: calc(~"100vh - 180px");
-    /*border: 1px solid red;*/
-    /*margin: 20px;*/
 
     .equipment_box {
       position: absolute;
       top: 0;
       left: 0;
       padding: 15px 15px;
-      width: 180px;
+      width: 170px;
     }
     .equipment_parent {
       margin-bottom: 5px;
@@ -260,13 +258,9 @@
         justify-content: center;
         align-items: center;
         height: 100px;
-        /*width: 100px;*/
-        /*border: 1px solid red;*/
-
         img {
           height: 70px;
           width: 70px;
-          /*border: 1px solid red;*/
         }
       }
 
@@ -300,7 +294,7 @@
 
     .legend {
       position: absolute;
-      top: 0;
+      bottom: 0;
       right: 0;
       .legend_status {
         display: flex;
