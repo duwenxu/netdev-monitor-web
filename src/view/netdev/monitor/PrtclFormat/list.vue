@@ -47,17 +47,17 @@
             {
               title: '设备类型',
               key: 'devType_paraName',
-              width: 100
+              width: 120
             },
             {
               title: '查询关键字',
               key: 'fmtSkey',
-              width: 130
+              width: 110
             },
             {
               title: '控制关键字',
               key: 'fmtCkey',
-              width: 120
+              width: 110
             },
             {
               title: '控制响应关键字',
@@ -72,7 +72,7 @@
             {
               title: '查询响应条数',
               key: 'fmtScNum',
-              width: 100
+              width: 120
             },
             {
               title: '控制响应条数',
@@ -82,7 +82,7 @@
             {
               title: '格式处理类',
               key: 'fmtHandlerClass',
-              width: 120
+              width: 200
             },
 
             // {
@@ -111,7 +111,7 @@
                       title: '编辑'
                     },
                     style: {
-                      marginRight: '10px',
+                      marginRight: '5px',
                     },
                     on: {
                       click: () => {

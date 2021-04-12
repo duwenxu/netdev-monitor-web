@@ -1,125 +1,167 @@
 <template>
   <div class="device-param">
-    <div style="border: 1px solid #009688;height: 500px;margin-bottom:10px;overflow: auto">
+
+    <div class="order-wrap" v-if="orderDatas.length">
+      <div style="margin-bottom: 5px">命令区</div>
+      <div  style="display: flex;margin-left: 20px;">
+        <Button v-for="(info,index) in orderDatas" @click="save(info,true)"
+                style="margin-right: 5px;background: #009688;color: white">
+          {{ info.paraName }}
+        </Button>
+      </div>
+    </div>
+    <div class="param-wrap" :style="{height:orderDatas.length?400+'px':450+'px'}">
       <Row>
-        <div v-for="(info,index) in paramInfo.datas">
-          <Col :xs="24" :lg="8">
-            <Form ref="formValidate" :model="info" :label-width="180">
-              <Row>
-                <Col :xs="24" :lg="24" v-if="info.parahowMode == '0024001'">
-                  <template v-if="info.paraSpellFmt">
-                    <FormItem prop="paraVal">
-                      <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
-                      <Row>
-                        <Col :xs="24" :lg="24">
-                        <span style="cursor: pointer" @click="changeMode(info)">{{
-                            (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
-                          }}&nbsp;&nbsp;<span
-                            v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
-                        </Col>
-                        <Col :xs="24" :lg="24" style="display: flex;margin-left: -60px">
-                          <template v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
-                            <template v-for="temp in info.splitArr">
-                              <Input v-model.trim="temp.value"  number>
-                                <span  slot="prepend">{{ temp.param }}</span>
-                              </Input>
-                            </template>
-                            <Button type="primary" @click="handleSubmit(info,index)">
-                              <Icon type="md-checkmark" size="15"></Icon>
-                            </Button>
-                            <Button type="default" @click="close(info)">
-                              <Icon type="md-close" size="15"></Icon>
-                            </Button>
-                          </template>
-                        </Col>
-                      </Row>
-                    </FormItem>
+        <div v-for="(info,index) in textDatas">
+          <Col :xs="24" :lg="6">
+            <Row>
+              <Col :xs="11" :lg="11">
+                <div style="text-align: right">
+                  <span style="color: red;"
+                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                </div>
+              </Col>
+
+              <Col :xs="13" :lg="13">
+                          <span style="cursor: pointer"
+                                @click="changeMode(info)">{{
+                              (info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'
+                            }}&nbsp;&nbsp;
+                            <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+              </Col>
+              <template v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                <Col :xs="16" :lg="16" push="4" style="display: flex">
+                  <template v-if="info.paraSimpleDatatype == 0">
+                    <template v-if="info.paraValMin || info.paraValMax">
+                      <Poptip trigger="focus" transfer>
+                        <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
+                                     :step='info.paraValStep' @on-blur="textValid(info)"></InputNumber>
+                        <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
+                               :placeholder="info.paraName" @on-blur="textValid(info)" number>
+                          <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                        </Input>
+                        <div slot="content">下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}</div>
+                      </Poptip>
+                    </template>
+                    <template v-else>
+                      <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number> <span
+                        v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
+                    </template>
                   </template>
                   <template v-else>
-                    <FormItem prop="paraVal" :rules="info.ruleMap">
-                      <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
-                      <Row>
-                        <Col :xs="24" :lg="6">
-                        <span style="cursor: pointer" @click="changeMode(info)">{{ (info.oldVal != null) ? info.oldVal : '暂无数据' }}&nbsp;&nbsp;<span
-                          v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
-                        </Col>
-                        <Col :xs="24" :lg="18" style="display: flex">
-                          <template v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
-
-                            <template  v-if="info.paraDatatype == '0023001' ||info.paraDatatype == '0023002' ||info.paraDatatype == '0023003'">
-                              <template v-if="info.paraValMin || info.paraValMax">
-                                <Poptip trigger="focus" transfer>
-                                  <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                               :step='info.paraValStep'></InputNumber>
-                                  <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
-                                         :placeholder="info.paraName" number>
-                                    <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
-                                  </Input>
-                                  <div slot="content">下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}</div>
-                                </Poptip>
-                              </template>
-                              <template v-else>
-                                <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number> <span
-                                  v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
-                              </template>
-                            </template>
-
-                            <template v-else>
-                              <Input v-model.trim="info.paraVal" :placeholder="info.paraName"> <span
-                                v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
-                            </template>
-
-                            <Button type="primary" @click="handleSubmit(info,index)">
-                              <Icon type="md-checkmark" size="15"></Icon>
-                            </Button>
-                            <Button type="default" @click="close(info)">
-                              <Icon type="md-close" size="15"></Icon>
-                            </Button>
-                          </template>
-                        </Col>
-                      </Row>
-                    </FormItem>
+                    <Input v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)">
+                      <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                    </Input>
                   </template>
+                  <Button type="primary" @click="handleSubmit(info)" size="small">
+                    <Icon type="md-checkmark" size="15"></Icon>
+                  </Button>
+                  <Button type="default" @click="close(info)" size="small">
+                    <Icon type="md-close" size="15"></Icon>
+                  </Button>
                 </Col>
-                <Col :xs="24" :lg="24" v-else>
-                  <FormItem prop="paraVal">
-                    <span slot="label"><span style="color: red;" v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>{{ info.paraName }}：</span>
-                    <Row>
-                      <Col :xs="24" :lg="4">
-                        <template v-if="info.oldVal">
-                          <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
-                            <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
-                          </div>
-                        </template>
-                        <template v-else>
-                          <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
-                        </template>
-                      </Col>
-                      <Col :xs="24" :lg="18" v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
-                           style="display: flex">
-                        <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
-                          <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{
-                              item.name
-                            }}
-                          </Option>
-                        </Select>
-                        <Button type="primary" @click="handleSubmit(info,index)">
-                          <Icon type="md-checkmark" size="15"></Icon>
-                        </Button>
-                        <Button type="default" style="margin-left: 1px" @click="close(info)">
-                          <Icon type="md-close" size="15"></Icon>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </FormItem>
+                <Col :xs="16" :lg="16" push="4">
+                  <span v-if="info.errorMsg" style="color: red;font-size: 12px">{{ info.errorMsg }}</span>
                 </Col>
-              </Row>
-            </Form>
+              </template>
+              <Col :xs="24" :lg="24">&nbsp;</Col>
+            </Row>
+          </Col>
+        </div>
+        <div v-for="(info,index) in selectDatas">
+          <Col :xs="24" :lg="6">
+            <Row>
+              <Col :xs="11" :lg="11">
+                <div style="text-align: right">
+                  <span style="color: red;"
+                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                </div>
+              </Col>
+              <Col :xs="13" :lg="13">
+                <template v-if="info.oldVal">
+                  <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
+                    <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                  </div>
+                </template>
+                <template v-else>
+                  <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
+                </template>
+              </Col>
+              <Col :xs="24" :lg="24"
+                   v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
+                   style="display: flex">
+                <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
+                  <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
+                  </Option>
+                </Select>
+                <Button type="primary" @click="handleSubmit(info)" size="small">
+                  <Icon type="md-checkmark" size="15"></Icon>
+                </Button>
+                <Button type="default" style="margin-left: 1px" @click="close(info)" size="small">
+                  <Icon type="md-close" size="15"></Icon>
+                </Button>
+              </Col>
+              <Col :xs="24" :lg="24">&nbsp;</Col>
+            </Row>
+          </Col>
+        </div>
+        <div v-for="(info,index) in viewDatas">
+          <Col :xs="24" :lg="6">
+            <Row>
+              <Col :xs="11" :lg="11">
+                <div style="text-align: right">
+                  <span style="color: red;"
+                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                </div>
+              </Col>
+              <Col :xs="13" :lg="13">
+                      <span style="cursor: pointer" @click="changeMode(info)">{{
+                          (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
+                        }}&nbsp;&nbsp;<span
+                          v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+              </Col>
+              <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                <Col :xs="24" :lg="24">
+                  <template v-for="temp in info.splitArr">
+                    <Col :xs="info.splitArr.length<=2?8:6" :lg="info.splitArr.length<=2?8:6">
+                      <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
+                        <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
+                        </Option>
+                        <span slot="prefix">{{ temp.param }}</span>
+                      </Select>
+                      <template v-else>
+                        <Poptip v-if="temp.paraValMin || temp.paraValMax" trigger="focus" transfer>
+                          <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
+                            <span slot="prefix">{{ temp.param }}</span>
+                          </Input>
+                          <div slot="content">下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}</div>
+                        </Poptip>
+                        <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
+                          <span slot="prefix">{{ temp.param }}</span>
+                        </Input>
+                        <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
+                      </template>
+                    </Col>
+                  </template>
+                  <Button type="primary" @click="handleSubmit(info)" size="small"
+                          style="margin-right:1px;margin-top: 4px">
+                    <Icon type="md-checkmark" size="15"></Icon>
+                  </Button>
+                  <Button type="default" @click="close(info)" size="small" style="margin-top: 4px">
+                    <Icon type="md-close" size="15"></Icon>
+                  </Button>
+                </Col>
+              </div>
+              <Col :xs="24" :lg="24">&nbsp;</Col>
+            </Row>
           </Col>
         </div>
       </Row>
     </div>
-    <div style="height: 240px;overflow: auto">
+    <div :style="{height:orderDatas.length?240+'px':300+'px',overflow:'auto'}">
       <Table disabled-hover :columns="logColumns" :data="logs"></Table>
     </div>
   </div>
@@ -132,10 +174,15 @@ import {splitCharacter} from '@/libs/util'
 export default {
   data() {
     return {
-      value11: 1,
       paramSocket: null,
       logSocket: null,
-      paramInfo: {datas: []},
+      validTag: false,
+      oldDatas: [],
+      viewDatas: [],
+      selectDatas: [],
+      textDatas: [],
+      orderDatas: [],
+      paramType: ['0019002', '0019003'],
       logColumns: [
         {
           title: '日志时间',
@@ -189,15 +236,15 @@ export default {
   },
   methods: {
     initWebSocket() { //初始化weosocket
-      const wsurl = 'ws://'+this.$xy.SOCKET_URL+'/ws'
+      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
       this.paramSocket.onmessage = this.getParamMsg
       /*-----------------日志--------------*/
-     this.logSocket = new WebSocket(wsurl)
-     this.logSocket.onopen = this.logSendMsg
-     this.logSocket.onmessage = this.getLogMsg
+      this.logSocket = new WebSocket(wsurl)
+      this.logSocket.onopen = this.logSendMsg
+      this.logSocket.onmessage = this.getLogMsg
     },
     /*-----------------设备参数--------------*/
     paramSendMsg() {
@@ -206,89 +253,196 @@ export default {
     },
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
+      this.editData(msg)
+    },
+    editData(msg) {
+      let textArr = [], viewArr = [], selectArr = [], oderArr = []
       msg.forEach(v => {
         v.selected = false
-        if (v.paraSpellFmt) {
-          v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-          v.splitArr = []
-          let resultChar = splitCharacter(v.paraSpellFmt,v.paraVal)
-          let index = -1
-          let saveOffset = 0
-          v.transViewFmt =  v.paraViewFmt.replace(/\[(.+?)\]/g,function (match,param,offset,string) {
-             let len = param.length
-             let pos = index == -1?0:saveOffset+len+2
-             index++
-             v.splitArr.push({param:v.copyFmt.substring(pos,offset),value:resultChar[index]})
-             saveOffset = offset
-            return match =  resultChar[index]
-          })
+        v.errorMsg = ''
+        if (v.accessRight == '0022005') {
+          oderArr.push(v)
         } else {
-          v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
-          if (v.paraDatatype == '0023001' || v.paraDatatype == '0023002' || v.paraDatatype == '0023003') {
-            if (!v.spinnerInfoList) {
-              v.paraValStep = Number(v.paraValStep)
-              v.paraVal = v.paraVal == null?null : Number(v.paraVal)
-              if (v.paraValMin && v.paraValMax) {
-                v.ruleMap = [{
-                  message: '数值型',
-                  trigger: 'blur',
-                  pattern: /^(([1-9]\d{0,3})|0)(\.\d{0,2})?$/
-                }, {type: 'number', min: Number(v.paraValMin), message: '不能小于' + v.paraValMin, trigger: 'blur'}, {
-                  type: 'number',
-                  max: Number(v.paraValMax),
-                  message: '不能大于' + v.paraValMax,
-                  trigger: 'blur'
-                }]
+          if (v.parahowMode == '0024001') {//数字类型Number转换
+            if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
+              v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
+              v.splitArr = []
+              let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
+              let index = -1
+              let saveOffset = 0
+              v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+                let len = param.length
+                let pos = index == -1 ? 0 : saveOffset + len + 2
+                index++
+                v.splitArr.push({
+                  param: v.copyFmt.substring(pos, offset),
+                  paraVal: resultChar[index],
+                  name: param,
+                  oldVal: JSON.parse(JSON.stringify(resultChar[index])),
+                  errorMsg: '',
+                  paraValMax: null,
+                  paraValMin: null,
+                  paraValStep: null,
+                  paraSimpleDatatype: v.paraSimpleDatatype,
+                  paraStrLen: v.paraStrLen,
+                })
+                saveOffset = offset
+                return match = resultChar[index]
+              })
+              if (v.subParaList.length) {
+                v.subParaList.forEach(n => {
+                  v.splitArr.forEach(x => {
+                    if (n.paraCode == x.name) {
+                      if (n.spinnerInfoList) {
+                        x.subList = n.spinnerInfoList || []
+                      }
+                    }
+                  })
+                })
               }
+              viewArr.push(v)
+            } else {
+              if (v.paraSimpleDatatype == 0) {
+                v.paraValStep = Number(v.paraValStep)
+                v.paraVal = (v.paraVal == null || !v.paraVal) ? null : Number(v.paraVal)
+              }
+              textArr.push(v)
             }
           } else {
-            v.ruleMap = [{
-              Length: Number(v.paraStrLen),
-              message: '长度为' + v.paraStrLen,
-              trigger: 'blur'
-            }]
+            selectArr.push(v)
           }
         }
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
       })
-      this.paramInfo.datas = msg
+      this.orderDatas = oderArr
+      this.textDatas = textArr
+      this.selectDatas = selectArr
+      this.viewDatas = viewArr
     },
     changeMode(info) {
-      if (info.paraVal != null) {
+      this.validTag = false
+      if (info.subParaList.length) {
+        let obj = {}
+        info.subParaList.forEach(v => {
+          info.splitArr.forEach(x => {
+            if (v.subParaLinkVal == x.paraVal && v.subParaLinkCode == x.name) {
+              obj = v
+            }
+          })
+        })
+        info.splitArr.forEach(v => {
+          if (obj.paraCode == v.name) {
+            this.$set(v, 'paraValMax', Number(obj.paraValMax))
+            this.$set(v, 'paraValMin', Number(obj.paraValMin))
+            this.$set(v, 'paraValStep', Number(obj.paraValStep))
+            this.$set(v, 'paraSimpleDatatype', obj.paraSimpleDatatype)
+            this.$set(v, 'paraStrLen', Number(obj.paraStrLen))
+            if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
+              this.$set(v, 'paraVal', Number(v.paraVal))
+            }
+          }
+        })
+      }
+      console.error(info)
+      if (info.paraVal != null && info.paraVal) {
         this.$set(info, 'selected', true)
       } else {
         this.$Message.error('无数据时无法更改，请稍后再试。')
       }
     },
     close(info) {
+      if (!info.paraSpellFmt) {
+        this.$set(info, 'paraVal', info.oldVal)
+        this.$set(info, 'errorMsg', '')
+      } else {
+        info.splitArr.forEach(v => {
+          this.$set(v, 'errorMsg', '')
+          this.$set(v, 'paraVal', v.oldVal)
+        })
+      }
       this.$set(info, 'selected', false)
     },
-    handleSubmit(info, index) {
-      this.$refs['formValidate'][index].validate((valid) => {
-        if (valid) {
-          this.save(info)
-        } else {
-          this.$Message.error('验证未通过!')
-        }
+    /*-----------------验证--------------*/
+    validCombine(info, data) {
+      info.subParaList.forEach(v => {
+        info.splitArr.forEach(x => {
+          if (data == v.subParaLinkVal && v.paraCode == x.name) {
+            this.$set(x, 'paraValMax', Number(v.paraValMax))
+            this.$set(x, 'paraValMin', Number(v.paraValMin))
+            this.$set(x, 'paraValStep', Number(v.paraValStep))
+            this.$set(x, 'paraSimpleDatatype', v.paraSimpleDatatype)
+            this.$set(x, 'paraStrLen', Number(v.paraStrLen))
+          }
+        })
       })
     },
-    async save(info) {
+    textValid(info) {
+      if (info.paraVal) {
+        if (info.paraSimpleDatatype == 1) {
+          if (info.paraStrLen) {
+            if (info.paraVal.length > info.paraStrLen) {
+              this.validTag = true
+              // this.$Message.error({
+              //   content: '长度不能超过'+info.paraStrLen,
+              //   duration: 6,
+              //   closable: true
+              // });
+              this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
+            }
+          } else {
+            this.validTag = false
+          }
+        } else {
+          let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
+          if (reg.test(info.paraVal)) {
+            if (info.paraValMax && info.paraValMin) {
+              if (info.paraVal > info.paraValMax || info.paraVal < info.paraValMin) {
+                this.validTag = true
+                // this.$Message.error({
+                //   content: '请在区间'+info.paraValMin+'--'+info.paraValMax+'内输入',
+                //   duration: 6,
+                //   closable: true
+                // });
+                this.$set(info, 'errorMsg', '下限:' + info.paraValMin + '--上限:' + info.paraValMax)
+              } else {
+                this.validTag = false
+              }
+            }
+          } else {
+            this.validTag = true
+            // this.$Message.error({
+            //   content: '请输入数字',
+            //   duration: 6,
+            //   closable: true
+            // });
+            this.$set(info, 'errorMsg', '请输入数字')
+          }
+        }
+      }
+    },
+    handleSubmit(info) {
+      if (!this.validTag) {
+        this.save(info)
+      }
+    },
+    async save(info, tag) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
         paraNo: info.paraNo,
         paraId: info.paraId
       }
-      if(info.paraSpellFmt){
+      if (info.paraSpellFmt) {
         let index = -1
-         let finallStr =  info.paraSpellFmt.replace(/\[(.+?)\]/g,function (match,param,offset,string) {
+        let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
           index++
-          return match = '['+ info.splitArr[index].value +']'
+          return match = '[' + info.splitArr[index].paraVal + ']'
         })
         obj.paraVal = finallStr
-      }else{
+      } else {
         obj.paraVal = info.paraVal
       }
-      if(obj.paraVal){
+      if (obj.paraVal || tag) {
         let {result, success, message} = await editParamValue(obj)
         if (success) {
           this.$Notice.success({
@@ -296,6 +450,7 @@ export default {
             desc: message,
             duration: 1
           })
+          this.$set(info, 'selected', false)
         } else {
           this.$Notice.error({
             title: '失败',
@@ -303,13 +458,15 @@ export default {
             duration: 3
           })
         }
+      } else {
+        this.$set(info, 'paraVal', info.oldVal)
+        this.$set(info, 'selected', false)
       }
-
     },
     /*-----------------日志--------------*/
     logSendMsg() {
       let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.$route.name})
-     this.logSocket.send(obj)
+      this.logSocket.send(obj)
     },
     getLogMsg(frame) {
       let msg = JSON.parse(frame.data)
@@ -319,12 +476,22 @@ export default {
 }
 </script>
 
-<style lang="less">
- .device-param{
-   .ivu-form{
-     .ivu-form-item{
-       margin-bottom: 10px;
-     }
-   }
- }
+<style scoped lang="less">
+.order-wrap {
+  border: 1px solid #009688;
+  height: 100px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: auto;
+  margin-bottom: 5px;
+}
+
+.param-wrap {
+  border: 1px solid #009688;
+  //height: 450px;
+  margin-bottom: 10px;
+  overflow: auto;
+  border-radius: 5px;
+  padding: 10px
+}
 </style>

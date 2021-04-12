@@ -2,9 +2,7 @@
   <div class="content-box">
     <Row>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-        <Button icon="ios-repeat" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="updateCache()">刷新缓存</Button>
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
-        <search :search-data='searchData'></search>
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate(search,'add')">新增</Button>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table :columns="columns1" :data="infos"></Table>
@@ -28,14 +26,12 @@
 
 <script>
     import {queryInterfacePageList, deleteInterface,getUnlinkedParams,getLinkedParams,editInterface,updateCache} from '@/api/monitor/Interface'
-    import search from '@/components/tables/search'
-    import operateRow from './operate'
+    import operateRow from './subOperate'
     import trans from '@/components/tables/trans'
     import {queryPrtclFormatAllList} from '@/api/monitor/PrtclFormat'
 
     export default {
         components: {
-            search,
             operateRow,
             trans
         },
@@ -44,11 +40,6 @@
                 operateModal: false,
                 name: '',
                 columns1: [
-                            {
-                              title: '接口名称',
-                              key: 'itfName',
-                              width: 300
-                            },
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
@@ -65,7 +56,11 @@
                                 title: '接口编码',
                                 key: 'itfCode',
                             },
-
+                            {
+                                title: '接口名称',
+                                key: 'itfName',
+                                width: 300
+                            },
                             {
                                 title: '接口类型',
                                 key: 'itfType_paraName',
@@ -85,7 +80,7 @@
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 250,
+                                width: 200,
                                 align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
@@ -102,7 +97,7 @@
                                             },
                                             on: {
                                                 click: () => {
-                                                    this.operate(rows.row)
+                                                    this.operate(rows.row,'update')
                                                 }
                                             }
                                         }),
@@ -125,24 +120,6 @@
                                         }),
                                         h('Button', {
                                             props: {
-                                                icon: 'md-settings',
-                                                type: 'primary'
-                                            },
-                                            attrs: {
-                                                title: '子接口'
-                                            },
-                                            style: {
-                                                marginRight: '5px',
-                                                display: rows.row.itfType ==="0027004" || rows.row.itfType == '0027005'? 'inline-block':'none'
-                                            },
-                                            on: {
-                                                click: () => {
-                                                    this.subItfFrameList(rows.row)
-                                                }
-                                            }
-                                        }),
-                                        h('Button', {
-                                            props: {
                                                 icon:'md-trash',
                                                 type: 'error'
                                             },
@@ -160,18 +137,10 @@
                             }
                 ],
                 infos: [],
-                searchData: [//搜索框根据需要自定义添加
-                    {
-                        type: 2,
-                        key: 'devType',
-                        name: '设备类型',
-                        value: '',
-                        data:[] ,
-                        placeholder: '设备类型'
-                    }
-                ],
                 search: {
-                    devType:'',
+                    devType:this.$route.query.devType,
+                    itfParentId:this.$route.query.itfId,
+                    itfFlag:'-1'
                 },
                 page: {
                     current: 1,
@@ -218,7 +187,6 @@
             async init() {
                 this.page.current = 1;
                 this.doQuery();
-                this.getInterTypeList();
                 this.getPrtclList();
             },
             async doQuery() {
@@ -283,10 +251,10 @@
                     })
                 }
             },
-            operate(Interface) {
-                this.name = Interface == null ? '添加设备接口' : '编辑设备接口'
+            operate(Interface,type) {
+                this.name = type == 'add' ? '添加设备接口' : '编辑设备接口'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateRow', Interface)
+                this.$xy.vector.$emit('operateRow', Interface,type)
             },
             //编辑弹出窗口关闭按钮触发方法
             closeModal() {
@@ -329,7 +297,7 @@
                         params=params+trans.id+",";
                     })
                     //剔除掉最后一个逗号
-                    //params = params.substr(0,params.length-1)
+                    params = params.substr(0,params.length-1)
                 }
                 var devInter = {itfId:this.eventInfos.itfId,
                           itfDataFormat:params};
@@ -343,12 +311,6 @@
                     });
                 }
                 this.init();
-            },
-            //查询接口类型
-            async getInterTypeList(){
-                this.$xy.getParamGroup('0020').then(res=>{
-                    this.searchData[0].data = res
-                })
             },
             //查询协议列表
             async getPrtclList(){
@@ -368,37 +330,6 @@
                 }
                 return ''
             },
-            //更新缓存
-            async updateCache() {
-                let {data, code, msg} = await updateCache()
-                let notice = this.$Notice;
-                if (code == 200) {
-                    notice.success({
-                        title: '成功',
-                        desc: '删除成功！',
-                        duration: 3
-                    })
-                    this.doQuery();
-                } else {
-                    notice.error({
-                        title: '失败',
-                        desc: msg,
-                        duration: 3
-                    })
-                }
-            },
-            //子接口查看
-            subItfFrameList(obj) {
-                this.$router.push(
-                    {
-                        path: '/monitor/subInterface',
-                        query: {
-                            itfId: obj.itfId,
-                            devType:obj.devType
-                        }
-                    }
-                )
-            }
         }
     }
 </script>
