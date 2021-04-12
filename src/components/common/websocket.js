@@ -15,6 +15,11 @@ let mixin = {
       WSPages: ['home'],
     }
   },
+  beforeRouteLeave(to, from, next) {
+    this.ws.close()
+    this.ws = null
+    next()
+  },
   mounted () {
     this.connectWs()
     this.openHomePage()
@@ -51,7 +56,8 @@ let mixin = {
       }
     },
     dealData (info) {
-      this.$xy.vector.$emit("WS_Info", info)
+      // this.$xy.vector.$emit("WS_Info", info)
+      this.getWSData(info)
     },
     sendData(){
       if (this.connectTag) {

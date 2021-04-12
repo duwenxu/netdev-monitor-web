@@ -78,11 +78,9 @@ import { getNewTagList, getNextRoute, routeEqual, localRead } from '@/libs/util'
 import { mapMutations, mapActions, mapState, mapGetters } from 'vuex'
 import routers from '@/router/routers'
 import './main.less'
-import mixin from './websocket'
 
 export default {
   name: 'Main',
-  mixins: [mixin],
   components: {
     SideMenu,
     HeaderBar,

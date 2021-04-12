@@ -73,9 +73,10 @@
 </template>
 
 <script>
-  import mixin from "./websocket";
+  import mixin from "../../../components/common/websocket";
 
   export default {
+    name: 'status',
     mixins: [mixin],
     components: {
     },
@@ -120,15 +121,15 @@
         equipments:[
           {devNo: '5', name: '冗余变频器', childList: [
               /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
-              {devNo: '8', name: '切换单元', isInterrupt:'0', workStatus: '1', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
-              {devNo: '6', name: 'A变频器', isInterrupt:'1', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 3}, //0是主用
-              {devNo: '7', name: 'B变频器', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 3}, //1是主用
+              {devNo: '8', name: '切换单元', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
+              {devNo: '6', name: 'A变频器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 3}, //0是主用
+              {devNo: '7', name: 'B变频器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 3}, //1是主用
             ],},
-          {devNo: '19', name: '调制解调器', childList: [], isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:2},
-          {devNo: '20', name: '天线控制单元', childList: [], isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:2},
+          {devNo: '19', name: '调制解调器', childList: [], isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:4},
+          {devNo: '20', name: '天线控制单元', childList: [], isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0', src:2},
           {devNo: '2', name: '功放', childList: [
-              {devNo: '3', name: 'A功放', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 5},
-              {devNo: '4', name: 'B功放', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 5},
+              {devNo: '3', name: 'A功放', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 5},
+              {devNo: '4', name: 'B功放', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 5},
             ]},
         ],
         legendType: [
@@ -139,12 +140,12 @@
         ]
       }
     },
-    created() {
-      this.$xy.vector.$on('WS_Info', this.getWSData)
-    },
-    beforeDestroy() {
-      this.$xy.vector.$off('WS_Info', this.getWSData)
-    },
+    // created() {
+    //   this.$xy.vector.$on('WS_Info', this.getWSData)
+    // },
+    // beforeDestroy() {
+    //   this.$xy.vector.$off('WS_Info', this.getWSData)
+    // },
     mounted () {
     },
     methods: {
@@ -288,7 +289,7 @@
 
     .legend {
       position: absolute;
-      top: 0;
+      bottom: 0;
       right: 0;
       .legend_status {
         display: flex;
