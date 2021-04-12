@@ -101,16 +101,23 @@
         </Col>
 
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="字段类型" prop="ndpaAlertPara">
-            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
+          <FormItem label="状态上报类型" prop="ndpaAlertPara">
+            <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择状态上报类型">
               <Option  v-for='choose in alertParaStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="告警级别" prop="ndpaAlertLevel">
-            <Select v-model="ParaInfo.ndpaAlertLevel" clearable   placeholder="请选择字段类型">
+            <Select v-model="ParaInfo.ndpaAlertLevel" clearable   placeholder="请选择告警级别">
               <Option  v-for='choose in ndpaAlertLevels' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="参数复杂级别" prop="ndpaCmplexLevel" >
+            <Select v-model="ParaInfo.ndpaCmplexLevel" clearable   placeholder="请选择参数复杂级别">
+              <Option  v-for='choose in ndpaCmplexLevelList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
@@ -135,15 +142,43 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="参数复杂级别" prop="ndpaCmplexLevel" >
-            <Select v-model="ParaInfo.ndpaCmplexLevel" clearable   placeholder="请选择参数复杂级别">
-              <Option  v-for='choose in ndpaCmplexLevelList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
-            </Select>
+          <FormItem label="缺省值" prop="ndpaDefaultVal" >
+            <Input v-model="ParaInfo.ndpaDefaultVal" type="textarea" placeholder="请输入缺省值"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="缺省值" prop="ndpaDefaultVal" >
-            <Input v-model="ParaInfo.ndpaDefaultVal" type="textarea" placeholder="请输入缺省值"></Input>
+          <FormItem label="备注一描述" prop="ndpaRemark1Desc" >
+            <Input v-model="ParaInfo.ndpaRemark1Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注一数据" prop="ndpaRemark1Data" >
+            <Input v-model="ParaInfo.ndpaRemark1Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二描述" prop="ndpaRemark2Desc" >
+            <Input v-model="ParaInfo.ndpaRemark2Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="ParaInfo.devType==='0020012'">
+            <Select v-model="ParaInfo.ndpaRemark2Data" clearable   placeholder="请选择参数处理类">
+              <Option  v-for='choose in paraCodecList' :value='choose' :key="choose">{{choose}}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-else>
+            <Input v-model="ParaInfo.ndpaRemark2Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三描述" prop="ndpaRemark3Desc" >
+            <Input v-model="ParaInfo.ndpaRemark3Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三数据" prop="ndpaRemark3Data" >
+            <Input v-model="ParaInfo.ndpaRemark3Data" type="textarea" placeholder="请输入"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
@@ -160,6 +195,8 @@
 <script>
 
   import {addParaInfo, editParaInfo} from '@/api/monitor/ParaInfo'
+  import axios from '@/libs/api.request'
+  import xy from "../../../../libs/url";
 
   export default {
     name: 'operate',
@@ -177,6 +214,7 @@
         displayModels:[],
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
+        paraCodecList:[],
         rulePro: {
           fmtId: [
             {required: false}
@@ -252,7 +290,25 @@
           ],
           ndpaDefaultVal: [
             {required: false}
-          ]
+          ],
+          ndpaRemark1Desc: [
+            {required: false}
+          ],
+          ndpaRemark1Data: [
+            {required: false}
+          ],
+          ndpaRemark2Desc: [
+            {required: false}
+          ],
+          ndpaRemark2Data: [
+            {required: false}
+          ],
+          ndpaRemark3Desc: [
+            {required: false}
+          ],
+          ndpaRemark3Data: [
+            {required: false}
+          ],
         }
       }
     },
@@ -272,6 +328,7 @@
       this.getDisplayModels();
       this.getNdpaAlertLevels();
       this.getNdpaCmplexLevelList();
+      this.getParaCodecList();
     },
     methods: {
       async getDevTypes(){
@@ -320,6 +377,15 @@
         this.$xy.getParamGroup('0019').then(res=>{
           res = res.filter(e => e.id!=='0019004')
           this.ndpaCmplexLevelList = res;
+        })
+      },
+      async getParaCodecList(){
+        axios.request({
+          url: xy.Setting.SPACE_URL + '/monitor/paraInfo/paraCodec',
+          method: 'get'
+        })
+        .then(res=>{
+          this.paraCodecList = res.result;
         })
       },
       operateRow(obj) {
