@@ -162,7 +162,7 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="ParaInfo.devType==='0020012'">
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="ParaInfo.devType==='0020012'||ParaInfo.devType==='0020008'">
             <Select v-model="ParaInfo.ndpaRemark2Data" clearable   placeholder="请选择参数处理类">
               <Option  v-for='choose in paraCodecList' :value='choose' :key="choose">{{choose}}</Option>
             </Select>
