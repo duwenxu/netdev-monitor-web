@@ -8,15 +8,15 @@
       <div class="login-header">
         <Row>
           <Col :xs="3" :sm="3" :lg="3" :md="3">
-            <img class="img_pic" src="../../../assets/images/login/logo.png" width="32" height="35"/>
+            <img class="img_pic" src="../../../assets/images/logo/39.png" width="80" height="35"/>
           </Col>
-          <Col :xs="21" :sm="21" :lg="21" :md="21">
-            <span class="pre_name">星邑空间</span>
+          <Col :xs="21" :sm="21" :lg="21" :md="21" style="margin-top: 2px">
+            <span class="pre_name">中国电科39所</span>
             <span class="middle_name"> | </span>
             <span class="last_name"> 网络设备监控</span>
           </Col>
         </Row>
-        <Row style="margin-left: 12px">
+        <Row style="margin-left: 70px">
           <Col :xs="24" :sm="24" :lg="24" :md="24">
 
             <div class="box">
@@ -36,7 +36,7 @@
             </div>
           </Col>
         </Row>
-        <Row style="margin-left: 12px">
+        <Row style="margin-left: 70px">
           <Col :xs="12" :sm="12" :lg="12" :md="12">
             <Checkbox class="check_class">&nbsp;&nbsp;记住密码</Checkbox>
           </Col>
@@ -44,7 +44,7 @@
             <a class="a_class" href="javascript:;">忘记密码</a>
           </Col>
         </Row>
-        <Row style="margin-left: 12px">
+        <Row style="margin-left: 70px">
           <Col :xs="24" :sm="24" :lg="24" :md="24">
 
             <button class="btn_class" type="primary" @click="login">登录</button>
@@ -165,7 +165,7 @@
   }
 
   .login-header {
-    width: 280px;
+    width: 440px;
     height: 440px;
   }
 
@@ -173,6 +173,8 @@
     font-family: "Arial";
     font-size: 25px;
     color: #fff;
+    margin-left: 30px;
+
   }
 
   .last_name {
@@ -221,11 +223,12 @@
   }
 
   .a_class {
-    float: right;
+    /*float: right;*/
     margin-right: 8px;
     display: block;
     margin-top: 28px;
     font-size: 14px;
+    margin-left: 15px;
     font-weight: 400;
     color: rgba(52, 114, 255, 1);
   }
