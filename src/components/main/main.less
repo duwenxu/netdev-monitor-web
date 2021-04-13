@@ -5,7 +5,7 @@
       .main-logo {
         height: 80px;
         line-height: 80px;
-        width: 260px;
+        //width: 260px;
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
@@ -13,22 +13,21 @@
         align-items: center;
 
         .max-logo {
-          width: 230px;
+          //width: 230px;
           display: flex;
           flex-direction: row;
           justify-content: center;
           align-items: center;
 
           img {
-            width: 80px;
-            height: 30px;
+
             margin-right: 10px;
           }
 
           span {
             margin-right: 5px;
             display: inline-block;
-            font-size: 20px;
+            //font-size: 20px;
             font-weight: 600;
             letter-spacing: 2px;
             margin-top: 6px;
@@ -153,3 +152,89 @@
     border-radius: 0px;
   }
 }
+
+
+@media screen and (min-width: 768px ) and  (max-width: 992px )   { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  .left-slider {
+    .main-logo{
+      width: 200px;
+    }
+    .max-logo {
+      width: 200px;
+      img{
+        width: 50px;
+        height: 20px;
+
+      }
+      span {
+        font-size: 16px;
+
+      }
+
+    }
+
+  }
+}
+
+@media screen and (min-width: 992px ) and (max-width: 1199px)  { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  .left-slider {
+    .main-logo{
+      width: 200px;
+
+    }
+    .max-logo {
+      img{
+        width: 50px;
+        height: 20px;
+
+      }
+      span {
+        font-size: 16px;
+
+      }
+    }
+  }
+}
+@media screen and (min-width: 1200px ) and (max-width: 1920px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  .left-slider {
+    .main-logo{
+      width: 260px;
+    }
+    .max-logo {
+      img{
+        width: 50px;
+        height: 20px;
+
+      }
+      span {
+        font-size: 16px;
+
+
+
+      }
+
+    }
+  }
+}
+@media screen and (min-width: 1920px ) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+  .left-slider {
+    .main-logo{
+      width: 260px;
+    }
+    .max-logo {
+      img{
+        width: 80px;
+        height: 30px;
+
+      }
+      span {
+        font-size: 20px;
+
+
+
+      }
+
+    }
+  }
+}
+
