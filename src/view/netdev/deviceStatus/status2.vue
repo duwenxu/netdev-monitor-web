@@ -76,7 +76,6 @@
   import mixin from "../../../components/common/websocket";
 
   export default {
-    name: 'status',
     mixins: [mixin],
     components: {
     },
