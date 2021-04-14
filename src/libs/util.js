@@ -47,8 +47,8 @@ export const treeDevice = (data) => {
     if ('subMap' in data[item]) {
       let array = []
       for (var temp in data[item]['subMap']) {
-        data[item].path = 'list/' + data[item]['subMap'].devNo
-        data[item].component = 'view/netdev/monitor/DeviceMsg/operate.vue'
+        data[item].path = 'list/' + data[item]['subMap'].devNo +'/0'
+        data[item].component = 'view/netdev/monitor/DeviceMsg/deviceMain.vue'
         array.push(data[item]['subMap'][temp])
       }
       data[item].path = 'list'
@@ -56,8 +56,8 @@ export const treeDevice = (data) => {
       data[item].children = array
       treeDevice(data[item]['subMap'])
     } else {
-      data[item].path = 'list/' + data[item].devNo
-      data[item].component = 'view/netdev/monitor/DeviceMsg/operate.vue'
+      data[item].path = 'list/' + data[item].devNo+'/0'
+      data[item].component = 'view/netdev/monitor/DeviceMsg/deviceMain.vue'
     }
     result.push(data[item])
   }
