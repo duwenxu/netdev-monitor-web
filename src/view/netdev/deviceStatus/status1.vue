@@ -28,7 +28,7 @@
     <template v-for="equipment in equipments">
       <template v-if="equipment.childList.length">
         <div class="equipment_box" :key="equipment.devNo"
-           :style="devicePosition(equipment)">
+             :style="devicePosition(equipment)">
           <div class="equipment_parent">
             {{equipment.name}}
           </div>
@@ -45,7 +45,7 @@
               </div>
             </div>
           </template>
-      </div>
+        </div>
       </template>
       <template v-else>
         <div class="equipment_box equipment_child" :key="equipment.devNo"
@@ -73,7 +73,6 @@
 </template>
 
 <script>
-
   import mixin from "../../../components/common/websocket";
 
   export default {
@@ -121,7 +120,7 @@
         },
         equipments:[
           {devNo: '5', name: '冗余变频器', childList: [
-            /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
+              /*isInterrupt是否中断，workStatus工作状态，isUseStandby是否启用主备，masterOrSlave是否备用，isAlarm是否警告*/
               {devNo: '8', name: '切换单元', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 1},
               {devNo: '6', name: 'A变频器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0',src: 3}, //0是主用
               {devNo: '7', name: 'B变频器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1',src: 3}, //1是主用
@@ -149,10 +148,10 @@
       }
     },
     // created() {
-    //   this.$xy.vector.$on('WS_homeInfo', this.getWSData)
+    //   this.$xy.vector.$on('WS_Info', this.getWSData)
     // },
     // beforeDestroy() {
-    //   this.$xy.vector.$off('WS_homeInfo', this.getWSData)
+    //   this.$xy.vector.$off('WS_Info', this.getWSData)
     // },
     mounted () {
     },
@@ -230,99 +229,6 @@
 </script>
 
 <style lang="less" scoped>
-  .home {
-    position: relative;
-    height: calc(~"100vh - 180px");
+  @import "./status.less";
 
-    .equipment_box {
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding: 15px 15px;
-      width: 170px;
-    }
-    .equipment_parent {
-      margin-bottom: 5px;
-      text-align: center;
-    }
-    .equipment_child {
-      text-align: center;
-      padding: 10px;
-      margin-bottom: 10px;
-      &:last-child {
-        margin-bottom: 0 !important;
-      }
-      .device_img {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-        img {
-          height: 70px;
-          width: 70px;
-        }
-      }
-
-
-      .device_title {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-        span{
-          display: inline-block;
-          background: #ccc;
-          height: 20px;
-          width: 20px;
-          border-radius: 50%;
-        }
-      }
-    }
-
-    .line {
-      height: 100%;
-      width: 100%;
-      svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
-    }
-
-    .legend {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      .legend_status {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 10px;
-
-        &:last-child{
-          margin-bottom: 0;
-          span {
-            border: 1px solid;
-          }
-        }
-        span {
-          display: inline-block;
-          background: #ccc;
-          height: 20px;
-          width: 20px;
-          margin-right: 5px;
-        }
-        .circle {
-          border-radius: 50%;
-        }
-        .square {
-
-        }
-      }
-
-    }
-  }
 </style>

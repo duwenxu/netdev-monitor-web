@@ -1,23 +1,23 @@
 <template>
   <Layout class="main" style="height: 100%">
-    <Sider class="left-slider" hide-trigger collapsible :width="260" :collapsed-width="64" v-model="collapsed"
+    <Sider class="left-slider" hide-trigger collapsible :width="menuWidth" :collapsed-width="64" v-model="collapsed"
            :style="{overflow: 'hidden'}">
       <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage"
                  :menu-list="menuList">
         <div class="main-logo">
           <template v-if="theme === 'light'">
             <div v-show="!collapsed" class="max-logo">
-              <img src="@/assets/images/logo/logo-light.png" key="max-logo"/>
+              <img src="@/assets/images/logo/39_light.png" key="max-logo"/>
               <span>网络设备监控</span>
             </div>
-            <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/logo-light.png" key="min-logo"/>
+            <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39_light.png" key="min-logo"/>
           </template>
           <template v-else-if="theme === 'dark'">
             <div v-show="!collapsed" class="max-logo">
-              <img src="@/assets/images/logo/logo-dark.png" key="max-logo"/>
+              <img src="@/assets/images/logo/39.png" key="max-logo"/>
               <span>网络设备监控</span>
             </div>
-            <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/logo-dark.png" key="min-logo"/>
+            <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39.png" key="min-logo"/>
           </template>
         </div>
       </side-menu>
@@ -44,7 +44,7 @@
       <Content :class="mainClass">
         <Layout class="main-content-wrapper">
           <div class="tag-nav-wrapper">
-          <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
+            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div>
           <Content class="main-view-wrapper ">
             <div class="dark-page-border" :class="{'content': !noShowBgRouteList.includes($route.name)}">
@@ -65,244 +65,259 @@
   </Layout>
 </template>
 <script>
-import User from './components/user'
-import SideMenu from './components/side-menu'
-import HeaderBar from './components/header-bar'
-import ABackTop from './components/a-back-top'
-import Fullscreen from './components/fullscreen'
-import ErrorStore from './components/error-store'
-import siderTrigger from './components/header-bar/sider-trigger'
-import customBreadCrumb from './components/header-bar/custom-bread-crumb'
-import TagsNav from './components/tags-nav'
-import { getNewTagList, getNextRoute, routeEqual, localRead } from '@/libs/util'
-import { mapMutations, mapActions, mapState, mapGetters } from 'vuex'
-import routers from '@/router/routers'
-import './main.less'
-import mixin from './websocket'
+  import User from './components/user'
+  import SideMenu from './components/side-menu'
+  import HeaderBar from './components/header-bar'
+  import ABackTop from './components/a-back-top'
+  import Fullscreen from './components/fullscreen'
+  import ErrorStore from './components/error-store'
+  import siderTrigger from './components/header-bar/sider-trigger'
+  import customBreadCrumb from './components/header-bar/custom-bread-crumb'
+  import TagsNav from './components/tags-nav'
+  import {getNewTagList, getNextRoute, routeEqual, localRead} from '@/libs/util'
+  import {mapMutations, mapActions, mapState, mapGetters} from 'vuex'
+  import routers from '@/router/routers'
+  import './main.less'
 
-export default {
-  name: 'Main',
-  mixins: [mixin],
-  components: {
-    SideMenu,
-    HeaderBar,
-    Fullscreen,
-    ErrorStore,
-    ABackTop,
-    customBreadCrumb,
-    siderTrigger,
-    User,
-    TagsNav
-  },
-  data () {
-    return {
-      noShowBgRouteList: [
-        // 'home'
-      ],
-      themesStatus: '',
-      collapsed: false,
-      isFullscreen: false,
-      screenWidth: 0,
-      selectSpace: '',
-      messageData: [],
-      timer: ''
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'errorCount'
-    ]),
-    ...mapState({
-      theme: state => state.user.theme
-    }),
-    key(){
-      return this.$route.path + Math.random();
+  export default {
+    name: 'Main',
+    components: {
+      SideMenu,
+      HeaderBar,
+      Fullscreen,
+      ErrorStore,
+      ABackTop,
+      customBreadCrumb,
+      siderTrigger,
+      User,
+      TagsNav
     },
-    breadCrumbList () {
-      let list = this.$store.state.app.breadCrumbList
-      list.forEach((item, index) => {
-        if (item.meta.showInHeader) {
-          list.splice(index, 1)
-        }
-      })
-      return list
-    },
-    headerLogoClass () {
-      return [
-        'main-header-logo',
-        this.collapsed ? 'main-header-logo-collapsed' : ''
-      ]
-    },
-    mainClass () {
-      return [
-        'main-content',
-        this.collapsed ? 'main-content-collapsed' : ''
-      ]
-    },
-    tagNavList () {
-      return this.$store.state.app.tagNavList
-    },
-    tagRouter () {
-      return this.$store.state.app.tagRouter
-    },
-    userAvatar () {
-      return this.$store.state.user.avatarImgPath
-    },
-    userName () {
-      return this.$store.state.user.userName
-    },
-    userAvator () {
-      // return this.$store.state.user.avatorImgPath
-      return 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554255513&di=eb15a591b289c74ee7bf2896c7f1eed3&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a66b58158d4ba84a0e282b024923.png%402o.jpg'
-    },
-    unreadCount () {
-      return this.$store.state.user.unreadCount
-    },
-    nickName () {
-      return this.$store.state.user.nickName
-    },
-    cacheList () {
-      const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-      return list
-    },
-    menuList () {
-      return this.$store.getters.menuList
-    },
-    local () {
-      return this.$store.state.app.local
-    },
-    hasReadErrorPage () {
-      return this.$store.state.app.hasReadErrorPage
-    }
-  },
-  methods: {
-    ...mapMutations([
-      'setBreadCrumb',
-      'setTagNavList',
-      'addTag',
-      'setLocal',
-      'saveSpace',
-      'setHomeRoute',
-      'setTheme'
-    ]),
-    getScreen (data) {
-      this.$xy.vector.$emit('screenState', { state: data })
-    },
-    handleChangeThemes () {
-      let value = 'light'
-      if (this.theme === 'light') {
-        value = 'dark'
+    data() {
+      return {
+        noShowBgRouteList: [
+          // 'home'
+        ],
+        menuWidth: 260,
+        themesStatus: '',
+        collapsed: false,
+        isFullscreen: false,
+        screenWidth: 0,
+        selectSpace: '',
+        messageData: [],
+        timer: ''
       }
-      this.setTheme(value)
     },
-    turnToPage(route) {
-      let tag = false
-      let {name, params, query} = {}
-      if (typeof route === 'string') name = route
-      else {
-        name = route.name
-        params = route.params
-        query = route.query
+    computed: {
+      ...mapGetters([
+        'errorCount'
+      ]),
+      ...mapState({
+        theme: state => state.user.theme
+      }),
+      key() {
+        return this.$route.path + Math.random();
+      },
+      breadCrumbList() {
+        let list = this.$store.state.app.breadCrumbList
+        list.forEach((item, index) => {
+          if (item.meta.showInHeader) {
+            list.splice(index, 1)
+          }
+        })
+        return list
+      },
+      headerLogoClass() {
+        return [
+          'main-header-logo',
+          this.collapsed ? 'main-header-logo-collapsed' : ''
+        ]
+      },
+      mainClass() {
+        return [
+          'main-content',
+          this.collapsed ? 'main-content-collapsed' : ''
+        ]
+      },
+      tagNavList() {
+        return this.$store.state.app.tagNavList
+      },
+      tagRouter() {
+        return this.$store.state.app.tagRouter
+      },
+      userAvatar() {
+        return this.$store.state.user.avatarImgPath
+      },
+      userName() {
+        return this.$store.state.user.userName
+      },
+      userAvator() {
+        // return this.$store.state.user.avatorImgPath
+        return 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554255513&di=eb15a591b289c74ee7bf2896c7f1eed3&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a66b58158d4ba84a0e282b024923.png%402o.jpg'
+      },
+      unreadCount() {
+        return this.$store.state.user.unreadCount
+      },
+      nickName() {
+        return this.$store.state.user.nickName
+      },
+      cacheList() {
+        const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+        return list
+      },
+      menuList() {
+        return this.$store.getters.menuList
+      },
+      local() {
+        return this.$store.state.app.local
+      },
+      hasReadErrorPage() {
+        return this.$store.state.app.hasReadErrorPage
       }
-      if (name.indexOf('isTurnByHref_') > -1) {
-        window.open(name.split('_')[1])
-        return
-      }
-      this.$router.push({
-        name,
-        params,
-        query
-      })
-      this.tagNavList.forEach(v => {
-        if (route == v.name) {
-          tag = true
-        }
-      })
-      if (this.tagNavList.length >= 14) {
-        if (!tag) {
-          this.tagNavList.splice(1, 1)
-        }
-      }
+    },
 
-    },
-    handleCollapsedChange (state) {
-      this.collapsed = state
-    },
-    handleCloseTag (res, type, route) {
-      if (type === 'all') {
-        this.turnToPage(this.$config.homeName)
-      } else if (routeEqual(this.$route, route)) {
-        if (type !== 'others') {
-          const nextRoute = getNextRoute(this.tagNavList, route)
-          this.$router.push(nextRoute)
+    methods: {
+      ...mapMutations([
+        'setBreadCrumb',
+        'setTagNavList',
+        'addTag',
+        'setLocal',
+        'saveSpace',
+        'setHomeRoute',
+        'setTheme'
+      ]),
+      getScreen(data) {
+        this.$xy.vector.$emit('screenState', {state: data})
+      },
+      handleChangeThemes() {
+        let value = 'light'
+        if (this.theme === 'light') {
+          value = 'dark'
         }
+        this.setTheme(value)
+      },
+      turnToPage(route) {
+        let tag = false
+        let {name, params, query} = {}
+        if (typeof route === 'string') name = route
+        else {
+          name = route.name
+          params = route.params
+          query = route.query
+        }
+        if (name.indexOf('isTurnByHref_') > -1) {
+          window.open(name.split('_')[1])
+          return
+        }
+        this.$router.push({
+          name,
+          params,
+          query
+        })
+        this.tagNavList.forEach(v => {
+          if (route == v.name) {
+            tag = true
+          }
+        })
+        if (this.tagNavList.length >= 14) {
+          if (!tag) {
+            this.tagNavList.splice(1, 1)
+          }
+        }
+
+      },
+      handleCollapsedChange(state) {
+        this.collapsed = state
+      },
+      handleCloseTag(res, type, route) {
+        if (type === 'all') {
+          this.turnToPage(this.$config.homeName)
+        } else if (routeEqual(this.$route, route)) {
+          if (type !== 'others') {
+            const nextRoute = getNextRoute(this.tagNavList, route)
+            this.$router.push(nextRoute)
+          }
+        }
+        this.setTagNavList(res)
+      },
+      handleClick(item) {
+        this.turnToPage(item)
+      },
+      setLayout() {
+        let layout = localStorage.getItem('layout')
+        if (!layout) {
+          layout = 'left'
+          localStorage.setItem('layout', layout)
+        }
+        this.layout = layout
       }
-      this.setTagNavList(res)
     },
-    handleClick (item) {
-      this.turnToPage(item)
-    },
-    setLayout () {
-      let layout = localStorage.getItem('layout')
-      if (!layout) {
-        layout = 'left'
-        localStorage.setItem('layout', layout)
+    watch: {
+      screenWidth(val) {
+        const that = this
+        if (val < 768) {
+          // 小于768强制折叠
+          that.handleCollapsedChange(true)
+        } else {
+          that.handleCollapsedChange(false)
+        }
+      },
+      '$route'(newRoute) {
+        const {name, query, params, meta} = newRoute
+        this.addTag({
+          route: {name, query, params, meta},
+          type: 'push'
+        })
+        this.setBreadCrumb(newRoute)
+        this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
+        this.$refs['sideMenu'].updateOpenName(newRoute.name)
       }
-      this.layout = layout
-    }
-  },
-  watch: {
-    screenWidth (val) {
+    },
+    mounted() {
+      this.setTheme(localRead('themeColor') || 'light')
+      // this.initTheme()
       const that = this
-      if (val < 768) {
-        // 小于768强制折叠
-        that.handleCollapsedChange(true)
-      } else {
-        that.handleCollapsedChange(false)
+      // 宽度适应
+      that.screenWidth = document.body.clientWidth
+      if (  that.screenWidth>768 && that.screenWidth < 992 ) {
+        that.menuWidth = 200
+      } else if (that.screenWidth>992 && that.screenWidth < 1199) {
+        that.menuWidth = 200
+      } else if (that.screenWidth>1200 && that.screenWidth < 1920) {
+        that.menuWidth = 260
       }
-    },
-    '$route' (newRoute) {
-      const { name, query, params, meta } = newRoute
+
+      window.onresize = () => {
+        return (() => {
+          if (  that.screenWidth>768 && that.screenWidth < 992 ) {
+            that.menuWidth = 200
+          } else if (that.screenWidth>992 && that.screenWidth < 1199) {
+            that.menuWidth = 200
+          } else if (that.screenWidth>1200 && that.screenWidth < 1920) {
+            that.menuWidth = 260
+          }
+          that.screenWidth = document.body.clientWidth
+        })()
+      }
+      // 设置布局
+      this.setLayout()
+      // 初始化设置面包屑导航和标签导航
+      this.setTagNavList()
+      this.setHomeRoute(routers)
       this.addTag({
-        route: { name, query, params, meta },
-        type: 'push'
+        route: this.$store.state.app.homeRoute
       })
-      this.setBreadCrumb(newRoute)
-      this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
-      this.$refs['sideMenu'].updateOpenName(newRoute.name)
-    }
-  },
-  mounted () {
-    this.setTheme(localRead('themeColor') || 'light')
-    // this.initTheme()
-    const that = this
-    // 宽度适应
-    that.screenWidth = document.body.clientWidth
-    window.onresize = () => {
-      return (() => {
-        that.screenWidth = document.body.clientWidth
-      })()
-    }
-    // 设置布局
-    this.setLayout()
-    // 初始化设置面包屑导航和标签导航
-    this.setTagNavList()
-    this.setHomeRoute(routers)
-    this.addTag({
-      route: this.$store.state.app.homeRoute
-    })
-    this.setBreadCrumb(this.$route)
-    // 设置初始语言
-    this.setLocal(this.$i18n.locale)
-    // 如果当前打开页面不在标签栏中，跳到homeName页
-    if (!this.tagNavList.find(item => item.name === this.$route.name)) {
-      this.$router.push({
-        name: this.$config.homeName
-      })
+      this.setBreadCrumb(this.$route)
+      // 设置初始语言
+      this.setLocal(this.$i18n.locale)
+      // 如果当前打开页面不在标签栏中，跳到homeName页
+      if (!this.tagNavList.find(item => item.name === this.$route.name)) {
+        this.$router.push({
+          name: this.$config.homeName
+        })
+      }
     }
   }
-}
 </script>
 <style lang="less" scoped>
-@import "../../assets/css/common.less";
+  @import "../../assets/css/common.less";
 </style>
