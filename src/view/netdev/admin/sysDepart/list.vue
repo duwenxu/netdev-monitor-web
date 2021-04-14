@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button icon="md-add" style="float:right;margin-bottom: 10px;background-color: #415dbe;border: 0px" type="primary" @click="operate()">新增</Button>
+      <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
       <search :search-data='searchData'></search>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table  :columns="columns1" :data="infos"></Table>
@@ -36,28 +36,34 @@
                 columns1: [
                     {
                         title: '部门名称',
-                        key: 'departName'
+                        key: 'departName',
+                        minWidth: 100,
                     },
                     {
                         title: '部门代号',
-                        key: 'departCode'
+                        key: 'departCode',
+                        minWidth: 100,
                     },
                     {
                         title: '部门状态',
-                        key: 'departStatus_paraName'
+                        key: 'departStatus_paraName',
+                        minWidth: 100,
                     },
                     {
                         title: '创建人',
-                        key: 'departUesrid_userName'
+                        key: 'departUesrid_userName',
+                        minWidth: 100,
                     },
                     {
                         title: '创建日期',
-                        key: 'departDate'
+                        key: 'departDate',
+                        minWidth: 170,
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        width: 280,
+                        width: 200,
+                        fixed: 'right',
                         align: 'center',
                         render: (h, rows) => {
                             return h('div', [
@@ -70,7 +76,7 @@
                                     },
                                     class:'edit_btn',
                                     style: {
-                                        marginRight: '25px',
+                                        marginRight: '10px',
                                     },
                                     on: {
                                         click: () => {
@@ -87,7 +93,7 @@
                                     },
                                     class:'edit_btn3',
                                     style: {
-                                        marginRight: '25px',
+                                        marginRight: '10px',
                                     },
                                     on: {
                                         click: () => {

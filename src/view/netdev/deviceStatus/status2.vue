@@ -74,11 +74,10 @@
 
 <script>
   import mixin from "../../../components/common/websocket";
+  import {mapState} from "vuex";
 
   export default {
     mixins: [mixin],
-    components: {
-    },
     data () {
       return {
         polylineColor: '#7f7f7f',
@@ -102,19 +101,19 @@
           },
           '19': {
             top: '0px',
-            left: '200px',
+            left: '190px',
           },
           '20': {
             top: '0px',
-            left: '400px',
+            left: '380px',
           },
           '2': {
             top: '0px',
-            left: '600px',
+            left: '570px',
           },
           '10': {
             top: '0px',
-            left: '800px',
+            left: '760px',
           },
         },
         equipments:[
@@ -139,15 +138,71 @@
         ]
       }
     },
-    // created() {
-    //   this.$xy.vector.$on('WS_Info', this.getWSData)
-    // },
-    // beforeDestroy() {
-    //   this.$xy.vector.$off('WS_Info', this.getWSData)
-    // },
+    computed: {
+      ...mapState({
+        mediaWidthType: state => state.user.mediaWidthType
+      }),
+    },
+    watch: {
+      mediaWidthType(){
+        this.getMediaWidth()
+      }
+    },
     mounted () {
+      this.getMediaWidth()
     },
     methods: {
+      getMediaWidth(){
+        if (this.mediaWidthType === 0){
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '19': {
+              top: '0px',
+              left: '155px',
+            },
+            '20': {
+              top: '0px',
+              left: '310px',
+            },
+            '2': {
+              top: '0px',
+              left: '465px',
+            },
+            '10': {
+              top: '0px',
+              left: '620px',
+            }
+          }
+        }else if (this.mediaWidthType === 1) {
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '19': {
+              top: '0px',
+              left: '190px',
+            },
+            '20': {
+              top: '0px',
+              left: '380px',
+            },
+            '2': {
+              top: '0px',
+              left: '570px',
+            },
+            '10': {
+              top: '0px',
+              left: '760px',
+            },
+          }
+        }
+      },
       devicePosition (equipment){
         return {
           top: this.position[equipment.devNo].top,

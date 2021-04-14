@@ -42,7 +42,7 @@
             {
               title: '协议名称',
               key: 'fmtName',
-              width: 150
+              width: 200
             },
             {
               title: '设备类型',
@@ -93,12 +93,13 @@
             {
               title: '控制响应类型',
               key: 'fmtCcType_paraName',
-              width: 120
+              width: 180
             },
             {
               title: '操作',
               key: 'action',
-              width: 180,
+              width: 140,
+              fixed: 'right',
               align: 'center',
               render: (h, rows) => {
                 return h('div', [

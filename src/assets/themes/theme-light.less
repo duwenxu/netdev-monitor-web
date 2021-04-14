@@ -1055,7 +1055,7 @@
             font-size: @font-size-text;
             height: @height-menu-item;
             line-height: @height-menu-item;
-            padding: 0 @padding-menu;
+            //padding: 0 @padding-menu;
             margin-top: 1px;
 
             &:hover {
@@ -1216,6 +1216,76 @@
       transform: rotate(360deg);
     }
   }
+
+  @media (min-width: 1920px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 @padding-menu;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=1919的设备
+  @media (max-width: 1919px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        //.ivu-menu-submenu-title,
+        //.ivu-menu-item {
+        //  padding-left: 30px !important;
+        //}
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 @padding-menu;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=1919的设备
+  @media (max-width: 1199px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              //padding: 0 10px;
+
+            }
+          }
+        }
+      }
+      .ivu-menu-vertical {
+        .ivu-menu-submenu-title-icon {
+          right: 10px;
+        }
+      }
+    }
+
+  }//<=1199的设备
+  @media (max-width: 991px){
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 10px;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=991的设备
+  /*@media (max-width: 767px){
+
+  }//<=767的设备*/
 
 }
 

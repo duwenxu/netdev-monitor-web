@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button icon="md-add" style="float:right;margin-bottom: 10px;background-color: #415dbe;border: 0px" type="primary" @click="operate()">新增</Button>
+      <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
       <search :search-data='searchData'></search>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table  :columns="columns1" :data="infos"></Table>
@@ -43,28 +43,34 @@
                 columns1: [
                     {
                         title: '角色名称',
-                        key: 'roleName'
+                        key: 'roleName',
+                        minWidth: 120,
                     },
                     {
                         title: '角色状态',
-                        key: 'roleStatus'
+                        key: 'roleStatus',
+                        minWidth: 100,
                     },
                     {
                         title: '角色描述',
-                        key: 'roleDesc'
+                        key: 'roleDesc',
+                        minWidth: 140,
                     },
                     {
                         title: '创建人',
-                        key: 'roleUesrid_userName'
+                        key: 'roleUesrid_userName',
+                        minWidth: 100,
                     },
                     {
                         title: '创建日期',
-                        key: 'roleDate'
+                        key: 'roleDate',
+                        minWidth: 170,
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        width: 280,
+                        fixed: 'right',
+                        width: 200,
                         align: 'center',
                         render: (h, rows) => {
                             return h('div', [
@@ -77,7 +83,7 @@
                                     },
                                     class:'edit_btn',
                                     style: {
-                                        marginRight: '25px',
+                                        marginRight: '10px',
                                     },
                                     on: {
                                         click: () => {
@@ -94,7 +100,7 @@
                                     },
                                     class:'edit_btn3',
                                     style: {
-                                        marginRight: '25px',
+                                        marginRight: '10px',
                                     },
                                     on: {
                                         click: () => {
