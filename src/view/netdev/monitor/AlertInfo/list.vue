@@ -2,7 +2,7 @@
     <div class="content-box">
         <Row>
             <!--<Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>-->
-            <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">导出</Button>
+            <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
             <search :search-data='searchData' @input="handleClick()"></search>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
@@ -14,26 +14,26 @@
             </div>
             </Col>
         </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+        <!--<Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
-        </Modal>
+        </Modal>-->
     </div>
 </template>
 
 <script>
     import {queryAlertInfoPageList, deleteAlertInfo,queryAlertInfoPageByTime} from '@/api/monitor/AlertInfo'
     import search from '@/components/tables/search'
-    import operateRow from './operate'
+    /*import operateRow from './operate'*/
 
     export default {
         components: {
             search,
-            operateRow
+            /*operateRow*/
         },
         data() {
             return {
-                operateModal: false,
-                name: '',
+                /*operateModal: false,
+                name: '',*/
                 columns1: [
                             {
                                 title: '设备类型',
@@ -133,7 +133,6 @@
                     endTime:'',
                     devNo:'',
                 },
-                current: 1,
                 page: {
                     current: 1,
                     size: 10
@@ -235,11 +234,11 @@
                     })
                 }
             },
-            operate(AlertInfo) {
+            /*operate(AlertInfo) {
                 this.name = AlertInfo == null ? '添加告警信息' : '编辑告警信息'
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', AlertInfo)
-            },
+            },*/
             //按照检索条件分页查询告警信息
             async queryAlertInfoPageByTime() {
                 let searchAll = this.page
@@ -258,6 +257,7 @@
                     })
                 }
             },
+            //搜索框填充数据方法
             handleClick(data, item) {
                 if (data.key == 'devNo') {
                     this.search.devNo = data.value
@@ -269,6 +269,27 @@
                     this.search.endTime = data.value
                 }
                 this.init();
+            },
+            //导出
+            async exportData() {
+                if (this.infos.length) {
+                    if (this.infos.length > 500) {
+                        this.$Notice.error({
+                            title: '查询到的条数过多',
+                            desc: '查询到的告警条数不得超过500条，请您重新选择查询条件',
+                            duration: 5
+                        })
+                    } else {
+                        this.$refs.selection.exportCsv({
+                            filename: "告警信息列表列表",
+                            original: false,
+                            columns: this.columns1,
+                            data: this.infos
+                        });
+                    }
+                } else {
+                    this.$Message.info("表格数据不能为空！")
+                }
             },
         }
     }
