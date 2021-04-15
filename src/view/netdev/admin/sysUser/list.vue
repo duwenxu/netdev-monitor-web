@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;background-color: #415dbe;border: 0px" type="primary" @click="operate()">
+      <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">
         新增
       </Button>
       <search :search-data='searchData'></search>
@@ -46,32 +46,39 @@
         columns1: [
           {
             title: '用户账号',
-            key: 'userName'
+            key: 'userName',
+            minWidth: 100
           },
           {
             title: '用户姓名',
-            key: 'userChname'
+            key: 'userChname',
+            minWidth: 100
           },
           {
             title: '用户类型',
-            key: 'userType_paraName'
+            key: 'userType_paraName',
+            minWidth: 100
           },
           {
             title: '用户手机号',
-            key: 'userPhone'
+            key: 'userPhone',
+            minWidth: 140
           },
           {
             title: '用户邮箱',
-            key: 'userEmail'
+            key: 'userEmail',
+            minWidth: 160
           },
           {
             title: '用户状态',
-            key: 'userStatus_paraName'
+            key: 'userStatus_paraName',
+            minWidth: 100
           },
           {
             title: '操作',
             key: 'action',
-            width: 280,
+            fixed: 'right',
+            width: 190,
             align: 'center',
             render: (h, rows) => {
               return h('div', [
@@ -84,7 +91,7 @@
                     },
                     class:'edit_btn',
                     style: {
-                        marginRight: '25px',
+                        marginRight: '10px',
                     },
                   on: {
                     click: () => {
@@ -101,7 +108,7 @@
                     },
                     class:'edit_btn3',
                     style: {
-                        marginRight: '25px',
+                        marginRight: '10px',
                     },
                   on: {
                     click: () => {
@@ -183,6 +190,8 @@
       initSelect() {
         this.$xy.getParamGroup('0004').then(res => {
           this.searchData[1].data = res
+          console.warn(2222)
+          console.warn(res)
         })
       },
       rowClassName(row, index) {

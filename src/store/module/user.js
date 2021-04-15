@@ -27,9 +27,13 @@ export default {
     messageReadedList: [],
     messageTrashList: [],
     messageContentStore: {},
-    theme: ''
+    theme: '',
+    mediaWidthType: 1,
   },
   mutations: {
+    setMediaWidthType(state, value){
+      state.mediaWidthType = value
+    },
     setTheme (state, value) {
       state.theme = value
       localSave('themeColor', value)
