@@ -54,7 +54,7 @@
                     {
                         title: '角色描述',
                         key: 'roleDesc',
-                        minWidth: 140,
+                        minWidth: 210,
                     },
                     {
                         title: '创建人',
@@ -70,7 +70,7 @@
                         title: '操作',
                         key: 'action',
                         fixed: 'right',
-                        width: 200,
+                        width: 190,
                         align: 'center',
                         render: (h, rows) => {
                             return h('div', [

@@ -3,10 +3,10 @@
     <template v-for='(data,index) in searchData'>
       <template v-if='data.type==1 && !data.isHide'>
         <Input v-model.trim="data.value" :name='data.key'
-               :placeholder="data.placeholder" :readonly="data.readonly" clearable style="width: 200px;margin-right: 15px"></Input>
+               :placeholder="data.placeholder" :readonly="data.readonly" clearable style="width: 200px;margin-right: 10px"></Input>
       </template>
       <template v-if='data.type==2'>
-        <Select v-model="data.value" clearable :placeholder="data.placeholder" @on-change="handleClick(data,$event)" style="width:200px;margin-right: 15px">
+        <Select v-model="data.value" clearable :placeholder="data.placeholder" @on-change="handleClick(data,$event)" style="width:200px;margin-right: 10px">
           <Option  v-for='choose in data.data' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
         </Select>
       </template>
@@ -14,7 +14,7 @@
         <DatePicker :placeholder="data.placeholder" v-model="data.value" :style="{width: data.long == 2?'200px':'300px'}" :type="data.long == 2?'date':'datetimerange'"></DatePicker>
       </template>
       <template v-if='index==searchData.length-1'>
-        <Button @click="init" style="background-color: #fea230;border: 0px;color: #ffffff;margin-right: 10px;">搜索</Button>
+        <Button @click="init" style="background-color: #fea230;border: 0px;color: #ffffff;">搜索</Button>
         <Button @click="reset" style="background-color: #2fb685;border: 0px;color: #ffffff">重置</Button>
       </template>
     </template>

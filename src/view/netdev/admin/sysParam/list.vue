@@ -42,7 +42,7 @@
                     {
                         title: '参数名称',
                         key: 'paraName',
-                      minWidth: 100,
+                      minWidth: 120,
                     },
                     {
                         title: '上级编码',
@@ -72,7 +72,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                      width: 160,
+                      width: 140,
                       fixed: 'right',
                         align: 'center',
                         render: (h, rows) => {

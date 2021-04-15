@@ -255,7 +255,7 @@
         const that = this
         that.screenWidth = document.body.clientWidth
         if (that.screenWidth <= 991 || that.screenWidth <= 1199 ) {
-          that.menuWidth = 200
+          that.menuWidth = 214
           that.setMediaWidthType(0)
         } else if (that.screenWidth <= 1919 || that.screenWidth >= 1920) {
           that.menuWidth = 260

@@ -42,7 +42,7 @@
             {
               title: '协议名称',
               key: 'fmtName',
-              width: 200
+              width: 220
             },
             {
               title: '设备类型',
@@ -82,7 +82,7 @@
             {
               title: '格式处理类',
               key: 'fmtHandlerClass',
-              width: 200
+              width: 240
             },
 
             // {

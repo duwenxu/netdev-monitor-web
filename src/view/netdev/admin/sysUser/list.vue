@@ -78,7 +78,7 @@
             title: '操作',
             key: 'action',
             fixed: 'right',
-            width: 200,
+            width: 190,
             align: 'center',
             render: (h, rows) => {
               return h('div', [
@@ -190,6 +190,8 @@
       initSelect() {
         this.$xy.getParamGroup('0004').then(res => {
           this.searchData[1].data = res
+          console.warn(2222)
+          console.warn(res)
         })
       },
       rowClassName(row, index) {

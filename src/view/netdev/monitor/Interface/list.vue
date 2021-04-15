@@ -62,7 +62,7 @@
           {
             title: '设备类型',
             key: 'devType_paraName',
-            minWidth: 180,
+            minWidth: 190,
           },
           {
             title: '解析协议',
@@ -70,7 +70,7 @@
             render: (h, params) => {
               return h('span', this.handlerPrtFomat(params.row.fmtId));
             },
-            minWidth: 220,
+            minWidth: 260,
           },
           {
             title: '接口编码',
@@ -86,7 +86,7 @@
           {
             title: '接口命令标识',
             key: 'itfCmdMark',
-            minWidth: 100,
+            minWidth: 120,
           },
           {
             title: '接口状态',

@@ -186,38 +186,38 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width: 200,
+          minWidth: 170,
           key: 'logTime',
         },
         {
           title: '访问类型名称',
-          width: 120,
+          minWidth: 120,
           key: 'logAccessTypeName',
         },
         {
           title: '操作类型名称',
-          width: 120,
+          minWidth: 120,
           key: 'logOperTypeName',
         },
         {
           title: '命令标识符',
-          width: 120,
+          minWidth: 110,
           key: 'logCmdMark',
         },
         {
           title: '操作对象名称',
-          width: 200,
+          minWidth: 165,
           key: 'logOperObjName',
         },
         {
           title: '操作内容',
           key: 'logOperContent',
-
+          minWidth: 100,
           tooltip: true,
         },
         {
           title: '原始数据',
-
+          minWidth: 140,
           key: 'orignData',
         },
       ],

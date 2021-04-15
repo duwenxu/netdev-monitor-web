@@ -72,12 +72,14 @@ let mixin = {
     },
     onClose (event) {
       this.connectTag = false
-      if (this.reconnect.currentCount < this.reconnect.allCount) {
-        this.reconnect.timer = setTimeout(() => {
-          this.reconnect.currentCount++
-          this.connectWs()
-          this.reconnect.tag = true
-        }, this.reconnect.step)
+      if (this.$route.name === 'home' || this.$route.name === 'status') {
+        if (this.reconnect.currentCount < this.reconnect.allCount) {
+          this.reconnect.timer = setTimeout(() => {
+            this.reconnect.currentCount++
+            this.connectWs()
+            this.reconnect.tag = true
+          }, this.reconnect.step)
+        }
       }
     }
   }

@@ -48,7 +48,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="equipment_box equipment_child" :key="equipment.devNo"
+        <div class="equipment_box equipment_child equipment_padding" :key="equipment.devNo"
              :style="devicePosition(equipment)"  style="margin-bottom: 0"
              @click="pageJump(equipment)">
           <div class="device_img">
@@ -111,11 +111,11 @@
           },
           '2': {
             top: '0px',
-            left: '570px',
+            left: '540px',
           },
           '10': {
             top: '0px',
-            left: '760px',
+            left: '730px',
           }
         },
         equipments:[
@@ -179,11 +179,11 @@
             },
             '2': {
               top: '0px',
-              left: '465px',
+              left: '445px',
             },
             '10': {
               top: '0px',
-              left: '620px',
+              left: '600px',
             }
           }
         }else if (this.mediaWidthType === 1) {
@@ -203,11 +203,11 @@
             },
             '2': {
               top: '0px',
-              left: '570px',
+              left: '540px',
             },
             '10': {
               top: '0px',
-              left: '760px',
+              left: '730px',
             }
           }
         }

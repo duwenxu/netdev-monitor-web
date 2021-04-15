@@ -47,17 +47,17 @@
           {
             title: '图标',
             key: 'menuIcon',
-            minWidth: 100,
+            minWidth: 140,
           },
           {
             title: '组件',
             key: 'menuComponent',
-            minWidth: 150,
+            minWidth: 300,
           },
           {
             title: '路径',
             key: 'menuPath',
-            minWidth: 150,
+            minWidth: 160,
           },
           {
             title: '排序',
@@ -67,7 +67,7 @@
           {
               title: '操作',
               key: 'action',
-              width: 200,
+              width: 190,
               fixed:'right',
               type: 'template',
               render: (h, rows) => {

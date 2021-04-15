@@ -62,7 +62,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 200,
+                        width: 190,
                         fixed: 'right',
                         align: 'center',
                         render: (h, rows) => {
