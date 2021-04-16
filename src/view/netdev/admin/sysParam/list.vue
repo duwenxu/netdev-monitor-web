@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button icon="md-add" style="float:right;margin-bottom: 10px;background-color: #415dbe;border: 0px" type="primary" @click="operate()">新增</Button>
+      <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
       <search :search-data='searchData'></search>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table  :columns="columns1" :data="infos"></Table>
@@ -36,36 +36,44 @@
                 columns1: [
                     {
                         title: '参数编码',
-                        key: 'paraCode'
+                        key: 'paraCode',
+                        minWidth: 100,
                     },
                     {
                         title: '参数名称',
-                        key: 'paraName'
+                        key: 'paraName',
+                      minWidth: 120,
                     },
                     {
                         title: '上级编码',
-                        key: 'paraParentId'
+                        key: 'paraParentId',
+                      minWidth: 100,
                     },
                     {
                         title: '备注一',
-                        key: 'remark1'
+                        key: 'remark1',
+                      minWidth: 100,
                     },
                     {
                         title: '备注二',
-                        key: 'remark2'
+                        key: 'remark2',
+                      minWidth: 100,
                     },
                     {
                         title: '备注三',
-                        key: 'remark3'
+                        key: 'remark3',
+                      minWidth: 100,
                     },
                     {
                         title: '是否有效',
-                        key: 'isValidate_paraName'
+                        key: 'isValidate_paraName',
+                      minWidth: 100,
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        width: 180,
+                      width: 140,
+                      fixed: 'right',
                         align: 'center',
                         render: (h, rows) => {
                             return h('div', [
@@ -78,7 +86,7 @@
                                     },
                                     class:'edit_btn',
                                     style: {
-                                        marginRight: '25px',
+                                        marginRight: '10px',
                                     },
                                     on: {
                                         click: () => {

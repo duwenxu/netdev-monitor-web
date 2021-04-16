@@ -183,7 +183,8 @@
         'setLocal',
         'saveSpace',
         'setHomeRoute',
-        'setTheme'
+        'setTheme',
+        'setMediaWidthType'
       ]),
       getScreen(data) {
         this.$xy.vector.$emit('screenState', {state: data})
@@ -249,6 +250,17 @@
           localStorage.setItem('layout', layout)
         }
         this.layout = layout
+      },
+      mediaWidth(){
+        const that = this
+        that.screenWidth = document.body.clientWidth
+        if (that.screenWidth <= 991 || that.screenWidth <= 1199 ) {
+          that.menuWidth = 214
+          that.setMediaWidthType(0)
+        } else if (that.screenWidth <= 1919 || that.screenWidth >= 1920) {
+          that.menuWidth = 260
+          that.setMediaWidthType(1)
+        }
       }
     },
     watch: {
@@ -275,27 +287,11 @@
     mounted() {
       this.setTheme(localRead('themeColor') || 'light')
       // this.initTheme()
-      const that = this
       // 宽度适应
-      that.screenWidth = document.body.clientWidth
-      if (  that.screenWidth>768 && that.screenWidth < 992 ) {
-        that.menuWidth = 200
-      } else if (that.screenWidth>992 && that.screenWidth < 1199) {
-        that.menuWidth = 200
-      } else if (that.screenWidth>1200 && that.screenWidth < 1920) {
-        that.menuWidth = 260
-      }
-
+      this.mediaWidth()
       window.onresize = () => {
         return (() => {
-          if (  that.screenWidth>768 && that.screenWidth < 992 ) {
-            that.menuWidth = 200
-          } else if (that.screenWidth>992 && that.screenWidth < 1199) {
-            that.menuWidth = 200
-          } else if (that.screenWidth>1200 && that.screenWidth < 1920) {
-            that.menuWidth = 260
-          }
-          that.screenWidth = document.body.clientWidth
+          this.mediaWidth()
         })()
       }
       // 设置布局

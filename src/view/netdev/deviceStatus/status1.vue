@@ -48,7 +48,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="equipment_box equipment_child" :key="equipment.devNo"
+        <div class="equipment_box equipment_child equipment_padding" :key="equipment.devNo"
              :style="devicePosition(equipment)"  style="margin-bottom: 0"
              @click="pageJump(equipment)">
           <div class="device_img">
@@ -74,14 +74,14 @@
 
 <script>
   import mixin from "../../../components/common/websocket";
+  import {mapState} from "vuex";
 
   export default {
     name: 'home',
     mixins: [mixin],
-    components: {
-    },
     data () {
       return {
+        screenWidth: document.documentElement.clientWidth,
         polylineColor: '#7f7f7f',
         heightType: {
           1: '180px',
@@ -103,19 +103,19 @@
           },
           '9': {
             top: '0px',
-            left: '200px',
+            left: '190px',
           },
           '20': {
             top: '0px',
-            left: '400px',
+            left: '380px',
           },
           '2': {
             top: '0px',
-            left: '600px',
+            left: '540px',
           },
           '10': {
             top: '0px',
-            left: '800px',
+            left: '730px',
           }
         },
         equipments:[
@@ -147,15 +147,126 @@
         ]
       }
     },
-    // created() {
-    //   this.$xy.vector.$on('WS_Info', this.getWSData)
-    // },
-    // beforeDestroy() {
-    //   this.$xy.vector.$off('WS_Info', this.getWSData)
-    // },
+    computed: {
+      ...mapState({
+        mediaWidthType: state => state.user.mediaWidthType
+      }),
+    },
+    watch:{
+      mediaWidthType(){
+        this.getMediaWidth()
+      }
+    },
     mounted () {
+      this.getMediaWidth()
     },
     methods: {
+      getMediaWidth(){
+        if (this.mediaWidthType === 0){
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '9': {
+              top: '0px',
+              left: '155px',
+            },
+            '20': {
+              top: '0px',
+              left: '310px',
+            },
+            '2': {
+              top: '0px',
+              left: '445px',
+            },
+            '10': {
+              top: '0px',
+              left: '600px',
+            }
+          }
+        }else if (this.mediaWidthType === 1) {
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '9': {
+              top: '0px',
+              left: '190px',
+            },
+            '20': {
+              top: '0px',
+              left: '380px',
+            },
+            '2': {
+              top: '0px',
+              left: '540px',
+            },
+            '10': {
+              top: '0px',
+              left: '730px',
+            }
+          }
+        }
+      },
+      mediaWidth(){
+        const that = this
+        window.addEventListener('resize', () => {
+          that.screenWidth = document.body.clientWidth
+          if (that.screenWidth <= 991 || that.screenWidth <= 1199 ) {
+            that.position = {
+              '5': {
+                top: '0px',
+                left: '0px',
+                // polyline: ['179,440 490,440 490,150']
+              },
+              '9': {
+                top: '0px',
+                left: '160px',
+              },
+              '20': {
+                top: '0px',
+                left: '320px',
+              },
+              '2': {
+                top: '0px',
+                left: '480px',
+              },
+              '10': {
+                top: '0px',
+                left: '640px',
+              }
+            }
+          } else if (that.screenWidth <= 1919 || that.screenWidth >= 1920) {
+            that.position = {
+              '5': {
+                top: '0px',
+                left: '0px',
+                // polyline: ['179,440 490,440 490,150']
+              },
+              '9': {
+                top: '0px',
+                left: '200px',
+              },
+              '20': {
+                top: '0px',
+                left: '400px',
+              },
+              '2': {
+                top: '0px',
+                left: '600px',
+              },
+              '10': {
+                top: '0px',
+                left: '800px',
+              }
+            }
+          }
+        })
+      },
       devicePosition (equipment){
         return {
           top: this.position[equipment.devNo].top,

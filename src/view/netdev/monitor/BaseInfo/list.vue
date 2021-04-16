@@ -43,7 +43,7 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width: 150
+                                width: 190
                             },
                             {
                                 title: '设备名称',
@@ -171,7 +171,6 @@
                                             },
                                             style: {
                                                 marginRight: '5px',
-
                                             },
                                             on: {
                                                 click: () => {
@@ -186,6 +185,9 @@
                                             },
                                             attrs:{
                                                 title:'删除'
+                                            },
+                                            style: {
+                                              marginRight: '5px',
                                             },
                                             on: {
                                                 click: () => {

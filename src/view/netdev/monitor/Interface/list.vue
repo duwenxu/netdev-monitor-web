@@ -57,11 +57,12 @@
           {
             title: '接口名称',
             key: 'itfName',
-
+            minWidth: 200,
           },
           {
             title: '设备类型',
             key: 'devType_paraName',
+            minWidth: 190,
           },
           {
             title: '解析协议',
@@ -69,32 +70,39 @@
             render: (h, params) => {
               return h('span', this.handlerPrtFomat(params.row.fmtId));
             },
+            minWidth: 260,
           },
           {
             title: '接口编码',
             key: 'itfCode',
+            minWidth: 100,
           },
 
           {
             title: '接口类型',
             key: 'itfType_paraName',
+            minWidth: 120,
           },
           {
             title: '接口命令标识',
             key: 'itfCmdMark',
+            minWidth: 120,
           },
           {
             title: '接口状态',
             key: 'itfStatus_paraName',
+            minWidth: 120,
           },
           {
             title: '页面路径',
             key: 'itfPagePath',
+            minWidth: 200,
           },
           {
             title: '操作',
             key: 'action',
             width: 240,
+            fixed: 'right',
             align: 'center',
             render: (h, rows) => {
               return h('div', [
