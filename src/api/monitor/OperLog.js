@@ -4,6 +4,7 @@ import qs from 'qs'
 
 /**
  * 查询分页数据
+ * 暂时没用到（已被方法queryOperLogPageByTime替代）
  */
 export const queryOperLogPageList = info => {
     return axios.request({
@@ -11,6 +12,17 @@ export const queryOperLogPageList = info => {
         method: 'post',
         data: qs.stringify(info)
     })
+}
+
+/**
+ * 按照检索条件分页查询
+ */
+export const queryOperLogPageByTime = info => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/operLog/queryOperLog',
+    method: 'post',
+    data: qs.stringify(info)
+  })
 }
 
 /**
