@@ -5,6 +5,10 @@
         <component  :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
+
+    <div :style="{height:220+'px',overflow:'auto'}">
+      <Table disabled-hover :columns="logColumns" :data="logs"></Table>
+    </div>
   </div>
 </template>
 
@@ -31,43 +35,87 @@ export default {
     return {
       wsurl:'ws://' + this.$xy.SOCKET_URL + '/ws',
       page_socket:null,
-      ctrl_socker:null,
+      logSocket:null,
       test:'',
       metaTitle:'任务编辑',
       navName: '',
       navIndex: 0,
       tabs: [
-        {index:0,name: 'Operate', nav: '基本信息',componentName:'Operate'},
-        // {index:1,name: 'ctrlParams', nav: '设备控制',componentName:'ctrlParams'},
-        // {index:2,name: 'aaa', nav: '测试',componentName:'aaa'},
+        {index:0,name: 'Operate', nav: '基本信息',componentName:'Operate'}
       ],
+      logColumns: [
+        {
+          title: '日志时间',
+          width: 200,
+          key: 'logTime',
+        },
+        {
+          title: '访问类型名称',
+          width: 120,
+          key: 'logAccessTypeName',
+        },
+        {
+          title: '操作类型名称',
+          width: 120,
+          key: 'logOperTypeName',
+        },
+        {
+          title: '命令标识符',
+          width: 120,
+          key: 'logCmdMark',
+        },
+        {
+          title: '操作对象名称',
+          width: 200,
+          key: 'logOperObjName',
+        },
+        {
+          title: '操作内容',
+          key: 'logOperContent',
+
+          tooltip: true,
+        },
+        {
+          title: '原始数据',
+
+          key: 'orignData',
+        },
+      ],
+      orderDatas: [],
+      logs: [],
     }
   },
   mounted() {
-      // this.getTabsPage()
-      // this.getTabsCtrl()
-      // this.getWs()
+      this.getTabsCtrl()
+      this.logWs()
   },
   methods: {
     goto: function (name) {
       this.navName = name
-      this.$xy.vector.$emit('ceshi',5)
     },
-    getWs() { //初始化weosocket
-      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
-      /*-----------------设备参数--------------*/
-      this.page_socket = new WebSocket(this.wsurl)
-      this.page_socket.onopen = this.pageSend
-      this.page_socket.onmessage = this.getPageData
+    //可以编辑的tab内容--设备控制，若该接口有值则连接ws
+    async getTabsCtrl(){
+      let {result, success, message} = await queryCtrlInfo({devNo:this.$route.name})
+      if(success && result.length){
+        this.tabs.push({name: 'ctrlParams', nav: '设备控制',componentName:'ctrlParams'})
+        this.getTabsPage()
+        this.getCtrlWs()
+      }
     },
-    pageSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo': this.$route.name,"cmdMark":"01"})
-      this.page_socket.send(obj)
+    //纯显示的tab
+    async getTabsPage(){
+      let {result, success, message} = await queryPageInfo({devNo:this.$route.name})
+       if(success && result.length){
+         let data = []
+         result.forEach(item=>{
+           data.push({name: item.itfPagePath, nav: item.itfName,componentName:item.itfPagePath})
+         })
+         this.tabs = this.tabs.concat(data)
+        this.$nextTick(()=>{
+          this.$xy.vector.$emit('pageInfo',result)
+        })
+       }
     },
-    getPageData(){
-
-    },
-
     getCtrlWs(){
       let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.ctrl_socker = new WebSocket(wsurl)
@@ -80,31 +128,27 @@ export default {
     },
     getCtrlData(frame){
       this.$xy.vector.$emit('ctrlTag',frame)
+    },
+    /*-----------------日志/告警--------------*/
+    logWs(){
+      let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      this.logSocket = new WebSocket(wsurl)
+      this.logSocket.onopen = this.logSendMsg
+      this.logSocket.onmessage = this.getLogMsg
+      /*-----------------告警--------------*/
+      this.warnSocket = new WebSocket(wsurl)
+      this.warnSocket.onopen = this.warnSend
+      this.warnSocket.onmessage = this.getWarnLog
 
     },
-
-    //纯显示的tab
-    async getTabsPage(){
-      let {result, success, message} = await queryPageInfo({devNo:this.$route.name})
-      // this.$xy.vector.$emit('aaa',22222)
-
+    warnSend() {
+      let obj = JSON.stringify({'interfaceMark': "DevAlertInfos", 'devNo': this.$route.name})
+      this.logSocket.send(obj)
     },
-    //可以编辑的tab内容--设备控制，若该接口有值则连接ws
-    async getTabsCtrl(){
-      let {result, success, message} = await queryCtrlInfo({devNo:this.$route.name})
-      if(success && result.length){
-        // this.getCtrlWs()
-        console.log(8888)
+    getWarnLog(frame) {
+      let msg = JSON.parse(frame.data)
 
-        this.tabs.push({index:1,name: 'ctrlParams', nav: '设备控制',componentName:'ctrlParams'})
-        this.getCtrlWs()
-      }
     }
   }
 }
 </script>
-<style scoped>
-</style>
-<style>
-
-</style>

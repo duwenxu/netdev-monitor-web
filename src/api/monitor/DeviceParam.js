@@ -23,3 +23,14 @@ export const queryCtrlInfo = info => {
     data: qs.stringify(info)
   })
 }
+
+/**
+ * 保存子接口数据
+ */
+export const saveCtrlInfo = info => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/interface/interfaceCtrl',
+    method: 'put',
+    data: info
+  })
+}
