@@ -1,5 +1,5 @@
 <template>
-  <div class="param-wrap">
+  <div class="param-wrap" :style="{height:normalHeight+'px'}">
     <Row>
       <Col :xs="24" :md="24" v-for="item in infos">
         <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
@@ -145,6 +145,7 @@ export default {
   components: {common},
   data() {
     return {
+      normalHeight:450,
       infos: [],
       validTag: false,
       paramType: ['0019002', '0019003']
@@ -152,14 +153,23 @@ export default {
   },
   created: function () {
     this.$xy.vector.$on('ctrlTag', this.getMsg)
+    this.$xy.vector.$on('changeSize', this.sizeInfo)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('ctrlTag', this.getMsg)
+    this.$xy.vector.$off('changeSize', this.sizeInfo)
 
   },
   mounted() {
   },
   methods: {
+    sizeInfo(data){
+      if(data.showAlert || data.showLog){
+        this.normalHeight = 450
+      }else{
+        this.normalHeight = 680
+      }
+    },
     getMsg(data) {
       let result = JSON.parse(data.data)
       result.forEach(item=>{

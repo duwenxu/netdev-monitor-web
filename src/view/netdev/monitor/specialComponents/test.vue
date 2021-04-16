@@ -1,5 +1,5 @@
 <template>
-<div class="param-wrap">
+  <div class="param-wrap" :style="{height:normalHeight+'px'}">
   <Row>
     <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
       <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
@@ -13,6 +13,7 @@ export default {
   name: "test",
   data(){
     return{
+      normalHeight:450,
       pageObj:{},
       infos:[]
     }
@@ -21,12 +22,21 @@ export default {
 
   },
   created: function () {
+    this.$xy.vector.$on('changeSize', this.sizeInfo)
     this.$xy.vector.$on('pageInfo', this.getInfo)
   },
   beforeDestroy: function () {
+    this.$xy.vector.$off('changeSize', this.changeSize)
     this.$xy.vector.$off('pageInfo', this.getInfo)
   },
   methods:{
+    sizeInfo(data){
+      if(data.showAlert || data.showLog){
+        this.normalHeight = 450
+      }else{
+        this.normalHeight = 680
+      }
+    },
     getInfo(data){
       data.forEach(item=>{
         if(item.itfPagePath == 'test'){
