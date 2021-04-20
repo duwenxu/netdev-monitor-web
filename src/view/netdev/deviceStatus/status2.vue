@@ -48,7 +48,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="equipment_box equipment_child" :key="equipment.devNo"
+        <div class="equipment_box equipment_child equipment_padding" :key="equipment.devNo"
              :style="devicePosition(equipment)"  style="margin-bottom: 0"
              @click="pageJump(equipment)">
           <div class="device_img">
@@ -74,11 +74,10 @@
 
 <script>
   import mixin from "../../../components/common/websocket";
+  import {mapState} from "vuex";
 
   export default {
     mixins: [mixin],
-    components: {
-    },
     data () {
       return {
         polylineColor: '#7f7f7f',
@@ -102,19 +101,15 @@
           },
           '19': {
             top: '0px',
-            left: '200px',
+            left: '190px',
           },
           '20': {
             top: '0px',
-            left: '400px',
+            left: '350px',
           },
           '2': {
             top: '0px',
-            left: '600px',
-          },
-          '10': {
-            top: '0px',
-            left: '800px',
+            left: '510px',
           },
         },
         equipments:[
@@ -139,15 +134,63 @@
         ]
       }
     },
-    // created() {
-    //   this.$xy.vector.$on('WS_Info', this.getWSData)
-    // },
-    // beforeDestroy() {
-    //   this.$xy.vector.$off('WS_Info', this.getWSData)
-    // },
+    computed: {
+      ...mapState({
+        mediaWidthType: state => state.user.mediaWidthType
+      }),
+    },
+    watch: {
+      mediaWidthType(){
+        this.getMediaWidth()
+      }
+    },
     mounted () {
+      this.getMediaWidth()
     },
     methods: {
+      getMediaWidth(){
+        if (this.mediaWidthType === 0){
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '19': {
+              top: '0px',
+              left: '155px',
+            },
+            '20': {
+              top: '0px',
+              left: '290px',
+            },
+            '2': {
+              top: '0px',
+              left: '425px',
+            },
+          }
+        }else if (this.mediaWidthType === 1) {
+          this.position = {
+            '5': {
+              top: '0px',
+              left: '0px',
+              // polyline: ['179,440 490,440 490,150']
+            },
+            '19': {
+              top: '0px',
+              left: '190px',
+            },
+            '20': {
+              top: '0px',
+              left: '350px',
+            },
+            '2': {
+              top: '0px',
+              left: '510px',
+            },
+          }
+        }
+      },
       devicePosition (equipment){
         return {
           top: this.position[equipment.devNo].top,

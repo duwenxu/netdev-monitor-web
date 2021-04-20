@@ -1,19 +1,19 @@
 <template>
  <div>
    <div v-for="(info,index) in infos">
-     <Col :xs="24" :lg="6">
+     <Col :xs="24" :lg="lgCol">
        <Row>
          <template v-if="info.parahowMode == '0024001'">
            <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                <Row>
-                 <Col :xs="11" :lg="11">
+                 <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                    <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                      <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                    </div>
                  </Col>
-                 <Col :xs="13" :lg="13">
+                 <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                       <span style="cursor: pointer" @click="changeMode(info)">{{
                           (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
                         }}&nbsp;&nbsp;<span
@@ -22,7 +22,7 @@
                  <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
                    <Col :xs="24" :lg="24">
                      <template v-for="temp in info.splitArr">
-                       <Col :xs="info.splitArr.length<=2?8:6" :lg="info.splitArr.length<=2?8:6">
+                       <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
                          <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
                            <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                            </Option>
@@ -56,14 +56,14 @@
            </template>
            <template v-else>
                <Row>
-             <Col :xs="11" :lg="11">
+                 <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                </div>
              </Col>
-             <Col :xs="13" :lg="13">
+                 <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                           <span style="cursor: pointer"
                                 @click="changeMode(info)">{{
                               (info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'
@@ -111,14 +111,14 @@
          </template>
          <template v-else>
              <Row>
-               <Col :xs="11" :lg="11">
+               <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                  <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                    <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                  </div>
                </Col>
-               <Col :xs="13" :lg="13">
+               <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                  <template v-if="info.oldVal">
                    <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
                      <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
@@ -128,7 +128,7 @@
                    <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
                  </template>
                </Col>
-               <Col :xs="24" :lg="24"
+               <Col :xs="16" :lg="16" push="4"
                     v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                     style="display: flex">
                  <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
@@ -162,11 +162,16 @@ export default {
   },
   data(){
     return{
+      lgCol:8,
       validTag: false,
       paramType: ['0019002', '0019003']
     }
   },
   mounted() {
+    if(window.screen.width<=1024){
+      this.lgCol = 12
+    }
+    console.log( window.screen.width)
   },
   methods:{
     changeMode(info) {

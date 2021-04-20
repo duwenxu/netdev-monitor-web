@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button icon="md-add" style="float:right;margin-bottom: 10px;background-color: #415dbe;border: 0px" type="primary" @click="operate(0,null)">新增</Button>
+      <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate(0,null)">新增</Button>
       <search :search-data='searchData'></search>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
        <template>
@@ -33,35 +33,42 @@
           {
             title: '菜单名称',
             key: 'menuTitle',
+            minWidth: 120,
             tree: true
           },
           {
             title: '菜单类型',
             key: 'menuType',
+            minWidth: 100,
             render:(h,rows) =>{
               return h('div',rows.row.menuType == 0 ? '一级菜单' : '子菜单')
             }
           },
           {
             title: '图标',
-            key: 'menuIcon'
+            key: 'menuIcon',
+            minWidth: 140,
           },
           {
             title: '组件',
-            key: 'menuComponent'
+            key: 'menuComponent',
+            minWidth: 300,
           },
           {
             title: '路径',
-            key: 'menuPath'
+            key: 'menuPath',
+            minWidth: 160,
           },
           {
             title: '排序',
-            key: 'menuSeq'
+            key: 'menuSeq',
+            minWidth: 100,
           },
           {
               title: '操作',
               key: 'action',
-              width: 250,
+              width: 190,
+              fixed:'right',
               type: 'template',
               render: (h, rows) => {
                   return h('div', [
@@ -74,7 +81,7 @@
                           },
                           class:'edit_btn',
                           style: {
-                              marginRight: '25px',
+                              marginRight: '10px',
                           },
                           on: {
                               click: () => {
@@ -91,7 +98,7 @@
                           },
                           class:'edit_btn3',
                           style: {
-                              marginRight: '25px',
+                              marginRight: '10px',
                           },
                           on: {
                               click: () => {

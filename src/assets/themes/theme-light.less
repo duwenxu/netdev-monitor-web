@@ -163,9 +163,8 @@
   .ivu-input-prefix, .ivu-input-suffix{
     line-height: 32px;
   }
-
+  & > div,
   & ~ div {
-
     .spin-icon-load {
       animation: ani-demo-spin 1s linear infinite;
     }
@@ -308,6 +307,9 @@
         &:after {
           background: transparent;
         }
+        .ivu-table-fixed-right::before {
+          background-color: transparent;
+        }
 
         color: @font-color-text;
         background: transparent;
@@ -390,6 +392,529 @@
     .ivu-form-item-label {
       color: @font-color-text;
     }
+
+    /*--------------------------公共组件------------------*/
+    .ivu-form {
+      .ivu-form-item-label {
+        color: @font-color-text !important;
+      }
+    }
+
+    /*tabs*/
+    .ivu-tabs-bar {
+      border-color: @border-table-th;
+
+      .ivu-tabs-nav {
+        .ivu-tabs-ink-bar {
+          background: @color-blue;
+        }
+
+        .ivu-tabs-tab {
+          color: @font-color-text;
+
+          &.ivu-tabs-tab-active {
+            color: @color-blue;
+          }
+        }
+      }
+    }
+
+    .ivu-table-cell-tree {
+      background-color: transparent;
+      &:hover {
+        color: @color-blue;
+        border-color: @color-blue;
+      }
+    }
+    .ivu-tag-primary {
+      background: @color-blue;
+    }
+
+    .ivu-tree {
+      color: @font-color-text;
+
+      .ivu-tree-title {
+        color: @font-color-text;
+
+        &:hover {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+
+      .ivu-tree-title-selected {
+        background: @color-blue;
+        color: @color-white;
+
+        &:hover {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+    }
+
+    p {
+      font-size: @font-size-text;
+      color: @font-color-text;
+    }
+
+    /*遮罩*/
+    .ivu-modal-mask {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /*modal*/
+    .ivu-modal {
+
+      .ivu-modal-content {
+        background-color: @bg-modal !important;
+        border-radius: 2px;
+
+        .ivu-modal-header {
+          color: @font-color-text;
+          background: @bg-modal;
+          border-bottom-color: @border-table-td;
+
+          .ivu-modal-header-inner {
+
+            color: @font-color-text;
+          }
+        }
+
+        .ivu-modal-body {
+          color: @font-color-text;
+        }
+
+        .ivu-modal-footer {
+          border-top-color: @border-table-td;
+        }
+
+        .ivu-btn {
+          &.ivu-btn-text {
+            &.ivu-btn-large {
+              color: @font-color-text;
+              background: transparent;
+
+              &:hover {
+                color: @color-blue;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .ivu-card {
+      margin-bottom: 16px;
+      background: @bg-card;
+      border-color: @bg-card;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .ivu-card-head {
+        p {
+          color: @font-color-text;
+        }
+      }
+    }
+
+    /*滚动条样式*/
+    //::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的
+    //::-webkit-scrollbar-button 滚动条两端的按钮
+    //::-webkit-scrollbar-track  外层轨道
+    //::-webkit-scrollbar-track-piece  内层滚动槽
+    //::-webkit-scrollbar-thumb 滚动的滑块
+    //::-webkit-scrollbar-corner 边角
+    //::-webkit-resizer 定义右下角拖动块的样式
+    ::-webkit-scrollbar {
+      width: 2px;
+      border: 1px solid @border-table-th;
+      height: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: @color-blue;
+    }
+
+    /*----input---placeholder-----*/
+    .ivu-input {
+      background: transparent;
+      color: @font-color-2;
+      border-color: @border-color-input
+    }
+
+    ::-webkit-input-placeholder {
+      color: @font-color-placeholder;
+    }
+
+    /*select*/
+    .ivu-select-selection {
+      border-color: @border-color-input;
+      background: transparent;
+      border-radius: 4px;
+
+      .ivu-select-placeholder {
+        color: @font-color-placeholder;
+      }
+
+      .ivu-select-selected-value {
+        color: @font-color-text;
+      }
+    }
+
+    /*table*/
+    .ivu-table-wrapper {
+      border: none;
+
+      .ivu-table {
+        &:before,
+        &:after {
+          background: transparent;
+        }
+        .ivu-table-fixed-right::before {
+          background-color: transparent;
+        }
+
+        color: @font-color-text;
+        background: @bg-color-card;
+        border-color: @border-table-th;
+
+        th {
+          color: @font-color-text;
+          border-bottom-color: @border-table-th;
+          background: @bg-color-table-header;
+          font-size: @font-size-text;
+          word-break: keep-all;
+          white-space: nowrap;
+        }
+
+        td {
+          background: @bg-color-card;
+          border-bottom-color: @border-table-td;
+          font-size: @font-size-text;
+          word-break: keep-all;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .ivu-btn-ghost.ivu-btn-default {
+      color: @font-color-2;
+      border: none;
+
+      &:hover {
+        color: @color-blue;
+      }
+    }
+
+    /*分页*/
+    .ivu-page {
+      text-align: right;
+      margin-top: 10px;
+      color: @font-color-text;
+
+      .ivu-page-item a,
+      .ivu-page-next,
+      .ivu-page-prev {
+        background: @bg-color-card;
+        border: none;
+        color: @font-color-text;
+      }
+
+      .ivu-page-item-active {
+        background: @color-blue;
+        border: none;
+
+        a {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+
+      .ivu-page-options {
+        .ivu-page-options-elevator {
+          input {
+            font-size: @font-size-text;
+            color: @font-color-text;
+          }
+        }
+      }
+
+    }
+
+    /*日期选择*/
+    .ivu-date-picker-cells-cell:hover em {
+      background: @color-blue;
+      color: @font-color-text;
+    }
+
+    .ivu-date-picker-cells-focused em {
+      box-shadow: none;
+      background: @color-blue;
+      color: @color-white;
+    }
+
+    .ivu-date-picker-cells-cell-today em:after {
+      background: @color-green;
+    }
+
+    /*日期下拉框*/
+    .ivu-picker-panel-body {
+      color: @font-color-text;
+
+      .ivu-date-picker-header {
+        border-bottom-color: @font-color-3;
+
+        .ivu-picker-panel-icon-btn {
+          color: @font-color-3;
+        }
+      }
+
+      .ivu-picker-panel-content {
+        .ivu-date-picker-cells-cell {
+          &.ivu-date-picker-cells-cell-today {
+            em:after {
+              background: @color-green;
+            }
+          }
+          &.ivu-date-picker-cells-focused {
+            em {
+              box-shadow: 0 0 0 1px @color-blue inset;
+            }
+          }
+          &.ivu-date-picker-cells-cell-selected {
+            em {
+              background: @color-blue;
+            }
+          }
+          &:hover em {
+            background: @color-blue;
+            color: @color-white;
+          }
+        }
+
+
+
+        .ivu-date-picker-cells-header span {
+          color: @font-color-3;
+        }
+
+        .ivu-date-picker-cells-cell-next-month em {
+          color: @font-color-3;
+        }
+      }
+
+      .ivu-time-picker-cells-list {
+        border-left-color: @font-color-3;
+      }
+
+      .ivu-picker-confirm {
+        border-top-color: @font-color-3;
+
+        .ivu-btn.ivu-btn-default.ivu-btn-small {
+          border-color: @font-color-3;
+          background: transparent;
+          color: @font-color-text;
+        }
+
+        .ivu-btn-text {
+          color: @font-color-text;
+
+          &:hover {
+            background: transparent;
+            color: @color-blue;
+
+          }
+        }
+
+      }
+
+    }
+    //&.ivu-select-dropdown {
+    //  max-height: 300px;
+    //  background: @bg-color-card !important;
+    //  .ivu-select-item {
+    //    color: @font-color-text;
+    //  }
+    //
+    //}
+    /*下拉框*/
+    &.ivu-select-dropdown,
+    .ivu-select-dropdown {
+      max-height: 400px;
+      background: @bg-color-card !important;
+      .ivu-select-item {
+        color: @font-color-text;
+        margin-top: 1px;
+        box-sizing: border-box;
+      }
+      .ivu-select-item-focus {
+        background: @color-blue;
+      }
+
+      .ivu-dropdown-item {
+        color: @font-color-text;
+        margin-top: 1px;
+
+        &:hover {
+          background: @color-blue;
+          color: @color-white;
+        }
+      }
+
+      .ivu-select-item-selected,
+      .ivu-select-item-selected:hover,
+      .ivu-select-item:hover {
+        background: @color-blue;
+        color: @color-white;
+      }
+    }
+
+    /*搜索*/
+    .ivu-select {
+      .ivu-select-selection {
+        border-color: @border-color-input;
+        background: transparent;
+
+        .ivu-select-input {
+          color: @font-color-text;
+        }
+      }
+    }
+
+    /*input*/
+    .ivu-input {
+      font-size: @font-size-text;
+      border-color: @border-color-input;
+      background: transparent;
+      color: @font-color-text;
+    }
+
+    /*input-number*/
+    //.ivu-input-number {
+    //  background: @bg-color-card;
+    //  border-color: @border-color-input;
+    //
+    //  .ivu-input-number-input-wrap {
+    //    .ivu-input-number-input {
+    //      background: @bg-color-card;
+    //      color: @font-color-text;
+    //      border-color: @border-color-input;
+    //    }
+    //  }
+    //}
+
+    /*page*/
+    .ivu-page {
+      .ivu-page-options-elevator input,
+      .ivu-page-item,
+      .ivu-page-next,
+      .ivu-page-prev {
+        background: @bg-color-card;
+        border: none;
+        color: @color-white;
+      }
+
+      .ivu-page-item-active {
+        background: @color-blue;
+        border: none;
+
+        a {
+          color: @color-white;
+        }
+      }
+    }
+
+    /*button*/
+    .ivu-btn-primary {
+      font-size: @font-color-text;
+      background: @bg-color-btn-search;
+      border-color: @bg-color-btn-search;
+      color: @color-white;
+    }
+
+    .ivu-btn-warning {
+      background: @bg-color-btn-reset;
+      border-color: @bg-color-btn-reset;
+      color: @color-white;
+    }
+
+    .ivu-btn-success {
+      background: @bg-color-btn-aync;
+      border-color: @bg-color-btn-aync;
+      color: @color-white;
+    }
+
+    .ivu-btn.disabled,
+    .ivu-btn.disabled.active,
+    .ivu-btn.disabled:active,
+    .ivu-btn.disabled:focus,
+    .ivu-btn.disabled:hover,
+    .ivu-btn[disabled],
+    .ivu-btn[disabled].active,
+    .ivu-btn[disabled]:active,
+    .ivu-btn[disabled]:focus,
+    .ivu-btn[disabled]:hover {
+      color: #c5c8ce;
+      background-color: #f7f7f7;
+      border-color: #dcdee2;
+    }
+
+    /*ivu-divider*/
+    .ivu-divider {
+      .ivu-divider-inner-text {
+        color: @divider-color
+      }
+    }
+
+    /*ivu-breadcrumb*/
+    .ivu-breadcrumb {
+      color: @font-color-text;
+      a {
+        color: @bread-color;
+      }
+
+      span {
+        &:last-child {
+          color: @font-color-text
+        }
+      }
+    }
+
+    /*icon-菜单*/
+    .side-menu-wrapper a.drop-menu-a {
+      height: @height-menu-item;
+      line-height: @height-menu-item;
+      i {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+    }
+    .ivu-dropdown-menu {
+      .ivu-dropdown-item:hover {
+        background: #009688;
+      }
+      .ivu-dropdown {
+        padding: 7px 16px;
+        display: block;
+        .ivu-select-dropdown {
+          .ivu-dropdown-item:hover {
+            background: #009688;
+          }
+        }
+      }
+      .ivu-dropdown-rel {
+        a {
+          color: @font-color-text;
+        }
+      }
+    }
+    a.drop-menu-a {
+      i {
+        color: @font-color-text !important;
+      }
+    }
   }
 
   .ivu-switch-checked {
@@ -425,543 +950,7 @@
     margin-bottom: 10px;
   }
 
-  /*--------------------------公共组件------------------*/
-  .ivu-form {
-    .ivu-form-item-label {
-      color: @font-color-text !important;
-    }
-  }
 
-  /*tabs*/
-  .ivu-tabs-bar {
-    border-color: @border-table-th;
-
-    .ivu-tabs-nav {
-      .ivu-tabs-ink-bar {
-        background: @color-blue;
-      }
-
-      .ivu-tabs-tab {
-        color: @font-color-text;
-
-        &.ivu-tabs-tab-active {
-          color: @color-blue;
-        }
-      }
-    }
-  }
-
-  .ivu-table-cell-tree {
-    background-color: transparent;
-    &:hover {
-      color: @color-blue;
-      border-color: @color-blue;
-    }
-  }
-  .ivu-tag-primary {
-    background: @color-blue;
-  }
-
-  .ivu-tree {
-    color: @font-color-text;
-
-    .ivu-tree-title {
-      color: @font-color-text;
-
-      &:hover {
-        background: @color-blue;
-        color: @color-white;
-      }
-    }
-
-    .ivu-tree-title-selected {
-      background: @color-blue;
-      color: @color-white;
-
-      &:hover {
-        background: @color-blue;
-        color: @color-white;
-      }
-    }
-  }
-
-  p {
-    font-size: @font-size-text;
-    color: @font-color-text;
-  }
-
-  /*遮罩*/
-  .ivu-modal-mask {
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  /*modal*/
-  .ivu-modal {
-
-    .ivu-modal-content {
-      background-color: @bg-modal !important;
-      border-radius: 2px;
-
-      .ivu-modal-header {
-        color: @font-color-text;
-        background: @bg-modal;
-        border-bottom-color: @border-table-td;
-
-        .ivu-modal-header-inner {
-
-          color: @font-color-text;
-        }
-      }
-
-      .ivu-modal-body {
-        color: @font-color-text;
-      }
-
-      .ivu-modal-footer {
-        border-top-color: @border-table-td;
-      }
-
-      .ivu-btn {
-        &.ivu-btn-text {
-          &.ivu-btn-large {
-            color: @font-color-text;
-            background: transparent;
-
-            &:hover {
-              color: @color-blue;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .ivu-card {
-    margin-bottom: 16px;
-    background: @bg-card;
-    border-color: @bg-card;
-
-    .ivu-table-wrapper {
-      border: none;
-
-      .ivu-table {
-        &:before,
-        &:after {
-          background: transparent;
-        }
-
-        color: @font-color-text;
-        background: transparent;
-        border-color: @border-table-th;
-
-        th {
-          color: @font-color-text;
-          border-bottom-color: rgba(27, 29, 35, 0.2);
-          background: transparent;
-          font-size: @font-size-text;
-        }
-
-        td {
-          background: transparent;
-          border-bottom-color: rgba(27, 29, 35, 0.2);
-          font-size: @font-size-text;
-        }
-      }
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    .ivu-card-head {
-      p {
-        color: @font-color-text;
-      }
-    }
-
-    .ivu-card-body {
-    }
-
-    .ivu-page {
-      .ivu-page-options-elevator input,
-      .ivu-page-item a,
-      .ivu-page-item,
-      .ivu-page-next,
-      .ivu-page-prev {
-        border-color: transparent;
-        background-color: transparent;
-      }
-
-      .ivu-page-item-active {
-        background: @color-blue;
-
-      }
-
-      .ivu-page-options-elevator {
-        input {
-          font-size: @font-size-text;
-          color: @font-color-text;
-        }
-      }
-    }
-
-  }
-
-  /*滚动条样式*/
-  //::-webkit-scrollbar 滚动条整体部分，可以设置宽度啥的
-  //::-webkit-scrollbar-button 滚动条两端的按钮
-  //::-webkit-scrollbar-track  外层轨道
-  //::-webkit-scrollbar-track-piece  内层滚动槽
-  //::-webkit-scrollbar-thumb 滚动的滑块
-  //::-webkit-scrollbar-corner 边角
-  //::-webkit-resizer 定义右下角拖动块的样式
-  ::-webkit-scrollbar {
-    width: 2px;
-    border: 1px solid @border-table-th;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: @color-blue;
-  }
-
-  /*----input---placeholder-----*/
-  .ivu-input {
-    background: @bg-color-card;
-    color: @font-color-2;
-    border-color: @border-color-input
-  }
-
-  ::-webkit-input-placeholder {
-    color: @font-color-placeholder;
-  }
-
-  /*select*/
-  .ivu-select-selection {
-    border-color: @border-color-input;
-    background: @bg-color-card;
-    border-radius: 4px;
-
-    .ivu-select-placeholder {
-      color: @font-color-placeholder;
-    }
-
-    .ivu-select-selected-value {
-      color: @font-color-text;
-    }
-  }
-
-  /*table*/
-  .ivu-table-wrapper {
-    border: none;
-
-    .ivu-table {
-      &:before,
-      &:after {
-        background: transparent;
-      }
-
-      color: @font-color-text;
-      background: @bg-color-card;
-      border-color: @border-table-th;
-
-      th {
-        color: @font-color-text;
-        border-bottom-color: @border-table-th;
-        background: @bg-color-table-header;
-        font-size: @font-size-text;
-        word-break: keep-all;
-        white-space: nowrap;
-      }
-
-      td {
-        background: @bg-color-card;
-        border-bottom-color: @border-table-td;
-        font-size: @font-size-text;
-        word-break: keep-all;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .ivu-btn-ghost.ivu-btn-default {
-    color: @font-color-2;
-    border: none;
-
-    &:hover {
-      color: @color-blue;
-    }
-  }
-
-  /*分页*/
-  .ivu-page {
-    text-align: right;
-    margin-top: 10px;
-    color: @font-color-text;
-
-    .ivu-page-item a,
-    .ivu-page-next,
-    .ivu-page-prev {
-      background: @bg-color-card;
-      border: none;
-      color: @font-color-text;
-    }
-
-    .ivu-page-item-active {
-      background: @color-blue;
-      border: none;
-
-      a {
-        background: @color-blue;
-        color: @color-white;
-      }
-    }
-
-    .ivu-page-options {
-      .ivu-page-options-elevator {
-        input {
-          font-size: @font-size-text;
-          color: @font-color-text;
-        }
-      }
-    }
-
-  }
-
-  /*日期选择*/
-  .ivu-date-picker-cells-cell:hover em {
-    background: @color-blue;
-    color: @font-color-text;
-  }
-
-  .ivu-date-picker-cells-focused em {
-    box-shadow: none;
-    background: @color-blue;
-    color: @color-white;
-  }
-
-  .ivu-date-picker-cells-cell-today em:after {
-    background: @color-green;
-  }
-
-  /*日期下拉框*/
-  .ivu-picker-panel-body {
-    color: @font-color-text;
-
-    .ivu-date-picker-header {
-      border-bottom-color: @font-color-3;
-
-      .ivu-picker-panel-icon-btn {
-        color: @font-color-3;
-      }
-    }
-
-    .ivu-picker-panel-content {
-      .ivu-date-picker-cells-cell {
-        &.ivu-date-picker-cells-cell-today {
-          em:after {
-            background: @color-green;
-          }
-        }
-        &.ivu-date-picker-cells-focused {
-          em {
-            box-shadow: 0 0 0 1px @color-blue inset;
-          }
-        }
-        &.ivu-date-picker-cells-cell-selected {
-          em {
-            background: @color-blue;
-          }
-        }
-        &:hover em {
-          background: @color-blue;
-          color: @color-white;
-        }
-      }
-
-
-
-      .ivu-date-picker-cells-header span {
-        color: @font-color-3;
-      }
-
-      .ivu-date-picker-cells-cell-next-month em {
-        color: @font-color-3;
-      }
-    }
-
-    .ivu-time-picker-cells-list {
-      border-left-color: @font-color-3;
-    }
-
-    .ivu-picker-confirm {
-      border-top-color: @font-color-3;
-
-      .ivu-btn.ivu-btn-default.ivu-btn-small {
-        border-color: @font-color-3;
-        background: transparent;
-        color: @font-color-text;
-      }
-
-      .ivu-btn-text {
-        color: @font-color-text;
-
-        &:hover {
-          background: transparent;
-          color: @color-blue;
-
-        }
-      }
-
-    }
-
-  }
-
-  .ivu-select-dropdown {
-    background: @bg-color-card !important;
-
-  }
-
-  /*下拉框*/
-  .ivu-select-dropdown {
-    background: @bg-color-card;
-
-    .ivu-select-item {
-      color: @font-color-text;
-      margin-top: 1px;
-      box-sizing: border-box;
-    }
-    .ivu-select-item-focus {
-      background: @color-blue;
-    }
-
-    .ivu-dropdown-item {
-      color: @font-color-text;
-      margin-top: 1px;
-
-      &:hover {
-        background: @color-blue;
-        color: @color-white;
-      }
-    }
-
-    .ivu-select-item-selected,
-    .ivu-select-item-selected:hover,
-    .ivu-select-item:hover {
-      background: @color-blue;
-      color: @color-white;
-    }
-  }
-
-  /*搜索*/
-  .ivu-select {
-    .ivu-select-selection {
-      border-color: @border-color-input;
-      background: @bg-color-card;
-
-      .ivu-select-input {
-        color: @font-color-text;
-      }
-    }
-  }
-
-  /*input*/
-  .ivu-input {
-    font-size: @font-size-text;
-    border-color: @border-color-input;
-    background: @bg-color-card !important;
-    color: @font-color-text;
-  }
-
-  /*input-number*/
-  //.ivu-input-number {
-  //  background: @bg-color-card;
-  //  border-color: @border-color-input;
-  //
-  //  .ivu-input-number-input-wrap {
-  //    .ivu-input-number-input {
-  //      background: @bg-color-card;
-  //      color: @font-color-text;
-  //      border-color: @border-color-input;
-  //    }
-  //  }
-  //}
-
-  /*page*/
-  .ivu-page {
-    .ivu-page-options-elevator input,
-    .ivu-page-item,
-    .ivu-page-next,
-    .ivu-page-prev {
-      background: @bg-color-card;
-      border: none;
-      color: @color-white;
-    }
-
-    .ivu-page-item-active {
-      background: @color-blue;
-      border: none;
-
-      a {
-        color: @color-white;
-      }
-    }
-  }
-
-  /*button*/
-  .ivu-btn-primary {
-    font-size: @font-color-text;
-    background: @bg-color-btn-search;
-    border-color: @bg-color-btn-search;
-    color: @color-white;
-  }
-
-  .ivu-btn-warning {
-    background: @bg-color-btn-reset;
-    border-color: @bg-color-btn-reset;
-    color: @color-white;
-  }
-
-  .ivu-btn-success {
-    background: @bg-color-btn-aync;
-    border-color: @bg-color-btn-aync;
-    color: @color-white;
-  }
-
-  .ivu-btn.disabled,
-  .ivu-btn.disabled.active,
-  .ivu-btn.disabled:active,
-  .ivu-btn.disabled:focus,
-  .ivu-btn.disabled:hover,
-  .ivu-btn[disabled],
-  .ivu-btn[disabled].active,
-  .ivu-btn[disabled]:active,
-  .ivu-btn[disabled]:focus,
-  .ivu-btn[disabled]:hover {
-    color: #c5c8ce;
-    background-color: #f7f7f7;
-    border-color: #dcdee2;
-  }
-
-  /*ivu-divider*/
-  .ivu-divider {
-    .ivu-divider-inner-text {
-      color: @divider-color
-    }
-  }
-
-  /*ivu-breadcrumb*/
-  .ivu-breadcrumb {
-    color: @font-color-text;
-    a {
-      color: @bread-color;
-    }
-
-    span {
-      &:last-child {
-        color: @font-color-text
-      }
-    }
-  }
 
   /*--------------------------------------------------------main*/
   .main {
@@ -1055,7 +1044,7 @@
             font-size: @font-size-text;
             height: @height-menu-item;
             line-height: @height-menu-item;
-            padding: 0 @padding-menu;
+            //padding: 0 @padding-menu;
             margin-top: 1px;
 
             &:hover {
@@ -1083,22 +1072,12 @@
       width: 0;
     }
 
-    overflow: auto !important;
+    //overflow-y: auto !important;
 
     .ivu-layout-sider-children { // 防止闪动
       background: #393d49;
       color: @font-color-text;
       font-size: 14px;
-    }
-  }
-
-  /*icon-菜单*/
-  .side-menu-wrapper a.drop-menu-a {
-    height: @height-menu-item;
-    line-height: @height-menu-item;
-
-    i {
-      color: @font-color-menu !important;
     }
   }
 
@@ -1216,6 +1195,61 @@
       transform: rotate(360deg);
     }
   }
+
+  @media (min-width: 1920px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 @padding-menu;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=1919的设备
+  @media (max-width: 1919px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 @padding-menu;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=1919的设备
+  @media (max-width: 1199px) {
+    .side-menu-wrapper {
+      .ivu-menu-vertical {
+        .ivu-menu-submenu-title-icon {
+          right: 10px;
+        }
+      }
+    }
+  }//<=1199的设备
+  @media (max-width: 991px){
+    .side-menu-wrapper {
+      .ivu-menu {
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 10px;
+            }
+          }
+        }
+      }
+    }
+
+  }//<=991的设备
+  /*@media (max-width: 767px){
+
+  }//<=767的设备*/
 
 }
 

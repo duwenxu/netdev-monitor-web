@@ -13,7 +13,7 @@ Setting.SOCKET_URL = '/track_socket'
 
 // Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.100:8080')
 // /* Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.190:8080')*/
-// //Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
+// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
 // Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
 
 
