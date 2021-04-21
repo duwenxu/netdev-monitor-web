@@ -7,38 +7,15 @@ const Setting = {}
 Setting.vector = new Vue()
 let proto = document.location.protocol
 
-// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.100:8083')
-// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.2.190:8080')
-Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
-Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
-// if (location.hostname == '172.23.4.31' ||  location.hostname == 'ybtest.xy.in') {
-//   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8081/api/v1.0');
-//   Setting.FORMULA_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8082/dsl-service/v1.0');
-//   Setting.ORDER_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8086/cloud-flight/v1.0');
-//   Setting.FILE_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8085/cloud-api-zt/v1.0');
-//   Setting.SOCKET_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8086');
-//   Setting.PLAY_URL = ('https:' == proto ? '' : 'http://172.23.4.31:8089/cloud-data-playback/v1.0');
-//   Setting.PLAY_SOCKET = ('https:' == proto ? '' : 'http://172.23.4.31:8089');
-//   Setting.RULE = ('https:' == proto ? '' : 'http://172.23.4.31:8089/criteria/v1.0');
-// }else if (location.hostname == 'cloud.xy.uat' || location.hostname == '172.23.1.226') {
-//   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://cloud-core.uat/api/v1.0');
-//   Setting.FORMULA_URL = ('https:' == proto ? '' : 'http://cloud-dsl.uat/dsl-service/v1.0');
-//   Setting.ORDER_URL = ('https:' == proto ? '' : 'http://cloud-flight.uat/cloud-flight/v1.0');
-//   Setting.FILE_URL = ('https:' == proto ? '' : 'http://cloud-api-zt.uat/cloud-api-zt/v1.0');
-//   Setting.SOCKET_URL = ('https:' == proto ? '' : 'http://cloud-flight.uat');
-//   Setting.PLAY_URL = ('https:' == proto ? '' : 'http://cloud-playback.uat/cloud-data-playback/v1.0');
-//   Setting.PLAY_SOCKET = ('https:' == proto ? '' : 'http://cloud-playback.uat');
-// }else{
-// //  Setting.SPACE_URL = ('https:' == proto ? '' : 'http://cloud-core.fat/api/v1.0');
-//   Setting.SPACE_URL = ('https:' == proto ? '' : 'http://127.0.0.1:8080/netmgr/');
-//   Setting.FORMULA_URL = ('https:' == proto ? '' :'http://cloud-dsl.fat/dsl-service/v1.0');
-//   Setting.ORDER_URL = ('https:' == proto ? '' : 'http://172.21.2.61:9091/cloud-flight/v1.0');
-//   Setting.FILE_URL = ('https:' == proto ? '' : 'http://cloud-api-zt.fat/cloud-api-zt/v1.0');
-//   Setting.SOCKET_URL = ('https:' == proto ? '' : 'http://cloud-flight.fat');
-//   Setting.PLAY_URL = ('https:' == proto ? '' : 'http://cloud-playback.fat/cloud-data-playback/v1.0');
-//   Setting.PLAY_SOCKET = ('https:' == proto ? '' : 'http://cloud-playback.fat');
-//   Setting.wsOrder = ('https:' == proto ? '' : 'http://172.21.2.61:8088/criteria/v1.0');
-// }
+Setting.SPACE_URL = '/track'
+Setting.SOCKET_URL = '/track_socket'
+
+// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
+// Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
+
+// Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.7.4:8080')
+// Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.7.4:8888')
+
 
  Setting.getParamGroup = async(parentId) => {
   let params = [];

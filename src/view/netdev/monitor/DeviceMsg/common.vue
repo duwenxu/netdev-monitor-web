@@ -279,7 +279,7 @@ export default {
         this.save(info)
       }
     },
-    async save(info, tag) {
+    async save(info) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -296,7 +296,7 @@ export default {
       } else {
         obj.paraVal = info.paraVal
       }
-      if (obj.paraVal || tag) {
+      if (obj.paraVal) {
         let {result, success, message} = await editParamValue(obj)
         if (success) {
           this.$Notice.success({
@@ -316,7 +316,7 @@ export default {
         this.$set(info, 'paraVal', info.oldVal)
         this.$set(info, 'selected', false)
       }
-    },
+    }
   }
 }
 </script>

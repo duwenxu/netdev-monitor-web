@@ -113,7 +113,6 @@ export default {
         {
           title: '告警时间',
           key: 'alertTime',
-          width: 180
         },
         {
           title: '站号',
@@ -126,7 +125,7 @@ export default {
         {
           title: '告警描述',
           key: 'alertDesc',
-          width: 400
+          tooltip: true,
         },
       ],
       alertInfos: [],
