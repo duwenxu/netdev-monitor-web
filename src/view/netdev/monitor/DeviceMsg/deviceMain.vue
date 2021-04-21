@@ -181,6 +181,7 @@ export default {
       }
     },
     getCtrlWs() {
+      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.ctrl_socker = new WebSocket(wsurl)
       this.ctrl_socker.onopen = this.ctrlSend
@@ -195,6 +196,7 @@ export default {
     },
     /*-----------------日志/告警--------------*/
     logWs() {
+      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.logSocket = new WebSocket(wsurl)
       this.logSocket.onopen = this.logSendMsg
