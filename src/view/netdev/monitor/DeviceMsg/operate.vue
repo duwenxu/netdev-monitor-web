@@ -1,23 +1,18 @@
 <template>
   <div class="device-param">
-
     <div class="order-wrap" v-if="orderDatas.length">
       <div style="margin-bottom: 5px">命令区</div>
       <div  style="display: flex;margin-left: 20px;">
-        <Button v-for="(info,index) in orderDatas" @click="save(info,true)"
+        <Button v-for="(info,index) in orderDatas" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
       </div>
     </div>
-    <div class="param-wrap" :style="{height:orderDatas.length?400+'px':430+'px'}">
+    <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
-      <div>
-      </div>
     </div>
-    <div :style="{height:orderDatas.length?240+'px':260+'px',overflow:'auto'}">
-      <Table disabled-hover :columns="logColumns" :data="logs"></Table>
-    </div>
+
   </div>
 </template>
 
@@ -25,78 +20,60 @@
 
 import {splitCharacter} from '@/libs/util'
 import common from './common'
+import {editParamValue} from "@/api/monitor/ParaInfo";
 export default {
   components:{common},
+  props:{
+    paramSize:{
+      type:Number
+    }
+  },
   data() {
     return {
+      orderHeight:360,
+      normalHeight:450,
+
       paramSocket: null,
       logSocket: null,
       infos:[],
-      orderDatas: [],
+      orderDatas:[],
+
       paramType: ['0019002', '0019003'],
-      logColumns: [
-        {
-          title: '日志时间',
-          minWidth: 170,
-          key: 'logTime',
-        },
-        {
-          title: '访问类型名称',
-          minWidth: 120,
-          key: 'logAccessTypeName',
-        },
-        {
-          title: '操作类型名称',
-          minWidth: 120,
-          key: 'logOperTypeName',
-        },
-        {
-          title: '命令标识符',
-          minWidth: 110,
-          key: 'logCmdMark',
-        },
-        {
-          title: '操作对象名称',
-          minWidth: 165,
-          key: 'logOperObjName',
-        },
-        {
-          title: '操作内容',
-          key: 'logOperContent',
-          minWidth: 100,
-          tooltip: true,
-        },
-        {
-          title: '原始数据',
-          minWidth: 140,
-          key: 'orignData',
-        },
-      ],
-      logs: [],
+
     }
+  },
+  created: function () {
+    this.$xy.vector.$on('changeSize', this.sizeInfo)
+  },
+  beforeDestroy: function () {
+    this.$xy.vector.$off('changeSize', this.sizeInfo)
+
   },
   mounted() {
     this.initWebSocket()
   },
   beforeRouteLeave(to, from, next) {
     this.paramSocket.close()
-    this.logSocket.close()
     this.paramSocket = null
-    this.logSocket = null
     next()
   },
   methods: {
+    sizeInfo(data){
+      if(data.showAlert || data.showLog){
+        this.orderHeight = 360
+        this.normalHeight = 450
+      }else{
+        this.orderHeight = 580
+        this.normalHeight = 680
+      }
+    },
     initWebSocket() { //初始化weosocket
-      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
       this.paramSocket.onmessage = this.getParamMsg
-      /*-----------------日志--------------*/
-      this.logSocket = new WebSocket(wsurl)
-      this.logSocket.onopen = this.logSendMsg
-      this.logSocket.onmessage = this.getLogMsg
     },
     /*-----------------设备参数--------------*/
     paramSendMsg() {
@@ -108,7 +85,7 @@ export default {
       this.editData(msg)
     },
     editData(msg) {
-      let textArr = [], viewArr = [], selectArr = [], oderArr = []
+      let oderArr = [],parentArr = []
       msg.forEach(v => {
         v.selected = false
         v.errorMsg = ''
@@ -152,36 +129,44 @@ export default {
                   })
                 })
               }
-              // viewArr.push(v)
             } else {
               if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
                 v.paraValStep = Number(v.paraValStep)
                 v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
               }
-              // textArr.push(v)
             }
-          } else {
-            // selectArr.push(v)
           }
         }
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
       })
       this.orderDatas = oderArr
-      // this.textDatas = textArr
-      // this.selectDatas = selectArr
-      // this.viewDatas = viewArr
-      console.log(msg)
       this.infos = msg
     },
+    commonFunc(v){
 
-    /*-----------------日志--------------*/
-    logSendMsg() {
-      let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.$route.name})
-      this.logSocket.send(obj)
     },
-    getLogMsg(frame) {
-      let msg = JSON.parse(frame.data)
-      this.logs = msg
+    async save(info) {
+      let obj = {
+        devNo: info.devNo,
+        paraCmdMark: info.paraCmdMark,
+        paraNo: info.paraNo,
+        paraId: info.paraId,
+        paraVal: info.paraVal,
+      }
+        let {result, success, message} = await editParamValue(obj)
+        if (success) {
+          this.$Notice.success({
+            title: '成功',
+            desc: message,
+            duration: 1
+          })
+        } else {
+          this.$Notice.error({
+            title: '失败',
+            desc: message,
+            duration: 3
+          })
+        }
     }
   }
 }
@@ -196,10 +181,17 @@ export default {
   overflow: auto;
   margin-bottom: 5px;
 }
-
+.sub-wrap{
+  border: 1px solid #009688;
+  height: 200px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: auto;
+  margin-bottom: 5px;
+}
 .param-wrap {
   border: 1px solid #009688;
-  //height: 450px;
+  height: 450px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;
