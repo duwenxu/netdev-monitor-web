@@ -15,7 +15,8 @@ export default {
     return{
       normalHeight:450,
       pageObj:{},
-      infos:[]
+      infos:[],
+      page_socket:null
     }
   },
   mounted() {
@@ -29,6 +30,11 @@ export default {
     this.$xy.vector.$off('changeSize', this.changeSize)
     this.$xy.vector.$off('pageInfo', this.getInfo)
   },
+  beforeRouteLeave(to, from, next) {
+    this.page_socket.close()
+    this.page_socket = null
+    next()
+  },
   methods:{
     sizeInfo(data){
       if(data.showAlert || data.showLog){
@@ -39,7 +45,7 @@ export default {
     },
     getInfo(data){
       data.forEach(item=>{
-        if(item.itfPagePath == 'test'){
+        if(item.itfPagePath == 'dztSingle'){
           this.pageObj = item
           this.getWs()
         }

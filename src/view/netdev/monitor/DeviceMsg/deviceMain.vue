@@ -14,10 +14,10 @@
       <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
       <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
     </div>
-<!--    <div :style="{height:220+'px',overflow:'auto'}">-->
+    <div :style="{height:220+'px',overflow:'auto'}">
       <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs"></Table>
       <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
-<!--    </div>-->
+    </div>
   </div>
 </template>
 <script>
@@ -45,8 +45,9 @@ export default {
       showLog: false,
       showAlert: true,
       wsurl: 'ws://' + this.$xy.SOCKET_URL + '/ws',
-      page_socket: null,
+      ctrl_socket: null,
       logSocket: null,
+      warnSocket: null,
       test: '',
       metaTitle: '任务编辑',
       navName: '',
@@ -137,6 +138,17 @@ export default {
     this.getTabsCtrl()
     this.logWs()
   },
+  beforeRouteLeave(to, from, next) {
+    if(this.ctrl_socket){
+      this.ctrl_socket.close()
+      this.ctrl_socket = null
+    }
+    this.warnSocket.close()
+    this.warnSocket = null
+    this.logSocket.close()
+    this.logSocket = null
+    next()
+  },
   methods: {
     goto: function (name) {
       this.navName = name
@@ -183,13 +195,13 @@ export default {
     getCtrlWs() {
       // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
-      this.ctrl_socker = new WebSocket(wsurl)
-      this.ctrl_socker.onopen = this.ctrlSend
-      this.ctrl_socker.onmessage = this.getCtrlData
+      this.ctrl_socket = new WebSocket(wsurl)
+      this.ctrl_socket.onopen = this.ctrlSend
+      this.ctrl_socket.onmessage = this.getCtrlData
     },
     ctrlSend() {
       let obj = JSON.stringify({'interfaceMark': "DevCtrlItfInfos", 'devNo': this.$route.name})
-      this.ctrl_socker.send(obj)
+      this.ctrl_socket.send(obj)
     },
     getCtrlData(frame) {
       this.$xy.vector.$emit('ctrlTag', frame)

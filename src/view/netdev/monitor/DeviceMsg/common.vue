@@ -1,7 +1,9 @@
 <template>
  <div>
+
    <div v-for="(info,index) in infos">
      <Col :xs="24" :lg="lgCol">
+
        <Row>
          <template v-if="info.parahowMode == '0024001'">
            <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
@@ -76,7 +78,7 @@
                    <template v-if="info.paraValMin || info.paraValMax">
                      <Poptip trigger="focus" transfer>
                        <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                    :step='info.paraValStep' @on-blur="textValid(info)"></InputNumber>
+                                    :step='info.paraValStep' @on-blur="textValid(info)" style="width: 100%"></InputNumber>
                        <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
                               :placeholder="info.paraName" @on-blur="textValid(info)" number>
                          <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
@@ -164,17 +166,17 @@ export default {
     return{
       lgCol:8,
       validTag: false,
-      paramType: ['0019002', '0019003']
+      paramType: ['0019002']
     }
   },
   mounted() {
     if(window.screen.width<=1024){
       this.lgCol = 12
     }
-    console.log( window.screen.width)
   },
   methods:{
     changeMode(info) {
+      console.log(info)
       this.validTag = false
       if (info.subParaList.length) {
         let obj = {}

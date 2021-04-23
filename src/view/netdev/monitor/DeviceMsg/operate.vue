@@ -9,6 +9,13 @@
         </Button>
       </div>
     </div>
+    <div class="sub-wrap" v-if="combineList.length">
+<!--    <div class="sub-wrap">-->
+      <div v-for="info in combineList">
+        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <common :infos="info.subParaList"></common>
+      </div>
+    </div>
     <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
@@ -37,8 +44,8 @@ export default {
       logSocket: null,
       infos:[],
       orderDatas:[],
-
-      paramType: ['0019002', '0019003'],
+      combineList:[],
+      paramType: ['0019002'],
 
     }
   },
@@ -92,54 +99,66 @@ export default {
         if (v.accessRight == '0022005') {
           oderArr.push(v)
         } else {
-          if (v.parahowMode == '0024001') {//数字类型Number转换
-            if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
-              v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-              v.splitArr = []
-              let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-              let index = -1
-              let saveOffset = 0
-              v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
-                let len = param.length
-                let pos = index == -1 ? 0 : saveOffset + len + 2
-                index++
-                v.splitArr.push({
-                  param: v.copyFmt.substring(pos, offset),
-                  paraVal: resultChar[index],
-                  name: param,
-                  oldVal: JSON.parse(JSON.stringify(resultChar[index])),
-                  errorMsg: '',
-                  paraValMax: null,
-                  paraValMin: null,
-                  paraValStep: null,
-                  paraSimpleDatatype: v.paraSimpleDatatype,
-                  paraStrLen: v.paraStrLen,
-                })
-                saveOffset = offset
-                return match = resultChar[index]
-              })
-              if (v.subParaList.length) {
-                v.subParaList.forEach(n => {
-                  v.splitArr.forEach(x => {
-                    if (n.paraCode == x.name) {
-                      if (n.spinnerInfoList) {
-                        x.subList = n.spinnerInfoList || []
-                      }
-                    }
+          if(v.paraCmplexLevel == '0019003'){
+             v.subParaList.forEach(item=>{
+               if (item.paraSimpleDatatype == 0 || item.paraSimpleDatatype == 2) {
+                 item.paraValStep = Number(v.paraValStep)
+                 item.paraVal = (item.paraVal == null || item.paraVal == '') ? null : Number(item.paraVal)
+               }
+             })
+            parentArr.push(v)
+          }else{
+            if (v.parahowMode == '0024001') {//数字类型Number转换
+              if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
+                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
+                v.splitArr = []
+                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
+                let index = -1
+                let saveOffset = 0
+                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+                  let len = param.length
+                  let pos = index == -1 ? 0 : saveOffset + len + 2
+                  index++
+                  v.splitArr.push({
+                    param: v.copyFmt.substring(pos, offset),
+                    paraVal: resultChar[index],
+                    name: param,
+                    oldVal: JSON.parse(JSON.stringify(resultChar[index])),
+                    errorMsg: '',
+                    paraValMax: null,
+                    paraValMin: null,
+                    paraValStep: null,
+                    paraSimpleDatatype: v.paraSimpleDatatype,
+                    paraStrLen: v.paraStrLen,
                   })
+                  saveOffset = offset
+                  return match = resultChar[index]
                 })
-              }
-            } else {
-              if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
-                v.paraValStep = Number(v.paraValStep)
-                v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+                if (v.subParaList.length) {
+                  v.subParaList.forEach(n => {
+                    v.splitArr.forEach(x => {
+                      if (n.paraCode == x.name) {
+                        if (n.spinnerInfoList) {
+                          x.subList = n.spinnerInfoList || []
+                        }
+                      }
+                    })
+                  })
+                }
+              } else {
+                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
+                  v.paraValStep = Number(v.paraValStep)
+                  v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+                }
               }
             }
           }
+
         }
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
       })
       this.orderDatas = oderArr
+      this.combineList = parentArr
       this.infos = msg
     },
     commonFunc(v){
