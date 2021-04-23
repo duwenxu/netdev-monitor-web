@@ -98,60 +98,49 @@ export default {
         if (v.accessRight == '0022005') {
           oderArr.push(v)
         } else {
-          if(v.paraCmplexLevel == '0019003'){
-             v.subParaList.forEach(item=>{
-               if (item.paraSimpleDatatype == 0 || item.paraSimpleDatatype == 2) {
-                 item.paraValStep = Number(v.paraValStep)
-                 item.paraVal = (item.paraVal == null || item.paraVal == '') ? null : Number(item.paraVal)
-               }
-             })
-            parentArr.push(v)
-          }else{
-            if (v.parahowMode == '0024001') {//数字类型Number转换
-              if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
-                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-                v.splitArr = []
-                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-                let index = -1
-                let saveOffset = 0
-                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
-                  let len = param.length
-                  let pos = index == -1 ? 0 : saveOffset + len + 2
-                  index++
-                  v.splitArr.push({
-                    param: v.copyFmt.substring(pos, offset),
-                    paraVal: resultChar[index],
-                    name: param,
-                    oldVal: JSON.parse(JSON.stringify(resultChar[index])),
-                    errorMsg: '',
-                    paraValMax: null,
-                    paraValMin: null,
-                    paraValStep: null,
-                    paraSimpleDatatype: v.paraSimpleDatatype,
-                    paraStrLen: v.paraStrLen,
-                  })
-                  saveOffset = offset
-                  return match = resultChar[index]
+          if (v.parahowMode == '0024001') {//文本数字框
+            if(v.paraCmplexLevel == '0019003'){//组合参数
+              let subType = v.subParaList[0].subParaLinkType
+              if(subType == '0018003'){//若子为0018003则父框子
+                v.subParaList.forEach(item=>{
+                  this.commonFunc(item)//转换数字格式，为了验证
                 })
-                if (v.subParaList.length) {
-                  v.subParaList.forEach(n => {
-                    v.splitArr.forEach(x => {
-                      if (n.paraCode == x.name) {
-                        if (n.spinnerInfoList) {
-                          x.subList = n.spinnerInfoList || []
-                        }
-                      }
-                    })
-                  })
-                }
-              } else {
-                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
-                  v.paraValStep = Number(v.paraValStep)
-                  v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
-                }
+                parentArr.push(v)
+              }else{//否则按复杂参数拼装来处理
+                this.commonFmt(v)
               }
+            }else{//0019001 002//复杂参数 基本参数
+              if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//复杂参数处理，按拼装来处理
+                this.commonFmt(v)
+              } else {
+                this.commonFunc(v)//转换数字格式，为了验证
+              }
+
             }
           }
+
+
+
+          //
+          // if(v.paraCmplexLevel == '0019003'){
+          //   let subType = v.subParaList[0].subParaLinkType
+          //   if(subType == '0018003'){
+          //     v.subParaList.forEach(item=>{
+          //      this.commonFunc(item)
+          //     })
+          //     parentArr.push(v)
+          //   }else{
+          //     this.commonFmt(v)
+          //   }
+          // }else{
+          //   if (v.parahowMode == '0024001') {//数字类型Number转换
+          //     if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//如果存在复杂参数，组合参数，切割
+          //      this.commonFmt(v)
+          //     } else {
+          //       this.commonFunc(v)
+          //     }
+          //   }
+          // }
 
         }
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
@@ -161,7 +150,47 @@ export default {
       this.infos = msg
     },
     commonFunc(v){
-
+      if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
+        v.paraValStep = Number(v.paraValStep)
+        v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+      }
+    },
+    commonFmt(v){
+      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
+      v.splitArr = []
+      let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
+      let index = -1
+      let saveOffset = 0
+      v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+        let len = param.length
+        let pos = index == -1 ? 0 : saveOffset + len + 2
+        index++
+        v.splitArr.push({
+          param: v.copyFmt.substring(pos, offset),
+          paraVal: resultChar[index],
+          name: param,
+          oldVal: JSON.parse(JSON.stringify(resultChar[index])),
+          errorMsg: '',
+          paraValMax: null,
+          paraValMin: null,
+          paraValStep: null,
+          paraSimpleDatatype: v.paraSimpleDatatype,
+          paraStrLen: v.paraStrLen,
+        })
+        saveOffset = offset
+        return match = resultChar[index]
+      })
+      if (v.subParaList.length) {
+        v.subParaList.forEach(n => {
+          v.splitArr.forEach(x => {
+            if (n.paraCode == x.name) {
+              if (n.spinnerInfoList) {
+                x.subList = n.spinnerInfoList || []
+              }
+            }
+          })
+        })
+      }
     },
     async save(info) {
       let obj = {
