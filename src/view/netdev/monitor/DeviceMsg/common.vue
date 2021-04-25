@@ -1,19 +1,21 @@
 <template>
  <div>
+
    <div v-for="(info,index) in infos">
-     <Col :xs="24" :lg="6">
+     <Col :xs="24" :lg="lgCol">
+
        <Row>
          <template v-if="info.parahowMode == '0024001'">
            <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                <Row>
-                 <Col :xs="11" :lg="11">
+                 <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                    <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                      <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                    </div>
                  </Col>
-                 <Col :xs="13" :lg="13">
+                 <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                       <span style="cursor: pointer" @click="changeMode(info)">{{
                           (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
                         }}&nbsp;&nbsp;<span
@@ -22,7 +24,7 @@
                  <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
                    <Col :xs="24" :lg="24">
                      <template v-for="temp in info.splitArr">
-                       <Col :xs="info.splitArr.length<=2?8:6" :lg="info.splitArr.length<=2?8:6">
+                       <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
                          <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
                            <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                            </Option>
@@ -56,14 +58,14 @@
            </template>
            <template v-else>
                <Row>
-             <Col :xs="11" :lg="11">
+                 <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                </div>
              </Col>
-             <Col :xs="13" :lg="13">
+                 <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                           <span style="cursor: pointer"
                                 @click="changeMode(info)">{{
                               (info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'
@@ -76,7 +78,7 @@
                    <template v-if="info.paraValMin || info.paraValMax">
                      <Poptip trigger="focus" transfer>
                        <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                    :step='info.paraValStep' @on-blur="textValid(info)"></InputNumber>
+                                    :step='info.paraValStep' @on-blur="textValid(info)" style="width: 100%"></InputNumber>
                        <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
                               :placeholder="info.paraName" @on-blur="textValid(info)" number>
                          <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
@@ -111,14 +113,14 @@
          </template>
          <template v-else>
              <Row>
-               <Col :xs="11" :lg="11">
+               <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                  <div style="text-align: right">
                   <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                    <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                  </div>
                </Col>
-               <Col :xs="13" :lg="13">
+               <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                  <template v-if="info.oldVal">
                    <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
                      <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
@@ -128,7 +130,7 @@
                    <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
                  </template>
                </Col>
-               <Col :xs="24" :lg="24"
+               <Col :xs="16" :lg="16" push="4"
                     v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                     style="display: flex">
                  <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
@@ -162,14 +164,19 @@ export default {
   },
   data(){
     return{
+      lgCol:8,
       validTag: false,
-      paramType: ['0019002', '0019003']
+      paramType: ['0019002']
     }
   },
   mounted() {
+    if(window.screen.width<=1024){
+      this.lgCol = 12
+    }
   },
   methods:{
     changeMode(info) {
+      console.log(info)
       this.validTag = false
       if (info.subParaList.length) {
         let obj = {}
@@ -274,7 +281,7 @@ export default {
         this.save(info)
       }
     },
-    async save(info, tag) {
+    async save(info) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -291,7 +298,7 @@ export default {
       } else {
         obj.paraVal = info.paraVal
       }
-      if (obj.paraVal || tag) {
+      if (obj.paraVal) {
         let {result, success, message} = await editParamValue(obj)
         if (success) {
           this.$Notice.success({
@@ -311,7 +318,7 @@ export default {
         this.$set(info, 'paraVal', info.oldVal)
         this.$set(info, 'selected', false)
       }
-    },
+    }
   }
 }
 </script>
