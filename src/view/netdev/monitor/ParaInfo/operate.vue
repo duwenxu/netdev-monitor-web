@@ -162,7 +162,7 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="ParaInfo.devType==='0020012'||ParaInfo.devType==='0020008'">
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="this.remark2DataList.includes(ParaInfo.devType)">
             <Select v-model="ParaInfo.ndpaRemark2Data" clearable   placeholder="请选择参数处理类">
               <Option  v-for='choose in paraCodecList' :value='choose' :key="choose">{{choose}}</Option>
             </Select>
@@ -215,6 +215,7 @@
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
         paraCodecList:[],
+        remark2DataList:[],
         rulePro: {
           fmtId: [
             {required: false}
@@ -329,6 +330,7 @@
       this.getNdpaAlertLevels();
       this.getNdpaCmplexLevelList();
       this.getParaCodecList();
+      this.initRemark2DataList();
     },
     methods: {
       async getDevTypes(){
@@ -378,6 +380,9 @@
           res = res.filter(e => e.id!=='0019004')
           this.ndpaCmplexLevelList = res;
         })
+      },
+      async initRemark2DataList(){
+        this.remark2DataList = ["0020008","0020012","0020017","0020018"];
       },
       async getParaCodecList(){
         axios.request({
