@@ -1,11 +1,10 @@
 <template>
     <div class="content-box">
         <Row>
-            <!--<Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>-->
             <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
             <search :search-data='searchData' @input="handleClick()"></search>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
-            <Table  :columns="columns1" :data="infos"></Table>
+            <Table  :columns="columns1" :data="infos" ref="alterTable"></Table>
             <div class="text-right page">
                 <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
                       :page-size-opts='otherPage.pageSize'
@@ -14,30 +13,25 @@
             </div>
             </Col>
         </Row>
-        <!--<Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
-            <operate-row></operate-row>
-        </Modal>-->
     </div>
 </template>
 
 <script>
-    import {queryAlertInfoPageList, deleteAlertInfo,queryAlertInfoPageByTime} from '@/api/monitor/AlertInfo'
+    import {queryAlertInfoPageByTime} from '@/api/monitor/AlertInfo'
     import search from '@/components/tables/search'
-    /*import operateRow from './operate'*/
+    import exportCsv from "../../../../components/tables/tables";
 
     export default {
         components: {
             search,
-            /*operateRow*/
+            exportCsv,
         },
         data() {
             return {
-                /*operateModal: false,
-                name: '',*/
                 columns1: [
                             {
                                 title: '设备类型',
-                                key: 'devType',
+                                key: 'devType_paraName',
                             },
                             {
                                 title: '设备编号',
@@ -54,6 +48,7 @@
                             {
                                 title: '告警时间',
                                 key: 'alertTime',
+                                width: 180
                             },
                             {
                                 title: '站号',
@@ -61,53 +56,13 @@
                             },
                             {
                                 title: '告警级别',
-                                key: 'alertLevel',
+                                key: 'alertLevel_paraName',
                             },
                             {
                                 title: '告警描述',
                                 key: 'alertDesc',
+                                width: 400
                             },
-                            {
-                                title: '操作',
-                                key: 'action',
-                                width: 180,
-                                align: 'center',
-                                render: (h, rows) => {
-                                    return h('div', [
-                                        /*h('Button', {
-                                            props: {
-                                                icon:'md-create',
-                                                type: 'primary'
-                                            },
-                                            attrs:{
-                                                title:'编辑'
-                                            },
-                                            style: {
-                                                marginRight: '10px',
-                                            },
-                                            on: {
-                                                click: () => {
-                                                    this.operate(rows.row)
-                                                }
-                                            }
-                                        }),*/
-                                        h('Button', {
-                                            props: {
-                                                icon:'md-trash',
-                                                type: 'error'
-                                            },
-                                            attrs:{
-                                                title:'删除'
-                                            },
-                                            on: {
-                                                click: () => {
-                                                    this.delete(rows.row.AlertInfoId)//id需要修改
-                                                }
-                                            }
-                                        })
-                                    ])
-                                }
-                            }
                 ],
                 infos: [],
                 searchData: [//搜索框根据需要自定义添加
@@ -158,10 +113,6 @@
             rowClassName(row, index) {
                 return 'demo-table-info-row'
             },
-            closeModal() {
-                this.operateModal = false
-                this.doQuery();
-            },
             //查询按钮方法
             sendReq: function (obj) {
                 this.search = Object.assign(this.search, obj)
@@ -174,7 +125,6 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                //let {result, success, message} = await queryAlertInfoPageList(searchAll)
                 let {result, success, message} = await queryAlertInfoPageByTime(searchAll)
                 if (success) {
                     this.infos = result.records
@@ -196,66 +146,6 @@
             changePage(page) {
                 this.page.current = page
                 this.doQuery()
-            },
-            delete(id) {
-                let that = this
-                let modal = that.$Modal;
-                let notice = that.$Notice;
-                modal.confirm({
-                title: '你确定要删除这条告警信息吗?',
-                content: '删除后将无法撤销！',
-                onOk: () => {
-                that.deleteData(id)
-                },
-                onCancel: () => {
-                    notice.warning({
-                        title: '取消',
-                        desc: '已取消！',
-                        duration: 3
-                    })
-                }
-                })
-            },
-            async deleteData(id) {
-                let {data, code, msg} = await deleteAlertInfo(id)
-                let notice = this.$Notice;
-                if (code == 200) {
-                    notice.success({
-                    title: '成功',
-                    desc: '删除成功！',
-                    duration: 3
-                    })
-                    this.doQuery();
-                } else {
-                    notice.error({
-                    title: '失败',
-                    desc: msg,
-                    duration: 3
-                    })
-                }
-            },
-            /*operate(AlertInfo) {
-                this.name = AlertInfo == null ? '添加告警信息' : '编辑告警信息'
-                this.operateModal = true
-                this.$xy.vector.$emit('operateRow', AlertInfo)
-            },*/
-            //按照检索条件分页查询告警信息
-            async queryAlertInfoPageByTime() {
-                let searchAll = this.page
-                searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryAlertInfoPageByTime(searchAll)
-                if (success) {
-                    this.infos = result.records
-                    this.page.current = result.current ? result.current : result.current + 1
-                    this.otherPage.total = result.total
-                } else {
-                    let notice = this.$Notice;
-                    notice.error({
-                        title: '查询失败',
-                        desc: message,
-                        duration: 3
-                    })
-                }
             },
             //搜索框填充数据方法
             handleClick(data, item) {
@@ -280,8 +170,8 @@
                             duration: 5
                         })
                     } else {
-                        this.$refs.selection.exportCsv({
-                            filename: "告警信息列表列表",
+                        this.$refs.alterTable.exportCsv({
+                            filename: "告警信息列表",
                             original: false,
                             columns: this.columns1,
                             data: this.infos
