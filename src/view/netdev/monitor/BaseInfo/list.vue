@@ -53,7 +53,8 @@
                             {
                                 title: '设备状态',
                                 key: 'devStatus_paraName',
-                                width: 100
+                                width: 100,
+                                sortType:'asc'
                             },
                             {
                               title: '设备使用状态',
