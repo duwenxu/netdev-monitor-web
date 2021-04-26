@@ -223,6 +223,14 @@
                     data:[],
                     placeholder:'请输入设备类型'
                   },
+                    {
+                        type:2,
+                        key:'devStatus',
+                        name:'设备状态',
+                        value:'',
+                        data:[],
+                        placeholder:'请输入设备状态'
+                    },
                   {
                     type:1,
                     key:'devName',
@@ -394,14 +402,18 @@
             }
           },
           initSelect() {
-            this.$xy.getParamGroup('0020').then(res => {
-              this.searchData[0].data = res
-              this.init()
-            })
-            this.$xy.getParamGroup('0010').then(res =>{
-              this.searchData[2].data = res
-              this.init()
-            })
+              this.$xy.getParamGroup('0020').then(res => {
+                  this.searchData[0].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0028').then(res => {
+                  this.searchData[1].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0010').then(res => {
+                  this.searchData[3].data = res
+                  this.init()
+              })
           },
         }
     }

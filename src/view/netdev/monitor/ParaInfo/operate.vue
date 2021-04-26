@@ -49,7 +49,7 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="参数长度" prop="ndpaStrLen">
+          <FormItem label="参数长度" prop="ndpaStrLen" :rules="[{required:ParaInfo.ndpaDatatype == '0023004'? true:false,message:'数据类型str参数长度不能为空',trigger:'blur'}]">
             <Input v-model="ParaInfo.ndpaStrLen" placeholder="请输入参数长度"></Input>
           </FormItem>
         </Col>
