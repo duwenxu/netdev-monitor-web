@@ -373,7 +373,7 @@
                     }else{
                         notice.error({
                             title: '失败',
-                            desc: '下载设备模型定义文件发生异常！',
+                            desc: '参数类型配置异常，请检查！',
                             duration: 3
                         })
                     }
