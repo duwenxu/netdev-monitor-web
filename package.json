@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "dayjs": "^1.7.7",
-    "echarts": "^4.0.4",
+    "echarts": "^5.1.1",
     "js-cookie": "^2.2.0",
     "qs": "^6.8.0",
     "screenfull": "^4.0.1",
@@ -41,7 +41,7 @@
     "chai": "^4.1.2",
     "eslint-plugin-cypress": "^2.0.1",
     "less": "^2.7.3",
-    "less-loader": "^4.0.5",
+    "less-loader": "^5.0.0",
     "lint-staged": "^6.0.0",
     "mockjs": "^1.0.1-beta3",
     "vue-json-views": "^1.1.0",

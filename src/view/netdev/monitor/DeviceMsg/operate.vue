@@ -115,33 +115,8 @@ export default {
               } else {
                 this.commonFunc(v)//转换数字格式，为了验证
               }
-
             }
           }
-
-
-
-          //
-          // if(v.paraCmplexLevel == '0019003'){
-          //   let subType = v.subParaList[0].subParaLinkType
-          //   if(subType == '0018003'){
-          //     v.subParaList.forEach(item=>{
-          //      this.commonFunc(item)
-          //     })
-          //     parentArr.push(v)
-          //   }else{
-          //     this.commonFmt(v)
-          //   }
-          // }else{
-          //   if (v.parahowMode == '0024001') {//数字类型Number转换
-          //     if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//如果存在复杂参数，组合参数，切割
-          //      this.commonFmt(v)
-          //     } else {
-          //       this.commonFunc(v)
-          //     }
-          //   }
-          // }
-
         }
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
       })

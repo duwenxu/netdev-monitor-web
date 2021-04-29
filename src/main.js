@@ -19,6 +19,7 @@ import '@/assets/themes/themeColor.less'
 import '@/assets/css/common.less'
 // 引入echarts
 import echarts from 'echarts'
+// const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 Vue.prototype.$echarts = echarts
 
 

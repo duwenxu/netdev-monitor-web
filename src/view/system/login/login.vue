@@ -100,13 +100,16 @@
             'getRouters'
           ]),
           login() {
-              this.handleLogin(this.formInline).then(data => {
-                //this.getUserInfo(this.formInline).then(res => {
-                  this.$router.push({
-                    name: this.$config.homeName
-                  })
-                //})
-              })
+            this.$router.push({
+              name: this.$config.homeName
+            })
+              // this.handleLogin(this.formInline).then(data => {
+              //   //this.getUserInfo(this.formInline).then(res => {
+              //     this.$router.push({
+              //       name: this.$config.homeName
+              //     })
+              //   //})
+              // })
             },
             keyupSubmit(){    //回车事件
 

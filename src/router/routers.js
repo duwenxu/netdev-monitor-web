@@ -73,8 +73,9 @@ export default [
           // notCache: true,
           icon: 'md-home'
         },
+        component: () => import('@/view/single-page/home/treeHome.vue')
         // component: () => import('@/view/single-page/home/home.vue')
-        component: () => import('@/view/netdev/deviceStatus/status1.vue')
+        // component: () => import('@/view/netdev/deviceStatus/status1.vue')
       }
     ]
   },
