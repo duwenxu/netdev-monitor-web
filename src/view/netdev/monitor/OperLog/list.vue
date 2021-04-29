@@ -56,10 +56,12 @@
                             {
                                 title: '操作内容',
                                 key: 'logOperContent',
+                                tooltip:true
                             },
                             {
                                 title: '原始数据',
                                 key: 'orignData',
+                                tooltip:true
                             },
                             {
                                 title: '操作人',
