@@ -87,6 +87,11 @@
                                 width: 100
                             },
                             {
+                              title: '是否连接远程服务',
+                              key: 'devIsLink_paraName',
+                              width: 100
+                            },
+                            {
                                 title: '上级设备编号',
                                 key: 'devParentNo',
                                 width: 120
