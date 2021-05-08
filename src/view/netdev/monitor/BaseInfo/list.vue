@@ -53,7 +53,8 @@
                             {
                                 title: '设备状态',
                                 key: 'devStatus_paraName',
-                                width: 100
+                                width: 100,
+                                sortType:'asc'
                             },
                             {
                               title: '设备使用状态',
@@ -84,6 +85,11 @@
                                 title: '设备端口',
                                 key: 'devPort',
                                 width: 100
+                            },
+                            {
+                              title: '是否连接远程服务',
+                              key: 'devIsLink_paraName',
+                              width: 100
                             },
                             {
                                 title: '上级设备编号',
@@ -223,6 +229,14 @@
                     data:[],
                     placeholder:'请输入设备类型'
                   },
+                    {
+                        type:2,
+                        key:'devStatus',
+                        name:'设备状态',
+                        value:'',
+                        data:[],
+                        placeholder:'请输入设备状态'
+                    },
                   {
                     type:1,
                     key:'devName',
@@ -364,7 +378,7 @@
                     }else{
                         notice.error({
                             title: '失败',
-                            desc: '下载设备模型定义文件发生异常！',
+                            desc: '参数类型配置异常，请检查！',
                             duration: 3
                         })
                     }
@@ -394,14 +408,18 @@
             }
           },
           initSelect() {
-            this.$xy.getParamGroup('0020').then(res => {
-              this.searchData[0].data = res
-              this.init()
-            })
-            this.$xy.getParamGroup('0010').then(res =>{
-              this.searchData[2].data = res
-              this.init()
-            })
+              this.$xy.getParamGroup('0020').then(res => {
+                  this.searchData[0].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0028').then(res => {
+                  this.searchData[1].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0010').then(res => {
+                  this.searchData[3].data = res
+                  this.init()
+              })
           },
         }
     }

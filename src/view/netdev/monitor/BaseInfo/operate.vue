@@ -59,6 +59,14 @@
                         </FormItem>
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
+                          <FormItem label="是否连接远程地址" prop="devIsLink">
+                              <Select clearable placeholder="请选择" v-model="BaseInfo.devIsLink">
+                                <Option :key="choose.id" :value='choose.value' v-for='choose in devIsLinkList'>{{choose.name}}
+                                </Option>
+                              </Select>
+                          </FormItem>
+                        </Col>
+                        <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="上级设备编号" prop="devParentNo">
                             <Input v-model="BaseInfo.devParentNo"  placeholder="请输入上级设备编号"></Input>
                         </FormItem>
@@ -160,6 +168,7 @@
                 validateList:[],
               devUseStatusList:[],
               devSubTypeList:[],
+              devIsLinkList:[],
                 rulePro: {
                             devNo: [
                           {required: true, message: '设备类型不能为空', trigger: 'blur'}
@@ -184,6 +193,8 @@
                         ],
                             devPort: [
                         ],
+                            devIsLink: [
+                            ],
                             devParentNo: [
                         ],
                             devIntervalTime: [
@@ -232,6 +243,7 @@
           this.getDevNetPtclList();
           this.getDevDeployTypeList();
           this.getDevUseStatusList();
+          this.initDevIsLinkList();
         },
         methods: {
             operateRow (obj) {
@@ -304,6 +316,11 @@
           async getDevUseStatusList () {
             this.$xy.getParamGroup('0032').then(res => {
               this.devUseStatusList = res
+            })
+          },
+          async initDevIsLinkList () {
+            this.$xy.getParamGroup('0003').then(res => {
+              this.devIsLinkList = res
             })
           },
           async refreshDevSubTypeList (devType){
