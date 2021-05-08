@@ -36,17 +36,17 @@ export default {
         {
           x: '250',
           y: '1000',
-          nodeName: 'ka发射\n\n\n\n\n\n\n\n\n\nKa接收',
+          nodeName: 'ka发射\n\n\n\n\n\n\n\nKa接收',
           img: 'rect',
-          size: [60, 245],
+          size: [60, 260],
           color: 'rgb(228,225,192)'
         },
         {
           x: '250',
-          y: '500',
+          y: '600',
           nodeName: 'ku发射\n\n\n\n\n\n\n\nKu接收',
           img: 'rect',
-          size: [60, 245],
+          size: [60, 260],
           color: 'rgb(228,225,192)'
         },
         //---------------------------------天线座
@@ -63,7 +63,7 @@ export default {
         },
         {
           x: '470',
-          y: '1130',
+          y: '1080',
           nodeName: 'ka发射机',
           img: 'rect',
           size: [90, 60],
@@ -71,7 +71,7 @@ export default {
         },
         {
           x: '410',
-          y: '880',
+          y: '920',
           nodeName: 'LNA',
           img: 'triangle',
           symbolRotate: -90,
@@ -81,17 +81,17 @@ export default {
         //Ka-C下变频器
         {
           x: '600',
-          y: '880',
+          y: '920',
           nodeName: 'Ka-C \n下变频器 \n\n\n\nKa-C \n下变频器',
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
           size: [180, 110]
         },
 //----------------------------维修仓
         {
-          mark:'维修仓',
+          mark:'维修',
           x: '500',
-          y: '600',
-          nodeName: '',
+          y: '680',
+          nodeName: '                                                                  维修仓\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
@@ -100,7 +100,7 @@ export default {
         },
         {
           x: '470',
-          y: '600',
+          y: '680',
           nodeName: 'Ku  发射机  \n\n\n\n\nKu  发射机',
           img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
           size: [180, 110]
@@ -112,18 +112,18 @@ export default {
         {
           mark:'天线座',
           x: '500',
-          y: '290',
-          nodeName: '天线座\n\n\n\n\n\n\n\n\n\n\n\n',
+          y: '410',
+          nodeName: '                                                                  天线座\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [340, 200],
+          size: [340, 230],
         },
 
         {
           x: '470',
-          y: '400',
+          y: '520',
           nodeName: 'LNA',
           img: 'triangle',
           symbolRotate: -90,
@@ -132,7 +132,7 @@ export default {
         },
         {
           x: '480',
-          y: '200',
+          y: '320',
           nodeName: '天线驱动单元',
           img: 'rect',
           size: [180, 50],
@@ -145,18 +145,18 @@ export default {
         {
           mark:'卫通信道分系统',
           x: '1020',
-          y: '690',
-          nodeName: '天线座\n\n\n\n\n\n\n\n\n\n\n\n',
+          y: '730',
+          nodeName: '卫通信道分系统                                                                                                                               \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [640, 645],
+          size: [640, 680],
         },
         //L-Ku 上变频器
         {
           x: '850',
-          y: '600',
+          y: '680',
           nodeName: 'L-Ku \n上变频器 \n\n\n\nL-Ku \n上变频器',
           img: 'image://' + require('@/assets/images/home/down_trans.png'),
           size: [180, 110]
@@ -165,7 +165,7 @@ export default {
 
         {
           x: '850',
-          y: '400',
+          y: '520',
           nodeName: 'Ku-L \n下变频器 \n\n\n\nKu-L \n下变频器',
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
           size: [180, 110]
@@ -173,7 +173,7 @@ export default {
         //C-L 下变频器
         {
           x: '850',
-          y: '880',
+          y: '920',
           nodeName: 'C-L \n下变频器 \n\n\n\nC-L \n下变频器',
           img: 'image://' + require('@/assets/images/home/up_trans.png'),
           size: [180, 110]
@@ -181,7 +181,7 @@ export default {
         //L-C上变频器
         {
           x: '850',
-          y: '1130',
+          y: '1080',
           nodeName: 'L-C \n上变频器 \n\n\n\nL-C \n上变频器',
           img: 'image://' + require('@/assets/images/home/down_trans.png'),
           size: [180, 110]
@@ -189,7 +189,7 @@ export default {
 
         {
           x: '850',
-          y: '200',
+          y: '320',
           nodeName: '天线控制单元',
           img: 'rect',
           size: [180, 60],
@@ -197,26 +197,26 @@ export default {
         },
         {
           x: '1050',
-          y: '750',
+          y: '800',
           nodeName: 'L\n\n波\n\n段\n\n中\n\n频\n\n矩\n\n阵\n',
           img: 'rect',
-          size: [60, 520],
+          size: [60, 580],
           color: '#c4e889'
         },
 
         {
           x: '1250',
           y: '1040',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
-          size: [160, 220],
+          size: [160, 200],
           category: 1,
           color: 'rgb(214,188,169)'
         },
         {
           x: '1250',
-          y: '1160',
+          y: '1100',
           nodeName: '2300调制解调器',
           img: 'rect',
           size: [120, 30],
@@ -234,7 +234,7 @@ export default {
         },
         {
           x: '1250',
-          y: '900',
+          y: '960',
           nodeName: '2300调制解调器',
           img: 'rect',
           size: [120, 30],
@@ -243,16 +243,16 @@ export default {
         },
         {
           x: '1250',
-          y: '570',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          y: '620',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
-          size: [160, 220],
+          size: [160, 200],
           color: 'rgb(214,188,169)'
         },
         {
           x: '1250',
-          y: '690',
+          y: '680',
           nodeName: '2300调制解调器',
           img: 'rect',
           size: [120, 30],
@@ -261,7 +261,7 @@ export default {
         },
         {
           x: '1250',
-          y: '570',
+          y: '610',
           nodeName: '1:1转换单元',
           img: 'rect',
           size: [120, 30],
@@ -270,7 +270,7 @@ export default {
         },
         {
           x: '1250',
-          y: '430',
+          y: '540',
           nodeName: '2300调制解调器',
           img: 'rect',
           size: [120, 30],
@@ -279,23 +279,23 @@ export default {
         },
         {
           x: '1250',
-          y: '230',
+          y: '400',
           nodeName: 'L频段跟踪接收机',
           img: 'rect',
-          size: [160, 120],
+          size: [180, 60],
           color: 'rgb(206,215,209)'
         },
 //--------------------------------业务承载网分系统
         {
           mark:'业务承载网分系统',
           x: '1550',
-          y: '710',
-          nodeName: '业务承载网分系统\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          y: '700',
+          nodeName: '业务承载网分系统\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [330, 650],
+          size: [330, 750],
         },
         {
           mark:'信息安全分系统',
@@ -306,7 +306,7 @@ export default {
           color:'white',
           border:'dotted',
           id:1,
-          size: [160, 450],
+          size: [160, 470],
         },
         {
           mark:'路由器2',
@@ -314,7 +314,7 @@ export default {
           y: '750',
           nodeName: '路\n\n由\n\n器\n\n2',
           img: 'rect',
-          size: [40, 500],
+          size: [40, 540],
         },
         {
           mark:'保密机2',
@@ -336,30 +336,30 @@ export default {
         {
           mark:'接入交换机2',
           x: '1680',
-          y: '940',
+          y: '920',
           nodeName: '接\n入\n交\n换\n机\n2',
           img: 'rect',
-          size: [40, 290],
+          size: [40, 320],
         },
         {
           mark:'接入交换机2',
           x: '1680',
-          y: '400',
+          y: '410',
           nodeName: '接\n入\n交\n换\n机\n2\n（备）',
           img: 'rect',
-          size: [40, 270],
+          size: [40, 320],
         },
         //------------------------时间统一分系统
         {
           mark:'时间统一分系统',
           x: '2040',
-          y: '1170',
-          nodeName: '时间统一分系统\n\n\n\n\n\n\n',
+          y: '1150',
+          nodeName: '时间统一分系统\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [550, 150],
+          size: [550, 180],
         },
         {
           mark:'时间统一设备',
@@ -406,13 +406,13 @@ export default {
         {
           mark:'通信业务分系统',
           x: '2040',
-          y: '855',
-          nodeName: '                                                                                                           通信业务分系统\n\n\n\n\n\n\n\n\n\n\n\n',
+          y: '840',
+          nodeName: '                                                                                                           通信业务分系统\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [550, 202],
+          size: [550, 240],
         },
         {
           mark:'',
@@ -566,13 +566,13 @@ export default {
         {
           mark:'信息安全分系统',
           x: '2040',
-          y: '480',
+          y: '490',
           nodeName: '信息安全分系统\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [550, 110],
+          size: [550, 130],
         },
         {
           mark:'',
@@ -610,18 +610,18 @@ export default {
         {
           mark:'通信网络管理分系统',
           x: '2040',
-          y: '270',
-          nodeName: '通信网络管理分系统\n\n\n\n\n',
+          y: '300',
+          nodeName: '通信网络管理分系统\n\n\n\n\n\n',
           img: 'rect',
           color:'white',
           border:'dotted',
           id:1,
-          size: [550, 110],
+          size: [550, 120],
         },
         {
           mark:'',
           x: '1840',
-          y: '320',
+          y: '360',
           nodeName: '通信网管服务器',
           img: 'rect',
           size: [150, 20],
@@ -629,7 +629,7 @@ export default {
         {
           mark:'',
           x: '1840',
-          y: '280',
+          y: '320',
           nodeName: '串口服务器',
           img: 'rect',
           size: [150, 20],
@@ -637,7 +637,7 @@ export default {
         {
           mark:'',
           x: '2100',
-          y: '280',
+          y: '320',
           nodeName: '串口设备监控信息',
           img: 'rect',
           size: [150, 20],
@@ -645,7 +645,7 @@ export default {
         {
           mark:'',
           x: '1840',
-          y: '240',
+          y: '280',
           nodeName: '通信网管客户机',
           img: 'rect',
           size: [150, 20],
@@ -653,7 +653,7 @@ export default {
         {
           mark:'',
           x: '1840',
-          y: '200',
+          y: '240',
           nodeName: '其它设备监控信息',
           img: 'rect',
           size: [150, 20],
@@ -664,8 +664,8 @@ export default {
         {
           mark:'供电分系统',
           x: '1970',
-          y: '10',
-          nodeName: '\n\n\n\n\n\n\n供电分系统',
+          y: '60',
+          nodeName: '\n\n\n\n\n\n\n                                                                                                     供电分系统',
           img: 'rect',
           color:'white',
           border:'dotted',
@@ -675,23 +675,23 @@ export default {
         {
           mark:'',
           x: '1720',
-          y: '80',
+          y: '120',
           nodeName: '配电及控保单元',
           img: 'rect',
-          size: [160, 50],
+          size: [160, 40],
         },
         {
           mark:'',
           x: '1950',
-          y: '80',
+          y: '120',
           nodeName: 'UPS',
           img: 'rect',
-          size: [160, 50],
+          size: [160, 40],
         },
         {
           mark:'',
           x: '1950',
-          y: '-40',
+          y: '0',
           nodeName: '市电',
           img: 'rect',
           size: [160, 30],
@@ -700,17 +700,17 @@ export default {
         {
           mark:'',
           x: '2200',
-          y: '80',
+          y: '120',
           nodeName: '1:1油机',
           img: 'rect',
-          size: [160, 50],
+          size: [160, 40],
         },
-        {
-          x: '330',
-          y: '680',
-          nodeName: '维修仓',
-          size: 0
-        }
+        // {
+        //   x: '330',
+        //   y: '680',
+        //   nodeName: '维修仓',
+        //   size: 0
+        // }
       ]
       var charts = {
         nodes: [],
@@ -719,7 +719,7 @@ export default {
           {
             mark: '设备->天线驱动单元',
             name: '',
-            coords: [ [50, 720],[50, 210], [370, 210]],
+            coords: [ [50, 720],[50, 320], [370, 320]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -730,7 +730,7 @@ export default {
           {
             mark: '天线驱动单元ADU->设备',
             name: '',
-            coords: [[370, 190], [0, 190], [0, 720]],
+            coords: [[370, 300], [20, 300], [20, 720]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -741,7 +741,7 @@ export default {
           {
             mark: '天线驱动单元ADU->天线控制单元acu',
             name: '',
-            coords: [[590, 210], [740, 210]],
+            coords: [[590, 320], [740, 320]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -751,7 +751,7 @@ export default {
           {
             mark: '天线控制单元acu->天线驱动单元ADU',
             name: '',
-            coords: [[740, 190], [590, 190]],
+            coords: [[740, 300], [590, 300]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -762,7 +762,7 @@ export default {
           //----------------------------上行------------
           {
             mark: 'KU发射接收->设备',
-            coords: [[200, 600], [120, 600],[120,680]],
+            coords: [[200, 680],[140,680]],
             lineStyle: {
               normal: {
                 color: '#dc6414 '
@@ -775,7 +775,7 @@ export default {
           //一段式连线
           {
             mark: 'KA发射接收->设备',
-            coords: [[200, 1130], [70, 1130], [70, 850]],
+            coords: [[200, 1080], [70, 1080], [70, 850]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -788,7 +788,7 @@ export default {
           {
             mark: 'Ka到ka发射接收',
             name: 'LHCP',
-            coords: [[410, 1130], [300, 1130]],
+            coords: [[410, 1080], [300, 1080]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -801,7 +801,7 @@ export default {
           {
             mark: 'ku发射机 到ku发射接收',
             name: '',
-            coords: [[375, 600], [290, 600]],
+            coords: [[375, 680], [290, 680]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -814,7 +814,7 @@ export default {
           {
             mark: 'lc上变频器-》ka发射机',
             name: '',
-            coords: [[760, 1130], [530, 1130]],
+            coords: [[760, 1080], [530, 1080]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -827,7 +827,7 @@ export default {
           {
             mark: 'l ku上变频器->ku 发射机',
             name: '',
-            coords: [[760, 600], [570, 600]],
+            coords: [[760, 680], [570, 680]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -840,7 +840,7 @@ export default {
           {
             mark: 'L波段中频矩阵 上行->L-c上变频器',
             name: '',
-            coords: [[1010, 1130], [950, 1130]],
+            coords: [[1010, 1080], [950, 1080]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -853,7 +853,7 @@ export default {
           {
             mark: 'L波段中频矩阵 上行->L-ku 上变频器',
             name: '',
-            coords: [[1010, 600], [950, 600]],
+            coords: [[1010, 680], [950, 680]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -866,7 +866,7 @@ export default {
           {
             mark: 'L波段中频矩阵  - 》调制解调器 上',
             name: '',
-            coords: [[1085, 880], [1160, 880]],
+            coords: [[1085, 920], [1160, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -879,7 +879,7 @@ export default {
           {
             mark: 'L波段中频矩阵  - 》路由器2',
             name: '',
-            coords: [[1340, 880], [1390, 880]],
+            coords: [[1340, 920], [1390, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -892,7 +892,7 @@ export default {
           {
             mark: 'L波段中频矩阵  - 》调制解调器 下',
             name: '',
-            coords: [[1085, 400], [1160, 400]],
+            coords: [[1085, 520], [1160, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -905,7 +905,7 @@ export default {
           {
             mark: '调制解调器 下-》路由器2',
             name: '',
-            coords: [[1340, 400], [1390, 400]],
+            coords: [[1340, 520], [1390, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -983,7 +983,7 @@ export default {
           {
             mark: 'L波段中频矩阵  - 》L频段跟踪接收机',
             name: '',
-            coords: [[1085, 300], [1160, 300]],
+            coords: [[1085, 410], [1150, 410]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -994,9 +994,9 @@ export default {
             }
           },
           {
-            mark: 'L波段中频矩阵  - 》天线控制单元',
+            mark: '天线控制单元=》L波段跟踪接收机',
             name: '',
-            coords: [[950, 220], [1150, 220]],
+            coords: [[950, 320], [1250, 320],[1250,350]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -1007,9 +1007,9 @@ export default {
             }
           },
           {
-            mark: '天线控制单元 - 》L波段中频矩阵  - 》',
+            mark: 'L波段跟踪接收机- 》 天线控制单元 ',
             name: '',
-            coords: [[1150, 190], [950, 190]],
+            coords: [[1270,350],[1270, 300], [950, 300]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -1023,7 +1023,7 @@ export default {
           {
             mark: '设备->KA发射接收',
             name: '',
-            coords: [[120,840],[120, 880], [200, 880]],
+            coords: [[120,840],[120, 920], [200, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1035,7 +1035,7 @@ export default {
           },
           {
             mark: '设备->KU发射接收',
-            coords: [[70, 700], [70, 400], [210, 400]],
+            coords: [[70, 700], [70, 520], [210, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1049,7 +1049,7 @@ export default {
           {
             mark: 'ka发射接收到Ka lwa',
             name: 'RHCP',
-            coords: [[300, 880], [350, 880]],
+            coords: [[300, 920], [350, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1062,7 +1062,7 @@ export default {
           {
             mark: 'ku-》ku lwa',
             name: '',
-            coords: [[300, 400], [410, 400]],
+            coords: [[300, 520], [410, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1075,7 +1075,7 @@ export default {
           {
             mark: 'ka lwa ->ka-c下变频器',
             name: '',
-            coords: [[470, 880], [500, 880]],
+            coords: [[470, 920], [500, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1086,9 +1086,9 @@ export default {
             }
           },
           {
-            mark: 'ku lwa -> ku-l下变频器',
+            mark: 'lna -> ku-l下变频器',
             name: '',
-            coords: [[530, 400], [750, 400]],
+            coords: [[530, 520], [750, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1101,7 +1101,7 @@ export default {
           {
             mark: ' ku-l下变频器 -》L波段中频矩阵下行',
             name: '',
-            coords: [[950, 400], [1010, 400]],
+            coords: [[950, 520], [1010, 520]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1114,7 +1114,7 @@ export default {
           {
             mark: 'ka c下变频器->cl下变频器',
             name: '',
-            coords: [[700, 880], [750, 880]],
+            coords: [[700, 920], [750, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1127,7 +1127,7 @@ export default {
           {
             mark: 'c-l-》l波段中频',
             name: '',
-            coords: [[950, 880], [1010, 880]],
+            coords: [[950, 920], [1010, 920]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1140,7 +1140,7 @@ export default {
           {
             mark: '调制解调器 上-》L波段中频矩阵',
             name: '',
-            coords: [[1160, 1130], [1085, 1130]],
+            coords: [[1160, 1080], [1085, 1080]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1154,7 +1154,7 @@ export default {
           {
             mark: '路由器2 -》调制解调器上',
             name: '',
-            coords: [[1390, 1130], [1340, 1130]],
+            coords: [[1390, 1080], [1340, 1080]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1169,7 +1169,7 @@ export default {
           {
             mark: '调制解调器 下-》L波段中频矩阵 ',
             name: '',
-            coords: [[1160, 600], [1085, 600]],
+            coords: [[1160, 680], [1085, 680]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1182,7 +1182,7 @@ export default {
           {
             mark: '路由器2 - 》调制解调器 下-》',
             name: '',
-            coords: [[1390, 600], [1340, 600]],
+            coords: [[1390, 680], [1340, 680]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1834,6 +1834,33 @@ export default {
           {
             mark: '交换机备用-》通信网络管理分系统',
             name: '',
+            coords: [[1760,360],[1700,360]],
+            lineStyle: {
+              normal: {
+                color: '#dc6414'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '交换机备用-》通信网络管理分系统',
+            name: '',
+            coords: [[1700,360],[1760,360]],
+            lineStyle: {
+              normal: {
+                color: '#143fdc'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+
+          {
+            mark: '交换机备用-》通信网络管理分系统',
+            name: '',
             coords: [[1760,320],[1700,320]],
             lineStyle: {
               normal: {
@@ -1915,34 +1942,7 @@ export default {
           {
             mark: '交换机备用-》通信网络管理分系统',
             name: '',
-            coords: [[1760,200],[1700,200]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1700,200],[1760,200]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1920,280],[2020,280]],
+            coords: [[1920,320],[2020,320]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1957,8 +1957,8 @@ export default {
 
           {
             mark: '市电-》UPS',
-            name: '222222222222222222222',
-            coords: [[1950,0],[1950,40]],
+            name: '',
+            coords: [[1950,30],[1950,90]],
             lineStyle: {
               normal: {
                 color: '#143fdc'
@@ -2002,7 +2002,7 @@ export default {
         grid: {
           left: '3%',
           right: '8%',
-
+          top:'5%'
         },
         xAxis: {
           min: 0,
@@ -2012,7 +2012,7 @@ export default {
         },
         yAxis: {
           min: 0,
-          max:1300,
+          max:1250,
           show: false,
           type: 'value'
         },
@@ -2090,7 +2090,7 @@ export default {
 </script>
 <style>
 .charts {
-  height:850px;
+  height:1000px;
   width: 2400px;
 }
 </style>
