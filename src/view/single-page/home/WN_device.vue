@@ -1,16 +1,80 @@
 <template>
-  <div ref="dom" class="charts"></div>
+  <div>
+    <div ref="dom" class="charts"></div>
+    <div v-for="equipment in equipments">
+      <div class="device_title" :style="devicePosition(equipment)">
+        <span :style="judgeDeviceStatus(equipment, 0)"></span>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend_status" v-for="(item, index) in legendType" :key="index">
+        <span :class="[item.shape]" :style="{background: item.color, borderColor: item.borderColor}"></span>{{item.description}}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
-
+import {mapState} from "vuex";
+import mixin from "../../../components/common/websocket";
 // echarts.registerTheme('tdTheme');
 export default {
+  mixins: [mixin],
   data() {
     return {
-      dom: null
+      dom: null,
+      equipments:[
+        {devNo: '2', name: 'Ku 1:1热备份开关切换控制器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '11', name: 'A调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '12', name: 'A调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+        {devNo: '13', name: 'B调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '14', name: 'B调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+        {devNo: '20', name: '2.4m天线ACU', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '40', name: '下变频器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '41', name: '下变频器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+      ],
+      legendType: [
+        {shape: 'circle', color: '#009688', description: '正常'},
+        {shape: 'circle', color: '#ff1400', description: '中断'},
+        {shape: 'circle', color: '#ffbe08', description: '维修'},
+        {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor:'#009688', description: '运行'},
+      ],
+      position: {
+        '2': {
+          top: '450px',
+          left: '900px',
+        },
+        '11': {
+          top: '240px',
+          left: '1320px',
+        },
+        '12': {
+          top: '325px',
+          left: '1320px',
+        },
+        '13': {
+          top: '420px',
+          left: '1320px',
+        },
+        '14': {
+          top: '505px',
+          left: '1320px',
+        },
+        '20': {
+          top: '750px',
+          left: '1260px',
+        },
+        '40': {
+          top: '548px',
+          left: '930px',
+        },
+        '41': {
+          top: '615px',
+          left: '930px',
+        },
+      },
     }
   },
   beforeDestroy() {
@@ -19,8 +83,117 @@ export default {
   mounted() {
     this.dom = echarts.init(this.$refs.dom);
     this.init()
+    this.getMediaWidth()
+  },
+  computed: {
+    ...mapState({
+      mediaWidthType: state => state.user.mediaWidthType
+    }),
   },
   methods: {
+    getWSData(WSdata) {
+      if (WSdata.length) {
+        WSdata.forEach(item => {
+          this.equipments.forEach(equip => {
+            if (item.devNo === equip.devNo) {
+              this.setWSDate (item, equip)
+            }
+          })
+        })
+      }
+    },
+    setWSDate (data, obj) {
+      obj.devDeployType = data.devDeployType /*0031002 主设备运行 0031003 备设备运行*/
+      obj.isInterrupt = data.isInterrupt
+      obj.workStatus = data.workStatus
+      obj.masterOrSlave = data.masterOrSlave
+      obj.isUseStandby = data.isUseStandby
+      obj.isAlarm = data.isAlarm
+    },
+    getMediaWidth(){
+      if (this.mediaWidthType === 0){
+        this.position = {
+          '5': {
+            top: '0px',
+            left: '0px',
+          },
+          '9': {
+            top: '0px',
+            left: '155px',
+          },
+          '20': {
+            top: '0px',
+            left: '310px',
+          },
+          '2': {
+            top: '0px',
+            left: '445px',
+          },
+          '10': {
+            top: '0px',
+            left: '600px',
+          }
+        }
+      }else if (this.mediaWidthType === 1) {
+        this.position = {
+          '2': {
+            top: '450px',
+            left: '900px',
+          },
+          '11': {
+            top: '240px',
+            left: '1320px',
+          },
+          '12': {
+            top: '325px',
+            left: '1320px',
+          },
+          '13': {
+            top: '420px',
+            left: '1320px',
+          },
+          '14': {
+            top: '505px',
+            left: '1320px',
+          },
+          '20': {
+            top: '750px',
+            left: '1260px',
+          },
+          '40': {
+            top: '548px',
+            left: '930px',
+          },
+          '41': {
+            top: '615px',
+            left: '930px',
+          },
+        }
+      }
+    },
+    judgeDeviceStatus (device, type) {
+      let info = {}
+      if (device.isInterrupt === '0' && device.workStatus === '0') { // 0正常
+        info = type ? '正常' : {
+          background: '#009688'
+        }
+      } else if (device.isInterrupt === '1') { // 中断
+        info = type ? '中断': {
+          background: '#ff1400'
+        }
+      } else if(device.workStatus === '1') { // 1 维修
+        info = type ? '维修':{
+          background: '#ffbe08'
+        }
+      }
+      return info
+    },
+    devicePosition (equipment){
+      return {
+        top: this.position[equipment.devNo].top,
+        left: this.position[equipment.devNo].left
+      }
+    },
     resize() {
       this.dom.resize()
     },
@@ -86,18 +259,35 @@ export default {
         },
 
         {
-          x: '580',
+          x: '570',
           y: '450',
-          nodeName: 'Ku Buc                      \n\n\n\n\n\nKu Buc                        ',
-          img: 'image://' + require('@/assets/images/home/double_ele.png'),
-          size: [270,160]
+          nodeName: 'Ku Buc\n\n\n\n\nKu Buc',
+          img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
+          size: [230,120]
         },
         {
           x: '580',
           y: '300',
-          nodeName: '下变频器\n\n\n\n\n下变频器',
+          nodeName: '',
+          id:1,
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
           size: [180,110]
+        },
+        {
+          x: '580',
+          y: '338',
+          nodeName: '下变频器       ',
+          img: 'rect',
+          size: [90, 35],
+          color: '#c4e889'
+        },
+        {
+          x: '580',
+          y: '259',
+          nodeName: '下变频器      ',
+          img: 'rect',
+          size: [90, 35],
+          color: '#c4e889'
         },
 //---------------工作舱
         {
@@ -133,9 +323,9 @@ export default {
         {
           x: '1020',
           y: '700',
-          nodeName: '650调制解调器',
+          nodeName: '650调制解调器        ',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
@@ -144,16 +334,16 @@ export default {
           y: '650',
           nodeName: '1:1转换单元',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
         {
           x: '1020',
           y: '600',
-          nodeName: '650调制解调器',
+          nodeName: '650调制解调器       ',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
@@ -169,9 +359,9 @@ export default {
         {
           x: '1020',
           y: '490',
-          nodeName: '650调制解调器',
+          nodeName: '650调制解调器       ',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
@@ -180,16 +370,16 @@ export default {
           y: '440',
           nodeName: '1:1转换单元',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
         {
           x: '1020',
           y: '390',
-          nodeName: '650调制解调器',
+          nodeName: '650调制解调器       ',
           img: 'rect',
-          size: [120, 30],
+          size: [150, 30],
           color: 'white',
           category: 2
         },
@@ -1280,9 +1470,7 @@ export default {
         charts.nodes.push(node)
       }
       var option = {
-        grid: {
-
-        },
+        animation:false,
         xAxis: {
           min: 0,
           max:1600,
@@ -1403,4 +1591,48 @@ export default {
   height:780px;
   width: 1620px;
 }
+</style>
+<style lang="less" scoped>
+.legend {
+  position: absolute;
+  bottom: 10px;
+  left: 300px;
+  display: flex;
+  flex-direction: row;
+  .legend_status {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    align-items: center;
+    &:last-child{
+      margin-right: 0;
+      span {
+        border: 1px solid;
+      }
+    }
+    span {
+      display: inline-block;
+      background: #ccc;
+      height: 16px;
+      width: 16px;
+      margin-right: 5px;
+    }
+    .circle {
+      border-radius: 50%;
+    }
+  }
+
+}
+.device_title {
+  position: absolute;
+
+  span{
+    display: inline-block;
+    background: #ccc;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+  }
+}
+
 </style>
