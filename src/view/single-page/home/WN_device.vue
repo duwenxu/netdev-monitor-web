@@ -648,17 +648,6 @@ export default {
         }
       }
     },
-    aaa(item, equip) {
-      // borderColor
-      // border:'solid'
-      // obj.devDeployType = data.devDeployType /*0031002 主设备运行 0031003 备设备运行*/
-      // obj.isInterrupt = data.isInterrupt
-      // obj.workStatus = data.workStatus
-      // obj.masterOrSlave = data.masterOrSlave
-      // obj.isUseStandby = data.isUseStandby
-      // obj.isAlarm = data.isAlarm
-    },
-
     resize() {
       this.dom.resize()
     },
