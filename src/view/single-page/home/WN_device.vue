@@ -90,15 +90,48 @@ export default {
         {
           x: '570',
           y: '450',
-          devNo: 2,
-          nodeName: 'Ku Buc\n\n\n\n\nKu Buc',
+          nodeName: '',
+          id: 1,
           img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
           size: [230, 120]
         },
+
         {
-          mark: 'ku buc 状态',
-          x: '580',
-          y: '450',
+          x: '578',
+          y: '495',
+          devNo: 2,
+          isMajor: true,
+          nodeName: 'Ku buc       ',
+          img: 'rect',
+          size: [120, 35],
+          color: '#c4e889'
+        },
+        {
+          mark: 'ku buc 状态1 ',
+          x: '625',
+          y: '495',
+          isMajor: false,
+          devNo: 2,
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
+        },
+        {
+          x: '578',
+          y: '406',
+          devNo: 2,
+          isMajor: true,
+          nodeName: 'Ku buc       ',
+          img: 'rect',
+          size: [120, 35],
+          color: '#c4e889'
+        },
+        {
+          mark: 'ku buc 状态2',
+          x: '625',
+          y: '410',
+          isMajor: false,
           devNo: 2,
           nodeName: '',
           img: 'circle',
