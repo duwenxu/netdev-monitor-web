@@ -597,7 +597,7 @@ export default {
       legendType: [
         {shape: 'circle', color: '#009688', description: '正常'},
         {shape: 'circle', color: '#ff1400', description: '中断'},
-        {shape: 'circle', color: '#ffbe08', description: '维修'},
+        {shape: 'circle', color: '#ffbe08', description: '告警'},
         {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor: '#009688', description: '运行'},
       ],
     }
