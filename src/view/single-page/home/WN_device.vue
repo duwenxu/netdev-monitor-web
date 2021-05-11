@@ -1639,8 +1639,10 @@ export default {
         }
       });
       this.dom.on('click', function (info) {
-        that.$xy.vector.$emit("deviceNumber", info.data.devNo)
-        that.paramModal = true
+        if(info.data.devNo){
+          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+          that.paramModal = true
+        }
       });
       this.dom.setOption(option);
       on(window, 'resize', this.resize)
