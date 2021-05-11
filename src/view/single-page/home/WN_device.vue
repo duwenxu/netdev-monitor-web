@@ -103,8 +103,8 @@ export default {
           isMajor: true,
           nodeName: 'Ku buc       ',
           img: 'rect',
-          size: [120, 35],
-          color: '#c4e889'
+          size: [120, 38],
+          color: 'rgba(0,150,136,0.2)'
         },
         {
           mark: 'ku buc 状态1 ',
@@ -124,8 +124,8 @@ export default {
           isMajor: true,
           nodeName: 'Ku buc       ',
           img: 'rect',
-          size: [120, 35],
-          color: '#c4e889'
+          size: [120, 38],
+          color: 'rgba(0,150,136,0.2)'
         },
         {
           mark: 'ku buc 状态2',
@@ -147,14 +147,14 @@ export default {
           size: [180, 110]
         },
         {
-          x: '580',
+          x: '581',
           y: '338',
           devNo: 40,
           isMajor: true,
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [90, 35],
-          color: '#c4e889'
+          size: [98, 35],
+          color: 'rgba(0,150,136,0.2)'
         },
         {
           mark: '下变频器1 状态',
@@ -165,7 +165,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '580',
@@ -174,8 +174,8 @@ export default {
           isMajor: true,
           nodeName: '下变频器      ',
           img: 'rect',
-          size: [90, 35],
-          color: '#c4e889'
+          size: [98, 35],
+          color: 'rgba(0,150,136,0.2)'
         },
         {
           mark: '下变频器2 状态',
@@ -186,7 +186,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
 //---------------工作舱
         {
@@ -206,7 +206,7 @@ export default {
           nodeName: '中\n\n频\n\n单\n\n元',
           img: 'rect',
           size: [60, 520],
-          color: 'rgb(228,225,192)'
+          color: 'rgba(228,225,192,0.6)'
         },
 
         {
@@ -227,7 +227,7 @@ export default {
           nodeName: '650调制解调器        ',
           img: 'rect',
           size: [150, 30],
-          color: 'white',
+          color: 'rgba(0,150,136,0.2)',
           category: 2,
           // border:'solid',
           // borderColor:'green'
@@ -241,7 +241,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc',
+          color: '#f1ecec',
         },
         {
           x: '1020',
@@ -260,7 +260,7 @@ export default {
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
-          color: 'white',
+          color: 'rgba(0,150,136,0.2)',
           category: 2
         },
         {
@@ -272,7 +272,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '1020',
@@ -291,7 +291,7 @@ export default {
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
-          color: 'white',
+          color: 'rgba(0,150,136,0.2)',
           category: 2
         },
         {
@@ -303,7 +303,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '1020',
@@ -322,7 +322,7 @@ export default {
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
-          color: 'white',
+          color: 'rgba(0,150,136,0.2)',
           category: 2
         },
         {
@@ -334,7 +334,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '1020',
@@ -342,7 +342,7 @@ export default {
           nodeName: '串口服务器',
           img: 'rect',
           size: [160, 50],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -351,7 +351,7 @@ export default {
           nodeName: 'L频段跟踪接收机',
           img: 'rect',
           size: [160, 50],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -360,7 +360,7 @@ export default {
           nodeName: '天线驱动\n单元\n(ADU)',
           img: 'rect',
           size: [100, 110],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -371,7 +371,7 @@ export default {
           nodeName: '天线控制\n单元\n(ACU)',
           img: 'rect',
           size: [100, 110],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -383,7 +383,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '1250',
@@ -391,7 +391,7 @@ export default {
           nodeName: '路\n由\n器',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -400,7 +400,7 @@ export default {
           nodeName: '保\n密\n机',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -409,7 +409,7 @@ export default {
           nodeName: '防\n火\n墙',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -418,7 +418,7 @@ export default {
           nodeName: '接入交换机',
           img: 'rect',
           size: [100, 40],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
 
@@ -429,7 +429,7 @@ export default {
           nodeName: '路\n由\n器',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -438,7 +438,7 @@ export default {
           nodeName: '保\n密\n机',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -447,7 +447,7 @@ export default {
           nodeName: '防\n火\n墙',
           img: 'rect',
           size: [60, 80],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -456,7 +456,7 @@ export default {
           nodeName: '接入交换机',
           img: 'rect',
           size: [100, 40],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
 
@@ -466,7 +466,7 @@ export default {
           nodeName: 'SDD设备',
           img: 'rect',
           size: [80, 60],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -484,7 +484,7 @@ export default {
           nodeName: '指\n挥\n调\n度\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -493,7 +493,7 @@ export default {
           nodeName: '时\n间\n统\n一\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
@@ -502,7 +502,7 @@ export default {
           nodeName: '电\n话\n交\n换\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgb(228,225,192)',
+          color: 'rgba(228,225,192,0.6)',
           category: 2
         },
         {
