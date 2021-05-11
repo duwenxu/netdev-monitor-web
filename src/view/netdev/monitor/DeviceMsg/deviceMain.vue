@@ -7,8 +7,9 @@
     </Tabs>
     <div class="fix-btn">
       <div style="margin-top:5px;" @click="changeInfo(1)">
-        <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'" />
-        告<Br/>警</div>
+        <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'"/>
+        告<Br/>警
+      </div>
     </div>
     <div class="fix-btn-warn">
       <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
@@ -40,8 +41,10 @@ context.keys().forEach(key => {
 })
 export default {
   components: mStores,
+
   data() {
     return {
+      devNo: null,
       showLog: false,
       showAlert: true,
       wsurl: 'ws://' + this.$xy.SOCKET_URL + '/ws',
@@ -134,12 +137,22 @@ export default {
 
     }
   },
+  created: function () {
+    this.$xy.vector.$on('deviceNumber', this.getDevNo)
+    this.$xy.vector.$on('closeModal', this.closeModal)
+  },
+  beforeDestroy: function () {
+    this.$xy.vector.$off('deviceNumber', this.getDevNo)
+    this.$xy.vector.$off('closeModal', this.closeModal)
+  },
   mounted() {
-    this.getTabsCtrl()
-    this.logWs()
+    if (this.$route.name != 'home') {
+      this.getTabsCtrl()
+      this.logWs()
+    }
   },
   beforeRouteLeave(to, from, next) {
-    if(this.ctrl_socket){
+    if (this.ctrl_socket) {
       this.ctrl_socket.close()
       this.ctrl_socket = null
     }
@@ -150,6 +163,21 @@ export default {
     next()
   },
   methods: {
+    getDevNo(data) {
+      this.devNo = data
+      this.getTabsCtrl()
+      this.logWs()
+    },
+    closeModal(){
+      if (this.ctrl_socket) {
+        this.ctrl_socket.close()
+        this.ctrl_socket = null
+      }
+      this.warnSocket.close()
+      this.warnSocket = null
+      this.logSocket.close()
+      this.logSocket = null
+    },
     goto: function (name) {
       this.navName = name
     },
@@ -158,20 +186,20 @@ export default {
       //告警
       if (value == 1) {
         this.showLog = false
-        this.showAlert = ! this.showAlert
+        this.showAlert = !this.showAlert
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
       }
       let obj = {
-        showLog:this.showLog,
-        showAlert:this.showAlert
+        showLog: this.showLog,
+        showAlert: this.showAlert
       }
       this.$xy.vector.$emit('changeSize', obj)
     },
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
-      let {result, success, message} = await queryCtrlInfo({devNo: this.$route.name})
+      let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success && result.length) {
         this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
         this.getTabsPage()
@@ -180,7 +208,7 @@ export default {
     },
     //纯显示的tab
     async getTabsPage() {
-      let {result, success, message} = await queryPageInfo({devNo: this.$route.name})
+      let {result, success, message} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success && result.length) {
         let data = []
         result.forEach(item => {
@@ -200,7 +228,10 @@ export default {
       this.ctrl_socket.onmessage = this.getCtrlData
     },
     ctrlSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevCtrlItfInfos", 'devNo': this.$route.name})
+      let obj = JSON.stringify({
+        'interfaceMark': "DevCtrlItfInfos",
+        'devNo': this.devNo ? this.devNo : this.$route.name
+      })
       this.ctrl_socket.send(obj)
     },
     getCtrlData(frame) {
@@ -220,7 +251,7 @@ export default {
 
     },
     logSendMsg() {
-      let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.$route.name})
+      let obj = JSON.stringify({'interfaceMark': "DevLogInfos", 'devNo': this.devNo ? this.devNo : this.$route.name})
       this.logSocket.send(obj)
     },
     getLogMsg(frame) {
@@ -228,7 +259,7 @@ export default {
       this.logs = msg
     },
     warnSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevAlertInfos", 'devNo': this.$route.name})
+      let obj = JSON.stringify({'interfaceMark': "DevAlertInfos", 'devNo': this.devNo ? this.devNo : this.$route.name})
       this.warnSocket.send(obj)
     },
     getWarnLog(frame) {
@@ -239,16 +270,18 @@ export default {
 }
 </script>
 <style scoped>
-.fix-icon{
+.fix-icon {
   position: absolute;
   top: 18px;
   right: 20px;
 }
-.fix-icon-warn{
+
+.fix-icon-warn {
   position: absolute;
   top: 18px;
   right: 20px;
 }
+
 .fix-btn {
   position: fixed;
   right: 2px;

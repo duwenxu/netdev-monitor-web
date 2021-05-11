@@ -39,7 +39,7 @@ export default {
     return {
       orderHeight: 360,
       normalHeight: 450,
-
+      devNo:null,
       paramSocket: null,
       logSocket: null,
       infos: [],
@@ -51,13 +51,19 @@ export default {
   },
   created: function () {
     this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('deviceNumber', this.getDevNo)
+    this.$xy.vector.$on('closeModal', this.closeModal)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('deviceNumber', this.getDevNo)
+    this.$xy.vector.$off('closeModal', this.closeModal)
 
   },
   mounted() {
-    this.initWebSocket()
+    if (this.$route.name != 'home') {
+      this.initWebSocket()
+    }
   },
   beforeRouteLeave(to, from, next) {
     this.paramSocket.close()
@@ -65,6 +71,14 @@ export default {
     next()
   },
   methods: {
+    closeModal(){
+      this.paramSocket.close()
+      this.paramSocket = null
+    },
+    getDevNo(data){
+      this.devNo = data
+      this.initWebSocket()
+    },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
         this.orderHeight = 360
@@ -84,7 +98,7 @@ export default {
     },
     /*-----------------设备参数--------------*/
     paramSendMsg() {
-      let obj = JSON.stringify({'interfaceMark': "DevParaInfos", 'devNo': this.$route.name})
+      let obj = JSON.stringify({'interfaceMark': "DevParaInfos", 'devNo': this.devNo?this.devNo:this.$route.name})
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
@@ -157,7 +171,7 @@ export default {
         if (v.subParaList.length) {
           if (v.subParaList[index].spinnerInfoList) {
             let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value)=>value.code==v.subParaList[index].paraVal);
-            return match = v.subParaList[index].spinnerInfoList[valIndex].name
+            return match = valIndex>-1?v.subParaList[index].spinnerInfoList[valIndex].name:resultChar[index]
           } else {
             return match = resultChar[index]
           }
