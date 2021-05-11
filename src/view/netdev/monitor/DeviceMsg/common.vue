@@ -181,7 +181,6 @@ export default {
   },
   methods:{
     changeMode(info) {
-      console.log(info)
       this.validTag = false
       if (info.subParaList.length) {
         let obj = {}

@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import deviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
 import {mapState} from "vuex";
