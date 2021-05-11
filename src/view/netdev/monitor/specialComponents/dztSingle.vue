@@ -1,9 +1,16 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
   <Row>
-    <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
-      <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
-    </Col>
+    <template v-if="infos.length">
+      <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
+        <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+          <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
+        </template>
+      </Col>
+    </template>
+   <template v-else>
+     <span>暂无数据</span>
+   </template>
   </Row>
 </div>
 </template>
@@ -52,8 +59,8 @@ export default {
       })
     },
     getWs() { //初始化weosocket
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.page_socket = new WebSocket(wsurl)
       this.page_socket.onopen = this.pageSend
