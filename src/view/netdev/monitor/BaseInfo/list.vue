@@ -113,32 +113,32 @@
                             },
                             {
                               title: '备注一描述',
-                              key: 'ndpaRemark1Desc',
+                              key: 'devRemark1Desc',
                               width: 120
                             },
                             {
                               title: '备注一数据',
-                              key: 'ndpaRemark1Data',
+                              key: 'devRemark1Data',
                               width: 120
                             },
                             {
                               title: '备注二描述',
-                              key: 'ndpaRemark2Desc',
+                              key: 'devRemark2Desc',
                               width: 120
                             },
                             {
                               title: '备注二数据',
-                              key: 'ndpaRemark2Data',
+                              key: 'devRemark2Data',
                               width: 120
                             },
                             {
                               title: '备注三描述',
-                              key: 'ndpaRemark3Desc',
+                              key: 'devRemark3Desc',
                               width: 120
                             },
                             {
                               title: '备注三数据',
-                              key: 'ndpaRemark3Data',
+                              key: 'devRemark3Data',
                               width: 120
                             },
                             {

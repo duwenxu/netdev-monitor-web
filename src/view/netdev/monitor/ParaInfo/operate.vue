@@ -142,6 +142,13 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="是否在拓扑图显示" prop="ndpaIsTopology" >
+            <Select v-model="ParaInfo.ndpaIsTopology" clearable   placeholder="请选择是否在拓扑图显示">
+              <Option  v-for='choose in isTopoList' :value='choose.id' :key="choose.id">{{choose.code}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="缺省值" prop="ndpaDefaultVal" >
             <Input v-model="ParaInfo.ndpaDefaultVal" type="textarea" placeholder="请输入缺省值"></Input>
           </FormItem>
@@ -216,6 +223,8 @@
         ndpaCmplexLevelList:[],
         paraCodecList:[],
         remark2DataList:[],
+        isTopoList:[{'id':'0','code':'否'},
+                    {'id':'1','code':'是'}],  //是否在拓扑图显示
         rulePro: {
           fmtId: [
             {required: false}

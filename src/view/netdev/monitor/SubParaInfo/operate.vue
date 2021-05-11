@@ -169,6 +169,13 @@
             <Input v-model="ParaInfo.ndpaLinkVal" type="textarea" placeholder="请输入关联值"></Input>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="是否在拓扑图显示" prop="ndpaIsTopology" >
+            <Select v-model="ParaInfo.ndpaIsTopology" clearable   placeholder="请选择是否在拓扑图显示">
+              <Option  v-for='choose in isTopoList' :value='choose.id' :key="choose.id">{{choose.code}}</Option>
+            </Select>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -201,6 +208,8 @@
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
         ndpaLinkTypeList:[],
+        isTopoList:[{'id':false,'code':'否'},
+              {'id':true,'code':'是'}],  //是否在拓扑图显示
         rulePro: {
           fmtId: [
             {required: false}
