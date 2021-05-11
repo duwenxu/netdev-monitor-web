@@ -1,11 +1,11 @@
 <template>
   <div>
     <div ref="dom" class="charts"></div>
-    <div v-for="equipment in equipments">
-      <div class="device_title" :style="devicePosition(equipment)">
-        <span :style="judgeDeviceStatus(equipment, 0)"></span>
-      </div>
-    </div>
+<!--    <div v-for="equipment in equipments">-->
+<!--      <div class="device_title" :style="devicePosition(equipment)">-->
+<!--        <span :style="judgeDeviceStatus(equipment, 0)"></span>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
         <span :class="[item.shape]" :style="{background: item.color, borderColor: item.borderColor}"></span>{{item.description}}
@@ -25,180 +25,7 @@ export default {
   data() {
     return {
       dom: null,
-      equipments:[
-        {devNo: '2', name: 'Ku 1:1热备份开关切换控制器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
-        {devNo: '11', name: 'A调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
-        {devNo: '12', name: 'A调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
-        {devNo: '13', name: 'B调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
-        {devNo: '14', name: 'B调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
-        {devNo: '20', name: '2.4m天线ACU', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
-        {devNo: '40', name: '下变频器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
-        {devNo: '41', name: '下变频器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
-      ],
-      legendType: [
-        {shape: 'circle', color: '#009688', description: '正常'},
-        {shape: 'circle', color: '#ff1400', description: '中断'},
-        {shape: 'circle', color: '#ffbe08', description: '维修'},
-        {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor:'#009688', description: '运行'},
-      ],
-      position: {
-        '2': {
-          top: '450px',
-          left: '900px',
-        },
-        '11': {
-          top: '240px',
-          left: '1320px',
-        },
-        '12': {
-          top: '325px',
-          left: '1320px',
-        },
-        '13': {
-          top: '420px',
-          left: '1320px',
-        },
-        '14': {
-          top: '505px',
-          left: '1320px',
-        },
-        '20': {
-          top: '750px',
-          left: '1260px',
-        },
-        '40': {
-          top: '548px',
-          left: '930px',
-        },
-        '41': {
-          top: '615px',
-          left: '930px',
-        },
-      },
-    }
-  },
-  beforeDestroy() {
-    off(window, 'resize', this.resize)
-  },
-  mounted() {
-    this.dom = echarts.init(this.$refs.dom);
-    this.init()
-    this.getMediaWidth()
-  },
-  computed: {
-    ...mapState({
-      mediaWidthType: state => state.user.mediaWidthType
-    }),
-  },
-  methods: {
-    getWSData(WSdata) {
-      if (WSdata.length) {
-        WSdata.forEach(item => {
-          this.equipments.forEach(equip => {
-            if (item.devNo === equip.devNo) {
-              this.setWSDate (item, equip)
-            }
-          })
-        })
-      }
-    },
-    setWSDate (data, obj) {
-      obj.devDeployType = data.devDeployType /*0031002 主设备运行 0031003 备设备运行*/
-      obj.isInterrupt = data.isInterrupt
-      obj.workStatus = data.workStatus
-      obj.masterOrSlave = data.masterOrSlave
-      obj.isUseStandby = data.isUseStandby
-      obj.isAlarm = data.isAlarm
-    },
-    getMediaWidth(){
-      if (this.mediaWidthType === 0){
-        this.position = {
-          '5': {
-            top: '0px',
-            left: '0px',
-          },
-          '9': {
-            top: '0px',
-            left: '155px',
-          },
-          '20': {
-            top: '0px',
-            left: '310px',
-          },
-          '2': {
-            top: '0px',
-            left: '445px',
-          },
-          '10': {
-            top: '0px',
-            left: '600px',
-          }
-        }
-      }else if (this.mediaWidthType === 1) {
-        this.position = {
-          '2': {
-            top: '450px',
-            left: '900px',
-          },
-          '11': {
-            top: '240px',
-            left: '1320px',
-          },
-          '12': {
-            top: '325px',
-            left: '1320px',
-          },
-          '13': {
-            top: '420px',
-            left: '1320px',
-          },
-          '14': {
-            top: '505px',
-            left: '1320px',
-          },
-          '20': {
-            top: '750px',
-            left: '1260px',
-          },
-          '40': {
-            top: '548px',
-            left: '930px',
-          },
-          '41': {
-            top: '615px',
-            left: '930px',
-          },
-        }
-      }
-    },
-    judgeDeviceStatus (device, type) {
-      let info = {}
-      if (device.isInterrupt === '0' && device.workStatus === '0') { // 0正常
-        info = type ? '正常' : {
-          background: '#009688'
-        }
-      } else if (device.isInterrupt === '1') { // 中断
-        info = type ? '中断': {
-          background: '#ff1400'
-        }
-      } else if(device.workStatus === '1') { // 1 维修
-        info = type ? '维修':{
-          background: '#ffbe08'
-        }
-      }
-      return info
-    },
-    devicePosition (equipment){
-      return {
-        top: this.position[equipment.devNo].top,
-        left: this.position[equipment.devNo].left
-      }
-    },
-    resize() {
-      this.dom.resize()
-    },
-    init() {
-      var nodes = [
+      nodes:[
         {
           x: '10',
           y: '500',
@@ -206,7 +33,6 @@ export default {
           img: 'image://' + require('@/assets/images/home/wn_track.png'),
           size: [260,200]
         },
-
 //---------------舱外
         {
           mark:'舱外',
@@ -266,6 +92,16 @@ export default {
           size: [230,120]
         },
         {
+          mark:'ku buc 状态',
+          x: '580',
+          y: '450',
+          devNo:2,
+          nodeName: '',
+          img: 'circle',
+          size: [20,20],
+          color:'#ccc'
+        },
+        {
           x: '580',
           y: '300',
           nodeName: '',
@@ -276,18 +112,44 @@ export default {
         {
           x: '580',
           y: '338',
+          devNo:40,
+          isMajor: true,
           nodeName: '下变频器       ',
           img: 'rect',
           size: [90, 35],
           color: '#c4e889'
         },
         {
+          mark:'下变频器1 状态',
+          devNo:40,
+          isMajor: false,
+          x: '620',
+          y: '338',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
+        },
+        {
           x: '580',
           y: '259',
+          devNo:41,
+          isMajor: true,
           nodeName: '下变频器      ',
           img: 'rect',
           size: [90, 35],
           color: '#c4e889'
+        },
+        {
+          mark:'下变频器2 状态',
+          devNo:41,
+          isMajor: false,
+          x: '620',
+          y: '260',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
         },
 //---------------工作舱
         {
@@ -323,11 +185,26 @@ export default {
         {
           x: '1020',
           y: '700',
+          devNo:11,
+          isMajor:true,
           nodeName: '650调制解调器        ',
           img: 'rect',
           size: [150, 30],
           color: 'white',
-          category: 2
+          category: 2,
+          // border:'solid',
+          // borderColor:'green'
+        },
+        {
+          mark:'A调制解调器1 状态',
+          devNo:11,
+          isMajor:false,
+          x: '1090',
+          y: '700',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc',
         },
         {
           x: '1020',
@@ -341,11 +218,24 @@ export default {
         {
           x: '1020',
           y: '600',
+          devNo:12,
+          isMajor:true,
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
           color: 'white',
           category: 2
+        },
+        {
+          mark:'A调制解调器2 状态',
+          devNo:12,
+          isMajor:false,
+          x: '1090',
+          y: '600',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
         },
         {
           x: '1020',
@@ -359,11 +249,24 @@ export default {
         {
           x: '1020',
           y: '490',
+          devNo:13,
+          isMajor:true,
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
           color: 'white',
           category: 2
+        },
+        {
+          mark:'B调制解调器1 状态',
+          devNo:13,
+          isMajor:false,
+          x: '1090',
+          y: '490',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
         },
         {
           x: '1020',
@@ -377,11 +280,24 @@ export default {
         {
           x: '1020',
           y: '390',
+          devNo:14,
+          isMajor: true,
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
           color: 'white',
           category: 2
+        },
+        {
+          mark:'B调制解调器2 状态',
+          devNo:14,
+          isMajor: false,
+          x: '1090',
+          y: '390',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
         },
         {
           x: '1020',
@@ -413,13 +329,25 @@ export default {
         {
           x: '1020',
           y: '60',
+          devNo:20,
+          isMajor:true,
           nodeName: '天线控制\n单元\n(ACU)',
           img: 'rect',
           size: [100, 110],
           color: 'rgb(228,225,192)',
           category: 2
         },
-
+        {
+          mark:'天线控制 状态',
+          devNo:20,
+          isMajor:false,
+          x: '1020',
+          y: '100',
+          nodeName: '',
+          img: 'circle',
+          size: [20, 20],
+          color: '#ccc'
+        },
         {
           x: '1250',
           y: '620',
@@ -586,7 +514,116 @@ export default {
           color: 'rgb(124,203,238)',
           category: 2
         },
+      ],
+      equipments:[
+        {devNo: '2', name: 'Ku 1:1热备份开关切换控制器', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '11', name: 'A调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '12', name: 'A调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+        {devNo: '13', name: 'B调制解调器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '14', name: 'B调制解调器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+        {devNo: '20', name: '2.4m天线ACU', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '40', name: '下变频器1', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '41', name: '下变频器2', isInterrupt:'', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+      ],
+      legendType: [
+        {shape: 'circle', color: '#009688', description: '正常'},
+        {shape: 'circle', color: '#ff1400', description: '中断'},
+        {shape: 'circle', color: '#ffbe08', description: '维修'},
+        {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor:'#009688', description: '运行'},
+      ],
+      timer:null
+    }
+  },
+  beforeDestroy() {
+    off(window, 'resize', this.resize)
+  },
+  mounted() {
+    this.dom = echarts.init(this.$refs.dom);
+    this.init(this.nodes)
+    // this.initTime()
+  },
+  computed: {
+    ...mapState({
+      mediaWidthType: state => state.user.mediaWidthType
+    }),
+  },
+  destroyed() {
+    clearInterval(this.timer)
+
+  },
+  methods: {
+    initTime() {
+
+      this.timer = setInterval(this.scrollAnimate, 5000);
+    },
+    scrollAnimate() {
+      let obj =[
+        {devNo: '2', name: 'Ku 1:1热备份开关切换控制器', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '11', name: 'A调制解调器1', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0',devDeployType:'0031002'},
+        {devNo: '12', name: 'A调制解调器2', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1'},
+        {devNo: '13', name: 'B调制解调器1', isInterrupt:'1', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '14', name: 'B调制解调器2', isInterrupt:'0', workStatus: '1', isAlarm: false, isUseStandby: false, masterOrSlave: '1',devDeployType:'0031003'},
+        {devNo: '20', name: '2.4m天线ACU', isInterrupt:'0', workStatus: '', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '40', name: '下变频器1', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '0'},
+        {devNo: '41', name: '下变频器2', isInterrupt:'0', workStatus: '0', isAlarm: false, isUseStandby: false, masterOrSlave: '1',devDeployType:'0031003'},
       ]
+      setTimeout(() => {
+      this.getWS(obj)
+      }, 1000)
+    },
+    getWS(WSdata) {
+      if (WSdata.length) {
+        console.log(WSdata)
+        WSdata.forEach(item => {
+          this.nodes.forEach(device => {
+            if (item.devNo == device.devNo) {
+              this.setWSDate (item, device)
+            }
+          })
+        })
+
+        this.init(this.nodes)
+      }
+    },
+    setWSDate (item, device) {
+      console.log(item)
+      console.log(device)
+      if (item.isInterrupt === '0' && item.workStatus === '0' && !device.isMajor) { // 0正常
+        console.log(1111)
+         this.$set(device,'color','#009688')
+      } else if (item.isInterrupt === '1'  && !device.isMajor) { // 中断
+        console.log(2222)
+        this.$set(device,'color','#ff1400')
+      } else if(item.workStatus === '1'  && !device.isMajor) { // 1 维修
+        this.$set(device,'color','#ffbe08')
+      }
+      if (item.masterOrSlave !== null) {
+        if (((item.devDeployType ==="0031002" && item.masterOrSlave === '0')
+          || (item.devDeployType ==="0031003" && item.masterOrSlave === '1'))&&device.isMajor) {
+          this.$set(device,'borderColor','#009688')
+          this.$set(device,'border','solid')
+          this.$set(device,'color','rgba(0,150,136,0.05)')
+        }
+      }
+    },
+    aaa (item, equip) {
+
+      // borderColor
+      // border:'solid'
+      // obj.devDeployType = data.devDeployType /*0031002 主设备运行 0031003 备设备运行*/
+      // obj.isInterrupt = data.isInterrupt
+      // obj.workStatus = data.workStatus
+      // obj.masterOrSlave = data.masterOrSlave
+      // obj.isUseStandby = data.isUseStandby
+      // obj.isAlarm = data.isAlarm
+    },
+
+    resize() {
+      this.dom.resize()
+    },
+    init(nodes) {
+      console.log(2222222222222)
+      // console.log(this.nodes)
       var charts = {
         nodes: [],
         linesData: [
@@ -1464,7 +1501,7 @@ export default {
         if(nodes[j].border){
           node.itemStyle.normal.borderType = nodes[j].border
           node.itemStyle.normal.borderDashOffset = nodes[j].offset
-          node.itemStyle.normal.borderColor = 'grey'
+          node.itemStyle.normal.borderColor = nodes[j].borderColor? nodes[j].borderColor:'grey'
         }
 
         charts.nodes.push(node)
