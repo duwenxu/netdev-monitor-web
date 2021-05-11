@@ -2,7 +2,7 @@
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
       <div style="margin-bottom: 5px">命令区</div>
-      <div  style="display: flex;margin-left: 20px;">
+      <div style="display: flex;margin-left: 20px;">
         <Button v-for="(info,index) in orderDatas" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
@@ -27,23 +27,24 @@
 import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
+
 export default {
-  components:{common},
-  props:{
-    paramSize:{
-      type:Number
+  components: {common},
+  props: {
+    paramSize: {
+      type: Number
     }
   },
   data() {
     return {
-      orderHeight:360,
-      normalHeight:450,
+      orderHeight: 360,
+      normalHeight: 450,
 
       paramSocket: null,
       logSocket: null,
-      infos:[],
-      orderDatas:[],
-      combineList:[],
+      infos: [],
+      orderDatas: [],
+      combineList: [],
       paramType: ['0019002'],
 
     }
@@ -64,18 +65,18 @@ export default {
     next()
   },
   methods: {
-    sizeInfo(data){
-      if(data.showAlert || data.showLog){
+    sizeInfo(data) {
+      if (data.showAlert || data.showLog) {
         this.orderHeight = 360
         this.normalHeight = 450
-      }else{
+      } else {
         this.orderHeight = 580
         this.normalHeight = 680
       }
     },
     initWebSocket() { //初始化weosocket
-      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
@@ -91,7 +92,7 @@ export default {
       this.editData(msg)
     },
     editData(msg) {
-      let oderArr = [],parentArr = []
+      let oderArr = [], parentArr = []
       msg.forEach(v => {
         v.selected = false
         v.errorMsg = ''
@@ -99,17 +100,17 @@ export default {
           oderArr.push(v)
         } else {
           if (v.parahowMode == '0024001') {//文本数字框
-            if(v.paraCmplexLevel == '0019003'){//组合参数
+            if (v.paraCmplexLevel == '0019003') {//组合参数
               let subType = v.subParaList[0].subParaLinkType
-              if(subType == '0018003'){//若子为0018003则父框子
-                v.subParaList.forEach(item=>{
+              if (subType == '0018003') {//若子为0018003则父框子
+                v.subParaList.forEach(item => {
                   this.commonFunc(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
-              }else{//否则按复杂参数拼装来处理
+              } else {//否则按复杂参数拼装来处理
                 this.commonFmt(v)
               }
-            }else{//0019001 002//复杂参数 基本参数
+            } else {//0019001 002//复杂参数 基本参数
               if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//复杂参数处理，按拼装来处理
                 this.commonFmt(v)
               } else {
@@ -124,13 +125,13 @@ export default {
       this.combineList = parentArr
       this.infos = msg
     },
-    commonFunc(v){
+    commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
         v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
       }
     },
-    commonFmt(v){
+    commonFmt(v) {
       v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
@@ -153,7 +154,16 @@ export default {
           paraStrLen: v.paraStrLen,
         })
         saveOffset = offset
-        return match = resultChar[index]
+        if (v.subParaList.length) {
+          if (v.subParaList[index].spinnerInfoList) {
+            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value)=>value.code==v.subParaList[index].paraVal);
+            return match = v.subParaList[index].spinnerInfoList[valIndex].name
+          } else {
+            return match = resultChar[index]
+          }
+        } else {
+          return match = resultChar[index]
+        }
       })
       if (v.subParaList.length) {
         v.subParaList.forEach(n => {
@@ -175,26 +185,26 @@ export default {
         paraId: info.paraId,
         paraVal: info.paraVal,
       }
-        let {result, success, message} = await editParamValue(obj)
-        if (success) {
-          this.$Notice.success({
-            title: '成功',
-            desc: message,
-            duration: 1
-          })
-        } else {
-          this.$Notice.error({
-            title: '失败',
-            desc: message,
-            duration: 3
-          })
-        }
+      let {result, success, message} = await editParamValue(obj)
+      if (success) {
+        this.$Notice.success({
+          title: '成功',
+          desc: message,
+          duration: 1
+        })
+      } else {
+        this.$Notice.error({
+          title: '失败',
+          desc: message,
+          duration: 3
+        })
+      }
     }
   }
 }
 </script>
 
-<style  lang="less">
+<style lang="less">
 .order-wrap {
   border: 1px solid #009688;
   height: 100px;
@@ -203,7 +213,8 @@ export default {
   overflow: auto;
   margin-bottom: 5px;
 }
-.sub-wrap{
+
+.sub-wrap {
   border: 1px solid #009688;
   height: 250px;
   border-radius: 5px;
@@ -211,6 +222,7 @@ export default {
   overflow: auto;
   margin-bottom: 5px;
 }
+
 .param-wrap {
   border: 1px solid #009688;
   height: 450px;
