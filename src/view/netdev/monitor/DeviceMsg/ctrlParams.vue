@@ -10,6 +10,7 @@
                 <div v-for="(info,index) in temp.subParaList">
                   <Col :xs="24" :lg="8">
                     <Row>
+                      <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
                       <template v-if="info.parahowMode == '0024001'">
                         <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                           <Row>
@@ -121,6 +122,7 @@
                           </Col>
                           <Col :xs="24" :lg="24">&nbsp;</Col>
                         </Row>
+                      </template>
                       </template>
                     </Row>
                   </Col>

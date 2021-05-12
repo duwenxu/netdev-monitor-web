@@ -160,6 +160,14 @@
                               width: 100
                             },
                             {
+                              title: '是否在拓扑图显示',
+                              key: 'ndpaIsTopology',
+                              width: 150,
+                              render:(h,params) =>{
+                                 return h('span',params.row.ndpaIsTopology == true ? '是':'否');
+                              }
+                            },
+                            {
                               title: '缺省值',
                               key: 'ndpaDefaultVal',
                               width: 150
@@ -337,6 +345,10 @@
               let {result, success, message} = await queryParaInfoPageList(searchAll)
               if (success) {
                 this.infos = result.records
+                //将是否展示在拓扑图数据值转换   否则不好处理
+                this.infos.forEach(value => {
+                    value.ndpaIsTopology = value.ndpaIsTopology == true ? '1' : '0';
+                })
                 this.current = result.current ? result.current : result.current + 1
                 this.otherPage.total = result.total
               }else {
