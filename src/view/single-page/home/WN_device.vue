@@ -100,7 +100,7 @@ export default {
           x: '578',
           y: '495',
           devNo: 2,
-          isMajor: true,
+          type:1,
           nodeName: 'Ku buc       ',
           img: 'rect',
           size: [120, 38],
@@ -115,13 +115,13 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '578',
           y: '406',
           devNo: 2,
-          isMajor: true,
+          type:0,
           nodeName: 'Ku buc       ',
           img: 'rect',
           size: [120, 38],
@@ -136,7 +136,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#ccc'
+          color: '#f1ecec'
         },
         {
           x: '580',
@@ -1546,6 +1546,7 @@ export default {
           symbolSize: nodes[j].size ? nodes[j].size : 1,
           alarm: nodes[j].alarm,
           symbol: nodes[j].img,
+          type:nodes[j].type,
           fixed: true,
           category: nodes[j].category,
           symbolRotate: nodes[j].symbolRotate ? nodes[j].symbolRotate : '',
