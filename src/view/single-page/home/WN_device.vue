@@ -101,10 +101,7 @@ export default {
           y: '495',
           devNo: 2,
           type:1,
-<<<<<<< HEAD
-=======
           isMajor: true,
->>>>>>> origin/dev
           nodeName: 'Ku buc       ',
           img: 'rect',
           size: [120, 38],
@@ -126,10 +123,7 @@ export default {
           y: '406',
           devNo: 2,
           type:0,
-<<<<<<< HEAD
-=======
           isMajor: true,
->>>>>>> origin/dev
           nodeName: 'Ku buc       ',
           img: 'rect',
           size: [120, 38],
