@@ -175,7 +175,7 @@ export default {
     }
   },
   mounted() {
-    if(window.screen.width<=1024){
+    if(window.screen.width<=1024 || this.$route.name == 'home'){
       this.lgCol = 12
     }
   },
@@ -248,16 +248,11 @@ export default {
       })
     },
     textValid(info) {
-      console.log(22222)
       if (info.inputVal) {
-        console.log(111111)
         if (info.paraSimpleDatatype == 1) {
-          console.log(33333)
           if (info.paraStrLen) {
             if (info.inputVal.length > info.paraStrLen) {
               this.validTag = true
-              console.log(info.inputVal.length)
-              console.log('wrong')
               this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
             }else {
               this.validTag = false

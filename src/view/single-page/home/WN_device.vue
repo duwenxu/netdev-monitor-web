@@ -7,7 +7,7 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal v-model="paramModal" title="参数信息" fullscreen @on-ok="confirm" @on-cancel="confirm">
+    <Modal :styles="{marginTop:'-90px'}" v-model="paramModal" title="参数信息"  @on-ok="confirm" @on-cancel="confirm" width="1000" :mask-closable="false">
       <DeviceMain></DeviceMain>
     </Modal>
   </div>
@@ -627,10 +627,13 @@ export default {
         },
       ],
       legendType: [
-        {shape: 'circle', color: '#009688', description: '正常'},
-        {shape: 'circle', color: '#ff1400', description: '中断'},
-        {shape: 'circle', color: '#ffbe08', description: '告警'},
         {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor: '#009688', description: '运行'},
+        {shape: 'circle', color: '#009688', description: '正常'},
+
+        {shape: 'circle', color: '#ff1400', description: '故障'},
+        {shape: 'circle', color: '#ffbe08', description: '告警'},
+
+
       ],
     }
   },
@@ -1704,8 +1707,8 @@ export default {
     margin-right: 10px;
     align-items: center;
 
-    &:last-child {
-      margin-right: 0;
+    &:first-child {
+      margin-right: 10px;
 
       span {
         border: 1px solid;
