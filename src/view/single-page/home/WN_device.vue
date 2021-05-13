@@ -18,12 +18,12 @@
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
 import {mapState} from "vuex";
-// import mixin from "../../../components/common/websocket";
+import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {
   components: {DeviceMain},
-  // mixins: [mixin],
+  mixins: [mixin],
   data() {
     return {
       shineData: [],
@@ -658,7 +658,6 @@ export default {
     off(window, 'resize', this.resize)
   },
   mounted() {
-    this.initTime()
     this.dom = echarts.init(this.$refs.dom);
     this.init(this.nodes, this.shineData)
   },
@@ -672,108 +671,18 @@ export default {
     confirm() {
       this.$xy.vector.$emit("closeModal")
     },
-    initTime() {
-      this.timer = setInterval(this.scrollAnimate, 2000);
+    getWSData(WSdata) {
+      if (WSdata.length) {
+        WSdata.forEach(item => {
+          this.nodes.forEach(device => {
+            if (item.devNo == device.devNo) {
+              this.setWSDate(item, device)
+            }
+          })
+        })
+        this.init(this.nodes,this.shineData)
+      }
     },
-    scrollAnimate() {
-      setTimeout(() => {
-        let data = [
-          {
-          "devDeployType": "0031002",
-          "devNo": "11",
-          "devTypeCode": "8",
-          "isAlarm": "1",
-          "isInterrupt": "0",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        },
-          {
-          "devDeployType": "0031002",
-          "devNo": "12",
-          "devTypeCode": "8",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "13",
-          "devTypeCode": "8",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "14",
-          "devTypeCode": "8",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        },  {
-          "devDeployType": "0031004",
-          "devNo": "2",
-          "devTypeCode": "2",
-          "isAlarm": "1",
-          "isInterrupt": "0",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "20",
-          "devTypeCode": "1",
-          "isAlarm": "1",
-          "isInterrupt": "0",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "1"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "21",
-          "devTypeCode": "29",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }]
-          if (data.length) {
-            data.forEach(item => {
-              this.nodes.forEach(device => {
-                if (item.devNo == device.devNo) {
-                  this.setWSDate(item, device)
-                }
-              })
-            })
-            this.init(this.nodes,this.shineData)
-          }
-      }, 1000)
-    },
-    // getWSData(WSdata) {
-    //   if (WSdata.length) {
-    //     WSdata.forEach(item => {
-    //       this.nodes.forEach(device => {
-    //         if (item.devNo == device.devNo) {
-    //           this.setWSDate(item, device)
-    //         }
-    //       })
-    //     })
-    //     this.init(this.nodes)
-    //   }
-    // },
     //主机type 1,备机0，对设备来说 isMajor为false的时候  改的是对应圆圈状态
     setWSDate(item, device) {
       if(!device.isMajor){//是否 状态灯图形isMajor False为状态圆形\true 为背景方块
@@ -784,6 +693,20 @@ export default {
                 let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo);
                 if(valIndex == -1){
                   this.shineData.push({devNo:item.devNo,value: [device.x, device.y, 22]})
+                }else{
+                  if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
+                    if (device.type === 1) {//上面ku buc 设主
+                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
+                      if (valIndex == -1) {
+                        this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
+                      }
+                    }else{
+                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
+                      if(valIndex == -1){
+                        this.shineData.push({devNo:item.devNo,type:0,value: [device.x, device.y, 22]})
+                      }
+                    }
+                  }
                 }
               }
             }else{//告警为0  则状态为正常
@@ -800,29 +723,15 @@ export default {
       if (item.masterOrSlave !== null) {
         if (item.devNo == 2) {
           if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
-            if (device.type === 1) {//上面ku buc 设主
-              if(device.isMajor){
-                this.commonSetStatus(device)
-              }else{
-                let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
-                if(valIndex == -1){
-                  this.shineData.push({devNo:item.devNo,type:1,value: [device.x, device.y, 22]})
-                }
-              }
+            if (device.type === 1 && device.isMajor) {//上面ku buc 设主
+              this.commonSetStatus(device)
             }
             if(device.type === 0 && !device.isMajor){
               this.$set(device, 'color', 'white')
             }
           } else {
-            if (device.type === 0) { //下面ku buc 设主
-              if(device.isMajor){
-                this.commonSetStatus(device)
-              }else{
-                let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
-                if(valIndex == -1){
-                  this.shineData.push({devNo:item.devNo,type:0,value: [device.x, device.y, 22]})
-                }
-              }
+            if (device.type === 0 && device.isMajor) { //下面ku buc 设主
+              this.commonSetStatus(device)
             }
             if(device.type === 1 && !device.isMajor){
               this.$set(device, 'color', 'white')
