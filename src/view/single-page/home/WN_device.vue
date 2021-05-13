@@ -119,7 +119,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '577',
@@ -173,7 +173,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '580',
@@ -196,7 +196,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
 //---------------工作舱
         {
@@ -253,7 +253,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white',
+          color: 'black',
         },
         {
           x: '1020',
@@ -286,7 +286,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '1020',
@@ -319,7 +319,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '1020',
@@ -352,7 +352,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '1020',
@@ -401,7 +401,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '1250',
@@ -680,6 +680,9 @@ export default {
             }
           })
         })
+        if(this.dom){
+          this.dom.clear()
+        }
         this.init(this.nodes,this.shineData)
       }
     },
@@ -727,24 +730,20 @@ export default {
               this.commonSetStatus(device)
             }
             if(device.type === 0 && !device.isMajor){
-              this.$set(device, 'color', 'white')
+              this.$set(device, 'color', 'black')
             }
           } else {
             if (device.type === 0 && device.isMajor) { //下面ku buc 设主
               this.commonSetStatus(device)
             }
             if(device.type === 1 && !device.isMajor){
-              this.$set(device, 'color', 'white')
+              this.$set(device, 'color', 'black')
             }
           }
         } else {
           if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
             || (item.devDeployType === "0031003" && item.masterOrSlave === '1'))  && device.isMajor) {
             this.commonSetStatus(device)
-          } else {
-            if (device.isMajor && device.devNo != 20) {
-              this.commonSetSub(device)
-            }
           }
         }
       }
@@ -752,10 +751,6 @@ export default {
     commonSetStatus(device) {
       this.$set(device, 'borderColor', '#009688')
       this.$set(device, 'border', 'solid')
-      // this.$set(device, 'color', '#c4e889')
-    },
-    commonSetSub(device) {
-      this.$set(device, 'color', 'rgba(184,181,181,0.7)')
     },
     resize() {
       this.dom.resize()
@@ -1671,12 +1666,10 @@ export default {
               position: 'middle',
             },
             lineStyle: {
-              normal: {
-                color: 'green',
-                width: 1.5,
-                opacity: 1,
-                curveness: 0
-              }
+              color: 'green',
+              width: 1.5,
+              opacity: 1,
+              curveness: 0
             },
             effect: {
               show: true,
@@ -1698,12 +1691,10 @@ export default {
               position: 'middle',
             },
             lineStyle: {
-              normal: {
-                color: 'green',
-                width: 1.5,
-                opacity: 1,
-                curveness: 0
-              }
+              color: 'green',
+              width: 1.5,
+              opacity: 1,
+              curveness: 0
             },
             effect: {
               show: true,
@@ -1726,42 +1717,25 @@ export default {
               return val[2] * 0.8;
             },
             data: shineData,
-            // [{ name: "客村", value: [600, 100,22] }],
             showEffectOn: "render",
             effectType: "ripple",
             rippleEffect: {
               period: 4,
               scale: 4,
               brushType: "stroke"
-
-            },
-            hoverAnimation: true
-
+            }
           },
           {
             type: 'graph',
             z: 1,
             coordinateSystem: 'cartesian2d',
             label: {
-              normal: {
-                show: true,
-                position: 'inside',
-                //offset: [0,-60],//居上 20
-                textStyle: {
-                  fontSize: 14,
-                  color: 'black',
-
-                }
-              }
-            },
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true,
-                  formatter: function (item) {
-                    return item.data.nodeName
-                  }
-                }
+              show: true,
+              fontSize:14,
+              color:'black',
+              position: 'inside',
+              formatter: function (item) {
+                return item.data.nodeName
               }
             },
             data: charts.nodes,
