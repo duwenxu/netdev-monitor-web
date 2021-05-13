@@ -15,9 +15,6 @@ export const loginData = info => {
 
 
 
-
-
-
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',
