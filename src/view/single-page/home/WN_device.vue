@@ -142,7 +142,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '580',
