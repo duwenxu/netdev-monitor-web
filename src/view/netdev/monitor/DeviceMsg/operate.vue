@@ -955,6 +955,7 @@ export default {
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
       let saveOffset = 0
+      console.log(resultChar)
       v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
         let len = param.length
         let pos = index == -1 ? 0 : saveOffset + len + 2
@@ -995,6 +996,7 @@ export default {
           })
         })
       }
+      console.log(v)
     },
     async save(info) {
       let obj = {

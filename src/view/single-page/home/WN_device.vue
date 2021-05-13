@@ -7,7 +7,8 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal :styles="{marginTop:'-90px'}" v-model="paramModal" title="参数信息"  @on-ok="confirm" @on-cancel="confirm" width="1000" :mask-closable="false">
+    <Modal :styles="{marginTop:'-90px'}" v-model="paramModal" title="参数信息" @on-ok="confirm" @on-cancel="confirm"
+           width="1000" :mask-closable="false">
       <DeviceMain></DeviceMain>
     </Modal>
   </div>
@@ -25,7 +26,8 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      devNo:null,
+      shineData: [],
+      devNo: null,
       dom: null,
       paramModal: false,
       nodes: [
@@ -97,14 +99,14 @@ export default {
         },
 
         {
-          x: '578',
-          y: '495',
+          x: '577',
+          y: '494',
           devNo: 2,
-          type:1,
+          type:1,//主机
           isMajor: true,
           nodeName: 'Ku buc       ',
           img: 'rect',
-          size: [120, 38],
+          size: [122, 38],
           color: 'rgba(0,150,136,0.2)'
         },
         {
@@ -112,33 +114,35 @@ export default {
           x: '625',
           y: '495',
           isMajor: false,
+          type:1,//主机
           devNo: 2,
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
-          x: '578',
-          y: '406',
+          x: '577',
+          y: '407',
           devNo: 2,
-          type:0,
+          type: 0,//备机
           isMajor: true,
           nodeName: 'Ku buc       ',
           img: 'rect',
-          size: [120, 38],
-          color: 'rgba(0,150,136,0.2)'
+          size: [122, 38],
+          color: 'rgba(184,181,181,0.7)'
         },
         {
           mark: 'ku buc 状态2',
           x: '625',
           y: '410',
           isMajor: false,
+          type: 0,//备机
           devNo: 2,
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '580',
@@ -153,6 +157,7 @@ export default {
           y: '338',
           devNo: 40,
           isMajor: true,
+          type:1,//主机
           nodeName: '下变频器       ',
           img: 'rect',
           size: [98, 35],
@@ -161,34 +166,37 @@ export default {
         {
           mark: '下变频器1 状态',
           devNo: 40,
+          type:1,//主机
           isMajor: false,
           x: '620',
           y: '338',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '580',
           y: '259',
           devNo: 41,
           isMajor: true,
+          type:0,//备机
           nodeName: '下变频器      ',
           img: 'rect',
           size: [98, 35],
-          color: 'rgba(0,150,136,0.2)'
+          color: 'rgba(184,181,181,0.7)'
         },
         {
           mark: '下变频器2 状态',
           devNo: 41,
           isMajor: false,
+          type:0,//备机
           x: '620',
           y: '260',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
 //---------------工作舱
         {
@@ -208,7 +216,7 @@ export default {
           nodeName: '中\n\n频\n\n单\n\n元',
           img: 'rect',
           size: [60, 520],
-          color: 'rgba(228,225,192,0.6)'
+          color: 'rgba(227,221,152,0.8)'
         },
 
         {
@@ -219,13 +227,14 @@ export default {
           img: 'rect',
           size: [160, 160],
           category: 1,
-          color: 'rgb(214,188,169)'
+          color: 'rgba(227,221,152,0.8)'
         },
         {
           x: '1020',
           y: '700',
           devNo: 11,
           isMajor: true,
+          type:1,//主机
           nodeName: '650调制解调器        ',
           img: 'rect',
           size: [150, 30],
@@ -238,12 +247,13 @@ export default {
           mark: 'A调制解调器1 状态',
           devNo: 11,
           isMajor: false,
+          type:1,//主机
           x: '1090',
           y: '700',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec',
+          color: 'white',
         },
         {
           x: '1020',
@@ -259,22 +269,24 @@ export default {
           y: '600',
           devNo: 12,
           isMajor: true,
+          type:0,//备机
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
-          color: 'rgba(0,150,136,0.2)',
+          color: 'rgba(184,181,181,0.7)',
           category: 2
         },
         {
           mark: 'A调制解调器2 状态',
           devNo: 12,
           isMajor: false,
+          type:0,//备机
           x: '1090',
           y: '600',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '1020',
@@ -283,13 +295,14 @@ export default {
           id: 1,
           img: 'rect',
           size: [160, 160],
-          color: 'rgb(214,188,169)'
+          color: 'rgba(227,221,152,0.8)'
         },
         {
           x: '1020',
           y: '490',
           devNo: 13,
           isMajor: true,
+          type:1,//主机
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
@@ -300,12 +313,13 @@ export default {
           mark: 'B调制解调器1 状态',
           devNo: 13,
           isMajor: false,
+          type:1,//主机
           x: '1090',
           y: '490',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '1020',
@@ -320,23 +334,25 @@ export default {
           x: '1020',
           y: '390',
           devNo: 14,
+          type:0,//备机
           isMajor: true,
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
-          color: 'rgba(0,150,136,0.2)',
+          color: 'rgba(184,181,181,0.7)',
           category: 2
         },
         {
           mark: 'B调制解调器2 状态',
           devNo: 14,
           isMajor: false,
+          type:0,//备机
           x: '1090',
           y: '390',
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '1020',
@@ -344,7 +360,7 @@ export default {
           nodeName: '串口服务器',
           img: 'rect',
           size: [160, 50],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -353,7 +369,7 @@ export default {
           nodeName: 'L频段跟踪接收机',
           img: 'rect',
           size: [160, 50],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -362,7 +378,7 @@ export default {
           nodeName: '天线驱动\n单元\n(ADU)',
           img: 'rect',
           size: [100, 110],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -373,7 +389,7 @@ export default {
           nodeName: '天线控制\n单元\n(ACU)',
           img: 'rect',
           size: [100, 110],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -385,7 +401,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: '#f1ecec'
+          color: 'white'
         },
         {
           x: '1250',
@@ -393,7 +409,7 @@ export default {
           nodeName: '路\n由\n器',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -402,7 +418,7 @@ export default {
           nodeName: '保\n密\n机',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -411,7 +427,7 @@ export default {
           nodeName: '防\n火\n墙',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -420,7 +436,7 @@ export default {
           nodeName: '接入交换机',
           img: 'rect',
           size: [100, 40],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
 
@@ -431,7 +447,7 @@ export default {
           nodeName: '路\n由\n器',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -440,7 +456,7 @@ export default {
           nodeName: '保\n密\n机',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -449,7 +465,7 @@ export default {
           nodeName: '防\n火\n墙',
           img: 'rect',
           size: [60, 80],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -458,7 +474,7 @@ export default {
           nodeName: '接入交换机',
           img: 'rect',
           size: [100, 40],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
 
@@ -468,7 +484,7 @@ export default {
           nodeName: 'SDD设备',
           img: 'rect',
           size: [80, 60],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -486,7 +502,7 @@ export default {
           nodeName: '指\n挥\n调\n度\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -495,7 +511,7 @@ export default {
           nodeName: '时\n间\n统\n一\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -504,7 +520,7 @@ export default {
           nodeName: '电\n话\n交\n换\n系\n统',
           img: 'rect',
           size: [50, 100],
-          color: 'rgba(228,225,192,0.6)',
+          color: 'rgba(227,221,152,0.8)',
           category: 2
         },
         {
@@ -629,13 +645,12 @@ export default {
         },
       ],
       legendType: [
-        {shape: 'square', color: 'rgba(0,150,136,0.05)', borderColor: '#009688', description: '运行'},
+        {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
+        {shape: 'square', color: 'rgba(0,150,136,0.2)',description: '主机'},
+        {shape: 'square', color: '#ccc', description: '备机'},
         {shape: 'circle', color: '#009688', description: '正常'},
-
         {shape: 'circle', color: '#ff1400', description: '故障'},
-        {shape: 'circle', color: '#ffbe08', description: '告警'},
-
-
+        {shape: 'circle', color: '#ffbe08', description: '告警'}
       ],
     }
   },
@@ -644,7 +659,7 @@ export default {
   },
   mounted() {
     this.dom = echarts.init(this.$refs.dom);
-    this.init(this.nodes)
+    this.init(this.nodes, this.shineData)
   },
   computed: {
     ...mapState({
@@ -653,7 +668,7 @@ export default {
   },
 
   methods: {
-    confirm(){
+    confirm() {
       this.$xy.vector.$emit("closeModal")
     },
     getWSData(WSdata) {
@@ -665,30 +680,87 @@ export default {
             }
           })
         })
-        this.init(this.nodes)
+        this.init(this.nodes,this.shineData)
       }
     },
+    //主机type 1,备机0，对设备来说 isMajor为false的时候  改的是对应圆圈状态
     setWSDate(item, device) {
-      if (item.isInterrupt === '0' && item.workStatus === '0' && !device.isMajor) { // 0正常
-        this.$set(device, 'color', '#009688')
-      } else if (item.isInterrupt === '1' && !device.isMajor) { // 中断
-        this.$set(device, 'color', '#ff1400')
-      } else if (item.workStatus === '1' && !device.isMajor) { // 1 维修
-        this.$set(device, 'color', '#ffbe08')
-      }
-      if (item.masterOrSlave !== null) {
-        if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
-          || (item.devDeployType === "0031003" && item.masterOrSlave === '1')) && device.isMajor) {
-          this.$set(device, 'borderColor', '#009688')
-          this.$set(device, 'border', 'solid')
-          this.$set(device, 'color', 'rgba(0,150,136,0.05)')
+      if(!device.isMajor){//是否 状态灯图形isMajor False为状态圆形\true 为背景方块
+        if(item.isInterrupt === '0'){//是否中断 否0
+          if(item.workStatus === '0' ){//如果工作状态正常 0
+            if(item.isAlarm === '1'){//告警为1  则告警
+              if(item.devNo != 2){
+                let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo);
+                if(valIndex == -1){
+                  this.shineData.push({devNo:item.devNo,value: [device.x, device.y, 22]})
+                }else{
+                  if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
+                    if (device.type === 1) {//上面ku buc 设主
+                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
+                      if (valIndex == -1) {
+                        this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
+                      }
+                    }else{
+                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
+                      if(valIndex == -1){
+                        this.shineData.push({devNo:item.devNo,type:0,value: [device.x, device.y, 22]})
+                      }
+                    }
+                  }
+                }
+              }
+            }else{//告警为0  则状态为正常
+              this.$set(device, 'color', '#009688')
+            }
+          }else{//不正常 则直接故障
+            this.$set(device, 'color', '#ff1400')
+          }
+        }else{//中断 是 1
+          this.$set(device, 'color', '#ff1400')
         }
       }
+
+      if (item.masterOrSlave !== null) {
+        if (item.devNo == 2) {
+          if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
+            if (device.type === 1 && device.isMajor) {//上面ku buc 设主
+              this.commonSetStatus(device)
+            }
+            if(device.type === 0 && !device.isMajor){
+              this.$set(device, 'color', 'white')
+            }
+          } else {
+            if (device.type === 0 && device.isMajor) { //下面ku buc 设主
+              this.commonSetStatus(device)
+            }
+            if(device.type === 1 && !device.isMajor){
+              this.$set(device, 'color', 'white')
+            }
+          }
+        } else {
+          if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
+            || (item.devDeployType === "0031003" && item.masterOrSlave === '1'))  && device.isMajor) {
+            this.commonSetStatus(device)
+          } else {
+            if (device.isMajor && device.devNo != 20) {
+              this.commonSetSub(device)
+            }
+          }
+        }
+      }
+    },
+    commonSetStatus(device) {
+      this.$set(device, 'borderColor', '#009688')
+      this.$set(device, 'border', 'solid')
+      // this.$set(device, 'color', '#c4e889')
+    },
+    commonSetSub(device) {
+      this.$set(device, 'color', 'rgba(184,181,181,0.7)')
     },
     resize() {
       this.dom.resize()
     },
-    init(nodes) {
+    init(nodes, shineData) {
       var charts = {
         nodes: [],
         linesData: [
@@ -1543,15 +1615,15 @@ export default {
         var x = parseInt(nodes[j].x)
         var y = parseInt(nodes[j].y)
         var node = {
-          isMajor:nodes[j].isMajor,
-          devNo:nodes[j].devNo,
+          isMajor: nodes[j].isMajor,
+          devNo: nodes[j].devNo,
           showTag: nodes[j].id,
           nodeName: nodes[j].nodeName,
           value: [x, y],
           symbolSize: nodes[j].size ? nodes[j].size : 1,
           alarm: nodes[j].alarm,
           symbol: nodes[j].img,
-          type:nodes[j].type,
+          type: nodes[j].type,
           fixed: true,
           category: nodes[j].category,
           symbolRotate: nodes[j].symbolRotate ? nodes[j].symbolRotate : '',
@@ -1566,6 +1638,7 @@ export default {
           node.itemStyle.normal.borderType = nodes[j].border
           node.itemStyle.normal.borderDashOffset = nodes[j].offset
           node.itemStyle.normal.borderColor = nodes[j].borderColor ? nodes[j].borderColor : 'grey'
+          node.itemStyle.normal.borderWidth = '2'
         }
 
         charts.nodes.push(node)
@@ -1584,37 +1657,12 @@ export default {
           show: false,
           type: 'value'
         },
-        series: [{
-          type: 'graph',
-          coordinateSystem: 'cartesian2d',
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              //offset: [0,-60],//居上 20
-              textStyle: {
-                fontSize: 14,
-                color: 'black',
+        series: [
 
-              }
-            }
-          },
-          itemStyle: {
-            normal: {
-              label: {
-                show: true,
-                formatter: function (item) {
-                  return item.data.nodeName
-                }
-              }
-            }
-          },
-          data: charts.nodes,
-        },
           {
             type: "lines",
             symbol: ['none', 'none'],
-            zlevel: 1,
+            z: 2,
             symbolSize: 10,
             polyline: true,
             coordinateSystem: "cartesian2d",
@@ -1642,7 +1690,7 @@ export default {
           {
             type: "lines",
             symbol: ['none', 'none'],
-            zlevel: 2,
+            z: 3,
             symbolSize: 10,
             coordinateSystem: "cartesian2d",
             label: {
@@ -1665,7 +1713,59 @@ export default {
               symbolSize: 6
             },
             data: charts.linesData
-          }
+          },
+
+          {
+            type: "effectScatter",
+            scaling: 1,
+            z: 4,
+            color: '#ffbe08',
+            //该系列使用的坐标系
+            coordinateSystem: "cartesian2d",
+            symbolSize: function (val) {
+              return val[2] * 0.8;
+            },
+            data: shineData,
+            // [{ name: "客村", value: [600, 100,22] }],
+            showEffectOn: "render",
+            effectType: "ripple",
+            rippleEffect: {
+              period: 4,
+              scale: 4,
+              brushType: "stroke"
+
+            },
+            hoverAnimation: true
+
+          },
+          {
+            type: 'graph',
+            z: 1,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              normal: {
+                show: true,
+                position: 'inside',
+                //offset: [0,-60],//居上 20
+                textStyle: {
+                  fontSize: 14,
+                  color: 'black',
+
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  formatter: function (item) {
+                    return item.data.nodeName
+                  }
+                }
+              }
+            },
+            data: charts.nodes,
+          },
         ]
       }
       var that = this
@@ -1678,7 +1778,7 @@ export default {
         }
       });
       this.dom.on('click', function (info) {
-        if(info.data.devNo){
+        if (info.data.devNo) {
           that.$xy.vector.$emit("deviceNumber", info.data.devNo)
           that.paramModal = true
         }
@@ -1713,7 +1813,7 @@ export default {
       margin-right: 10px;
 
       span {
-        border: 1px solid;
+        border: 2px solid;
       }
     }
 
