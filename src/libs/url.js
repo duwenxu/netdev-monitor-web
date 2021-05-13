@@ -10,8 +10,8 @@ let proto = document.location.protocol
 // Setting.SPACE_URL = '/track'
 // Setting.SOCKET_URL = '/track_socket'
 
-Setting.SPACE_URL = ('https:' == proto ? '' : 'http://localhost:8080')
-Setting.SOCKET_URL = ('https:' == proto ? '' : 'localhost:8888')
+Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
+Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
 //
 // Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.7.4:8080')
 // Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.7.4:8888')
