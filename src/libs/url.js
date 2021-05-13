@@ -7,6 +7,7 @@ const Setting = {}
 Setting.vector = new Vue()
 let proto = document.location.protocol
 
+
 Setting.SPACE_URL = '/track'
 Setting.SOCKET_URL = '/track_socket'
 

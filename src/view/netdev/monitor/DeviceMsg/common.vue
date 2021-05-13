@@ -21,23 +21,23 @@
                         }}&nbsp;&nbsp;<span
                           v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
-                   <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                   <div v-if="info.selected">
                      <Col :xs="24" :lg="24">
                        <template v-for="temp in info.splitArr">
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
-                           <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
+                           <Select v-if="temp.subList" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
                              <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                              </Option>
                              <span slot="prefix">{{ temp.param }}</span>
                            </Select>
                            <template v-else>
                              <Poptip v-if="temp.paraValMin || temp.paraValMax" trigger="focus" transfer>
-                               <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
+                               <Input v-model.trim="temp.inputVal" @on-blur="textValid(temp)" number  @on-change="splitValue(info,temp)">
                                  <span slot="prefix">{{ temp.param }}</span>
                                </Input>
                                <div slot="content">下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}</div>
                              </Poptip>
-                             <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)">
+                             <Input v-else v-model.trim="temp.inputVal" @on-blur="textValid(temp)"  @on-change="splitValue(info,temp)">
                                <span slot="prefix">{{ temp.param }}</span>
                              </Input>
                              <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
@@ -77,22 +77,22 @@
                        <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
                          <template v-if="info.paraValMin || info.paraValMax">
                            <Poptip trigger="focus" transfer>
-                             <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
+                             <InputNumber v-if="info.paraValStep" v-model="info.inputVal"  @on-change="setValues(info)"
                                           :step='info.paraValStep' @on-blur="textValid(info)" style="width: 100%"></InputNumber>
-                             <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
-                                    :placeholder="info.paraName" @on-blur="textValid(info)" number>
+                             <Input v-if="!info.paraValStep" v-model.trim="info.inputVal"
+                                    :placeholder="info.paraName" @on-blur="textValid(info)"  @on-change="setValues(info)" number>
                                <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                              </Input>
                              <div slot="content">下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}</div>
                            </Poptip>
                          </template>
                          <template v-else>
-                           <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number> <span
+                           <Input v-model.trim="info.inputVal" :placeholder="info.paraName" number  @on-change="setValues(info)"> <span
                              v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
                          </template>
                        </template>
                        <template v-else>
-                         <Input v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)">
+                         <Input v-model.trim="info.inputVal" :placeholder="info.paraName" @on-blur="textValid(info)"  @on-change="setValues(info)">
                            <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                          </Input>
                        </template>
@@ -133,7 +133,7 @@
                  <Col :xs="16" :lg="16" push="4"
                       v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                       style="display: flex">
-                   <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
+                   <Select v-if="info.selected" v-model="info.inputVal" :placeholder="info.paraName"  @on-change="setValues(info)">
                      <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
                      </Option>
                    </Select>
@@ -175,13 +175,18 @@ export default {
     }
   },
   mounted() {
-    if(window.screen.width<=1024){
+    if(window.screen.width<=1024 || this.$route.name == 'home'){
       this.lgCol = 12
     }
   },
   methods:{
+    setValues(info){
+      this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.inputVal})
+    },
+    splitValue(info,temp){
+      this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
+    },
     changeMode(info) {
-      console.log(info)
       this.validTag = false
       if (info.subParaList.length) {
         let obj = {}
@@ -201,6 +206,7 @@ export default {
             this.$set(v, 'paraStrLen', Number(obj.paraStrLen))
             if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
               this.$set(v, 'paraVal', Number(v.paraVal))
+              // this.$set(v, 'inputVal', Number(v.inputVal))
             }
           }
         })
@@ -210,6 +216,7 @@ export default {
       } else {
         this.$Message.error('无数据时无法更改，请稍后再试。')
       }
+      this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.oldVal,splitArr:info.splitArr})
     },
     close(info) {
       if (!info.paraSpellFmt) {
@@ -222,9 +229,12 @@ export default {
         })
       }
       this.$set(info, 'selected', false)
+      this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,close:true})
     },
+
     /*-----------------验证--------------*/
-    validCombine(info, data) {
+    validCombine(info, data,temp) {
+      this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
       info.subParaList.forEach(v => {
         info.splitArr.forEach(x => {
           if (data == v.subParaLinkVal && v.paraCode == x.name) {
@@ -238,33 +248,27 @@ export default {
       })
     },
     textValid(info) {
-      if (info.paraVal) {
+      if (info.inputVal) {
         if (info.paraSimpleDatatype == 1) {
           if (info.paraStrLen) {
-            if (info.paraVal.length > info.paraStrLen) {
+            if (info.inputVal.length > info.paraStrLen) {
               this.validTag = true
-              // this.$Message.error({
-              //   content: '长度不能超过'+info.paraStrLen,
-              //   duration: 6,
-              //   closable: true
-              // });
               this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
+            }else {
+              this.validTag = false
             }
           } else {
             this.validTag = false
           }
         } else {
           let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
-          if (reg.test(info.paraVal)) {
+          if (reg.test(info.inputVal)) {
             if (info.paraValMax && info.paraValMin) {
-              if (info.paraVal > info.paraValMax || info.paraVal < info.paraValMin) {
+              if (info.inputVal > info.paraValMax || info.inputVal < info.paraValMin) {
                 this.validTag = true
-                // this.$Message.error({
-                //   content: '请在区间'+info.paraValMin+'--'+info.paraValMax+'内输入',
-                //   duration: 6,
-                //   closable: true
-                // });
                 this.$set(info, 'errorMsg', '下限:' + info.paraValMin + '--上限:' + info.paraValMax)
+
+
               } else {
                 this.validTag = false
               }
@@ -297,11 +301,11 @@ export default {
         let index = -1
         let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
           index++
-          return match = '[' + info.splitArr[index].paraVal + ']'
+          return match = '[' + info.splitArr[index].inputVal + ']'
         })
         obj.paraVal = finallStr
       } else {
-        obj.paraVal = info.paraVal
+        obj.paraVal = info.inputVal
       }
       if (obj.paraVal) {
         let {result, success, message} = await editParamValue(obj)
@@ -311,7 +315,7 @@ export default {
             desc: message,
             duration: 1
           })
-          this.$set(info, 'selected', false)
+          this.close(info)
         } else {
           this.$Notice.error({
             title: '失败',
@@ -321,6 +325,7 @@ export default {
         }
       } else {
         this.$set(info, 'paraVal', info.oldVal)
+        this.$set(info, 'inputVal', info.oldVal)
         this.$set(info, 'selected', false)
       }
     }

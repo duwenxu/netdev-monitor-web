@@ -5,20 +5,20 @@
         <component :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
-    <div class="fix-btn">
-      <div style="margin-top:5px;" @click="changeInfo(1)">
-        <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'"/>
-        告<Br/>警
+      <div class="fix-btn">
+        <div style="margin-top:5px;" @click="changeInfo(1)">
+          <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'"/>
+          告<Br/>警
+        </div>
       </div>
-    </div>
-    <div class="fix-btn-warn">
-      <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
-      <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
-    </div>
-    <div :style="{height:220+'px',overflow:'auto'}">
-      <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs"></Table>
-      <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
-    </div>
+      <div class="fix-btn-warn">
+        <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
+        <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
+      </div>
+      <div :style="{height:220+'px',overflow:'auto'}">
+        <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs"></Table>
+        <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
+      </div>
   </div>
 </template>
 <script>
@@ -134,6 +134,7 @@ export default {
       ],
       alertInfos: [],
       orderDatas: [],
+      viewLog:true
 
     }
   },
@@ -164,6 +165,7 @@ export default {
   },
   methods: {
     getDevNo(data) {
+      this.viewLog = false
       this.devNo = data
       this.getTabsCtrl()
       this.logWs()

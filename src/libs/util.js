@@ -506,6 +506,8 @@ export const setTitle = (routeItem, vm) => {
  根据传入分隔符分割字符串
  */
 export const splitCharacter = (splitStr, str) => {
+  console.log(splitStr)
+  console.log(str)
   var codes = [];
   splitStr.replace(/\{(.+?)\}/g, function (match, param, offset, string) {
     codes.push(param)
