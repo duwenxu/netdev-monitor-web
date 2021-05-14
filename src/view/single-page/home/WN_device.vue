@@ -7,8 +7,9 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal :styles="{marginTop:'-90px'}" v-model="paramModal" title="参数信息" @on-ok="confirm" @on-cancel="confirm"
+    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal"  @on-ok="confirm" @on-cancel="confirm"
            width="1000" :mask-closable="false">
+      <div slot="header"><span>参数信息</span>    <Button style="float: right" size="small" @click="confirm">关闭</Button></div>
       <DeviceMain></DeviceMain>
     </Modal>
   </div>
@@ -671,6 +672,7 @@ export default {
 
   methods: {
     confirm() {
+      this.paramModal = false
       this.$xy.vector.$emit("closeModal")
     },
     getWSData(WSdata) {
