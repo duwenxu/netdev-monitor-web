@@ -1785,7 +1785,7 @@ export default {
 </style>
 <style lang="less" scoped>
 .legend {
-  position: absolute;
+  //position: fixed;
   bottom: 10px;
   left: 300px;
   display: flex;
