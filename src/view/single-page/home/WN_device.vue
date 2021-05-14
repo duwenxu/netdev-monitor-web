@@ -142,7 +142,7 @@ export default {
           nodeName: '',
           img: 'circle',
           size: [20, 20],
-          color: 'white'
+          color: 'black'
         },
         {
           x: '580',
@@ -741,10 +741,13 @@ export default {
             }
           }
         } else {
-          if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
-            || (item.devDeployType === "0031003" && item.masterOrSlave === '1'))  && device.isMajor) {
+          if(item.masterOrSlave === '0' && device.isMajor && device.devNo != 20){
             this.commonSetStatus(device)
           }
+          // if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
+          //   || (item.devDeployType === "0031003" && item.masterOrSlave === '1'))  && device.isMajor) {
+          //   this.commonSetStatus(device)
+          // }
         }
       }
     },
