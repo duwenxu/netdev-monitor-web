@@ -3,27 +3,23 @@
     height: 100%;
     .left-slider {
       .main-logo {
-        height: 80px;
-        line-height: 80px;
+        //height: 80px;
+        //line-height: 80px;
         //width: 260px;
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-
         .max-logo {
           //width: 230px;
           display: flex;
           flex-direction: row;
           justify-content: center;
           align-items: center;
-
           img {
-
             margin-right: 10px;
           }
-
           span {
             margin-right: 5px;
             display: inline-block;
@@ -33,16 +29,12 @@
             margin-top: 6px;
           }
         }
-
         img.min-logo {
           width: 50px;
           height: 18px;
           display: block;
           margin: 0 14px 0 10px;
-
         }
-
-
         .logo-text {
           text-align: center;
           line-height: 60px;
@@ -50,112 +42,54 @@
       }
     }
 
-    .main-header {
-      z-index: 99;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-
-      .main-tool {
-        height: 80px;
-        width: calc(100% - 260px);
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        .main-trigger {
-          height: 100%;
-          display: inline-block;
-        }
-
-        .main-header-bar {
-          height: 100%;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-
-          .fullscreen {
-            height: 100%;
-            margin-right: 24px;
-          }
-
-          .themestatus {
-            height: 100%;
-            margin-right: 32px;
-            i {
-              cursor: pointer;
-              display: inline-block;
-              border: 1px solid;
-              border-radius: 50px;
-              text-align: center;
-              box-sizing: border-box;
-            }
-          }
-        }
-
-      }
-    }
-
-
     .uarName {
       font-size: 16px;
     }
-
     .side-menu-wrapper {
       min-height: 100vh;
       //padding-top: 20px;
     }
-
     .main-header-logo-collapsed {
       width: 60px;
     }
-
-
     .main-bread-crumb {
       display: inline-block;
       vertical-align: top;
       //margin-left: 15px;
     }
-
     .main-content {
       height: ~"calc(100% - 60px)";
       overflow: hidden;
       z-index: 88;
     }
-
     .main-content-wrapper {
       height: 100%;
       overflow: hidden;
     }
-
     .content {
       height: 100%;
       overflow: auto;
       padding: 20px;
       font-size: 14px;
     }
-
-
     .ivu-page {
       text-align: right;
       margin-top: 10px;
     }
-
     .main-view-wrapper {
       height: 100%;
       overflow: auto;
     }
   }
-
   .ivu-card {
     border-radius: 0px;
   }
 }
-
 @media (min-width: 1920px) {
   .left-slider {
     .main-logo{
+      height: 80px;
+      line-height: 80px;
       width: 260px;
     }
     .max-logo {
@@ -169,10 +103,58 @@
       }
     }
   }
+  .main-header {
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-tool {
+      height: 80px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .main-trigger {
+        height: 100%;
+        display: inline-block;
+      }
+
+      .main-header-bar {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .fullscreen {
+          height: 100%;
+          margin-right: 24px;
+        }
+
+        .themestatus {
+          height: 100%;
+          margin-right: 32px;
+          i {
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 50px;
+            text-align: center;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+    }
+  }
 }//<=1919的设备
 @media (max-width: 1919px) {
   .left-slider {
     .main-logo{
+      height: 80px;
+      line-height: 80px;
       width: 260px;
     }
     .max-logo {
@@ -187,10 +169,58 @@
 
     }
   }
+  .main-header {
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-tool {
+      height: 80px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .main-trigger {
+        height: 100%;
+        display: inline-block;
+      }
+
+      .main-header-bar {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .fullscreen {
+          height: 100%;
+          margin-right: 24px;
+        }
+
+        .themestatus {
+          height: 100%;
+          margin-right: 32px;
+          i {
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 50px;
+            text-align: center;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+    }
+  }
 }//<=1919的设备
 @media (max-width: 1199px) {
   .left-slider {
     .main-logo{
+      height: 60px;
+      line-height: 60px;
       width: 214px;
     }
     .max-logo {
@@ -204,6 +234,54 @@
       }
     }
   }
+  .main-header {
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-tool {
+      height: 60px;
+      width: calc(100% - 214px);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .main-trigger {
+        height: 100%;
+        display: inline-block;
+      }
+
+      .main-header-bar {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .fullscreen {
+          height: 100%;
+          margin-right: 24px;
+        }
+
+        .themestatus {
+          height: 100%;
+          margin-right: 32px;
+          i {
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 50px;
+            text-align: center;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+    }
+  }
+
+
 }//<=1199的设备
 @media (max-width: 991px){
   .left-slider {
@@ -219,6 +297,52 @@
       span {
         font-size: 16px;
       }
+    }
+  }
+  .main-header {
+    z-index: 99;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-tool {
+      height: 60px;
+      width: calc(100% - 214px);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .main-trigger {
+        height: 100%;
+        display: inline-block;
+      }
+
+      .main-header-bar {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .fullscreen {
+          height: 100%;
+          margin-right: 24px;
+        }
+
+        .themestatus {
+          height: 100%;
+          margin-right: 32px;
+          i {
+            cursor: pointer;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 50px;
+            text-align: center;
+            box-sizing: border-box;
+          }
+        }
+      }
+
     }
   }
 }//<=991的设备
