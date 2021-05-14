@@ -745,7 +745,6 @@ export default {
             }
           }
         } else {
-          console.log(item)
           if (item.masterOrSlave === '0') {
             if (device.isMajor) {
               this.commonSetStatus(device)
