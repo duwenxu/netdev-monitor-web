@@ -95,7 +95,7 @@
     data() {
       return {
         noShowBgRouteList: [
-          // 'home'
+          'home'
         ],
         menuWidth: 260,
         themesStatus: '',

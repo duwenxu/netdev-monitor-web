@@ -150,17 +150,17 @@ export default {
           nodeName: '',
           id: 1,
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [180, 110]
+          size: [200, 120]
         },
         {
           x: '581',
-          y: '338',
+          y: '340',
           devNo: 40,
           isMajor: true,
           type: 1,//主机
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [98, 35],
+          size: [105, 40],
           color: 'rgba(0,150,136,0.2)'
         },
         {
@@ -177,13 +177,13 @@ export default {
         },
         {
           x: '580',
-          y: '259',
+          y: '255',
           devNo: 41,
           isMajor: true,
           type: 0,//备机
           nodeName: '下变频器      ',
           img: 'rect',
-          size: [98, 35],
+          size: [105, 40],
           color: 'rgba(184,181,181,0.7)'
         },
         {
@@ -373,7 +373,7 @@ export default {
           category: 2
         },
         {
-          x: '800',
+          x: '810',
           y: '60',
           nodeName: '天线驱动\n单元\n(ADU)',
           img: 'rect',
@@ -698,18 +698,18 @@ export default {
                 let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo);
                 if (valIndex == -1) {
                   this.shineData.push({devNo: item.devNo, value: [device.x, device.y, 22]})
-                } else {
-                  if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
-                    if (device.type === 1) {//上面ku buc 设主
-                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
-                      if (valIndex == -1) {
-                        this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
-                      }
-                    } else {
-                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
-                      if (valIndex == -1) {
-                        this.shineData.push({devNo: item.devNo, type: 0, value: [device.x, device.y, 22]})
-                      }
+                }
+              }else {
+                if (item.masterOrSlave === '0') {
+                  if (device.type === 1) {//上面ku buc 设主
+                    let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
+                    if (valIndex == -1) {
+                      this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
+                    }
+                  } else {
+                    let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
+                    if (valIndex == -1) {
+                      this.shineData.push({devNo: item.devNo, type: 0, value: [device.x, device.y, 22]})
                     }
                   }
                 }
@@ -727,7 +727,7 @@ export default {
 
       if (item.masterOrSlave !== null && device.devNo != 20) {
         if (item.devNo == 2) {
-          if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
+          if (item.masterOrSlave === '0') {
             if (device.type === 1 && device.isMajor) {//上面ku buc 设主
               this.commonSetStatus(device)
             }
@@ -1654,6 +1654,7 @@ export default {
       }
       var option = {
         animation: false,
+        grid:{left:'6%'},
         xAxis: {
           min: 0,
           max: 1600,
@@ -1787,7 +1788,7 @@ export default {
 .legend {
   //position: fixed;
   bottom: 10px;
-  left: 300px;
+  margin-left: 20px;
   display: flex;
   flex-direction: row;
 
@@ -1819,10 +1820,8 @@ export default {
   }
 
 }
-
 .device_title {
   position: absolute;
-
   span {
     display: inline-block;
     background: #ccc;
