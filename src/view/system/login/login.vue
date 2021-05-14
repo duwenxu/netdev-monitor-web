@@ -13,7 +13,7 @@
           <Col :xs="21" :sm="21" :lg="21" :md="21" style="margin-top: 2px">
             <span class="pre_name">中国电科39所</span>
             <span class="middle_name"> | </span>
-            <span class="last_name"> 网络设备监控</span>
+            <span class="last_name"> 卫通集中监控系统</span>
           </Col>
         </Row>
         <Row style="margin-left: 70px">
