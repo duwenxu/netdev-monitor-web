@@ -8,14 +8,14 @@
           <template v-if="theme === 'light'">
             <div v-show="!collapsed" class="max-logo">
               <img src="@/assets/images/logo/39_light.png" key="max-logo"/>
-              <span>网络设备监控</span>
+              <span>卫通集中监控</span>
             </div>
             <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39_light.png" key="min-logo"/>
           </template>
           <template v-else-if="theme === 'dark'">
             <div v-show="!collapsed" class="max-logo">
               <img src="@/assets/images/logo/39.png" key="max-logo"/>
-              <span>网络设备监控</span>
+              <span>卫通集中监控</span>
             </div>
             <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39.png" key="min-logo"/>
           </template>
@@ -95,7 +95,7 @@
     data() {
       return {
         noShowBgRouteList: [
-          // 'home'
+          'home'
         ],
         menuWidth: 260,
         themesStatus: '',
