@@ -102,7 +102,7 @@ export default {
           x: '577',
           y: '494',
           devNo: 2,
-          type:1,//主机
+          type: 1,//主机
           isMajor: true,
           nodeName: 'Ku buc       ',
           img: 'rect',
@@ -114,7 +114,7 @@ export default {
           x: '625',
           y: '495',
           isMajor: false,
-          type:1,//主机
+          type: 1,//主机
           devNo: 2,
           nodeName: '',
           img: 'circle',
@@ -150,23 +150,23 @@ export default {
           nodeName: '',
           id: 1,
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [180, 110]
+          size: [200, 120]
         },
         {
           x: '581',
-          y: '338',
+          y: '340',
           devNo: 40,
           isMajor: true,
-          type:1,//主机
+          type: 1,//主机
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [98, 35],
+          size: [105, 40],
           color: 'rgba(0,150,136,0.2)'
         },
         {
           mark: '下变频器1 状态',
           devNo: 40,
-          type:1,//主机
+          type: 1,//主机
           isMajor: false,
           x: '620',
           y: '338',
@@ -177,20 +177,20 @@ export default {
         },
         {
           x: '580',
-          y: '259',
+          y: '255',
           devNo: 41,
           isMajor: true,
-          type:0,//备机
+          type: 0,//备机
           nodeName: '下变频器      ',
           img: 'rect',
-          size: [98, 35],
+          size: [105, 40],
           color: 'rgba(184,181,181,0.7)'
         },
         {
           mark: '下变频器2 状态',
           devNo: 41,
           isMajor: false,
-          type:0,//备机
+          type: 0,//备机
           x: '620',
           y: '260',
           nodeName: '',
@@ -234,7 +234,7 @@ export default {
           y: '700',
           devNo: 11,
           isMajor: true,
-          type:1,//主机
+          type: 1,//主机
           nodeName: '650调制解调器        ',
           img: 'rect',
           size: [150, 30],
@@ -247,7 +247,7 @@ export default {
           mark: 'A调制解调器1 状态',
           devNo: 11,
           isMajor: false,
-          type:1,//主机
+          type: 1,//主机
           x: '1090',
           y: '700',
           nodeName: '',
@@ -269,7 +269,7 @@ export default {
           y: '600',
           devNo: 12,
           isMajor: true,
-          type:0,//备机
+          type: 0,//备机
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
@@ -280,7 +280,7 @@ export default {
           mark: 'A调制解调器2 状态',
           devNo: 12,
           isMajor: false,
-          type:0,//备机
+          type: 0,//备机
           x: '1090',
           y: '600',
           nodeName: '',
@@ -302,7 +302,7 @@ export default {
           y: '490',
           devNo: 13,
           isMajor: true,
-          type:1,//主机
+          type: 1,//主机
           nodeName: '650调制解调器       ',
           img: 'rect',
           size: [150, 30],
@@ -313,7 +313,7 @@ export default {
           mark: 'B调制解调器1 状态',
           devNo: 13,
           isMajor: false,
-          type:1,//主机
+          type: 1,//主机
           x: '1090',
           y: '490',
           nodeName: '',
@@ -334,7 +334,7 @@ export default {
           x: '1020',
           y: '390',
           devNo: 14,
-          type:0,//备机
+          type: 0,//备机
           isMajor: true,
           nodeName: '650调制解调器       ',
           img: 'rect',
@@ -346,7 +346,7 @@ export default {
           mark: 'B调制解调器2 状态',
           devNo: 14,
           isMajor: false,
-          type:0,//备机
+          type: 0,//备机
           x: '1090',
           y: '390',
           nodeName: '',
@@ -373,7 +373,7 @@ export default {
           category: 2
         },
         {
-          x: '800',
+          x: '810',
           y: '60',
           nodeName: '天线驱动\n单元\n(ADU)',
           img: 'rect',
@@ -646,18 +646,20 @@ export default {
       ],
       legendType: [
         {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
-        {shape: 'square', color: 'rgba(0,150,136,0.2)',description: '主机'},
+        {shape: 'square', color: 'rgba(0,150,136,0.2)', description: '主机'},
         {shape: 'square', color: '#ccc', description: '备机'},
         {shape: 'circle', color: '#009688', description: '正常'},
         {shape: 'circle', color: '#ff1400', description: '故障'},
         {shape: 'circle', color: '#ffbe08', description: '告警'}
       ],
+      number:'0',
     }
   },
   beforeDestroy() {
     off(window, 'resize', this.resize)
   },
   mounted() {
+    // this.initTime()
     this.dom = echarts.init(this.$refs.dom);
     this.init(this.nodes, this.shineData)
   },
@@ -688,61 +690,70 @@ export default {
     },
     //主机type 1,备机0，对设备来说 isMajor为false的时候  改的是对应圆圈状态
     setWSDate(item, device) {
-      if(!device.isMajor){//是否 状态灯图形isMajor False为状态圆形\true 为背景方块
-        if(item.isInterrupt === '0'){//是否中断 否0
-          if(item.workStatus === '0' ){//如果工作状态正常 0
-            if(item.isAlarm === '1'){//告警为1  则告警
-              if(item.devNo != 2){
+      if (!device.isMajor) {//是否 状态灯图形isMajor False为状态圆形\true 为背景方块
+        if (item.isInterrupt === '0') {//是否中断 否0
+          if (item.workStatus === '0') {//如果工作状态正常 0
+            if (item.isAlarm === '1') {//告警为1  则告警
+              if (item.devNo != 2) {
                 let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo);
-                if(valIndex == -1){
-                  this.shineData.push({devNo:item.devNo,value: [device.x, device.y, 22]})
-                }else{
-                  if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
-                    if (device.type === 1) {//上面ku buc 设主
-                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
-                      if (valIndex == -1) {
-                        this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
-                      }
-                    }else{
-                      let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
-                      if(valIndex == -1){
-                        this.shineData.push({devNo:item.devNo,type:0,value: [device.x, device.y, 22]})
-                      }
+                if (valIndex == -1) {
+                  this.shineData.push({devNo: item.devNo, value: [device.x, device.y, 22]})
+                }
+              }else {
+                if (item.masterOrSlave === '0') {
+                  if (device.type === 1) {//上面ku buc 设主
+                    let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 1);
+                    if (valIndex == -1) {
+                      this.shineData.push({devNo: item.devNo, type: 1, value: [device.x, device.y, 22]})
+                    }
+                  } else {
+                    let valIndex = this.shineData.findIndex((value) => value.devNo == item.devNo && value.type == 0);
+                    if (valIndex == -1) {
+                      this.shineData.push({devNo: item.devNo, type: 0, value: [device.x, device.y, 22]})
                     }
                   }
                 }
               }
-            }else{//告警为0  则状态为正常
+            } else {//告警为0  则状态为正常
               this.$set(device, 'color', '#009688')
             }
-          }else{//不正常 则直接故障
+          } else {//不正常 则直接故障
             this.$set(device, 'color', '#ff1400')
           }
-        }else{//中断 是 1
+        } else {//中断 是 1
           this.$set(device, 'color', '#ff1400')
         }
       }
 
-      if (item.masterOrSlave !== null) {
+      if (item.masterOrSlave !== null && device.devNo != 20) {
         if (item.devNo == 2) {
-          if (item.devDeployType === "0031002" && item.masterOrSlave === '0') {
+          if (item.masterOrSlave === '0') {
             if (device.type === 1 && device.isMajor) {//上面ku buc 设主
               this.commonSetStatus(device)
             }
-            if(device.type === 0 && !device.isMajor){
+            if (device.type === 0 && !device.isMajor) {
               this.$set(device, 'color', 'black')
             }
           } else {
             if (device.type === 0 && device.isMajor) { //下面ku buc 设主
               this.commonSetStatus(device)
             }
-            if(device.type === 1 && !device.isMajor){
+            if (device.type === 1 && !device.isMajor) {
               this.$set(device, 'color', 'black')
             }
           }
         } else {
-          if(item.masterOrSlave === '0' && device.isMajor && device.devNo != 20){
-            this.commonSetStatus(device)
+          console.log(item)
+          if (item.masterOrSlave === '0') {
+            if (device.isMajor) {
+              this.commonSetStatus(device)
+            }
+          }
+          else {
+            if (device.isMajor) {
+              this.$set(device, 'borderColor', '')
+              this.$set(device, 'border', '')
+            }
           }
           // if (((item.devDeployType === "0031002" && item.masterOrSlave === '0')
           //   || (item.devDeployType === "0031003" && item.masterOrSlave === '1'))  && device.isMajor) {
@@ -1643,6 +1654,7 @@ export default {
       }
       var option = {
         animation: false,
+        grid:{left:'6%'},
         xAxis: {
           min: 0,
           max: 1600,
@@ -1734,8 +1746,8 @@ export default {
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
-              fontSize:14,
-              color:'black',
+              fontSize: 14,
+              color: 'black',
               position: 'inside',
               formatter: function (item) {
                 return item.data.nodeName
@@ -1774,9 +1786,9 @@ export default {
 </style>
 <style lang="less" scoped>
 .legend {
-  position: absolute;
+  //position: fixed;
   bottom: 10px;
-  left: 300px;
+  margin-left: 20px;
   display: flex;
   flex-direction: row;
 
@@ -1808,10 +1820,8 @@ export default {
   }
 
 }
-
 .device_title {
   position: absolute;
-
   span {
     display: inline-block;
     background: #ccc;
