@@ -18,7 +18,6 @@
     <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
-
   </div>
 </template>
 
@@ -874,6 +873,9 @@ export default {
       }
     },
     initWebSocket() { //初始化weosocket
+      this.infos = []
+      this.orderDatas =  []
+      this.combineList =  []
       // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
@@ -938,9 +940,9 @@ export default {
 
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
       })
-      this.orderDatas = oderArr
-      this.combineList = parentArr
-      this.infos = msg
+      this.orderDatas = oderArr || []
+      this.combineList = parentArr || []
+      this.infos = msg || []
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
@@ -996,7 +998,6 @@ export default {
           })
         })
       }
-      console.log(v)
     },
     async save(info) {
       let obj = {
