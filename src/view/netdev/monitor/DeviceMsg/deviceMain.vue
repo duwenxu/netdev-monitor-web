@@ -99,32 +99,19 @@ export default {
       logs: [],
       alertColumns: [
         {
-          title: '设备类型',
-          key: 'devType_paraName',
-        },
-        {
-          title: '设备编号',
-          key: 'devNo',
-        },
-        {
-          title: '参数编号',
-          key: 'ndpaNo',
+            title: '告警级别',
+            width: 110,
+            key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
+            width: 110,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-        },
-        {
-          title: '站号',
-          key: 'alertStationNo',
-        },
-        {
-          title: '告警级别',
-          key: 'alertLevel_paraName',
+            width: 200,
         },
         {
           title: '告警描述',

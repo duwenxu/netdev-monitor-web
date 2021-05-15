@@ -773,7 +773,7 @@ export default {
         info =  { background: '#ff1400' }
       }
       if((device.devNo == '2' && device.masterOrSlave == '1')||(device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave))){
-        info =  { background: 'black' }
+        info =  { background: '#009688' }
       }
       return info
     },
