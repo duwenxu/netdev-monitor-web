@@ -4,7 +4,7 @@
       <div class="device_title" :style="devicePosition(equipment)" @click="openParam(equipment)">
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
       </div>
-      <div   class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
+      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
     </template>
     <div ref="dom" class="charts"></div>
     <div class="legend">
@@ -13,9 +13,11 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal"  @on-ok="confirm" @on-cancel="confirm"
+    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
            width="1000" :mask-closable="false">
-      <div slot="header"><span>参数信息</span>    <Button style="float: right" size="small" @click="confirm">关闭</Button></div>
+      <div slot="header"><span>参数信息</span>
+        <Button style="float: right" size="small" @click="confirm">关闭</Button>
+      </div>
       <DeviceMain></DeviceMain>
     </Modal>
   </div>
@@ -40,62 +42,62 @@ export default {
         {
           devNo: '2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '0'
         },
         {
           devNo: '2-2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '1'
         },
         {
           devNo: '11',
           name: 'A调制解调器1',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '0'
         },
         {
           devNo: '12',
           name: 'A调制解调器2',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '1'
         },
         {
           devNo: '13',
           name: 'B调制解调器1',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '0'
         },
         {
           devNo: '14',
           name: 'B调制解调器2',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '1'
         },
         {
           devNo: '20',
           name: '2.4m天线ACU',
-          isInterrupt: 0,
-          workStatus: 0,
+          isInterrupt: '0',
+          workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
 
@@ -103,20 +105,20 @@ export default {
         {
           devNo: '40',
           name: '下变频器1',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: ''
         },
         {
           devNo: '41',
           name: '下变频器2',
-          isInterrupt: 0,
-          workStatus: 0,
-          isAlarm: 0,
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: ''
         },
       ],
       position: {
@@ -157,60 +159,60 @@ export default {
           left: '620px',
         },
       },
-      masterPosition:{
+      masterPosition: {
         '2': {
-          border:'5px solid green',
-          width:'125px',
-          height:'42px',
+          border: '5px solid green',
+          width: '125px',
+          height: '42px',
           top: '312px',
           left: '525px',
         },
         '2-2': {
-          border:'5px solid green',
-          width:'125px',
-          height:'42px',
+          border: '5px solid green',
+          width: '125px',
+          height: '42px',
           top: '378px',
           left: '525px',
         },
         '11': {
-          border:'5px solid green',
-          width:'152px',
-          height:'32px',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
           top: '125px',
           left: '890px',
         },
         '12': {
-          border:'5px solid green',
-          width:'152px',
-          height:'32px',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
           top: '213px',
           left: '890px',
         },
         '13': {
-          border:'5px solid green',
-          width:'152px',
-          height:'32px',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
           top: '308px',
           left: '890px',
         },
         '14': {
-          border:'5px solid green',
-          width:'152px',
-          height:'32px',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
           top: '398px',
           left: '890px',
         },
         '40': {
-          border:'5px solid green',
-          width:'110px',
-          height:'40px',
+          border: '5px solid green',
+          width: '110px',
+          height: '40px',
           top: '444px',
           left: '536px',
         },
         '41': {
-          border:'5px solid green',
-          width:'110px',
-          height:'40px',
+          border: '5px solid green',
+          width: '110px',
+          height: '40px',
           top: '511px',
           left: '536px',
         },
@@ -223,7 +225,7 @@ export default {
         {shape: 'circle', color: '#ff1400', description: '故障'},
         {shape: 'circle', color: '#ffbe08', description: '告警'}
       ],
-      number:'0',
+      number: '0',
     }
   },
   beforeDestroy() {
@@ -726,29 +728,36 @@ export default {
 
     getWSData(WSdata) {
       if (WSdata.length) {
-        WSdata.forEach(item => {
-          this.equipments.forEach(device => {
-            if(item.devNo == 2 && device.devNo == '2-2'){
-              this.setWSDate(item, device,1)
+        this.equipments.forEach(device => {
+          let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
+          if (dIndex > -1) {
+            WSdata.forEach(item => {
+              if (item.devNo == 2 && device.devNo == '2-2') {
+                this.setWSDate(item, device, 1)
+              }
+              if (item.devNo == device.devNo) {
+                this.setWSDate(item, device, 0)
+              }
+            })
+          } else {
+            if(device.devNo != '2-2'){
+              this.$set(device,'noData',true)
             }
-            if (item.devNo == device.devNo) {
-              this.setWSDate(item, device,0)
-            }
-          })
+          }
         })
       }
     },
-    setWSDate (data, obj,type) {
-      if(type == 1){
-        if(data.masterOrSlave == '1'){
+    setWSDate(data, obj, type) {
+      if (type == 1) {
+        if (data.masterOrSlave == '1') {
           obj.masterOrSlave = '0'
-        }else{
+        } else {
           obj.masterOrSlave = '1'
         }
-      }else{
+      } else {
 
-        if(data.devNo != 20){
-          obj.masterOrSlave = data.masterOrSlave
+        if (data.devNo != 20) {
+          obj.masterOrSlave = data.masterOrSlave || ''
         }
       }
       obj.devDeployType = data.devDeployType
@@ -757,41 +766,45 @@ export default {
       obj.isUseStandby = data.isUseStandby
       obj.isAlarm = data.isAlarm
     },
-    judgeDeviceStatus (device) {
+    judgeDeviceStatus(device) {
       let info = {}
       if (device.isInterrupt === '0') {//是否中断 否0
         if (device.workStatus === '0') {//如果工作状态正常 0
           if (device.isAlarm === '1') {//告警为1  则告警
-            info =  { background: '#eeb24b' }
+            info = {background: '#eeb24b'}
           } else {//告警为0  则状态为正常
-            info =  { background: '#009688' }
+
+            info = {background: '#009688'}
           }
         } else {//不正常 则直接故障
-          info =  { background: '#ff1400' }
+          info = {background: '#ff1400'}
         }
       } else {//中断 是 1
-        info =  { background: '#ff1400' }
+        info = {background: '#ff1400'}
       }
-      if((device.devNo == '2' && device.masterOrSlave == '1')||(device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave))){
-        info =  { background: 'black' }
+      if ((device.devNo == '2' && device.masterOrSlave == '1') || (device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave))) {
+        info = {background: 'black'}
+      }
+      if(device.noData){
+        info = {background: 'black'}
       }
       return info
     },
-    devicePosition (equipment){
+    devicePosition(equipment) {
       return {
         top: this.position[equipment.devNo].top,
         marginLeft: this.position[equipment.devNo].left
       }
     },
-    masterStatus (equipment){
-      if(equipment.devNo != 20){
+    masterStatus(equipment) {
+      if (equipment.devNo != 20) {
         return {
           top: this.masterPosition[equipment.devNo].top,
           marginLeft: this.masterPosition[equipment.devNo].left,
           width: this.masterPosition[equipment.devNo].width,
           height: this.masterPosition[equipment.devNo].height,
           // border: this.masterPosition[equipment.devNo].border,
-          border: equipment.masterOrSlave == 0?this.masterPosition[equipment.devNo].border:'5px solid rgba(0,0,0,0)',
+          border: equipment.masterOrSlave == '0' ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
 
         }
       }
@@ -800,7 +813,7 @@ export default {
       this.dom.resize()
     },
     init() {
-      let nodes =  [
+      let nodes = [
         {
           x: '10',
           y: '500',
@@ -2224,7 +2237,7 @@ export default {
       }
       var option = {
         animation: false,
-        grid:{left:'6%'},
+        grid: {left: '6%'},
         xAxis: {
           min: 0,
           max: 1600,
@@ -2325,9 +2338,9 @@ export default {
       this.dom.setOption(option);
       on(window, 'resize', this.resize)
     },
-    openParam(info){
+    openParam(info) {
       if (info.devNo) {
-        this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2'?'2':info.devNo)
+        this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
         this.paramModal = true
       }
     }
@@ -2416,11 +2429,13 @@ export default {
   }
 
 }
+
 .device_title {
-  cursor:pointer;
+  cursor: pointer;
   margin-top: -28px;
   z-index: 999;
   position: relative;
+
   span {
     display: inline-block;
     background: black;
