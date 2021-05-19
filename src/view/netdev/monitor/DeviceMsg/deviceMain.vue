@@ -189,24 +189,43 @@ export default {
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
       let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success && result.length) {
-        this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
-        this.getTabsPage()
-        this.getCtrlWs()
+      if (success) {
+        if( result.length){
+          let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
+          if(fIndex == -1){
+            this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
+          }
+          this.getTabsPage()
+          this.getCtrlWs()
+        }else{
+          this.tabs  = [
+            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
+          ]
+        }
+
       }
     },
     //纯显示的tab
     async getTabsPage() {
       let {result, success, message} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success && result.length) {
-        let data = []
-        result.forEach(item => {
-          data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
-        })
-        this.tabs = this.tabs.concat(data)
-        this.$nextTick(() => {
-          this.$xy.vector.$emit('pageInfo', result)
-        })
+      if (success) {
+        if(result.length){
+          let data = []
+          result.forEach(item => {
+            let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
+            if(fIndex == -1){
+              data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
+            }
+          })
+          this.tabs = this.tabs.concat(data)
+          this.$nextTick(() => {
+            this.$xy.vector.$emit('pageInfo', result)
+          })
+        }else{
+          this.tabs  = [
+            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
+          ]
+        }
       }
     },
     getCtrlWs() {
