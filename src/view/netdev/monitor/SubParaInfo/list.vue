@@ -329,6 +329,7 @@
       async doQuery() {
         let searchAll = this.page
         searchAll.ndpaParentNo = this.$route.query.ndpaNo
+        searchAll.devType = this.$route.query.devType
         searchAll = Object.assign(searchAll, this.search)
         let {result, success, message} = await querySubParaInfoPageList(searchAll)
         if (success) {
