@@ -808,17 +808,15 @@
                 }
             },
             masterStatus(equipment) {
-                if (equipment.devNo != 20) {
-                    return {
-                        zIndex:this.masterPosition[equipment.devNo].zIndex?this.masterPosition[equipment.devNo].zIndex:999,
-                        top: this.masterPosition[equipment.devNo].top,
-                        marginLeft: this.masterPosition[equipment.devNo].left,
-                        width: this.masterPosition[equipment.devNo].width,
-                        height: this.masterPosition[equipment.devNo].height,
-                        // border: this.masterPosition[equipment.devNo].border,
-                        border: equipment.masterOrSlave == '0' ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
-                    }
-                }
+              return {
+                zIndex:this.masterPosition[equipment.devNo].zIndex?this.masterPosition[equipment.devNo].zIndex:999,
+                top: this.masterPosition[equipment.devNo].top,
+                marginLeft: this.masterPosition[equipment.devNo].left,
+                width: this.masterPosition[equipment.devNo].width,
+                height: this.masterPosition[equipment.devNo].height,
+                // border: this.masterPosition[equipment.devNo].border,
+                border: equipment.masterOrSlave == '0' && equipment.devNo != 16 ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+              }
             },
             resize() {
                 this.dom.resize()
