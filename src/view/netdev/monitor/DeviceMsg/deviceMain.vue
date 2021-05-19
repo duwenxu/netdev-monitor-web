@@ -190,7 +190,7 @@ export default {
     async getTabsCtrl() {
       let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success) {
-        if( result.length){
+        if(result.length){
           let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
           if(fIndex == -1){
             this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
@@ -221,10 +221,9 @@ export default {
           this.$nextTick(() => {
             this.$xy.vector.$emit('pageInfo', result)
           })
-        }else{
-          this.tabs  = [
-            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
-          ]
+        }
+        else{
+          this.tabs = this.tabs.concat(data)
         }
       }
     },
