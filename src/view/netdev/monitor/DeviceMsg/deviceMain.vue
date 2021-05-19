@@ -191,38 +191,43 @@ export default {
       let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success) {
         if(result.length){
+          console.log(11111111111111)
           let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
           if(fIndex == -1){
             this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
           }
-          this.getTabsPage()
-          this.getCtrlWs()
+
         }else{
+          console.log(3333333)
           this.tabs  = [
             {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
           ]
         }
-
+        this.getTabsPage()
+        this.getCtrlWs()
       }
     },
     //纯显示的tab
     async getTabsPage() {
       let {result, success, message} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success) {
+        let data = []
         if(result.length){
-          let data = []
+          console.log(222222222)
           result.forEach(item => {
-            let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
-            if(fIndex == -1){
-              data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
+            if(item.itfPagePath){
+              let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
+              if(fIndex == -1){
+                data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
+              }
             }
           })
           this.tabs = this.tabs.concat(data)
           this.$nextTick(() => {
             this.$xy.vector.$emit('pageInfo', result)
           })
-        }
-        else{
+        }else{
+          console.log(44444444444444444444)
           this.tabs = this.tabs.concat(data)
         }
       }
