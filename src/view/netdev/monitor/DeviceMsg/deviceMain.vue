@@ -191,14 +191,12 @@ export default {
       let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
       if (success) {
         if(result.length){
-          console.log(11111111111111)
           let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
           if(fIndex == -1){
             this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
           }
 
         }else{
-          console.log(3333333)
           this.tabs  = [
             {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
           ]
@@ -213,7 +211,6 @@ export default {
       if (success) {
         let data = []
         if(result.length){
-          console.log(222222222)
           result.forEach(item => {
             if(item.itfPagePath){
               let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
@@ -227,7 +224,6 @@ export default {
             this.$xy.vector.$emit('pageInfo', result)
           })
         }else{
-          console.log(44444444444444444444)
           this.tabs = this.tabs.concat(data)
         }
       }
