@@ -606,10 +606,10 @@ export default {
         },
         {
           x: '690',
-          y: '620',
+          y: '600',
           nodeName: '中\n\n频\n\n分\n\n合\n\n路\n\n单\n\n元',
           img: 'rect',
-          size: [50, 450],
+          size: [50, 400],
           color: '#c4e889',
           border: 'black',
         },
