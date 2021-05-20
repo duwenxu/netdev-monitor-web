@@ -463,7 +463,7 @@ export default {
         {
           x: '260',
           y: '800',
-          nodeName: '400W高功放        ',
+          nodeName: '400W高功放     ',
           img: 'rect',
           size: [130, 50],
           color: '#c4e889',
@@ -545,7 +545,7 @@ export default {
         {
           x: '506',
           y: '840',
-          nodeName: '上变频器       ',
+          nodeName: '上变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
@@ -554,7 +554,7 @@ export default {
         {
           x: '506',
           y: '760',
-          nodeName: '上变频器       ',
+          nodeName: '上变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(184,181,181,1)',
@@ -571,7 +571,7 @@ export default {
         {
           x: '501',
           y: '520',
-          nodeName: '下变频器       ',
+          nodeName: '下变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
@@ -580,7 +580,7 @@ export default {
         {
           x: '501',
           y: '438',
-          nodeName: '下变频器       ',
+          nodeName: '下变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(184,181,181,1)',
@@ -629,7 +629,7 @@ export default {
           devNo: 11,
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器        ',
+          nodeName: '650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(0,150,136,0.2)',
@@ -652,7 +652,7 @@ export default {
           devNo: 12,
           isMajor: true,
           type: 0,//备机
-          nodeName: '650调制解调器       ',
+          nodeName: '650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(184,181,181,1)',
@@ -674,7 +674,7 @@ export default {
           devNo: 13,
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器      ',
+          nodeName: '650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(0,150,136,0.2)',
@@ -695,7 +695,7 @@ export default {
           devNo: 14,
           type: 0,//备机
           isMajor: true,
-          nodeName: '650调制解调器      ',
+          nodeName: '650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(184,181,181,1)',
@@ -1129,7 +1129,7 @@ export default {
       }
       var option = {
         animation: false,
-        grid: {left: '40',right:'15',bottom:'0',},
+        grid: {left: '40',right:'15',bottom:'0',top:'0'},
         xAxis: {
           min: 0,
           max: 1000,
@@ -1241,11 +1241,10 @@ export default {
 </script>
 <style>
 .charts {
-  /*border: 1px solid red;*/
-  height: 880px;
+
+  height: 800px;
   width: 1000px;
-  /*width: 100%;*/
-  /*margin-left: -100px;*/
+
 }
 
 </style>
