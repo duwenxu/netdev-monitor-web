@@ -1242,7 +1242,7 @@ export default {
 <style>
 .charts {
 
-  height: 800px;
+  height: 720px;
   width: 1000px;
 
 }
