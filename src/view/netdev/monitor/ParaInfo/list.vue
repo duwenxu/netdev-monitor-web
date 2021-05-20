@@ -416,6 +416,7 @@
                   path: '/monitor/subParaInfo',
                   query: {
                     ndpaNo: obj.ndpaNo,
+                    devType: obj.devType
                   }
                 }
               )

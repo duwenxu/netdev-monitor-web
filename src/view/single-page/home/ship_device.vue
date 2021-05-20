@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-      <div class="device_title" :style="devicePosition(equipment)" @click="openParam(equipment)">
+      <div class="device_status" :style="devicePosition(equipment)" >
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
       </div>
       <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
@@ -94,8 +94,8 @@ export default {
         //   masterOrSlave: '1'
         // },
         {
-          devNo: '38',
-          name: '上变频器1',
+          devNo: '36',
+          name: '上变频器',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -103,7 +103,7 @@ export default {
           masterOrSlave: '0'
         },
         {
-          devNo: '39',
+          devNo: '37',
           name: '上变频器2',
           isInterrupt: '0',
           workStatus: '0',
@@ -112,7 +112,7 @@ export default {
           masterOrSlave: '1'
         },
         {
-          devNo: '40',
+          devNo: '24',
           name: '下变频器1',
           isInterrupt: '0',
           workStatus: '0',
@@ -121,7 +121,7 @@ export default {
           masterOrSlave: ''
         },
         {
-          devNo: '41',
+          devNo: '40',
           name: '下变频器2',
           isInterrupt: '0',
           workStatus: '0',
@@ -132,118 +132,127 @@ export default {
       ],
       position: {
         '11': {
-          mark:'A调制解调器1',
-          top: '150px',
+          mark: 'A调制解调器1',
+          top: '141px',
           left: '1340px',
+
         },
         '12': {
-          mark:'A调制解调器2',
-          top: '245px',
+          mark: 'A调制解调器2',
+          top: '236px',
           left: '1340px',
+
         },
         '13': {
-          mark:'B调制解调器1',
-          top: '350px',
+          mark: 'B调制解调器1',
+          top: '340px',
           left: '1340px',
+
         },
         '14': {
-          mark:'B调制解调器2',
-          top: '444px',
+          mark: 'B调制解调器2',
+          top: '436px',
           left: '1340px',
+
         },
         '16': {
-          mark:'400W高功放',
-          top: '242px',
+          mark: '400W高功放',
+          top: '232px',
           left: '522px',
+
         },
-        '38': {
-          mark:'上变频器1',
-          top: '178px',
+        '36': {
+          mark: '上变频器1',
+          top: '170px',
           left: '850px',
+
         },
-        '39': {
-          mark:'上变频器2',
-          top: '255px',
+        '37': {
+          mark: '上变频器2',
+          top: '245px',
           left: '850px',
+
         },
-        '40': {
-          mark:'下变频器1',
+        '24': {
+          mark: '下变频器1',
           top: '450px',
           left: '840px',
+
         },
-        '41': {
-          mark:'下变频器2',
+        '40': {
+          mark: '下变频器2',
           top: '526px',
           left: '840px',
+
         },
       },
       masterPosition: {
         '11': {
-          mark:'A调制解调器1',
+          mark: 'A调制解调器1',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '152px',
+          top: '143px',
           left: '1220px',
         },
         '12': {
-          mark:'A调制解调器2',
+          mark: 'A调制解调器2',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '248px',
+          top: '237px',
           left: '1220px',
         },
         '13': {
-          mark:'B调制解调器1',
+          mark: 'B调制解调器1',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '352px',
+          top: '342px',
           left: '1220px',
         },
         '14': {
-          mark:'B调制解调器2',
+          mark: 'B调制解调器2',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '446px',
+          top: '437px',
           left: '1220px',
         },
         '16': {
-          mark:'400W高功放',
+          mark: '400W高功放',
           border: '5px solid green',
           width: '125px',
           height: '62px',
-          top: '230px',
+          top: '220px',
           left: '423px',
         },
-        '38': {
-          mark:'上变频器1',
+        '36': {
+          mark: '上变频器1',
           border: '5px solid green',
           width: '125px',
-          height: '52px',
-          top: '170px',
+          height: '48px',
+          top: '164px',
           left: '753px',
         },
-        '39': {
-          mark:'上变频器2',
+        '37': {
+          mark: '上变频器2',
           border: '5px solid green',
           width: '125px',
-          height: '52px',
-          top: '248px',
+          height: '48px',
+          top: '238px',
           left: '753px',
         },
-        '40': {
-          mark:'下变频器1',
+        '24': {
+          mark: '下变频器1',
           border: '5px solid green',
           width: '120px',
-          height: '50px',
-          top: '444px',
+          height: '48px',
+          top: '445px',
           left: '750px',
         },
-        '41': {
-          mark:'下变频器2',
+        '40': {
+          mark: '下变频器2',
           border: '5px solid green',
           width: '120px',
           height: '50px',
@@ -275,7 +284,20 @@ export default {
       mediaWidthType: state => state.user.mediaWidthType
     }),
   },
+  watch: {
+    mediaWidthType() {
+      this.getMediaWidth()
+    }
+  },
   methods: {
+    getMediaWidth() {
+      if (this.mediaWidthType == 0) {
+
+      } else {
+
+      }
+      console.log(this.mediaWidthType)
+    },
     confirm() {
       this.paramModal = false
       this.$xy.vector.$emit("closeModal")
@@ -767,7 +789,7 @@ export default {
               this.setWSDate(item, device)
             })
           } else {
-            this.$set(device,'noData',true)
+            this.$set(device, 'noData', true)
           }
         })
       }
@@ -796,7 +818,7 @@ export default {
       } else {//中断 是 1
         info = {background: '#ff1400'}
       }
-      if(device.noData){//推送的数据中不存在当前设备状态
+      if (device.noData) {//推送的数据中不存在当前设备状态
         info = {background: 'black'}
       }
       return info
@@ -804,24 +826,25 @@ export default {
     devicePosition(equipment) {
       return {
         top: this.position[equipment.devNo].top,
-        marginLeft: this.position[equipment.devNo].left
+        marginLeft: this.position[equipment.devNo].left,
+        width: this.position[equipment.devNo].width,
+        height: this.position[equipment.devNo].height,
       }
     },
     masterStatus(equipment) {
-      if (equipment.devNo != 20) {
-        return {
-          zIndex:this.masterPosition[equipment.devNo].zIndex?this.masterPosition[equipment.devNo].zIndex:999,
-          top: this.masterPosition[equipment.devNo].top,
-          marginLeft: this.masterPosition[equipment.devNo].left,
-          width: this.masterPosition[equipment.devNo].width,
-          height: this.masterPosition[equipment.devNo].height,
-          // border: this.masterPosition[equipment.devNo].border,
-          border: equipment.masterOrSlave == '0' ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
-        }
+      return {
+        zIndex: this.masterPosition[equipment.devNo].zIndex ? this.masterPosition[equipment.devNo].zIndex : 999,
+        top: this.masterPosition[equipment.devNo].top,
+        marginLeft: this.masterPosition[equipment.devNo].left,
+        width: this.masterPosition[equipment.devNo].width,
+        height: this.masterPosition[equipment.devNo].height,
+        // border: this.masterPosition[equipment.devNo].border,
+        border: equipment.masterOrSlave == '0' && equipment.devNo != 16 ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
       }
     },
     resize() {
       this.dom.resize()
+
     },
     init() {
       let nodes = [
@@ -848,7 +871,7 @@ export default {
           img: 'rect',
           size: [120, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
 
 
@@ -859,7 +882,7 @@ export default {
           img: 'rect',
           size: [130, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '400',
@@ -868,7 +891,7 @@ export default {
           img: 'rect',
           size: [130, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '560',
@@ -877,7 +900,7 @@ export default {
           img: 'rect',
           size: [40, 40],
           color: 'rgba(0,0,0,0)',
-          border:'black',
+          border: 'black',
         },
         {
           x: '400',
@@ -886,7 +909,7 @@ export default {
           img: 'rect',
           size: [130, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '400',
@@ -895,7 +918,7 @@ export default {
           img: 'rect',
           size: [150, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '400',
@@ -904,7 +927,7 @@ export default {
           img: 'rect',
           size: [130, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
 
         {
@@ -914,59 +937,59 @@ export default {
           img: 'rect',
           size: [60, 100],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '800',
           y: '640',
-          id:1,
+          id: 1,
           nodeName: '',
           img: 'image://' + require('@/assets/images/home/down_trans.png'),
           size: [220, 130]
         },
         {
           x: '807',
-          y: '692',
+          y: '689',
           nodeName: '上变频器       ',
           img: 'rect',
-          size: [117, 50],
-          color: '#c4e889',
-          border:'black',
+          size: [117, 42],
+          color: 'rgba(0,150,136,0.2)',
+          border: 'black',
         },
         {
           x: '807',
-          y: '589',
+          y: '595',
           nodeName: '上变频器       ',
           img: 'rect',
-          size: [117, 50],
+          size: [117, 42],
           color: 'rgba(184,181,181,1)',
-          border:'black',
+          border: 'black',
         },
         {
           x: '800',
           y: '300',
           nodeName: '',
-          id:1,
+          id: 1,
           img: 'image://' + require('@/assets/images/home/up_trans.png'),
           size: [220, 130]
         },
         {
           x: '800',
-          y: '350',
+          y: '345',
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [117, 50],
-          color: '#c4e889',
-          border:'black',
+          size: [117, 44],
+          color: 'rgba(0,150,136,0.2)',
+          border: 'black',
         },
         {
           x: '800',
-          y: '250',
+          y: '251',
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [117, 50],
+          size: [117, 44],
           color: 'rgba(184,181,181,1)',
-          border:'black',
+          border: 'black',
         },
         {
           x: '1050',
@@ -975,7 +998,7 @@ export default {
           img: 'rect',
           size: [120, 60],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '1050',
@@ -984,7 +1007,7 @@ export default {
           img: 'rect',
           size: [100, 40],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '1200',
@@ -993,7 +1016,7 @@ export default {
           img: 'rect',
           size: [60, 450],
           color: '#c4e889',
-          border:'black',
+          border: 'black',
         },
         {
           x: '1400',
@@ -1273,18 +1296,18 @@ export default {
         ],
         polyLines: [
           {
-          mark: '设备->差支路，合成网路',
-          name: '',
-          coords: [[60, 480], [60, 300], [325, 300]],
-          lineStyle: {
-            normal: {
-              color: '#020202'
+            mark: '设备->差支路，合成网路',
+            name: '',
+            coords: [[60, 480], [60, 300], [325, 300]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
             }
           },
-          effect: {
-            color: '#143fdc'
-          }
-        },
           {
             mark: '设备->天线控制',
             name: '',
@@ -1314,7 +1337,7 @@ export default {
           {
             mark: '低噪声-》下变频器',
             name: '',
-            coords: [[480, 440], [560, 440], [560, 300],[690,300]],
+            coords: [[480, 440], [560, 440], [560, 300], [690, 300]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1327,7 +1350,7 @@ export default {
           {
             mark: '方块-》合成网络',
             name: '',
-            coords: [[550, 360], [550, 380], [400, 380],[400,338]],
+            coords: [[550, 360], [550, 380], [400, 380], [400, 338]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1341,7 +1364,7 @@ export default {
           {
             mark: '调制解调器 上-》串口',
             name: '',
-            coords: [[1500, 700], [1550, 700], [1550, 130],[1130,130]],
+            coords: [[1500, 700], [1550, 700], [1550, 130], [1130, 130]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1354,7 +1377,7 @@ export default {
           {
             mark: '串口=>调制解调器 上',
             name: '',
-            coords: [[1130, 130], [1550, 130], [1550, 700],[1500,700]],
+            coords: [[1130, 130], [1550, 130], [1550, 700], [1500, 700]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1421,7 +1444,7 @@ export default {
           {
             mark: '串口-》跟踪接收机',
             name: '',
-            coords: [[970, 130], [600, 130], [600, 170],[490,170]],
+            coords: [[970, 130], [600, 130], [600, 170], [490, 170]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1434,7 +1457,7 @@ export default {
           {
             mark: '下变频器-》串口',
             name: '',
-            coords: [[490, 170], [600, 170], [600, 130],[970,130]],
+            coords: [[490, 170], [600, 170], [600, 130], [970, 130]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1449,7 +1472,7 @@ export default {
           {
             mark: '串口-》天线控制',
             name: '',
-            coords: [[970, 110], [600, 110], [600, 50],[480,50]],
+            coords: [[970, 110], [600, 110], [600, 50], [480, 50]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1462,7 +1485,7 @@ export default {
           {
             mark: '天线控制-》串口',
             name: '',
-            coords: [[480, 50], [600, 50], [600, 110],[970,110]],
+            coords: [[480, 50], [600, 50], [600, 110], [970, 110]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1612,6 +1635,7 @@ export default {
       on(window, 'resize', this.resize)
     },
     openParam(info) {
+      console.log(info.devNo)
       if (info.devNo) {
         this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
         this.paramModal = true
@@ -1707,6 +1731,12 @@ export default {
   cursor: pointer;
   margin-top: -32px;
   z-index: 999;
+  position: relative;
+}
+
+.device_status {
+  margin-top: -32px;
+  z-index: 100;
   position: relative;
 
   span {
