@@ -133,30 +133,30 @@ export default {
       position: {
         '11': {
           mark: 'A调制解调器1',
-          top: '128px',
+          top: '118px',
           left: '910px',
         },
         '12': {
           mark: 'A调制解调器2',
-          top: '222px',
+          top: '203px',
           left: '910px',
 
         },
         '13': {
           mark: 'B调制解调器1',
-          top: '352px',
+          top: '323px',
           left: '910px',
 
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '447px',
+          top: '408px',
           left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '120px',
+          top: '113px',
           left: '327px',
 
         },
@@ -167,25 +167,25 @@ export default {
         // },
         '36': {
           mark: '上变频器1',
-          top: '60px',
+          top: '57px',
           left: '547px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '130px',
+          top: '120px',
           left: '547px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '347px',
+          top: '315px',
           left: '545px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '420px',
+          top: '381px',
           left: '545px',
 
         },
@@ -196,7 +196,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '130px',
+          top: '120px',
           left: '785px',
         },
         '12': {
@@ -204,7 +204,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '225px',
+          top: '205px',
           left: '785px',
         },
         '13': {
@@ -212,7 +212,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '355px',
+          top: '325px',
           left: '785px',
         },
         '14': {
@@ -220,7 +220,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '450px',
+          top: '410px',
           left: '785px',
         },
         '16': {
@@ -244,7 +244,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '57px',
+          top: '53px',
           left: '463px',
         },
         '37': {
@@ -252,7 +252,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '130px',
+          top: '120px',
           left: '463px',
         },
         '24': {
@@ -260,7 +260,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '347px',
+          top: '313px',
           left: '458px',
         },
         '40': {
@@ -268,7 +268,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '420px',
+          top: '380px',
           left: '458px',
         },
       },
@@ -471,7 +471,7 @@ export default {
         },
         {
           x: '260',
-          y: '660',
+          y: '665',
           nodeName: '低噪声放大器',
           img: 'rect',
           size: [140, 50],
@@ -544,7 +544,7 @@ export default {
         },
         {
           x: '506',
-          y: '840',
+          y: '844',
           nodeName: '上变频器     ',
           img: 'rect',
           size: [105, 40],
@@ -553,7 +553,7 @@ export default {
         },
         {
           x: '506',
-          y: '760',
+          y: '758',
           nodeName: '上变频器     ',
           img: 'rect',
           size: [105, 40],
@@ -570,7 +570,7 @@ export default {
         },
         {
           x: '501',
-          y: '520',
+          y: '522',
           nodeName: '下变频器     ',
           img: 'rect',
           size: [105, 40],
@@ -579,7 +579,7 @@ export default {
         },
         {
           x: '501',
-          y: '438',
+          y: '436',
           nodeName: '下变频器     ',
           img: 'rect',
           size: [105, 40],
@@ -816,7 +816,7 @@ export default {
             coords: [[780, 495], [720, 495]],
             lineStyle: {
               normal: {
-                color: '#020202'
+                color: '#dc6414'
               }
             },
             effect: {
