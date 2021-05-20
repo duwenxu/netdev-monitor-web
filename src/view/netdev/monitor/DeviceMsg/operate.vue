@@ -951,13 +951,13 @@ export default {
       }
     },
     commonFmt(v) {
+      if(v.paraViewFmt){
       v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
       let saveOffset = 0
-      console.log(resultChar)
       v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
         let len = param.length
         let pos = index == -1 ? 0 : saveOffset + len + 2
@@ -997,6 +997,7 @@ export default {
             }
           })
         })
+      }
       }
     },
     async save(info) {
