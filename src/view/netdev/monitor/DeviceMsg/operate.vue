@@ -897,6 +897,7 @@ export default {
       msg.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
@@ -938,7 +939,7 @@ export default {
           }
         }
 
-        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
