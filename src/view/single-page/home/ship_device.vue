@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-      <div class="device_status" :style="devicePosition(equipment)" >
+      <div class="device_status" :style="devicePosition(equipment)">
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
       </div>
       <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
@@ -84,15 +84,6 @@ export default {
           isUseStandby: false,
           masterOrSlave: '0'
         },
-        // {
-        //   devNo: '17',
-        //   name: '备份高功放',
-        //   isInterrupt: '0',
-        //   workStatus: '0',
-        //   isAlarm: '0',
-        //   isUseStandby: false,
-        //   masterOrSlave: '1'
-        // },
         {
           devNo: '36',
           name: '上变频器',
@@ -102,6 +93,15 @@ export default {
           isUseStandby: false,
           masterOrSlave: '0'
         },
+        // {
+        //   devNo: '32',
+        //   name: '天线控制单元',
+        //   isInterrupt: '0',
+        //   workStatus: '0',
+        //   isAlarm: '0',
+        //   isUseStandby: false,
+        //   masterOrSlave: '0'
+        // },
         {
           devNo: '37',
           name: '上变频器2',
@@ -118,7 +118,7 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: ''
+          masterOrSlave: '0'
         },
         {
           devNo: '40',
@@ -127,62 +127,66 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: ''
+          masterOrSlave: '1'
         },
       ],
       position: {
         '11': {
           mark: 'A调制解调器1',
-          top: '141px',
-          left: '1340px',
-
+          top: '190px',
+          left: '910px',
         },
         '12': {
           mark: 'A调制解调器2',
-          top: '236px',
-          left: '1340px',
+          top: '288px',
+          left: '910px',
 
         },
         '13': {
           mark: 'B调制解调器1',
-          top: '340px',
-          left: '1340px',
+          top: '422px',
+          left: '910px',
 
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '436px',
-          left: '1340px',
+          top: '517px',
+          left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '232px',
-          left: '522px',
+          top: '180px',
+          left: '325px',
 
         },
+        // '32': {
+        //   mark: '天线控制单元',
+        //   top: '232px',
+        //   left: '100px',
+        // },
         '36': {
           mark: '上变频器1',
-          top: '170px',
-          left: '850px',
+          top: '120px',
+          left: '540px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '245px',
-          left: '850px',
+          top: '193px',
+          left: '540px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '450px',
-          left: '840px',
+          top: '416px',
+          left: '540px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '526px',
-          left: '840px',
+          top: '490px',
+          left: '540px',
 
         },
       },
@@ -192,72 +196,80 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '143px',
-          left: '1220px',
+          top: '192px',
+          left: '785px',
         },
         '12': {
           mark: 'A调制解调器2',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '237px',
-          left: '1220px',
+          top: '290px',
+          left: '785px',
         },
         '13': {
           mark: 'B调制解调器1',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '342px',
-          left: '1220px',
+          top: '425px',
+          left: '785px',
         },
         '14': {
           mark: 'B调制解调器2',
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '437px',
-          left: '1220px',
+          top: '520px',
+          left: '785px',
         },
         '16': {
           mark: '400W高功放',
-          border: '5px solid green',
+          border: '',
           width: '125px',
           height: '62px',
-          top: '220px',
-          left: '423px',
+          top: '700px',
+          left: '100px',
         },
+        // '32': {
+        //   mark: '天线控制单元',
+        //   border: '5px solid green',
+        //   width: '132px',
+        //   height: '32px',
+        //   top: '554px',
+        //   left: '136px',
+        // },
         '36': {
           mark: '上变频器1',
           border: '5px solid green',
-          width: '125px',
-          height: '48px',
-          top: '164px',
-          left: '753px',
+          width: '110px',
+          height: '42px',
+          top: '120px',
+          left: '463px',
         },
         '37': {
           mark: '上变频器2',
           border: '5px solid green',
-          width: '125px',
-          height: '48px',
-          top: '238px',
-          left: '753px',
+          width: '110px',
+          height: '42px',
+          top: '190px',
+          left: '463px',
         },
         '24': {
           mark: '下变频器1',
           border: '5px solid green',
-          width: '120px',
-          height: '48px',
-          top: '445px',
-          left: '750px',
+          width: '110px',
+          height: '42px',
+          top: '415px',
+          left: '458px',
         },
         '40': {
           mark: '下变频器2',
           border: '5px solid green',
-          width: '120px',
-          height: '50px',
-          top: '521px',
-          left: '750px',
+          width: '110px',
+          height: '42px',
+          top: '488px',
+          left: '458px',
         },
       },
       legendType: [
@@ -269,6 +281,7 @@ export default {
         {shape: 'circle', color: '#ffbe08', description: '告警'}
       ],
       number: '0',
+      screenWidth: document.documentElement.clientWidth,
     }
   },
   beforeDestroy() {
@@ -277,516 +290,109 @@ export default {
   mounted() {
     // this.initTime()
     this.dom = echarts.init(this.$refs.dom);
+    // this.$nextTick(() => {
+    //   on(window, 'resize', this.resize)
+    // })
     this.init()
   },
-  computed: {
-    ...mapState({
-      mediaWidthType: state => state.user.mediaWidthType
-    }),
-  },
-  watch: {
-    mediaWidthType() {
-      this.getMediaWidth()
-    }
-  },
+  // computed: {
+  //   ...mapState({
+  //     mediaWidthType: state => state.user.mediaWidthType
+  //   }),
+  // },
   methods: {
     getMediaWidth() {
-      if (this.mediaWidthType == 0) {
+      // this.$nextTick(() => {
+      //   this.$xy.vector.$emit("siderTriggher", true)//收起菜单
+      // })
 
-      } else {
-
-      }
-      console.log(this.mediaWidthType)
+      this.init()
     },
     confirm() {
       this.paramModal = false
       this.$xy.vector.$emit("closeModal")
     },
-    // initTime() {
-    //   this.timer = setInterval(this.scrollAnimate, 2000);
-    // },
-    // scrollAnimate() {
-    //   setTimeout(() => {
-    //     if(this.number == '0'){
-    //       this.number = '1'
-    //     }else{
-    //       this.number = '0'
-    //     }
-    // let data = [
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"22",
-    //     "devTypeCode":"12",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"44",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"23",
-    //     "devTypeCode":"16",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"45",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"24",
-    //     "devTypeCode":"17",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"46",
-    //     "devTypeCode":"6",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"25",
-    //     "devTypeCode":"18",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"47",
-    //     "devTypeCode":"4",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"26",
-    //     "devTypeCode":"15",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"48",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"27",
-    //     "devTypeCode":"12",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"49",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"28",
-    //     "devTypeCode":"12",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"29",
-    //     "devTypeCode":"19",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"50",
-    //     "devTypeCode":"6",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"30",
-    //     "devTypeCode":"9",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"1",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"31",
-    //     "devTypeCode":"9",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"1",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"11",
-    //     "devTypeCode":"8",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":this.number,
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"12",
-    //     "devTypeCode":"8",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"13",
-    //     "devTypeCode":"8",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":this.number,
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"35",
-    //     "devTypeCode":"4",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"14",
-    //     "devTypeCode":"8",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"36",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"15",
-    //     "devTypeCode":"",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"37",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"16",
-    //     "devTypeCode":"21",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"38",
-    //     "devTypeCode":"6",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"17",
-    //     "devTypeCode":"21",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"39",
-    //     "devTypeCode":"4",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"18",
-    //     "devTypeCode":"11",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"19",
-    //     "devTypeCode":"",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"2",
-    //     "devTypeCode":"3",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":this.number,
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"3",
-    //     "devTypeCode":"3",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"1",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"4",
-    //     "devTypeCode":"3",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"1",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"8",
-    //     "devTypeCode":"7",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"9",
-    //     "devTypeCode":"7",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031002",
-    //     "devNo":"40",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031003",
-    //     "devNo":"41",
-    //     "devTypeCode":"5",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"20",
-    //     "devTypeCode":"1",
-    //     "isAlarm":this.number,
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"42",
-    //     "devTypeCode":"6",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"1",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031001",
-    //     "devNo":"21",
-    //     "devTypeCode":"",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   },
-    //   {
-    //     "devDeployType":"0031004",
-    //     "devNo":"43",
-    //     "devTypeCode":"4",
-    //     "isAlarm":"0",
-    //     "isInterrupt":"0",
-    //     "isUseStandby":"0",
-    //     "masterOrSlave":"0",
-    //     "stationId":null,
-    //     "workStatus":"0"
-    //   }
-    // ]
-    //     this.getWSData(data)
-    //   }, 1000)
-    // },
+    initTime() {
+      this.timer = setInterval(this.scrollAnimate, 2000);
+    },
+    scrollAnimate() {
+      setTimeout(() => {
+        console.log(this.number)
+        if (this.number == '0') {
+          this.number = '1'
+        } else {
+          this.number = '0'
+        }
+        let data = [
+          {
+            "devDeployType": "0031002",
+            "devNo": "11",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": this.number,
+            "stationId": null,
+            "workStatus": "0"
+          },
+
+          {
+            "devDeployType": "0031002",
+            "devNo": "12",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "13",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": this.number,
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "35",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "14",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+        ]
+        this.getWSData(data)
+      }, 1000)
+    },
     getWSData(WSdata) {
       if (WSdata.length) {
         this.equipments.forEach(device => {
           let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
           if (dIndex > -1) {
             WSdata.forEach(item => {
-              this.setWSDate(item, device)
+              if (item.devNo == device.devNo) {
+                this.setWSDate(item, device)
+              }
             })
           } else {
             this.$set(device, 'noData', true)
@@ -844,58 +450,47 @@ export default {
     },
     resize() {
       this.dom.resize()
-
     },
     init() {
       let nodes = [
         {
           x: '30',
-          y: '600',
+          y: '730',
           nodeName: '1.5m天线   \n(含伺服)',
           img: 'image://' + require('@/assets/images/home/antenna.png'),
-          size: [220, 220]
+          size: [170, 160]
         },
-        // {
-        //   x: '460',
-        //   y: '695',
-        //   nodeName: '备份高功放      ',
-        //   img: 'rect',
-        //   size: [120, 60],
-        //   color: 'rgba(184,181,181,0.7)',
-        //   border:'black',
-        // },
         {
-          x: '400',
-          y: '640',
-          nodeName: '400W高功放      ',
+          x: '260',
+          y: '800',
+          nodeName: '400W高功放        ',
           img: 'rect',
-          size: [120, 60],
+          size: [130, 50],
           color: '#c4e889',
           border: 'black',
         },
-
-
         {
-          x: '460',
-          y: '500',
+          x: '260',
+          y: '660',
           nodeName: '低噪声放大器',
           img: 'rect',
-          size: [130, 60],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '400',
-          y: '445',
+          x: '230',
+          y: '620',
           nodeName: '低噪声放大器',
           img: 'rect',
-          size: [130, 60],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '560',
-          y: '370',
+          mark: '方块',
+          x: '370',
+          y: '560',
           nodeName: '',
           img: 'rect',
           size: [40, 40],
@@ -903,125 +498,125 @@ export default {
           border: 'black',
         },
         {
-          x: '400',
-          y: '300',
+          x: '260',
+          y: '480',
           nodeName: '合成网络',
           img: 'rect',
-          size: [130, 60],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '400',
-          y: '170',
+          x: '260',
+          y: '320',
           nodeName: '单脉冲跟踪接收机',
           img: 'rect',
-          size: [150, 60],
+          size: [150, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '400',
-          y: '50',
+          x: '260',
+          y: '150',
           nodeName: '天线控制单元',
           img: 'rect',
-          size: [130, 60],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
 
         {
-          x: '60',
-          y: '330',
+          x: '50',
+          y: '500',
           nodeName: '差支\n\n路低\n\n噪声',
           img: 'rect',
-          size: [60, 100],
+          size: [60, 130],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '800',
-          y: '640',
+          x: '500',
+          y: '800',
           id: 1,
           nodeName: '',
           img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [220, 130]
+          size: [200, 120]
         },
         {
-          x: '807',
-          y: '689',
+          x: '506',
+          y: '840',
           nodeName: '上变频器       ',
           img: 'rect',
-          size: [117, 42],
+          size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
           border: 'black',
         },
         {
-          x: '807',
-          y: '595',
+          x: '506',
+          y: '760',
           nodeName: '上变频器       ',
           img: 'rect',
-          size: [117, 42],
+          size: [105, 40],
           color: 'rgba(184,181,181,1)',
           border: 'black',
         },
         {
-          x: '800',
-          y: '300',
+          x: '500',
+          y: '480',
           nodeName: '',
           id: 1,
           img: 'image://' + require('@/assets/images/home/up_trans.png'),
-          size: [220, 130]
+          size: [200, 120]
         },
         {
-          x: '800',
-          y: '345',
+          x: '501',
+          y: '520',
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [117, 44],
+          size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
           border: 'black',
         },
         {
-          x: '800',
-          y: '251',
+          x: '501',
+          y: '438',
           nodeName: '下变频器       ',
           img: 'rect',
-          size: [117, 44],
+          size: [105, 40],
           color: 'rgba(184,181,181,1)',
           border: 'black',
         },
         {
-          x: '1050',
-          y: '130',
+          x: '630',
+          y: '270',
           nodeName: '串口服务器',
           img: 'rect',
-          size: [120, 60],
+          size: [120, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '1050',
-          y: '10',
+          x: '630',
+          y: '150',
           nodeName: '卫通网管',
           img: 'rect',
-          size: [100, 40],
+          size: [120, 40],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '1200',
-          y: '500',
+          x: '690',
+          y: '620',
           nodeName: '中\n\n频\n\n分\n\n合\n\n路\n\n单\n\n元',
           img: 'rect',
-          size: [60, 450],
+          size: [50, 450],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '1400',
-          y: '660',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n',
+          x: '870',
+          y: '730',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [160, 160],
@@ -1029,8 +624,8 @@ export default {
           color: 'rgba(227,221,152,0.8)'
         },
         {
-          x: '1400',
-          y: '700',
+          x: '870',
+          y: '760',
           devNo: 11,
           isMajor: true,
           type: 1,//主机
@@ -1043,8 +638,8 @@ export default {
           // borderColor:'green'
         },
         {
-          x: '1400',
-          y: '650',
+          x: '870',
+          y: '715',
           nodeName: '1:1转换单元',
           img: 'rect',
           size: [150, 30],
@@ -1052,8 +647,8 @@ export default {
           category: 2
         },
         {
-          x: '1400',
-          y: '600',
+          x: '870',
+          y: '665',
           devNo: 12,
           isMajor: true,
           type: 0,//备机
@@ -1065,29 +660,29 @@ export default {
         },
 
         {
-          x: '1400',
-          y: '450',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n',
+          x: '870',
+          y: '500',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [160, 160],
           color: 'rgba(227,221,152,0.8)'
         },
         {
-          x: '1400',
-          y: '490',
+          x: '870',
+          y: '530',
           devNo: 13,
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器       ',
+          nodeName: '650调制解调器      ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(0,150,136,0.2)',
           category: 2
         },
         {
-          x: '1400',
-          y: '440',
+          x: '870',
+          y: '485',
           nodeName: '1:1转换单元',
           img: 'rect',
           size: [150, 30],
@@ -1095,12 +690,12 @@ export default {
           category: 2
         },
         {
-          x: '1400',
-          y: '390',
+          x: '870',
+          y: '435',
           devNo: 14,
           type: 0,//备机
           isMajor: true,
-          nodeName: '650调制解调器       ',
+          nodeName: '650调制解调器      ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(184,181,181,1)',
@@ -1113,7 +708,7 @@ export default {
           {
             mark: '设备->低噪声放大器',
             name: '',
-            coords: [[80, 480], [320, 480]],
+            coords: [[70, 655], [185, 655]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1126,7 +721,7 @@ export default {
           {
             mark: '合成网络->单脉冲',
             name: '',
-            coords: [[400, 260], [400, 200]],
+            coords: [[260, 450], [260, 340]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1139,7 +734,7 @@ export default {
           {
             mark: '单脉冲->天线控制',
             name: '',
-            coords: [[400, 130], [400, 80]],
+            coords: [[260, 290], [260, 180]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1152,7 +747,7 @@ export default {
           {
             mark: '上变频器->设备',
             name: '',
-            coords: [[700, 640], [70, 640]],
+            coords: [[410, 800], [90, 800]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1165,7 +760,7 @@ export default {
           {
             mark: '中频->上变频器',
             name: '',
-            coords: [[1160, 640], [925, 640]],
+            coords: [[660, 800], [600, 800]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1178,7 +773,7 @@ export default {
           {
             mark: '下变频器->中频',
             name: '',
-            coords: [[925, 300], [1160, 300]],
+            coords: [[595, 480], [660, 480]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1191,10 +786,10 @@ export default {
           {
             mark: '调制解调器 上->中频',
             name: '',
-            coords: [[1300, 660], [1240, 660]],
+            coords: [[780, 725], [720, 725]],
             lineStyle: {
               normal: {
-                color: '#dc6414'
+                color: '#020202'
               }
             },
             effect: {
@@ -1204,7 +799,7 @@ export default {
           {
             mark: '中频-》调制解调器 上->',
             name: '',
-            coords: [[1240, 640], [1300, 640]],
+            coords: [[720, 705], [780, 705]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1218,7 +813,7 @@ export default {
           {
             mark: '调制解调器 下->中频',
             name: '',
-            coords: [[1300, 450], [1240, 450]],
+            coords: [[780, 495], [720, 495]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1231,7 +826,7 @@ export default {
           {
             mark: '中频-》调制解调器 下->',
             name: '',
-            coords: [[1240, 430], [1300, 430]],
+            coords: [[720, 475], [780, 475]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1244,7 +839,7 @@ export default {
           {
             mark: '调制解调器 下->竖线',
             name: '',
-            coords: [[1500, 440], [1545, 440]],
+            coords: [[960, 485], [980, 485]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1257,7 +852,7 @@ export default {
           {
             mark: '竖线-》调制解调器 下->',
             name: '',
-            coords: [[1545, 440], [1500, 440]],
+            coords: [[980, 485], [960, 485]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1270,7 +865,7 @@ export default {
           {
             mark: '串口-》卫通网管',
             name: '',
-            coords: [[1050, 90], [1050, 30]],
+            coords: [[630, 240], [630, 170]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1283,7 +878,7 @@ export default {
           {
             mark: '卫通网管-》串口-》',
             name: '',
-            coords: [[1050, 30], [1050, 90]],
+            coords: [[630, 170], [630, 240]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1298,7 +893,7 @@ export default {
           {
             mark: '设备->差支路，合成网路',
             name: '',
-            coords: [[60, 480], [60, 300], [325, 300]],
+            coords: [[50, 650], [50, 480], [185, 480]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1311,7 +906,7 @@ export default {
           {
             mark: '设备->天线控制',
             name: '',
-            coords: [[0, 480], [0, 50], [325, 50]],
+            coords: [[0, 650], [0, 150], [185, 150]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1324,7 +919,7 @@ export default {
           {
             mark: '天线控制-》设备',
             name: '',
-            coords: [[325, 50], [0, 50], [0, 480]],
+            coords: [[185, 150], [0, 150], [0, 650]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1337,7 +932,7 @@ export default {
           {
             mark: '低噪声-》下变频器',
             name: '',
-            coords: [[480, 440], [560, 440], [560, 300], [690, 300]],
+            coords: [[300, 610], [370, 610], [370, 480],[410,480]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1350,7 +945,7 @@ export default {
           {
             mark: '方块-》合成网络',
             name: '',
-            coords: [[550, 360], [550, 380], [400, 380], [400, 338]],
+            coords: [[360, 550], [360, 570], [260, 570],[260,500]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1364,7 +959,7 @@ export default {
           {
             mark: '调制解调器 上-》串口',
             name: '',
-            coords: [[1500, 700], [1550, 700], [1550, 130], [1130, 130]],
+            coords: [[950, 750], [990, 750], [990, 270],[690,270]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1377,7 +972,7 @@ export default {
           {
             mark: '串口=>调制解调器 上',
             name: '',
-            coords: [[1130, 130], [1550, 130], [1550, 700], [1500, 700]],
+            coords: [[690, 270], [990, 270], [990, 750],[950,750]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1390,7 +985,7 @@ export default {
           {
             mark: '串口=>上变频器',
             name: '',
-            coords: [[1050, 170], [1050, 580], [880, 580]],
+            coords: [[630, 295], [630, 700], [505, 700],[505,750]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1403,7 +998,7 @@ export default {
           {
             mark: '上变频器-》串口=>',
             name: '',
-            coords: [[880, 580], [1050, 580], [1050, 170]],
+            coords: [[505,750],[505, 700], [630, 700], [630, 295]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1416,7 +1011,7 @@ export default {
           {
             mark: '串口-》下变频器-》=>',
             name: '',
-            coords: [[970, 150], [800, 150], [800, 210]],
+            coords: [[560, 290], [500, 290], [500, 415]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1429,7 +1024,7 @@ export default {
           {
             mark: '下变频器-》串口',
             name: '',
-            coords: [[800, 210], [800, 150], [970, 150]],
+            coords: [[500, 415], [500, 290], [560, 290]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1444,7 +1039,7 @@ export default {
           {
             mark: '串口-》跟踪接收机',
             name: '',
-            coords: [[970, 130], [600, 130], [600, 170], [490, 170]],
+            coords: [[560, 270], [300, 270], [300, 295]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1455,9 +1050,9 @@ export default {
             }
           },
           {
-            mark: '下变频器-》串口',
+            mark: '跟踪接收机-》串口',
             name: '',
-            coords: [[490, 170], [600, 170], [600, 130], [970, 130]],
+            coords: [[300, 295], [300, 270], [560, 270]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1472,7 +1067,7 @@ export default {
           {
             mark: '串口-》天线控制',
             name: '',
-            coords: [[970, 110], [600, 110], [600, 50], [480, 50]],
+            coords: [[560, 250], [300, 250], [300, 180]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1485,7 +1080,7 @@ export default {
           {
             mark: '天线控制-》串口',
             name: '',
-            coords: [[480, 50], [600, 50], [600, 110], [970, 110]],
+            coords: [[300, 180], [300,250], [560, 250]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1498,6 +1093,7 @@ export default {
 
         ],
       }
+      // this.dom.clear()
       this.dom.off('click')
       for (var j = 0; j < nodes.length; j++) {
         var x = parseInt(nodes[j].x)
@@ -1533,16 +1129,16 @@ export default {
       }
       var option = {
         animation: false,
-
+        grid: {left: '40',right:'15',bottom:'0',},
         xAxis: {
           min: 0,
-          max: 1600,
-          show: false,
+          max: 1000,
+          show: true,
           type: 'value'
         },
         yAxis: {
           min: 0,
-          max: 760,
+          max: 870,
           show: false,
           type: 'value'
         },
@@ -1605,7 +1201,7 @@ export default {
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
-              fontSize: 14,
+              fontSize: 16,
               color: 'black',
               position: 'inside',
               formatter: function (item) {
@@ -1632,10 +1228,9 @@ export default {
         }
       });
       this.dom.setOption(option);
-      on(window, 'resize', this.resize)
+
     },
     openParam(info) {
-      console.log(info.devNo)
       if (info.devNo) {
         this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
         this.paramModal = true
@@ -1646,9 +1241,13 @@ export default {
 </script>
 <style>
 .charts {
-  height: 780px;
-  width: 1620px;
+  /*border: 1px solid red;*/
+  height: 880px;
+  width: 1000px;
+  /*width: 100%;*/
+  /*margin-left: -100px;*/
 }
+
 </style>
 <style lang="less" scoped>
 /* 设置动画前颜色 */
@@ -1735,7 +1334,7 @@ export default {
 }
 
 .device_status {
-  margin-top: -32px;
+  margin-top: -29px;
   z-index: 100;
   position: relative;
 
