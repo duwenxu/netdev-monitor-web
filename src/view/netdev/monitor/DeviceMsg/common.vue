@@ -21,7 +21,7 @@
                         }}&nbsp;&nbsp;<span
                           v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
-                   <div v-if="info.selected">
+                   <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
                        <template v-for="temp in info.splitArr">
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
