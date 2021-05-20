@@ -133,31 +133,31 @@ export default {
       position: {
         '11': {
           mark: 'A调制解调器1',
-          top: '190px',
+          top: '128px',
           left: '910px',
         },
         '12': {
           mark: 'A调制解调器2',
-          top: '288px',
+          top: '222px',
           left: '910px',
 
         },
         '13': {
           mark: 'B调制解调器1',
-          top: '422px',
+          top: '352px',
           left: '910px',
 
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '517px',
+          top: '447px',
           left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '180px',
-          left: '325px',
+          top: '120px',
+          left: '327px',
 
         },
         // '32': {
@@ -167,26 +167,26 @@ export default {
         // },
         '36': {
           mark: '上变频器1',
-          top: '120px',
-          left: '540px',
+          top: '60px',
+          left: '547px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '193px',
-          left: '540px',
+          top: '130px',
+          left: '547px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '416px',
-          left: '540px',
+          top: '347px',
+          left: '545px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '490px',
-          left: '540px',
+          top: '420px',
+          left: '545px',
 
         },
       },
@@ -196,7 +196,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '192px',
+          top: '130px',
           left: '785px',
         },
         '12': {
@@ -204,7 +204,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '290px',
+          top: '225px',
           left: '785px',
         },
         '13': {
@@ -212,7 +212,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '425px',
+          top: '355px',
           left: '785px',
         },
         '14': {
@@ -220,7 +220,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '520px',
+          top: '450px',
           left: '785px',
         },
         '16': {
@@ -244,7 +244,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '120px',
+          top: '57px',
           left: '463px',
         },
         '37': {
@@ -252,7 +252,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '190px',
+          top: '130px',
           left: '463px',
         },
         '24': {
@@ -260,7 +260,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '415px',
+          top: '347px',
           left: '458px',
         },
         '40': {
@@ -268,7 +268,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '488px',
+          top: '420px',
           left: '458px',
         },
       },
