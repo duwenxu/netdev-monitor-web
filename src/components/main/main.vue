@@ -174,7 +174,12 @@
         return this.$store.state.app.hasReadErrorPage
       }
     },
-
+    created: function () {
+      this.$xy.vector.$on('siderTriggher', this.handleCollapsedChange)
+    },
+    beforeDestroy: function () {
+      this.$xy.vector.$off('siderTriggher', this.handleCollapsedChange)
+    },
     methods: {
       ...mapMutations([
         'setBreadCrumb',
