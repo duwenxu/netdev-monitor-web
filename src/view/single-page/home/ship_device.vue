@@ -816,7 +816,7 @@ export default {
             coords: [[780, 495], [720, 495]],
             lineStyle: {
               normal: {
-                color: '#dc6414'
+                color: '#020202'
               }
             },
             effect: {
