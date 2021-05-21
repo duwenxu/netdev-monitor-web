@@ -893,7 +893,7 @@ export default {
           {
             mark: '设备->差支路，合成网路',
             name: '',
-            coords: [[50, 650], [50, 480], [185, 480]],
+            coords: [[50, 630], [50, 480], [185, 480]],
             lineStyle: {
               normal: {
                 color: '#020202'
