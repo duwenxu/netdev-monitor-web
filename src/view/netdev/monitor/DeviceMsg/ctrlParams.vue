@@ -20,7 +20,7 @@
                               </div>
                             </Col>
                             <Col :xs="13" :lg="13">
-                                  <span>{{(info.transViewFmt != null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;<span
+                                  <span>{{(info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;<span
                                     v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                             </Col>
                             <div v-if="info.selected">
@@ -211,7 +211,16 @@ export default {
                                         paraStrLen: v.paraStrLen,
                                     })
                                     saveOffset = offset
-                                    return match = resultChar[index]
+                                    if (v.subParaList.length) {
+                                        if (v.subParaList[index].spinnerInfoList) {
+                                            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
+                                            return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
+                                        } else {
+                                            return match = resultChar[index]
+                                        }
+                                    } else {
+                                        return match = resultChar[index]
+                                    }
                                 })
                                 if (v.subParaList.length) {
                                     v.subParaList.forEach(n => {
