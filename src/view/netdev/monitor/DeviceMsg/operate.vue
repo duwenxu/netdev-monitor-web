@@ -876,8 +876,8 @@ export default {
       this.infos = []
       this.orderDatas =  []
       this.combineList =  []
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg

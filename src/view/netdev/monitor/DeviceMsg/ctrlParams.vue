@@ -26,7 +26,7 @@
                             <div v-if="info.selected">
                               <Col :xs="24" :lg="24">
                                 <template v-for="temp in info.splitArr">
-                                  <Col :xs="info.splitArr.length<=2?8:6" :lg="info.splitArr.length<=2?8:6">
+                                  <Col :xs="info.splitArr.length<=2?12:6" :lg="info.splitArr.length<=2?12:6">
                                     <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
                                       <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                                       </Option>
@@ -100,7 +100,6 @@
                         <Row>
                           <Col :xs="11" :lg="11">
                             <div style="text-align: right">
-
                               <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                             </div>
                           </Col>
@@ -114,7 +113,7 @@
                               <span >暂无数据</span>
                             </template>
                           </Col>
-                          <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex">
+                          <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex;">
                             <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
                               <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
                               </Option>
@@ -156,6 +155,7 @@ export default {
       normalHeight:450,
       infos: [],
       validTag: false,
+        receiveMsg:false,
       paramType: ['0019002', '0019003']
     }
   },
@@ -179,66 +179,70 @@ export default {
       }
     },
     getMsg(data) {
-      let result = JSON.parse(data.data)
-      result.forEach(item=>{
-        item.subInterList.forEach(key=>{
-          this.$set(key, 'selected', false)
-          key.subParaList.forEach(v => {
-            this.$set(v, 'selected', false)
-            v.errorMsg = ''
-            if (v.parahowMode == '0024001') {//数字类型Number转换
-              if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
-                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-                v.splitArr = []
-                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-                let index = -1
-                let saveOffset = 0
-                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
-                  let len = param.length
-                  let pos = index == -1 ? 0 : saveOffset + len + 2
-                  index++
-                  v.splitArr.push({
-                    param: v.copyFmt.substring(pos, offset),
-                    paraVal: resultChar[index],
-                    name: param,
-                    oldVal: JSON.parse(JSON.stringify(resultChar[index])),
-                    errorMsg: '',
-                    paraValMax: null,
-                    paraValMin: null,
-                    paraValStep: null,
-                    paraSimpleDatatype: v.paraSimpleDatatype,
-                    paraStrLen: v.paraStrLen,
-                  })
-                  saveOffset = offset
-                  return match = resultChar[index]
-                })
-                if (v.subParaList.length) {
-                  v.subParaList.forEach(n => {
-                    v.splitArr.forEach(x => {
-                      if (n.paraCode == x.name) {
-                        if (n.spinnerInfoList) {
-                          x.subList = n.spinnerInfoList || []
+        if(!this.receiveMsg){
+            let result = JSON.parse(data.data)
+            result.forEach(item=>{
+                item.subInterList.forEach(key=>{
+                    this.$set(key, 'selected', false)
+                    key.subParaList.forEach(v => {
+                        this.$set(v, 'selected', false)
+                        v.errorMsg = ''
+                        if (v.parahowMode == '0024001') {//数字类型Number转换
+                            if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
+                                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
+                                v.splitArr = []
+                                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
+                                let index = -1
+                                let saveOffset = 0
+                                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+                                    let len = param.length
+                                    let pos = index == -1 ? 0 : saveOffset + len + 2
+                                    index++
+                                    v.splitArr.push({
+                                        param: v.copyFmt.substring(pos, offset),
+                                        paraVal: resultChar[index],
+                                        name: param,
+                                        oldVal: JSON.parse(JSON.stringify(resultChar[index])),
+                                        errorMsg: '',
+                                        paraValMax: null,
+                                        paraValMin: null,
+                                        paraValStep: null,
+                                        paraSimpleDatatype: v.paraSimpleDatatype,
+                                        paraStrLen: v.paraStrLen,
+                                    })
+                                    saveOffset = offset
+                                    return match = resultChar[index]
+                                })
+                                if (v.subParaList.length) {
+                                    v.subParaList.forEach(n => {
+                                        v.splitArr.forEach(x => {
+                                            if (n.paraCode == x.name) {
+                                                if (n.spinnerInfoList) {
+                                                    x.subList = n.spinnerInfoList || []
+                                                }
+                                            }
+                                        })
+                                    })
+                                }
+                                // viewArr.push(v)
+                            } else {
+                                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
+                                    v.paraValStep = Number(v.paraValStep)
+                                    v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+                                }
+                                // textArr.push(v)
+                            }
                         }
-                      }
+                        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
                     })
-                  })
-                }
-                // viewArr.push(v)
-              } else {
-                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
-                  v.paraValStep = Number(v.paraValStep)
-                  v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
-                }
-                // textArr.push(v)
-              }
-            }
-            v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
-          })
-        })
-      })
-      this.infos = result
+                })
+            })
+            this.infos = result
+        }
+
     },
     changeMode(temp) {
+      this.receiveMsg = !this.receiveMsg
       this.validTag = false
       this.$set(temp, 'selected', !temp.selected)
       temp.subParaList.forEach(info=>{
