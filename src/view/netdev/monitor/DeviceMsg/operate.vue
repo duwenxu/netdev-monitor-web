@@ -948,7 +948,7 @@ export default {
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
-        v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+        v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
       }
     },
     commonFmt(v) {
