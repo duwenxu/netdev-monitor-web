@@ -121,7 +121,7 @@
                    </div>
                  </Col>
                  <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                   <template v-if="info.oldVal">
+                   <template v-if="info.oldVal !== '' && info.oldVal !== null">
                      <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
                        <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
                      </div>

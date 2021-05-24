@@ -876,8 +876,8 @@ export default {
       this.infos = []
       this.orderDatas =  []
       this.combineList =  []
-      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
@@ -906,7 +906,9 @@ export default {
             if (v.paraCmplexLevel == '0019003') {//组合参数
               let subType = v.subParaList[0].subParaLinkType
               if (subType == '0018003') {//若子为0018003则父框子
+                v.showInText = true
                 v.subParaList.forEach(item => {
+                  item.oldVal = JSON.parse(JSON.stringify(item.paraVal))
                   this.commonFunc(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
@@ -943,7 +945,7 @@ export default {
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg || []
+      this.infos = msg.filter(value=>!value.showInText)
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
