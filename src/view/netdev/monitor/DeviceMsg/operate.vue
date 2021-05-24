@@ -897,6 +897,7 @@ export default {
       msg.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
@@ -905,7 +906,9 @@ export default {
             if (v.paraCmplexLevel == '0019003') {//组合参数
               let subType = v.subParaList[0].subParaLinkType
               if (subType == '0018003') {//若子为0018003则父框子
+                v.showInText = true
                 v.subParaList.forEach(item => {
+                  item.oldVal = JSON.parse(JSON.stringify(item.paraVal))
                   this.commonFunc(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
@@ -938,26 +941,26 @@ export default {
           }
         }
 
-        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg || []
+      this.infos = msg.filter(value=>!value.showInText)
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
-        v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+        v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
       }
     },
     commonFmt(v) {
+      if(v.paraViewFmt){
       v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
       let saveOffset = 0
-      console.log(resultChar)
       v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
         let len = param.length
         let pos = index == -1 ? 0 : saveOffset + len + 2
@@ -997,6 +1000,7 @@ export default {
             }
           })
         })
+      }
       }
     },
     async save(info) {
