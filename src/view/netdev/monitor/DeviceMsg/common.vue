@@ -17,11 +17,11 @@
                    </Col>
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                       <span style="cursor: pointer" @click="changeMode(info)">{{
-                          (info.transViewFmt != null) ? info.transViewFmt : '暂无数据'
+                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'
                         }}&nbsp;&nbsp;<span
                           v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
-                   <div v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                   <div  v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
                        <template v-for="temp in info.splitArr">
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
@@ -68,7 +68,7 @@
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                           <span style="cursor: pointer"
                                 @click="changeMode(info)">{{
-                              (info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'
+                              (info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据'
                             }}&nbsp;&nbsp;
                             <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
@@ -121,7 +121,7 @@
                    </div>
                  </Col>
                  <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                   <template v-if="info.oldVal">
+                   <template v-if="info.oldVal !== '' && info.oldVal !== null">
                      <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
                        <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
                      </div>
@@ -211,7 +211,7 @@ export default {
           }
         })
       }
-      if (info.paraVal != null && info.paraVal) {
+      if (info.paraVal !== null && info.paraVal !== '') {
         this.$set(info, 'selected', true)
       } else {
         this.$Message.error('无数据时无法更改，请稍后再试。')

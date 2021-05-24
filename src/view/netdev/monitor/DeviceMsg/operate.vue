@@ -874,8 +874,8 @@ export default {
     },
     initWebSocket() { //初始化weosocket
       this.infos = []
-      this.orderDatas = []
-      this.combineList = []
+      this.orderDatas =  []
+      this.combineList =  []
       // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
@@ -896,8 +896,8 @@ export default {
       let oderArr = [], parentArr = []
       msg.forEach(v => {
         v.selected = false
-        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
@@ -906,7 +906,9 @@ export default {
             if (v.paraCmplexLevel == '0019003') {//组合参数
               let subType = v.subParaList[0].subParaLinkType
               if (subType == '0018003') {//若子为0018003则父框子
+                v.showInText = true
                 v.subParaList.forEach(item => {
+                  item.oldVal = JSON.parse(JSON.stringify(item.paraVal))
                   this.commonFunc(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
@@ -938,18 +940,18 @@ export default {
             }
           }
         }
+
+
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg || []
+      this.infos = msg.filter(value=>!value.showInText)
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
-        v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+        v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
       }
-
-
     },
     commonFmt(v) {
       if(v.paraViewFmt){
