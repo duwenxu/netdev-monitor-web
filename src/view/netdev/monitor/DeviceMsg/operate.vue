@@ -876,8 +876,8 @@ export default {
       this.infos = []
       this.orderDatas =  []
       this.combineList =  []
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
@@ -897,6 +897,7 @@ export default {
       msg.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
@@ -938,7 +939,7 @@ export default {
           }
         }
 
-        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
@@ -947,7 +948,7 @@ export default {
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
-        v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+        v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
       }
     },
     commonFmt(v) {

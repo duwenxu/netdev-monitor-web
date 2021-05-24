@@ -186,6 +186,7 @@ export default {
                     this.$set(key, 'selected', false)
                     key.subParaList.forEach(v => {
                         this.$set(v, 'selected', false)
+                        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
                         v.errorMsg = ''
                         if (v.parahowMode == '0024001') {//数字类型Number转换
                             if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
@@ -237,12 +238,12 @@ export default {
                             } else {
                                 if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
                                     v.paraValStep = Number(v.paraValStep)
-                                    v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
+                                    v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
                                 }
                                 // textArr.push(v)
                             }
                         }
-                        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+
                     })
                 })
             })
