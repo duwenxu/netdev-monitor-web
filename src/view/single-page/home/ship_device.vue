@@ -133,7 +133,7 @@ export default {
       position: {
         '11': {
           mark: 'A调制解调器1',
-          top: '118px',
+          top: '114px',
           left: '910px',
         },
         '12': {
@@ -150,13 +150,13 @@ export default {
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '408px',
+          top: '411px',
           left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '113px',
+          top: '178px',
           left: '327px',
 
         },
@@ -167,25 +167,25 @@ export default {
         // },
         '36': {
           mark: '上变频器1',
-          top: '57px',
+          top: '126px',
           left: '547px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '120px',
+          top: '207px',
           left: '547px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '315px',
+          top: '360px',
           left: '545px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '381px',
+          top: '435px',
           left: '545px',
 
         },
@@ -204,7 +204,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '205px',
+          top: '208px',
           left: '785px',
         },
         '13': {
@@ -212,7 +212,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '325px',
+          top: '328px',
           left: '785px',
         },
         '14': {
@@ -220,7 +220,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '410px',
+          top: '416px',
           left: '785px',
         },
         '16': {
@@ -244,7 +244,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '53px',
+          top: '127px',
           left: '463px',
         },
         '37': {
@@ -252,7 +252,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '120px',
+          top: '208px',
           left: '463px',
         },
         '24': {
@@ -260,7 +260,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '313px',
+          top: '360px',
           left: '458px',
         },
         '40': {
@@ -268,7 +268,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '380px',
+          top: '437px',
           left: '458px',
         },
       },
@@ -462,8 +462,8 @@ export default {
         },
         {
           x: '260',
-          y: '800',
-          nodeName: '400W高功放     ',
+          y: '760',
+          nodeName: ' 400W高功放     ',
           img: 'rect',
           size: [130, 50],
           color: '#c4e889',
@@ -471,7 +471,7 @@ export default {
         },
         {
           x: '260',
-          y: '665',
+          y: '655',
           nodeName: '低噪声放大器',
           img: 'rect',
           size: [140, 50],
@@ -480,7 +480,7 @@ export default {
         },
         {
           x: '230',
-          y: '620',
+          y: '610',
           nodeName: '低噪声放大器',
           img: 'rect',
           size: [140, 50],
@@ -536,7 +536,7 @@ export default {
         },
         {
           x: '500',
-          y: '800',
+          y: '760',
           id: 1,
           nodeName: '',
           img: 'image://' + require('@/assets/images/home/down_trans.png'),
@@ -544,8 +544,8 @@ export default {
         },
         {
           x: '506',
-          y: '844',
-          nodeName: '上变频器     ',
+          y: '809',
+          nodeName: ' 上变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
@@ -553,8 +553,8 @@ export default {
         },
         {
           x: '506',
-          y: '758',
-          nodeName: '上变频器     ',
+          y: '715',
+          nodeName: ' 上变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(184,181,181,1)',
@@ -570,8 +570,8 @@ export default {
         },
         {
           x: '501',
-          y: '522',
-          nodeName: '下变频器     ',
+          y: '525',
+          nodeName: ' 下变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(0,150,136,0.2)',
@@ -579,8 +579,8 @@ export default {
         },
         {
           x: '501',
-          y: '436',
-          nodeName: '下变频器     ',
+          y: '432',
+          nodeName: ' 下变频器     ',
           img: 'rect',
           size: [105, 40],
           color: 'rgba(184,181,181,1)',
@@ -629,7 +629,7 @@ export default {
           devNo: 11,
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器     ',
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(0,150,136,0.2)',
@@ -652,7 +652,7 @@ export default {
           devNo: 12,
           isMajor: true,
           type: 0,//备机
-          nodeName: '650调制解调器     ',
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(184,181,181,1)',
@@ -674,7 +674,7 @@ export default {
           devNo: 13,
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器     ',
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(0,150,136,0.2)',
@@ -695,7 +695,7 @@ export default {
           devNo: 14,
           type: 0,//备机
           isMajor: true,
-          nodeName: '650调制解调器     ',
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
           size: [150, 30],
           color: 'rgba(184,181,181,1)',
@@ -747,7 +747,7 @@ export default {
           {
             mark: '上变频器->设备',
             name: '',
-            coords: [[410, 800], [90, 800]],
+            coords: [[410, 760], [90, 760]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -760,7 +760,7 @@ export default {
           {
             mark: '中频->上变频器',
             name: '',
-            coords: [[660, 800], [600, 800]],
+            coords: [[660, 760], [600, 760]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -816,7 +816,7 @@ export default {
             coords: [[780, 495], [720, 495]],
             lineStyle: {
               normal: {
-                color: '#dc6414'
+                color: '#020202'
               }
             },
             effect: {
@@ -893,7 +893,7 @@ export default {
           {
             mark: '设备->差支路，合成网路',
             name: '',
-            coords: [[50, 650], [50, 480], [185, 480]],
+            coords: [[50, 630], [50, 480], [185, 480]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -1129,7 +1129,7 @@ export default {
       }
       var option = {
         animation: false,
-        grid: {left: '40',right:'15',bottom:'0',top:'0'},
+        grid: {left: '40',right:'15',bottom:'0',top:'80'},
         xAxis: {
           min: 0,
           max: 1000,
@@ -1242,7 +1242,7 @@ export default {
 <style>
 .charts {
 
-  height: 720px;
+  height: 750px;
   width: 1000px;
 
 }
@@ -1291,6 +1291,7 @@ export default {
 
 
 .legend {
+  margin-top: 50px;
   margin-left: 20px;
   display: flex;
   flex-direction: row;
@@ -1327,13 +1328,13 @@ export default {
 
 .device_title {
   cursor: pointer;
-  margin-top: -32px;
+  margin-top: -35px;
   z-index: 999;
   position: relative;
 }
 
 .device_status {
-  margin-top: -29px;
+  margin-top: -35px;
   z-index: 100;
   position: relative;
 
