@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-      <div class="device_title" :style="devicePosition(equipment)" @click="openParam(equipment)">
+      <div class="device_status" :style="devicePosition(equipment)">
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
       </div>
       <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
@@ -2434,6 +2434,19 @@ export default {
   cursor: pointer;
   margin-top: -28px;
   z-index: 999;
+  position: relative;
+
+  span {
+    display: inline-block;
+    background: black;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+  }
+}
+.device_status {
+  margin-top: -28px;
+  z-index: 100;
   position: relative;
 
   span {
