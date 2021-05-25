@@ -176,6 +176,41 @@
             </Select>
           </FormItem>
         </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注一描述" prop="ndpaRemark1Desc" >
+            <Input v-model="ParaInfo.ndpaRemark1Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注一数据" prop="ndpaRemark1Data" >
+            <Input v-model="ParaInfo.ndpaRemark1Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二描述" prop="ndpaRemark2Desc" >
+            <Input v-model="ParaInfo.ndpaRemark2Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-if="this.remark2DataList.includes(ParaInfo.devType)">
+            <Select v-model="ParaInfo.ndpaRemark2Data" clearable   placeholder="请选择参数处理类">
+              <Option  v-for='choose in paraCodecList' :value='choose' :key="choose">{{choose}}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="备注二数据" prop="ndpaRemark2Data" v-else>
+            <Input v-model="ParaInfo.ndpaRemark2Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三描述" prop="ndpaRemark3Desc" >
+            <Input v-model="ParaInfo.ndpaRemark3Desc" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="备注三数据" prop="ndpaRemark3Data" >
+            <Input v-model="ParaInfo.ndpaRemark3Data" type="textarea" placeholder="请输入"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="15">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
@@ -190,6 +225,8 @@
 <script>
 
   import {addParaInfo, editParaInfo} from '@/api/monitor/ParaInfo'
+  import xy from "../../../../libs/url";
+  import axios from '@/libs/api.request'
 
   export default {
     name: 'operate',
@@ -208,6 +245,8 @@
         ndpaAlertLevels:[],
         ndpaCmplexLevelList:[],
         ndpaLinkTypeList:[],
+        remark2DataList:[],
+        paraCodecList:[],
         isTopoList:[{'id':false,'code':'否'},
               {'id':true,'code':'是'}],  //是否在拓扑图显示
         rulePro: {
@@ -318,6 +357,8 @@
       this.getNdpaAlertLevels();
       this.getNdpaCmplexLevelList();
       this.getNdpaLinkTypeList();
+      this.getParaCodecList();
+      this.initRemark2DataList();
     },
     methods: {
       async getDevTypes(){
@@ -379,6 +420,18 @@
         } else {
           this.updateMark = false
         }
+      },
+      async initRemark2DataList(){
+        this.remark2DataList = ["0020023"];
+      },
+      async getParaCodecList(){
+        axios.request({
+          url: xy.Setting.SPACE_URL + '/monitor/paraInfo/paraCodec',
+          method: 'get'
+        })
+          .then(res=>{
+            this.paraCodecList = res.result;
+          })
       },
       handleSubmit() {
         let form = this.$refs['form']
