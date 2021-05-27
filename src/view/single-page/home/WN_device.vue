@@ -1,11 +1,11 @@
 <template>
   <div>
-    <template v-for="equipment in equipments">
-      <div class="device_status" :style="devicePosition(equipment)">
-        <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
-      </div>
-      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
-    </template>
+<!--    <template v-for="equipment in equipments">-->
+<!--      <div class="device_status" :style="devicePosition(equipment)">-->
+<!--        <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>-->
+<!--      </div>-->
+<!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
+<!--    </template>-->
     <div ref="dom" class="charts"></div>
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
@@ -815,172 +815,125 @@ export default {
     init() {
       let nodes = [
         {
-          x: '10',
-          y: '500',
+          x: '25',
+          y: '300',
           nodeName: '',
           img: 'image://' + require('@/assets/images/home/wn_track.png'),
-          size: [260, 200]
+          size: [80, 80]
         },
 //---------------舱外
         {
           mark: '舱外',
-          x: '290',
-          y: '520',
-          nodeName: '舱外\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          x: '120',
+          y: '305',
+          nodeName: '舱外\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color: 'white',
           border: 'dotted',
           id: 1,
-          size: [200, 500],
+          size: [80, 375],
         },
 
         {
-          x: '250',
-          y: '650',
-          nodeName: 'ka发射\n\n\n\n\n\n\n\nKa接收',
+          x: '95',
+          y: '400',
+          nodeName: 'ka\n发射\n\n\n\n\n\nKa\n接收',
           img: 'rect',
-          size: [60, 220],
+          size: [30, 170],
           color: '#c4e889'
         },
         {
-          x: '250',
-          y: '380',
-          nodeName: 'ku发射\n\n\n\n\n\n\n\n\nKu接收',
+          x: '95',
+          y: '210',
+          nodeName: 'ku\n发射\n\n\n\n\n\nKu\n接收',
           img: 'rect',
-          size: [60, 220],
+          size: [30, 170],
           color: '#c4e889'
         },
         {
-          x: '365',
-          y: '300',
-          nodeName: 'LNA',
+          x: '145',
+          y: '160',
+          nodeName: 'LNA  ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [50, 70],
+          size: [25, 30],
           color: '#c4e889'
         },
 //---------------维修舱
         {
           mark: '维修舱',
-          x: '565',
-          y: '520',
-          nodeName: '维修舱\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          x: '220',
+          y: '305',
+          nodeName: '维修舱\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
           color: 'white',
           border: 'dotted',
           id: 1,
-          size: [250, 500],
+            size: [100, 375],
         },
 
         {
-          x: '570',
-          y: '450',
+          x: '225',
+          y: '260',
           nodeName: '',
           id: 1,
           img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
-          size: [230, 120]
+          size: [90, 70]
         },
 
         {
-          x: '577',
-          y: '494',
+          x: '225',
+          y: '282',
           devNo: 2,
           type: 1,//主机
           isMajor: true,
-          nodeName: 'Ku buc       ',
+          nodeName: 'Ku buc     ',
           img: 'rect',
-          size: [122, 38],
+            size: [58, 20],
           color: 'rgba(0,150,136,0.2)'
         },
-        // {
-        //   mark: 'ku buc 状态1 ',
-        //   x: '625',
-        //   y: '495',
-        //   isMajor: false,
-        //   type: 1,//主机
-        //   devNo: 2,
-        //   nodeName: '',
-        //   img: 'circle',
-        //   size: [20, 20],
-        //   color: 'black'
-        // },
         {
-          x: '577',
-          y: '407',
+          x: '225',
+          y: '238',
           devNo: 2,
           type: 0,//备机
           isMajor: true,
-          nodeName: 'Ku buc       ',
+          nodeName: 'Ku buc     ',
           img: 'rect',
-          size: [122, 38],
+            size: [58, 20],
           color: 'rgba(184,181,181,0.7)'
         },
-        // {
-        //   mark: 'ku buc 状态2',
-        //   x: '625',
-        //   y: '410',
-        //   isMajor: false,
-        //   type: 0,//备机
-        //   devNo: 2,
-        //   nodeName: '',
-        //   img: 'circle',
-        //   size: [20, 20],
-        //   color: 'black'
-        // },
         {
-          x: '580',
-          y: '300',
+          x: '225',
+          y: '160',
           nodeName: '',
           id: 1,
           img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [200, 120]
+          size: [90, 70]
         },
         {
-          x: '581',
-          y: '340',
+          x: '225',
+          y: '180',
           devNo: 40,
           isMajor: true,
           type: 1,//主机
-          nodeName: '下变频器       ',
+          nodeName: '下变频器    ',
           img: 'rect',
-          size: [105, 40],
+            size: [58, 20],
           color: 'rgba(0,150,136,0.2)'
         },
-        // {
-        //   mark: '下变频器1 状态',
-        //   devNo: 40,
-        //   type: 1,//主机
-        //   isMajor: false,
-        //   x: '620',
-        //   y: '338',
-        //   nodeName: '',
-        //   img: 'circle',
-        //   size: [20, 20],
-        //   color: 'black'
-        // },
         {
-          x: '580',
-          y: '255',
+          x: '225',
+          y: '138',
           devNo: 41,
           isMajor: true,
           type: 0,//备机
-          nodeName: '下变频器      ',
+          nodeName: '下变频器    ',
           img: 'rect',
-          size: [105, 40],
+            size: [58, 20],
           color: 'rgba(184,181,181,0.7)'
         },
-        // {
-        //   mark: '下变频器2 状态',
-        //   devNo: 41,
-        //   isMajor: false,
-        //   type: 0,//备机
-        //   x: '620',
-        //   y: '260',
-        //   nodeName: '',
-        //   img: 'circle',
-        //   size: [20, 20],
-        //   color: 'black'
-        // },
+
 //---------------工作舱
         {
           mark: '工作舱',
@@ -1317,38 +1270,38 @@ export default {
         },
 
         {
-          x: '0',
-          y: '120',
+          x: '50',
+          y: '70',
           nodeName: '配电及控保单元',
           img: 'rect',
-          size: [160, 60],
+          size: [110, 30],
           color: 'rgb(124,203,238)',
           category: 2
         },
         {
-          x: '300',
-          y: '120',
+          x: '180',
+          y: '70',
           nodeName: 'UPS',
           img: 'rect',
-          size: [130, 60],
+          size: [80, 30],
           color: 'rgb(124,203,238)',
           category: 2
         },
         {
-          x: '300',
-          y: '0',
+          x: '180',
+          y: '15',
           nodeName: '市电',
           img: 'rect',
-          size: [60, 30],
+          size: [80, 30],
           color: 'rgb(124,203,238)',
           category: 2
         },
         {
-          x: '600',
-          y: '120',
+          x: '290',
+          y: '70',
           nodeName: '油机',
           img: 'rect',
-          size: [130, 60],
+          size: [80, 30],
           color: 'rgb(124,203,238)',
           category: 2
         },
@@ -2237,17 +2190,17 @@ export default {
       }
       var option = {
         animation: false,
-        grid: {left: '6%'},
+        grid: {left: '10',bottom:'15',top:'5'},
         xAxis: {
           min: 0,
-          max: 1600,
-          show: false,
+          max: 830,
+          show: true,
           type: 'value'
         },
         yAxis: {
           min: 0,
-          max: 760,
-          show: false,
+          max: 510,
+          show: true,
           type: 'value'
         },
         series: [
@@ -2309,7 +2262,7 @@ export default {
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
-              fontSize: 14,
+              fontSize: 11,
               color: 'black',
               position: 'inside',
               formatter: function (item) {
@@ -2349,8 +2302,9 @@ export default {
 </script>
 <style>
 .charts {
-  height: 780px;
-  width: 1620px;
+  height: 518px;
+  width: 830px;
+  border: 1px solid red;
 }
 </style>
 <style lang="less" scoped>
