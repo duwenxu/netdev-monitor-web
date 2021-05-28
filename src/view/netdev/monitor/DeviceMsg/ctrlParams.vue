@@ -20,8 +20,19 @@
                               </div>
                             </Col>
                             <Col :xs="13" :lg="13">
-                                  <span>{{(info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;<span
-                                    v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+<!--                                  <span>{{(info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;</span>-->
+                              <template v-if="info.splitArr.length">
+                                <template v-for="item in info.splitArr">
+                                 <span>{{item.param}}
+                                   <template v-for="cell in item.subList">
+                                     <span v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}</span>
+                                   </template>
+                                 </span>
+                                </template>
+                              </template>
+                             <template v-else>
+                               <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+                             </template>
                             </Col>
                             <div v-if="info.selected">
                               <Col :xs="24" :lg="24">
@@ -60,7 +71,7 @@
                               </div>
                             </Col>
                             <Col :xs="13" :lg="13">
-                                      <span>{{(info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
+                                      <span style="color:#009688;">{{(info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
                                         <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                             </Col>
                             <template v-if="info.selected">
@@ -106,11 +117,11 @@
                           <Col :xs="13" :lg="13">
                             <template v-if="info.oldVal">
                               <div v-for="(item,i) in info.spinnerInfoList">
-                                <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                                <span style="cursor: pointer;color:#009688;" v-if="info.oldVal == item.code">{{ item.name }}</span>
                               </div>
                             </template>
                             <template v-else>
-                              <span >暂无数据</span>
+                              <span style="color: #009688">暂无数据</span>
                             </template>
                           </Col>
                           <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex;">

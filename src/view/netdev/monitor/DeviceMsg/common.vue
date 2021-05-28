@@ -10,16 +10,31 @@
                  <Row>
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
-                  <span style="color: red;"
+                      <span style="color: red;"
                         v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                        <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                      </div>
                    </Col>
+
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                      <span style="cursor: pointer" @click="changeMode(info)">{{
-                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'
-                        }}&nbsp;&nbsp;<span
-                          v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+
+<!--                      <span style="cursor: pointer" @click="changeMode(info)">{{-->
+<!--                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'-->
+<!--                        }}&nbsp;&nbsp;-->
+                     <template v-if="info.splitArr.length">
+                       <template v-for="item in info.splitArr">
+                                 <span style="cursor: pointer;" @click="changeMode(info)">{{item.param}}
+                                   <template v-for="cell in item.subList">
+                                     <span  v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}
+                                     </span>
+                                   </template>
+                                 </span>
+                       </template>
+
+                     </template>
+                     <template v-else>
+                       <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+                     </template>
                    </Col>
                    <div  v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
@@ -66,7 +81,7 @@
                      </div>
                    </Col>
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                          <span style="cursor: pointer"
+                          <span style="cursor: pointer;color:#009688"
                                 @click="changeMode(info)">{{
                               (info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据'
                             }}&nbsp;&nbsp;
@@ -123,11 +138,11 @@
                  <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                    <template v-if="info.oldVal !== '' && info.oldVal !== null">
                      <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
-                       <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                       <span style="cursor: pointer;color: #009688" v-if="info.oldVal == item.code">{{ item.name }}</span>
                      </div>
                    </template>
                    <template v-else>
-                     <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
+                     <span style="cursor: pointer;color: #009688" @click="changeMode(info)">暂无数据</span>
                    </template>
                  </Col>
                  <Col :xs="16" :lg="16" push="4"
