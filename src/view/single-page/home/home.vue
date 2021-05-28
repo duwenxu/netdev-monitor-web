@@ -1,4 +1,5 @@
 <template>
+<!-- 二类车-->
   <div ref="dom" class="charts"></div>
 </template>
 

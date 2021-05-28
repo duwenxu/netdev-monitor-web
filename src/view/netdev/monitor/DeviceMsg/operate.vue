@@ -16,10 +16,10 @@
       </div>
     </div>
     <div class="sub-wrap" v-if="combineList.length">
-      <Row v-for="info in combineList">
+      <div v-for="info in combineList">
         <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
-      </Row>
+      </div>
     </div>
     <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
