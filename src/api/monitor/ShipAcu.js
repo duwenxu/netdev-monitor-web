@@ -16,10 +16,11 @@ export const ctrlAngle = (info) => {
 /**
  * 获取当前位置的经纬度
  */
-export const getLocalDeg = () => {
+export const getLocalDeg = (info) => {
   return axios.request({
     url: xy.Setting.SPACE_URL + '/monitor/acuCtrl/getLocalDeg',
     method: 'post',
+    data:qs.stringify(info)
   })
 }
 

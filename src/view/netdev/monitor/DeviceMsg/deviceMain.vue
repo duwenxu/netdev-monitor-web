@@ -59,7 +59,7 @@ export default {
       navIndex: 0,
       tabs: [
         {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'},
-        {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
+        // {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
       ],
       logColumns: [
         {
@@ -201,8 +201,7 @@ export default {
 
         }else{
           this.tabs  = [
-            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'},
-            {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
+            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
           ]
         }
         this.getTabsPage()
