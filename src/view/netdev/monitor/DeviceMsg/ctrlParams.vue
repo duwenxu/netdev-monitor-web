@@ -36,8 +36,7 @@
                                <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
                              </template>
                             </Col>
-                            <div v-if="info.selected">
-                              <Col :xs="24" :lg="24">
+                              <Col :xs="24" :lg="24" v-if="info.selected">
                                 <Row>
                                   <template v-for="temp in info.splitArr">
                                     <Col :xs="info.splitArr.length<=2?12:6" :lg="info.splitArr.length<=2?12:6">
@@ -61,9 +60,7 @@
                                     </Col>
                                   </template>
                                 </Row>
-
                               </Col>
-                            </div>
                             <Col :xs="24" :lg="24">&nbsp;</Col>
                           </Row>
                         </template>

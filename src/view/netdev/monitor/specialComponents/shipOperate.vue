@@ -161,7 +161,7 @@
               </Form>
             </Col>
             <Col :xs="6" :lg="6" :md="6" class="col-6">
-              <div class="title-text">姿态控制</div>
+              <div class="title-text">姿态信息</div>
               <Row style="padding:0 10px">
                 <Col :xs="24" :lg="24" :md="24">
                   <Form :model="gestureData" :label-width="40">
@@ -195,17 +195,17 @@
                   <Form :model="zoneDirect" :label-width="70">
                     <Row>
                       <Col :xs="14" :lg="14" :md="14" push="4">
-                        <FormItem label="卫星预置" prop="menuTitle">
-                          <Select v-model="zoneDirect.menuTitle">
+                        <FormItem label="卫星预置" prop="star">
+                          <Select v-model="zoneDirect.star">
                             <Option v-for="item in selects" :value="item.code" :key="item.code">{{ item.name }}</Option>
                           </Select>
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24"></Col>
                       <Col :xs="17" :lg="17" :md="17" push="2">
-                        <RadioGroup v-model="zoneDirect.btnCheck">
-                          <Radio label="">水平极化</Radio>
-                          <Radio label="">垂直极化</Radio>
+                        <RadioGroup v-model="zoneDirect.isLevel">
+                          <Radio :label="true">水平极化</Radio>
+                          <Radio :label="false">垂直极化</Radio>
                         </RadioGroup>
                       </Col>
                       <Col :xs="3" :lg="3" :md="3">
@@ -251,24 +251,21 @@
 
             </Col>
             <Col :xs="6" :lg="6" :md="6"  class="col-6">
-              <div class="title-text">姿态控制</div>
+              <div class="title-text">姿态信息</div>
               <Row style="padding:0 10px">
                 <Col :xs="24" :lg="24" :md="24">
                   <Form :model="gestureData" :label-width="40">
                     <Row>
                       <Col :xs="24" :lg="24" :md="24">
-                        <FormItem label="经度" prop="menuTitle">
-                          <Input v-model.trim="starModel.menuTitle" placeholder="经度"></Input>
+                        <FormItem label="经度" prop="devJd">
+                          <Input v-model.trim="gestureData.devJd" placeholder="经度"></Input>
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24">
-                        <FormItem label="纬度" prop="menuName">
-                          <Input v-model.trim="gestureData.menuName" placeholder="纬度"></Input>
+                        <FormItem label="纬度" prop="devWd">
+                          <Input v-model.trim="gestureData.devWd" placeholder="纬度"></Input>
                         </FormItem>
                       </Col>
-                      <FormItem>
-                        <Button  style="background: #009688;color: white">确定</Button>
-                      </FormItem>
                     </Row>
                   </Form>
                 </Col>
@@ -291,9 +288,12 @@ export default {
       handmic:{},//手动
       automic:{},//自动
       starModel: {},
-      zoneDirect: {},//卫星预置
+      zoneDirect: {
+        star:1,
+        btnCheck:true
+      },//卫星预置
       zoneData: {},//空间指向
-      gestureData:{},//姿态控制
+      gestureData:{},//空间指向姿态信息
       topBtns: [
         {id: 1, name: '待机'},
         {id: 2, name: '手动'},
