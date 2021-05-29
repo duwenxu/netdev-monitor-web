@@ -8,7 +8,6 @@
     </RadioGroup>
     <Row style="margin-top: 15px">
       <Col :xs="24" :lg="12" :md="12">
-
         <Card v-if="btnCheck == 2">
           <Row>
             <Col :xs="24" :lg="24" :md="24" class="col-17">
@@ -203,16 +202,14 @@
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24"></Col>
-                      <Col :xs="16" :lg="16" :md="16">
-                        <FormItem label="" prop="menuName">
-                          <RadioGroup v-model="zoneDirect.btnCheck">
-                            <Radio label="">水平极化</Radio>
-                            <Radio label="">垂直极化</Radio>
-                          </RadioGroup>
-                        </FormItem>
+                      <Col :xs="17" :lg="17" :md="17" push="2">
+                        <RadioGroup v-model="zoneDirect.btnCheck">
+                          <Radio label="">水平极化</Radio>
+                          <Radio label="">垂直极化</Radio>
+                        </RadioGroup>
                       </Col>
-                      <Col :xs="4" :lg="4" :md="4">
-                        <Button style="margin-top: 4px;margin-left: 20px;background: #009688;color: white" type="primary" icon="md-checkmark" size="small">确认
+                      <Col :xs="3" :lg="3" :md="3">
+                        <Button style="margin-top: 4px;background: #009688;color: white" type="primary" icon="md-checkmark" size="small">确认
                         </Button>
                       </Col>
                     </Row>
