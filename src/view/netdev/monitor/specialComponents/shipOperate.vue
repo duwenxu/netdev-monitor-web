@@ -42,7 +42,7 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="menuName">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.gc" placeholder="交叉"></InputNumber>
+                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -80,22 +80,22 @@
                 <Row>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="az">
-                      <InputNumber :min="0" :max="20" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
+                      <InputNumber :min="0" :max="360" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="el">
-                      <InputNumber  :min="0" :max="20" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
+                      <InputNumber  :min="15" :max="110" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
-                    <FormItem label="交叉" prop="gc">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="automic.gc" placeholder="交叉"></InputNumber>
+                    <FormItem label="交叉" prop="jc">
+                      <InputNumber :min="-25" :max="25" :step="0.1"  style="width: 95%" v-model.trim="automic.jc" placeholder="交叉"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="pol">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
+                      <InputNumber :min="-45" :max="225" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -134,7 +134,7 @@
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="频率" prop="hz">
-                      <Input v-model.trim="starModel.hz" placeholder="频率" Number>
+                      <Input v-model.trim="starModel.freq" placeholder="频率" Number>
                         <span slot="suffix">MHs</span>
                       </Input>
                     </FormItem>
@@ -257,7 +257,7 @@
                     </Col>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="频率" prop="hz">
-                        <Input v-model.trim="zoneData.hz" placeholder="频率" Number>
+                        <Input v-model.trim="zoneData.freq" placeholder="频率" Number>
                           <span slot="suffix">MHs</span>
                         </Input>
                       </FormItem>
@@ -311,13 +311,13 @@ export default {
     return {
       btnCheck: '0000',
       handmic:{
-        gc:1,
+        jc:1,
         az:1,
         el:1,
         pol:1,
       },//手动
       automic:{
-        gc:0,
+        jc:0,
         az:0,
         el:0,
         pol:0,
@@ -326,7 +326,7 @@ export default {
         satWd:0.000,
         star:1,
         isLevel:'0',
-        hz:'',
+        freq:'',
         az:'',
         el:'',
         pol:'',
@@ -339,7 +339,7 @@ export default {
         az:'',
         el:'',
         pol:'',
-        hz:''
+        freq:''
       },//空间指向
       gestureData:{
         devJd:'',
@@ -352,7 +352,7 @@ export default {
       topBtns: [
         {id: '0000', name: '待机'},
         {id: '0001', name: '手动'},
-        {id: 3, name: '步进'},
+        {id: '1111', name: '步进'},
         {id: '0010', name: '指向'},
         {id: '0100', name: '星下点'},
         {id: '0110', name: '扫描跟踪'},
@@ -422,9 +422,9 @@ export default {
     },
     getHz(flag,data){//根据水平或者垂直选择频率
       if(flag == 1){
-        this.starModel.hz = data == '0'? this.starMap[this.starModel.star].horizon:this.starMap[this.starModel.star].vertical
+        this.starModel.freq = data == '0'? this.starMap[this.starModel.star].horizon:this.starMap[this.starModel.star].vertical
       }else{
-        this.zoneData.hz = data == '0'? this.starMap[this.zoneDirect.star].horizon:this.starMap[this.zoneDirect.star].vertical
+        this.zoneData.freq = data == '0'? this.starMap[this.zoneDirect.star].horizon:this.starMap[this.zoneDirect.star].vertical
       }
 
     },
@@ -480,7 +480,7 @@ export default {
           az:this.starModel.az,
           el:this.starModel.el,
           pol:this.starModel.pol,
-          hz:this.starModel.hz
+          freq:this.starModel.freq
         }
         obj = Object.assign(obj,param)
       }else if(flag == 3){
@@ -488,7 +488,7 @@ export default {
           az:this.automic.az,
           el:this.automic.el,
           pol:this.automic.pol,
-          hz:this.automic.gc
+          jc:this.automic.jc
         }
         obj = Object.assign(obj,param)
       }
@@ -519,7 +519,7 @@ export default {
           az:this.starModel.az,
           el:this.starModel.el,
           pol:this.starModel.pol,
-          hz:this.starModel.hz
+          freq:this.starModel.freq
         }
         obj = Object.assign(obj,param)
       }
