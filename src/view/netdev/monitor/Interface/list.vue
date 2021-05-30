@@ -133,6 +133,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: rows.row.itfType == "0027004" || rows.row.itfType == '0027005' ? 'none':'inline-block'
                   },
                   on: {
                     click: () => {
@@ -395,7 +396,7 @@
         if (code == 200) {
           notice.success({
             title: '成功',
-            desc: '删除成功！',
+            desc: '刷新成功！',
             duration: 3
           })
           this.doQuery();

@@ -1,10 +1,12 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">
-        新增
-      </Button>
-      <search :search-data='searchData'></search>
+      <Col :xs="24" :sm="24" :md="24" :lg="20">
+        <search :search-data='searchData'></search>
+      </Col>
+      <Col :xs="24" :sm="24" :md="24" :lg="4">
+        <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+      </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table  :columns="columns1" :data="infos"></Table>
         <div class="text-right page">

@@ -25,11 +25,13 @@
 import {queryPageInfo, queryCtrlInfo} from "@/api/monitor/DeviceParam"
 import Operate from "./operate"
 import ctrlParams from "./ctrlParams"
+import shipOperate from "../specialComponents/shipOperate"
 
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 const mStores = {
   Operate,
-  ctrlParams
+  ctrlParams,
+  shipOperate
 }
 context.keys().forEach(key => {
   const name = key.split('.')[1].split('/')[1]
@@ -56,7 +58,8 @@ export default {
       navName: '',
       navIndex: 0,
       tabs: [
-        {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
+        {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'},
+        // {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
       ],
       logColumns: [
         {

@@ -34,3 +34,14 @@ export const saveCtrlInfo = info => {
     data: info
   })
 }
+
+/**
+ * 開關切換
+ */
+export const switchCheck = info => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/baseInfo/comtechChange',
+    method: 'post',
+    data: qs.stringify(info)
+  })
+}

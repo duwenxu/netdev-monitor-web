@@ -399,7 +399,7 @@
         })
       },
       async initRemark2DataList(){
-        this.remark2DataList = ["0020008","0020012","0020017","0020018","0020020"];
+        this.remark2DataList = ["0020008","0020012","0020017","0020018","0020020","0020023"];
       },
       async getParaCodecList(){
         axios.request({

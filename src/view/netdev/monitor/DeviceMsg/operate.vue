@@ -2,7 +2,13 @@
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
       <div style="margin-bottom: 5px">命令区</div>
-      <div style="display: flex;margin-left: 20px;">
+      <div  style="display: flex;margin-left: 20px;">
+        <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
+          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
+            <span slot="open">A</span>
+            <span slot="close">B</span>
+          </i-switch>
+        </div>
         <Button v-for="(info,index) in orderDatas" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
@@ -10,10 +16,10 @@
       </div>
     </div>
     <div class="sub-wrap" v-if="combineList.length">
-      <Row v-for="info in combineList">
+      <div v-for="info in combineList">
         <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
-      </Row>
+      </div>
     </div>
     <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
@@ -26,6 +32,7 @@
 import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
+import {switchCheck} from "@/api/monitor/DeviceParam";
 
 export default {
   components: {common},
@@ -36,6 +43,7 @@ export default {
   },
   data() {
     return {
+        orderSwitch:true,
       orderHeight: 360,
       normalHeight: 450,
       devNo: null,
@@ -70,6 +78,7 @@ export default {
 
   },
   mounted() {
+      // console.log(this.$route)
     if (this.$route.name != 'home') {
       this.initWebSocket()
     }
@@ -80,6 +89,12 @@ export default {
     next()
   },
   methods: {
+    async  switchChange(data){
+        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
+        if(success){
+
+        }
+      },
     selectStatus(data) {
       this.selectObj = {
         paraId: data.paraId,
@@ -1031,6 +1046,41 @@ export default {
 </script>
 
 <style lang="less">
+ .device-param {
+   .ivu-switch-large.ivu-switch-checked:after{
+     left:60px
+   }
+   .ivu-switch-checked{
+     .ivu-switch-inner {
+       left:20px !important;
+     }
+   }
+   .ivu-switch-large {
+     width: 100px;
+     .ivu-switch-inner {
+       left:60px
+     }
+   }
+   .ivu-switch{
+     height: 40px;
+     line-height: 40px;
+   }
+   .ivu-switch-inner {
+     font-size: 28px;
+   }
+   .ivu-switch:after {
+     content: '';
+     width: 32px;
+     height: 32px;
+     border-radius: 18px;
+     background-color: #fff;
+     position: absolute;
+     left: 1px;
+     top: 3px;
+
+   }
+ }
+
 .order-wrap {
   border: 1px solid #009688;
   height: 100px;
