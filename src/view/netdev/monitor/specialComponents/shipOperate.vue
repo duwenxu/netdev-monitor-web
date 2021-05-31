@@ -28,8 +28,8 @@
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button @click="run('az',handmic.az)">执行</Button>
-                    <Button @click="run('az',0,true)">停止</Button>
+                    <Button style="background: #009688;color: white" @click="run('az',handmic.az)">执行</Button>
+                    <Button style="background: #009688;color: white"@click="run('az',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="menuName">
@@ -37,8 +37,8 @@
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button @click="run('el',handmic.el)">执行</Button>
-                    <Button @click="run('el',0,true)">停止</Button>
+                    <Button style="background: #009688;color: white" @click="run('el',handmic.el)">执行</Button>
+                    <Button style="background: #009688;color: white" @click="run('el',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="menuName">
@@ -46,8 +46,8 @@
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button @click="run('gc',handmic.gc)">执行</Button>
-                    <Button @click="run('gc',0,true)">停止</Button>
+                    <Button style="background: #009688;color: white" @click="run('gc',handmic.gc)">执行</Button>
+                    <Button style="background: #009688;color: white" @click="run('gc',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="menuName">
@@ -55,8 +55,8 @@
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button @click="run('pol',handmic.pol)">执行</Button>
-                    <Button @click="run('pol',0,true)">停止</Button>
+                    <Button style="background: #009688;color: white" @click="run('pol',handmic.pol)">执行</Button>
+                    <Button style="background: #009688;color: white" @click="run('pol',0,true)">停止</Button>
                   </Col>
                 </Row>
               </Form>
@@ -99,7 +99,7 @@
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button @click="byHand(3)">执行</Button>
+                    <Button style="background: #009688;color: white" @click="byHand(3)">执行</Button>
                   </Col>
                 </Row>
               </Form>
@@ -141,7 +141,7 @@
                   </Col>
                   <Col :xs="24" :lg="24" :md="24">
                     <FormItem>
-                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white"  icon="md-checkmark">确认
+                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认
                       </Button>
                       <Button  @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
                       <Button  @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
@@ -232,7 +232,7 @@
                         </RadioGroup>
                       </Col>
                       <Col :xs="3" :lg="3" :md="3">
-                        <Button @click="starPrepare(2)" style="margin-top: 4px;background: #009688;color: white" type="primary" icon="md-checkmark" size="small">确认
+                        <Button @click="starPrepare(2)" style="margin-top: 4px;background: #009688;color: white" type="primary" size="small">确认
                         </Button>
                       </Col>
                     </Row>
