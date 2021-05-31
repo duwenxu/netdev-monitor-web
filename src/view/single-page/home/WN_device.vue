@@ -1255,22 +1255,9 @@
                     nodes: [],
                     linesData: [
                         {
-                            mark: '设备->ka',
-                            name: '',
-                            coords: [[90, 540], [200, 540]],
-                            lineStyle: {
-                                normal: {
-                                    color: '#020202'
-                                }
-                            },
-                            effect: {
-                                color: '#143fdc'
-                            }
-                        },
-                        {
                             mark: 'Ku->设备',
                             name: '',
-                            coords: [[200, 450], [80, 450]],
+                            coords: [[80, 285], [35, 285]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1284,7 +1271,7 @@
                         {
                             mark: 'ku->lna',
                             name: '',
-                            coords: [[290, 300], [320, 300]],
+                            coords: [[110, 160], [130, 160]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1297,7 +1284,7 @@
                         {
                             mark: 'lna->下变频器',
                             name: '',
-                            coords: [[410, 300], [480, 300]],
+                            coords: [[160, 160], [180, 160]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1311,7 +1298,7 @@
                         {
                             mark: 'ku buc->ku',
                             name: '',
-                            coords: [[440, 450], [290, 450]],
+                            coords: [[180, 260], [110, 260]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1324,7 +1311,7 @@
                         {
                             mark: '中频单元->ku buc',
                             name: '',
-                            coords: [[760, 450], [710, 450]],
+                            coords: [[315, 260], [270, 260]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1337,7 +1324,7 @@
                         {
                             mark: '下变频器->中频单元',
                             name: '',
-                            coords: [[680, 300], [760, 300]],
+                            coords: [[270, 160], [315, 160]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1351,7 +1338,7 @@
                         {
                             mark: '竖线->指挥调度',
                             name: '',
-                            coords: [[1560, 500], [1600, 500]],
+                            coords: [[745, 300], [780, 300]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1364,7 +1351,7 @@
                         {
                             mark: '竖线->时间统一',
                             name: '',
-                            coords: [[1560, 350], [1600, 350]],
+                            coords: [[745, 200], [780, 200]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1377,7 +1364,7 @@
                         {
                             mark: '竖线->电话交换',
                             name: '',
-                            coords: [[1560, 200], [1600, 200]],
+                            coords: [[745, 100], [780, 100]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1390,7 +1377,7 @@
                         {
                             mark: '竖线->卫通站监控系统',
                             name: '',
-                            coords: [[1475, 50], [1540, 50]],
+                            coords: [[735, 50], [690, 50]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1404,7 +1391,7 @@
                         {
                             mark: '光纤',
                             name: '光纤',
-                            coords: [[1550, 680], [1600, 680]],
+                            coords: [[780, 430], [820, 430]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1417,7 +1404,7 @@
                         {
                             mark: '光纤',
                             name: '',
-                            coords: [[1600, 680], [1550, 680]],
+                            coords: [[820, 430], [780, 430]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1431,7 +1418,7 @@
                         {
                             mark: '路由器->sdd',
                             name: 'IP',
-                            coords: [[1410, 680], [1450, 680]],
+                            coords: [[665, 430], [720, 430]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1444,7 +1431,7 @@
                         {
                             mark: 'sdd->路由器',
                             name: '',
-                            coords: [[1450, 680], [1410, 680]],
+                            coords: [[720, 430], [665, 430]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1457,7 +1444,7 @@
                         {
                             mark: '路由器-> 保密机',
                             name: '',
-                            coords: [[1370, 630], [1370, 560]],
+                            coords: [[650, 400], [650, 360]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1470,7 +1457,7 @@
                         {
                             mark: '保密机-》路由器',
                             name: '',
-                            coords: [[1370, 560], [1370, 630]],
+                            coords: [[650, 360], [650, 400]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1484,7 +1471,7 @@
                         {
                             mark: '保密机-》防火墙',
                             name: '',
-                            coords: [[1370, 460], [1370, 390]],
+                            coords: [[650, 300], [650, 270]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1497,7 +1484,7 @@
                         {
                             mark: '防火墙-> 保密机',
                             name: '',
-                            coords: [[1370, 390], [1370, 460]],
+                            coords: [[650, 270], [650, 300]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1510,7 +1497,7 @@
                         {
                             mark: '接入交换机 右->竖线',
                             name: '',
-                            coords: [[1465, 190], [1540, 190]],
+                            coords: [[700, 140], [735, 140]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1524,7 +1511,7 @@
                         {
                             mark: '路由器 左-> 保密机',
                             name: '',
-                            coords: [[1250, 570], [1250, 530]],
+                            coords: [[580, 370], [580, 350]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1537,7 +1524,7 @@
                         {
                             mark: '保密机 左-》路由器',
                             name: '',
-                            coords: [[1250, 530], [1250, 570]],
+                            coords: [[580, 350], [580, 370]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1552,7 +1539,7 @@
                         {
                             mark: '保密机 左-》防火墙',
                             name: '',
-                            coords: [[1250, 430], [1250, 390]],
+                            coords: [[580, 290], [580, 270]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1565,7 +1552,7 @@
                         {
                             mark: '防火墙 左-> 保密机',
                             name: '',
-                            coords: [[1250, 390], [1250, 430]],
+                            coords: [[580, 270], [580, 290]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1580,7 +1567,7 @@
                         {
                             mark: '接入交换机 左-》防火墙 右',
                             name: '',
-                            coords: [[1270, 220], [1350, 295]],
+                            coords: [[590, 155], [650, 210]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1593,7 +1580,7 @@
                         {
                             mark: '防火墙 右-> 接入交换机 左',
                             name: '',
-                            coords: [[1350, 295], [1270, 220]],
+                            coords: [[650, 210], [590, 155]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1608,7 +1595,7 @@
                         {
                             mark: '接入交换机 右-》防火墙  左',
                             name: '',
-                            coords: [[1350, 220], [1270, 295]],
+                            coords: [[650, 155], [590, 210]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1621,7 +1608,7 @@
                         {
                             mark: '防火墙  左-> 接入交换机 右',
                             name: '',
-                            coords: [[1270, 295], [1350, 220]],
+                            coords: [[590, 210], [650, 155]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1635,7 +1622,7 @@
                         {
                             mark: '中频单元->调制解调器 上',
                             name: '中频入',
-                            coords: [[840, 660], [920, 660]],
+                            coords: [[350, 410], [400, 410]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1649,7 +1636,7 @@
                         {
                             mark: '调制解调器 上->中频单元',
                             name: '中频出',
-                            coords: [[920, 640], [840, 640]],
+                            coords: [[400, 390], [350, 390]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1664,7 +1651,7 @@
                         {
                             mark: '中频单元->调制解调器 下',
                             name: '中频入',
-                            coords: [[840, 450], [920, 450]],
+                            coords: [[350, 330], [400, 450]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1678,7 +1665,7 @@
                         {
                             mark: '调制解调器 下->中频单元',
                             name: '中频出',
-                            coords: [[920, 430], [840, 430]],
+                            coords: [[400, 430], [350, 430]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -1910,10 +1897,23 @@
 
                     ],
                     polyLines: [
+                      {
+                        mark: '设备->ka',
+                        name: '',
+                        coords: [[30, 315], [30, 350],[80,350]],
+                        lineStyle: {
+                          normal: {
+                            color: '#020202'
+                          }
+                        },
+                        effect: {
+                          color: '#143fdc'
+                        }
+                      },
                         {
                             mark: '设备->Ku',
                             name: '',
-                            coords: [[40, 440], [40, 300], [200, 300]],
+                            coords: [[30, 280], [30, 160], [80, 160]],
                             lineStyle: {
                                 normal: {
                                     color: '#020202'
@@ -2163,7 +2163,7 @@
                             },
                             lineStyle: {
                                 color: 'green',
-                                width: 1.5,
+                                width: 1,
                                 opacity: 1,
                                 curveness: 0
                             },
