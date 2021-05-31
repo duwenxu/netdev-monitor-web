@@ -3,11 +3,11 @@
     <RadioGroup @on-change="clickHand" v-model="btnCheck">
       <template v-for="(info,index) in topBtns">
         <Radio style="width: 100px;margin-bottom: 5px" :label="info.id" border>{{ info.name }}</Radio>
-        <span v-if="index == 3"><Br/></span>
+        <!--<span v-if="index == 3"><Br/></span>-->
       </template>
     </RadioGroup>
     <Row style="margin-top: 15px">
-      <Col :xs="24" :sm="24" :lg="16" :md="20">
+      <Col :xs="24" :sm="24" :lg="24" :md="24">
         <Card v-if="btnCheck == '0000'">
           <Row>
             <Col :xs="24" :lg="24" :md="24" class="col-24">
@@ -238,7 +238,7 @@
                     </Row>
                   </Form>
                 </div>
-                <Form :model="zoneData" :label-width="60">
+                <Form :model="zoneData" :label-width="120">
                   <Row>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="方位" prop="az">
