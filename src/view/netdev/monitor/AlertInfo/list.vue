@@ -1,9 +1,13 @@
 <template>
     <div class="content-box">
         <Row>
-            <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
+          <Col :xs="24" :sm="24" :md="24" :lg="20">
             <search :search-data='searchData' @input="handleClick()"></search>
-            <Col :xs="24" :sm="24" :md="24" :lg="24">
+          </Col>
+          <Col :xs="24" :sm="24" :md="24" :lg="4">
+            <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
+          </Col>
+          <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos" ref="alterTable"></Table>
             <div class="text-right page">
                 <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
@@ -11,7 +15,7 @@
                       show-elevator @on-change='changePage'
                       @on-page-size-change='skipPage'></Page>
             </div>
-            </Col>
+          </Col>
         </Row>
     </div>
 </template>

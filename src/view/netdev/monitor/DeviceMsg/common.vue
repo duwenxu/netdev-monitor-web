@@ -1,28 +1,42 @@
 <template>
  <div>
-   <div v-if="infos.length">
-     <div v-for="(info,index) in infos">
-       <Col :xs="24" :lg="lgCol">
-         <Row>
+   <Row v-if="infos.length">
+     <template v-for="(info,index) in infos">
+         <Col :xs="24" :lg="lgCol">
            <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
              <template v-if="info.parahowMode == '0024001'">
                <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                  <Row>
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
-                  <span style="color: red;"
-                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                      <span style="color: red;"
+                            v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
                        <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                      </div>
                    </Col>
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                      <span style="cursor: pointer" @click="changeMode(info)">{{
-                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'
-                        }}&nbsp;&nbsp;<span
-                          v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+
+                     <!--                      <span style="cursor: pointer" @click="changeMode(info)">{{-->
+                     <!--                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'-->
+                     <!--                        }}&nbsp;&nbsp;-->
+                     <template v-if="info.splitArr.length">
+                       <template v-for="item in info.splitArr">
+                                 <span style="cursor: pointer;" @click="changeMode(info)">{{item.param}}
+                                   <template v-for="cell in item.subList">
+                                     <span  v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}
+                                     </span>
+                                   </template>
+                                 </span>
+                       </template>
+
+                     </template>
+                     <template v-else>
+                       <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+                     </template>
                    </Col>
-                   <div  v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                   <template  v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
+                       <Row>
                        <template v-for="temp in info.splitArr">
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
                            <Select v-if="temp.subList" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
@@ -44,6 +58,7 @@
                            </template>
                          </Col>
                        </template>
+
                        <Button type="primary" @click="handleSubmit(info)" size="small"
                                style="margin-right:1px;margin-top: 4px">
                          <Icon type="md-checkmark" size="15"></Icon>
@@ -51,8 +66,9 @@
                        <Button type="default" @click="close(info)" size="small" style="margin-top: 4px">
                          <Icon type="md-close" size="15"></Icon>
                        </Button>
+                       </Row>
                      </Col>
-                   </div>
+                   </template>
                    <Col :xs="24" :lg="24">&nbsp;</Col>
                  </Row>
                </template>
@@ -66,7 +82,7 @@
                      </div>
                    </Col>
                    <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-                          <span style="cursor: pointer"
+                          <span style="cursor: pointer;color:#009688"
                                 @click="changeMode(info)">{{
                               (info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据'
                             }}&nbsp;&nbsp;
@@ -96,10 +112,10 @@
                            <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                          </Input>
                        </template>
-                       <Button type="primary" @click="handleSubmit(info)" size="small">
+                       <Button style="margin-top: 4px" type="primary" @click="handleSubmit(info)" size="small">
                          <Icon type="md-checkmark" size="15"></Icon>
                        </Button>
-                       <Button type="default" @click="close(info)" size="small">
+                       <Button style="margin-top: 4px" type="default" @click="close(info)" size="small">
                          <Icon type="md-close" size="15"></Icon>
                        </Button>
                      </Col>
@@ -123,11 +139,11 @@
                  <Col :xs="12" :lg="info.paraName.length<=10?13:12">
                    <template v-if="info.oldVal !== '' && info.oldVal !== null">
                      <div v-for="(item,i) in info.spinnerInfoList" @click="changeMode(info)">
-                       <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                       <span style="cursor: pointer;color: #009688" v-if="info.oldVal == item.code">{{ item.name }}</span>
                      </div>
                    </template>
                    <template v-else>
-                     <span style="cursor: pointer" @click="changeMode(info)">暂无数据</span>
+                     <span style="cursor: pointer;color: #009688" @click="changeMode(info)">暂无数据</span>
                    </template>
                  </Col>
                  <Col :xs="16" :lg="16" push="4"
@@ -137,10 +153,10 @@
                      <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
                      </Option>
                    </Select>
-                   <Button type="primary" @click="handleSubmit(info)" size="small">
+                   <Button style="margin-top: 4px" type="primary" @click="handleSubmit(info)" size="small">
                      <Icon type="md-checkmark" size="15"></Icon>
                    </Button>
-                   <Button type="default" style="margin-left: 1px" @click="close(info)" size="small">
+                   <Button type="default" style="margin-left: 1px;margin-top: 4px" @click="close(info)" size="small">
                      <Icon type="md-close" size="15"></Icon>
                    </Button>
                  </Col>
@@ -148,10 +164,12 @@
                </Row>
              </template>
            </template>
-         </Row>
-       </Col>
-     </div>
-   </div>
+
+         </Col>
+
+
+     </template>
+   </Row>
   <div v-else>
     <span>暂无数据</span>
   </div>
