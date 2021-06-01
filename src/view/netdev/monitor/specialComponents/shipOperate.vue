@@ -23,7 +23,11 @@
                 <Row>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="menuTitle">
-                      <InputNumber :min="-20" :max="20" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
+                        <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -32,7 +36,11 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="menuName">
-                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
+                        <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -41,7 +49,11 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="menuName">
-                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
+                        <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -50,7 +62,10 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="menuName">
-                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
+                        <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
+                      </Poptip>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -138,22 +153,37 @@
                 <Row>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="az">
-                      <InputNumber :min="0" :max="360" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="0" :max="360" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
+                        <div slot="content">最小值:0 ~ 最大值:360</div>
+                      </Poptip>
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="el">
-                      <InputNumber  :min="15" :max="110" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false"  :min="15" :max="110" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
+                        <div slot="content">最小值:15 ~ 最大值:110</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="jc">
-                      <InputNumber :min="-25" :max="25" :step="0.1"  style="width: 95%" v-model.trim="automic.jc" placeholder="交叉"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="-25" :max="25" :step="0.1"  style="width: 95%" v-model.trim="automic.jc" placeholder="交叉"></InputNumber>
+                        <div slot="content">最小值:-25 ~ 最大值:25</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="pol">
-                      <InputNumber :min="-45" :max="225" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
+                      <Poptip trigger="focus">
+                        <InputNumber :active-change="false" :min="-45" :max="225" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
+                        <div slot="content">最小值:-45 ~ 最大值:225</div>
+                      </Poptip>
+
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -172,9 +202,17 @@
                 <Row style="padding: 0 10px">
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="卫星经度" prop="star">
-                      <Select ref="starRef"  @on-query-change="queryValue" clearable filterable allow-create  @on-change="getStar(1,$event)" v-model="starModel.star">
-                        <Option v-for="item in selects" :value="item.code" :key="item.code">{{ item.name }}</Option>
-                      </Select>
+                      <auto-complete
+                        ref = "test"
+                        v-model="starModel.star"
+                        @on-change="changeSel(1,'test')"
+                        @on-select="selectSel(1,$event,'test')"
+                        style="width:200px" icon="ios-arrow-down" >
+                        <Option v-for="item in oldArr" :value="item.name+'|'+item.code"  :key="item.code" >
+                          <span >{{item.name}}</span>
+                        </Option>
+                      </auto-complete>
+
                     </FormItem>
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
@@ -191,7 +229,7 @@
                     </FormItem>
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
-                    <FormItem label="频率" prop="hz">
+                    <FormItem label="频率" prop="freq">
                       <Input v-model.trim="starModel.freq" placeholder="频率" Number>
                         <span slot="suffix">MHs</span>
                       </Input>
@@ -199,28 +237,28 @@
                   </Col>
                   <Col :xs="24" :lg="24" :md="24">
                     <FormItem>
-                      <!--<Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认
-                      </Button>-->
-                      <Button  @click="byHand(4)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
-                      <Button  @click="byAuto(4)" style="background: #009688;color: white" >自动</Button>
+                      <!--                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认-->
+                      <!--                      </Button>-->
+                      <Button  @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
+                      <Button  @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
                     </FormItem>
                   </Col>
-                  <!--<Col :xs="24" :lg="24" :md="24"></Col>
-                  <Col :xs="24" :lg="12" :md="12">
-                    <FormItem label="方位" prop="az">
-                      <Input v-model.trim="starModel.az" placeholder="方位" Number></Input>
-                    </FormItem>
-                  </Col>
-                  <Col :xs="24" :lg="12" :md="12">
-                    <FormItem label="俯仰" prop="el">
-                      <Input v-model.trim="starModel.el" placeholder="俯仰" Number></Input>
-                    </FormItem>
-                  </Col>
-                  <Col :xs="24" :lg="12" :md="12">
-                    <FormItem label="极化" prop="pol">
-                      <Input v-model.trim="starModel.pol" placeholder="极化" Number></Input>
-                    </FormItem>
-                  </Col>-->
+                  <Col :xs="24" :lg="24" :md="24"></Col>
+                  <!--                  <Col :xs="24" :lg="12" :md="12">-->
+                  <!--                    <FormItem label="方位" prop="az">-->
+                  <!--                      <Input v-model.trim="starModel.az" placeholder="方位" Number></Input>-->
+                  <!--                    </FormItem>-->
+                  <!--                  </Col>-->
+                  <!--                  <Col :xs="24" :lg="12" :md="12">-->
+                  <!--                    <FormItem label="俯仰" prop="el">-->
+                  <!--                      <Input v-model.trim="starModel.el" placeholder="俯仰" Number></Input>-->
+                  <!--                    </FormItem>-->
+                  <!--                  </Col>-->
+                  <!--                  <Col :xs="24" :lg="12" :md="12">-->
+                  <!--                    <FormItem label="极化" prop="pol">-->
+                  <!--                      <Input v-model.trim="starModel.pol" placeholder="极化" Number></Input>-->
+                  <!--                    </FormItem>-->
+                  <!--                  </Col>-->
                 </Row>
               </Form>
             </Col>
@@ -276,9 +314,16 @@
                     <Row>
                       <Col :xs="14" :lg="14" :md="14" push="4">
                         <FormItem label="卫星预置" prop="star">
-                          <Select @on-change="getStar(2,$event)" v-model="zoneDirect.star">
-                            <Option v-for="item in selects" :value="item.code" :key="item.code">{{ item.name }}</Option>
-                          </Select>
+                          <auto-complete
+                            ref = "starTest"
+                            v-model="zoneDirect.star"
+                            @on-change="changeSel(2,'starTest')"
+                            @on-select="selectSel(2,$event,'starTest')"
+                            style="width:200px" icon="ios-arrow-down" >
+                            <Option v-for="item in starArr" :value="item.name+'|'+item.code"  :key="item.code" >
+                              <span >{{item.name}}</span>
+                            </Option>
+                          </auto-complete>
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24"></Col>
@@ -313,7 +358,7 @@
                       </FormItem>
                     </Col>
                     <Col :xs="24" :lg="12" :md="12">
-                      <FormItem label="频率" prop="hz">
+                      <FormItem label="频率" prop="freq">
                         <Input v-model.trim="zoneData.freq" placeholder="频率" Number>
                           <span slot="suffix">MHs</span>
                         </Input>
@@ -360,7 +405,7 @@
 </template>
 
 <script>
-    import {ctrlAngle, getLocalDeg,operCtrl,autoCtrl} from "@/api/monitor/ShipAcu"
+    import {ctrlAngle, getLocalDeg,operCtrl,autoCtrl,getNowState} from "@/api/monitor/ShipAcu"
     import {queryCtrlInfo} from "@/api/monitor/DeviceParam";
     export default {
         name: "shipOperate",
@@ -384,15 +429,15 @@
                 },//自动
                 starModel: {
                     satWd:0.000,
-                    star:1,
+                    star:'亚太6C',
                     isLevel:'0',
                     freq:'',
-                    az:'',
-                    el:'',
-                    pol:'',
+                    // az:'',
+                    // el:'',
+                    // pol:'',
                 },
                 zoneDirect: {
-                    star:1,
+                    star:'亚太6C',
                     isLevel:'0'
                 },//卫星预置
                 zoneData: {
@@ -423,6 +468,13 @@
                     {code: 1, name: '亚太6C', long: 134.0, vertical: 12250, horizon: 12749.8},
                     {code: 2, name: '中兴10号', long: 110.5, vertical: 12741, horizon: 12745}
                 ],
+
+                starArr:[],//存储select下拉框绑定的列表
+                oldArr:[],//存储select下拉框绑定的列表
+                nowSel: 1,    //存储需要提交给后台的value
+                lastLabel: '',    //存储上一次输入的内容
+                isSel:false, ////由于选中和输入内容都会触发onchange，设置此变量进行区分两种情况
+                isCheck:false,
                 starMap:{
                     1:{
                         vertical: 12250, horizon: 12749.8
@@ -430,54 +482,106 @@
                     2:{
                         vertical: 12741, horizon: 12745
                     }
-                }
+                },
+                handMin:-20,
+                handMax:20,
             }
         },
         mounted(){
+            this.getState()
             this.getNowPosition()
+
+        },
+        created:function(){
+            this.oldArr = this.selects;    //页面初次加载，下拉列表就是原始列表
+            this.starArr = this.selects;    //页面初次加载，下拉列表就是原始列表
         },
         methods:{
-            queryValue(value){
-                console.log(value)
-                // let fIndex = this.selects.findIndex(item=>item.name == value)
-                // if(fIndex == -1){
-                if(value){
-                    let that = this;
-                    let refObj = that.$refs.starRef;
-                    //调整iview的样式，filterQueryChange是为了关闭iview的过滤功能，另外需要隐藏掉iview的allow-create添加的弹出层
-
-                    that.$nextTick(function(){
-                        refObj.filterQueryChange = false;
-                        if(refObj.$el.querySelector('.ivu-select-item-enter')){
-                            refObj.$el.querySelector('.ivu-select-item-enter').parentNode.style.display='none'
-                        }
-                    })
-
-                    let list = that.selects;
-                    let isExist = false;
-                    //根据输入的值到list中找，如果输入的值和list中的label匹配，那么将匹配值的value赋值给绑定值和实际值
-                    for(let i=0;i<list.length;i++){
-                        if(list[i].name == value){
-                            that.starModel.star = list[i].code;
-                            setTimeout(function(){
-                                //为了解决iview的小bug，将选中的阴影效果转移到选中的值上（iview选中一个值后，字体会变成蓝色，背景会变成暗灰色，但是不明白为什么要把二者的数据绑定分开，这个bug会导致如果非页面手动点击（比如页面初始化后），被选择的值的背景是白色的，但是手动点击是灰色的）
-                                refObj.focusIndex = i;
-                            },0)
-                            that.saveValue2 = list[i].code;
-                            isExist = true;
-                        }
+            filterMethod:function(value,arr,flag) {
+                var newArr = [];
+                for(var i=0;i<arr.length;i++){
+                    if(arr[i].name.toUpperCase().indexOf(value.toUpperCase()) !== -1){
+                        //模糊查询到了，塞入新数组
+                        newArr.push(arr[i]);
                     }
-                    if(!isExist){
-                        //如果前边的list中没有输入的值，此时不应该选中任何值，所以先把选择框绑定的值设置为空
-                        that.starModel.star = "";
-                        //此时需要提交后台的值就是自定义输入的值，赋值给实际值
-                        that.saveValue2 = value;
-                        //这里是为了解决iview的小bug，清除掉选中后的阴影效果
-                        refObj.focusIndex = -1;
-                    }
-                    // }
                 }
+                if(flag == 1){
+                    this.oldArr = newArr;
+                }else{
+                    this.starArr = newArr;
+                }
+            },
+            changeSel:function(flag,refName){
+                //更改事件
+                var that = this;
 
+                if(that.isSel){
+                    //如果输入框的改变是选中内容引发的，就什么也不做，同时重新初始化标识，为了解决选中同一内容两次引发的bug
+                    that.isSel = false;
+                    return false;
+                }else{
+                    that.isCheck = true//仅输入
+                }
+                if(flag == 1){
+                    var input = that.starModel.star;    //获取输入框输入的内容
+                }else{
+                    var input = that.zoneDirect.star;    //获取输入框输入的内容
+                }
+                that.nowSel = input;
+                that.clearSelCss(that,refName);
+                //将输入内容与上一次的输入内容比对上一次输入内容，判断是到初始化列表中查还是从上次查询结果列表查
+                if(input == null || input == undefined || input == ""){
+                    //输入内容是空，显示原始列表
+                    if(flag == 1){
+                        that.oldArr = that.selects;
+                    }else{
+                        that.starArr = that.selects;
+                    }
+                }else if(input.indexOf(that.lastLabel)==0){
+                    //此次输入内容是上次输入内容的开头，不需要到原始列表查，只要到上次查询结果中查
+                    if(flag == 1){
+                        that.filterMethod(input,that.oldArr,flag);
+                    }else{
+                        that.filterMethod(input,that.starArr,flag);
+                    }
+                }else{
+                    //其他情况到原始列表中查
+                    that.filterMethod(input,that.selects);
+                }
+                this.lastLabel = input;
+            },
+            selectSel:function(flag,val,refName){
+                let that = this;
+                that.isCheck = false
+                //选中事件
+                that.isSel = true;
+                var label = val.split("|")[0];
+                that.nowSel = val.split("|")[1];
+                that.$nextTick(function () {
+                    if(flag == 1){
+                        that.starModel.star = label;
+                    }else{
+                        that.zoneDirect.star = label;
+                    }
+                    that.clearSelCss(that,refName);
+                    var focusItem =  that.$refs[refName].$el.querySelector('.ivu-select-item-focus')
+                    //定义一个属性，用于给选中项设置样式，之所以不设置class，是因为iview会将class替换掉
+                    focusItem.setAttribute("myfocus","myfocus");
+                });
+                this.getStar(flag,val)
+            },
+            clearSelCss:function(that,ref){
+                //清除掉已经被选中的项的css
+                var lastSel = that.$refs[ref].$el.querySelector("[myfocus]");
+                if(lastSel){
+                    lastSel.removeAttribute("myfocus");
+                }
+            },
+            async getState(){
+                let {result, success, message} = await getNowState({devNo:this.$route.name})
+                if(success){
+                    this.btnCheck = result.func
+                }
             },
             async changePos(name,symb){//1是-，2是+
                 let obj = {
@@ -525,6 +629,9 @@
                 }
             },
             clickHand(value){//点击按钮触发手动执行
+                this.nowSel = 1
+                this.lastLabel = ''
+                this.isSel = false
                 if(value == '0000' || value == '0110' || value == '0101'){
                     this.byHand()
                 }else if(value == '0100'){
@@ -544,11 +651,10 @@
             },
             getHz(flag,data){//根据水平或者垂直选择频率
                 if(flag == 1){
-                    this.starModel.freq = data == '0'? this.starMap[this.starModel.star].horizon:this.starMap[this.starModel.star].vertical
+                    this.starModel.freq = data == '0'? this.starMap[this.nowSel].horizon:this.starMap[this.nowSel].vertical
                 }else{
-                    this.zoneData.freq = data == '0'? this.starMap[this.zoneDirect.star].horizon:this.starMap[this.zoneDirect.star].vertical
+                    this.zoneData.freq = data == '0'? this.starMap[this.nowSel].horizon:this.starMap[this.nowSel].vertical
                 }
-
             },
             getStar(flag,data){//选择卫星
                 if(data){
@@ -561,17 +667,15 @@
 
             },
             async  starPrepare(flag){//星预置选择卫星
-                let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-                let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
                 let obj = {
-                    isLevel:level,
-                    satJd:satJd,
+                    isLevel:this.zoneDirect.isLevel == '0'?true:false,
                 }
-                if(flag == 2){
-                    obj = Object.assign(obj,this.gestureData)
+                if(this.isCheck){
+                    obj.satJd = this.nowSel
                 }else{
-                    obj = Object.assign(obj,this.stargestureData)
+                    obj.satJd = this.nowSel == 1?'134.0':'110.5'
                 }
+                obj = Object.assign(obj,this.gestureData)
                 let {result, success, message} = await ctrlAngle(obj)
                 if(success){
                     if(flag == 1){
@@ -601,11 +705,16 @@
                 if(flag == 2){
                     obj = Object.assign(obj,this.zoneData)
                 }else if(flag == 1){
+                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
                     let param = {
-                        az:this.starModel.az,
-                        el:this.starModel.el,
-                        pol:this.starModel.pol,
+                        satWd:this.starModel.satWd,
+                        isLevel:level,
                         freq:this.starModel.freq
+                    }
+                    if(this.isCheck){
+                        param.satJd = this.nowSel
+                    }else{
+                        param.satJd = flag == 1?(this.nowSel == 1?'134.0':'110.5'):(this.nowSel == 1?'134.0':'110.5')
                     }
                     obj = Object.assign(obj,param)
                 }else if(flag == 3){
@@ -614,16 +723,6 @@
                         el:this.automic.el,
                         pol:this.automic.pol,
                         jc:this.automic.jc
-                    }
-                    obj = Object.assign(obj,param)
-                }else if(flag == 4){
-                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
-                    let param = {
-                        satJd:satJd,
-                        satWd:this.starModel.satWd,
-                        isLevel:level,
-                        freq:this.starModel.freq
                     }
                     obj = Object.assign(obj,param)
                 }
@@ -657,16 +756,6 @@
                         freq:this.starModel.freq
                     }
                     obj = Object.assign(obj,param)
-                }else if(flag == 4){
-                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
-                    let param = {
-                        az:satJd,
-                        el:this.starModel.satWd,
-                        pol:level,
-                        freq:this.starModel.freq
-                    }
-                    obj = Object.assign(obj,param)
                 }
                 let {result, success, message} = await autoCtrl(obj)
                 if(success){
@@ -686,8 +775,23 @@
         }
     }
 </script>
+<style lang="less">
+  .col-17{
+    .ivu-poptip{
+      width: 100%;
+      .ivu-poptip-rel {
+        width: 100%;
 
+      }
+    }
+  }
+</style>
 <style scoped>
+
+  [myfocus]{
+    color: #2d8cf0;
+    background: #f3f3f3;
+  }
   .col-text{
     float: left;
     width: 145px;
