@@ -3,7 +3,6 @@
     <RadioGroup @on-change="clickHand" v-model="btnCheck">
       <template v-for="(info,index) in topBtns">
         <Radio style="width: 100px;margin-bottom: 5px" :label="info.id" border>{{ info.name }}</Radio>
-        <!--<span v-if="index == 3"><Br/></span>-->
       </template>
     </RadioGroup>
     <Row style="margin-top: 15px">
@@ -24,7 +23,7 @@
                 <Row>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="menuTitle">
-                      <InputNumber :min="0" :max="20" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
+                      <InputNumber :min="-20" :max="20" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -33,7 +32,7 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="menuName">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
+                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -42,16 +41,16 @@
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="menuName">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
+                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="run('gc',handmic.gc)">执行</Button>
-                    <Button style="background: #009688;color: white" @click="run('gc',0,true)">停止</Button>
+                    <Button style="background: #009688;color: white" @click="run('jc',handmic.jc)">执行</Button>
+                    <Button style="background: #009688;color: white" @click="run('jc',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="menuName">
-                      <InputNumber :min="0" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
+                      <InputNumber :min="-20" :max="20" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
@@ -63,14 +62,73 @@
             </Col>
           </Row>
         </Card>
-        <Card v-if="btnCheck == 3">
+        <Card v-if="btnCheck == '1111'">
           <Row>
-            <Col :xs="24" :lg="24" :md="24" class="col-24">
-              <Alert type="success">当前状态为步进</Alert>
-
+            <Col :xs="24" :lg="24" :md="24" class="col-17">
+              <div class="title-text">步进</div>
+              <Row style="margin-left: 30px">
+                <Col :xs="12" :lg="6" :md="10">
+                  <Row>
+                    <Col :xs="20" :lg="20" :md="20">
+                      <div class="col-text" @click="changePos('el',2)">
+                        <p>俯仰+</p>
+                        <Icon type="md-arrow-round-up" size="38"/>
+                      </div>
+                    </Col>
+                    <Col :xs="24" :lg="24" :md="24">
+                      <div>
+                        <span @click="changePos('az',1)" style="cursor: pointer">方位-
+                          <Icon type="md-arrow-round-back"  size="38" style="margin-right: 40px"/>
+                        </span>
+                        <span @click="changePos('az',2)" style="cursor: pointer">
+                          <Icon type="md-arrow-round-forward" size="38"/>方位+
+                        </span>
+                      </div>
+                    </Col>
+                    <Col :xs="20" :lg="20" :md="20">
+                      <div class="col-text" @click="changePos('el',1)">
+                        <Icon type="md-arrow-round-down" size="38"/>
+                        <p>俯仰-</p>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col :xs="12" :lg="6" :md="10">
+                  <Row>
+                    <Col :xs="20" :lg="20" :md="20">
+                      <div @click="changePos('pol',2)" class="col-text">
+                        <p>极化+</p>
+                        <Icon type="md-arrow-round-up" size="38"/>
+                      </div>
+                    </Col>
+                    <Col :xs="24" :lg="24" :md="24">
+                      <div>
+                        <span @click="changePos('jc',1)" style="cursor: pointer">交叉-
+                          <Icon type="md-arrow-round-back"  size="38" style="margin-right: 40px"/>
+                        </span>
+                        <span @click="changePos('jc',2)" style="cursor: pointer">
+                          <Icon type="md-arrow-round-forward" size="38"/>交叉+
+                        </span>
+                      </div>
+                    </Col>
+                    <Col :xs="20" :lg="20" :md="20">
+                      <div @click="changePos('pol',1)" class="col-text">
+                        <Icon type="md-arrow-round-down" size="38"/>
+                        <p>极化-</p>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col :xs="24" :lg="24" :md="24" style="margin-top: 30px">
+                  <Form>
+                    <FormItem label="步进角度" :label-width="90">
+                      <InputNumber :min="0" :max="360" :step="0.1" style="width: 40%" v-model.trim="stepAngel" placeholder="步进角度"></InputNumber>
+                    </FormItem>
+                  </Form>
+                </Col>
+              </Row>
             </Col>
           </Row>
-
         </Card>
         <Card v-if="btnCheck == '0010'">
           <Row>
@@ -114,7 +172,7 @@
                 <Row style="padding: 0 10px">
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="卫星经度" prop="star">
-                      <Select @on-change="getStar(1)" v-model="starModel.star">
+                      <Select ref="starRef"  @on-query-change="queryValue" clearable filterable allow-create  @on-change="getStar(1,$event)" v-model="starModel.star">
                         <Option v-for="item in selects" :value="item.code" :key="item.code">{{ item.name }}</Option>
                       </Select>
                     </FormItem>
@@ -141,14 +199,13 @@
                   </Col>
                   <Col :xs="24" :lg="24" :md="24">
                     <FormItem>
-                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认
-                      </Button>
-                      <Button  @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
-                      <Button  @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
+                      <!--<Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认
+                      </Button>-->
+                      <Button  @click="byHand(4)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
+                      <Button  @click="byAuto(4)" style="background: #009688;color: white" >自动</Button>
                     </FormItem>
                   </Col>
-                  <Col :xs="24" :lg="24" :md="24"></Col>
-
+                  <!--<Col :xs="24" :lg="24" :md="24"></Col>
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="方位" prop="az">
                       <Input v-model.trim="starModel.az" placeholder="方位" Number></Input>
@@ -163,7 +220,7 @@
                     <FormItem label="极化" prop="pol">
                       <Input v-model.trim="starModel.pol" placeholder="极化" Number></Input>
                     </FormItem>
-                  </Col>
+                  </Col>-->
                 </Row>
               </Form>
             </Col>
@@ -183,9 +240,9 @@
                           <Input v-model.trim="stargestureData.devWd" placeholder="纬度"></Input>
                         </FormItem>
                       </Col>
-<!--                      <FormItem>-->
-<!--                        <Button  style="background: #009688;color: white">确定</Button>-->
-<!--                      </FormItem>-->
+                      <!--                      <FormItem>-->
+                      <!--                        <Button  style="background: #009688;color: white">确定</Button>-->
+                      <!--                      </FormItem>-->
                     </Row>
                   </Form>
                 </Col>
@@ -219,7 +276,7 @@
                     <Row>
                       <Col :xs="14" :lg="14" :md="14" push="4">
                         <FormItem label="卫星预置" prop="star">
-                          <Select @on-change="getStar(2)" v-model="zoneDirect.star">
+                          <Select @on-change="getStar(2,$event)" v-model="zoneDirect.star">
                             <Option v-for="item in selects" :value="item.code" :key="item.code">{{ item.name }}</Option>
                           </Select>
                         </FormItem>
@@ -303,265 +360,363 @@
 </template>
 
 <script>
-import {ctrlAngle, getLocalDeg,operCtrl,autoCtrl} from "@/api/monitor/ShipAcu"
-import {queryCtrlInfo} from "@/api/monitor/DeviceParam";
-export default {
-  name: "shipOperate",
-  data() {
-    return {
-      btnCheck: '0000',
-      handmic:{
-        jc:1,
-        az:1,
-        el:1,
-        pol:1,
-      },//手动
-      automic:{
-        jc:0,
-        az:0,
-        el:0,
-        pol:0,
-      },//自动
-      starModel: {
-        satWd:0.000,
-        star:1,
-        isLevel:'0',
-        freq:'',
-        az:'',
-        el:'',
-        pol:'',
-      },
-      zoneDirect: {
-        star:1,
-        isLevel:'0'
-      },//卫星预置
-      zoneData: {
-        az:'',
-        el:'',
-        pol:'',
-        freq:''
-      },//空间指向
-      gestureData:{
-        devJd:'',
-        devWd:''
-      },//空间指向姿态信息
-      stargestureData:{
-        devJd:'',
-        devWd:''
-      },//星下点姿态信息
-      topBtns: [
-        {id: '0000', name: '待机'},
-        {id: '0001', name: '手动'},
-        {id: '1111', name: '步进'},
-        {id: '0010', name: '指向'},
-        {id: '0100', name: '星下点'},
-        {id: '0110', name: '扫描跟踪'},
-        {id: '0101', name: '自跟踪'},
-        {id:'0011', name: '空间指向'}
-      ],
-      selects: [
-        {code: 1, name: '亚太6C', long: 134.0, vertical: 12250, horizon: 12749.8},
-        {code: 2, name: '中兴10号', long: 110.5, vertical: 12741, horizon: 12745}
-      ],
-      starMap:{
-        1:{
-          vertical: 12250, horizon: 12749.8
+    import {ctrlAngle, getLocalDeg,operCtrl,autoCtrl} from "@/api/monitor/ShipAcu"
+    import {queryCtrlInfo} from "@/api/monitor/DeviceParam";
+    export default {
+        name: "shipOperate",
+        data() {
+            return {
+                saveValue1:'',
+                saveValue2:'',
+                stepAngel:0.1,
+                btnCheck: '0000',
+                handmic:{
+                    jc:1,
+                    az:1,
+                    el:1,
+                    pol:1,
+                },//手动
+                automic:{
+                    jc:0,
+                    az:0,
+                    el:0,
+                    pol:0,
+                },//自动
+                starModel: {
+                    satWd:0.000,
+                    star:1,
+                    isLevel:'0',
+                    freq:'',
+                    az:'',
+                    el:'',
+                    pol:'',
+                },
+                zoneDirect: {
+                    star:1,
+                    isLevel:'0'
+                },//卫星预置
+                zoneData: {
+                    az:'',
+                    el:'',
+                    pol:'',
+                    freq:''
+                },//空间指向
+                gestureData:{
+                    devJd:'',
+                    devWd:''
+                },//空间指向姿态信息
+                stargestureData:{
+                    devJd:'',
+                    devWd:''
+                },//星下点姿态信息
+                topBtns: [
+                    {id: '0000', name: '待机'},
+                    {id: '0001', name: '手动'},
+                    {id: '1111', name: '步进'},
+                    {id: '0010', name: '指向'},
+                    {id: '0100', name: '星下点'},
+                    {id: '0110', name: '扫描跟踪'},
+                    {id: '0101', name: '自跟踪'},
+                    {id:'0011', name: '空间指向'}
+                ],
+                selects: [
+                    {code: 1, name: '亚太6C', long: 134.0, vertical: 12250, horizon: 12749.8},
+                    {code: 2, name: '中兴10号', long: 110.5, vertical: 12741, horizon: 12745}
+                ],
+                starMap:{
+                    1:{
+                        vertical: 12250, horizon: 12749.8
+                    },
+                    2:{
+                        vertical: 12741, horizon: 12745
+                    }
+                }
+            }
         },
-        2:{
-          vertical: 12741, horizon: 12745
+        mounted(){
+            this.getNowPosition()
+        },
+        methods:{
+            queryValue(value){
+                console.log(value)
+                // let fIndex = this.selects.findIndex(item=>item.name == value)
+                // if(fIndex == -1){
+                if(value){
+                    let that = this;
+                    let refObj = that.$refs.starRef;
+                    //调整iview的样式，filterQueryChange是为了关闭iview的过滤功能，另外需要隐藏掉iview的allow-create添加的弹出层
+
+                    that.$nextTick(function(){
+                        refObj.filterQueryChange = false;
+                        if(refObj.$el.querySelector('.ivu-select-item-enter')){
+                            refObj.$el.querySelector('.ivu-select-item-enter').parentNode.style.display='none'
+                        }
+                    })
+
+                    let list = that.selects;
+                    let isExist = false;
+                    //根据输入的值到list中找，如果输入的值和list中的label匹配，那么将匹配值的value赋值给绑定值和实际值
+                    for(let i=0;i<list.length;i++){
+                        if(list[i].name == value){
+                            that.starModel.star = list[i].code;
+                            setTimeout(function(){
+                                //为了解决iview的小bug，将选中的阴影效果转移到选中的值上（iview选中一个值后，字体会变成蓝色，背景会变成暗灰色，但是不明白为什么要把二者的数据绑定分开，这个bug会导致如果非页面手动点击（比如页面初始化后），被选择的值的背景是白色的，但是手动点击是灰色的）
+                                refObj.focusIndex = i;
+                            },0)
+                            that.saveValue2 = list[i].code;
+                            isExist = true;
+                        }
+                    }
+                    if(!isExist){
+                        //如果前边的list中没有输入的值，此时不应该选中任何值，所以先把选择框绑定的值设置为空
+                        that.starModel.star = "";
+                        //此时需要提交后台的值就是自定义输入的值，赋值给实际值
+                        that.saveValue2 = value;
+                        //这里是为了解决iview的小bug，清除掉选中后的阴影效果
+                        refObj.focusIndex = -1;
+                    }
+                    // }
+                }
+
+            },
+            async changePos(name,symb){//1是-，2是+
+                let obj = {
+                    devNo:this.$route.name,
+                    func:this.btnCheck,
+                }
+                obj[name] = symb == 1?-this.stepAngel:this.stepAngel
+                let {result, success, message} = await operCtrl(obj)
+                if(success){
+                    this.$Notice.success({
+                        title: '成功',
+                        desc: message,
+                        duration: 3
+                    })
+                }else{
+                    this.$Notice.error({
+                        title: '失败',
+                        desc: message,
+                        duration: 3
+                    })
+                }
+            },
+            async run(name,value,tag){
+                let obj={
+                    func:this.btnCheck,
+                    devNo:this.$route.name
+                }
+                obj[name] = value
+                let {result, success, message} = await operCtrl(obj)
+                if(success){
+                    if(tag){
+                        this.$set(this.handmic,name,0)
+                    }
+                    this.$Notice.success({
+                        title: '成功',
+                        desc: message,
+                        duration: 3
+                    })
+                }else{
+                    this.$Notice.error({
+                        title: '失败',
+                        desc: message,
+                        duration: 3
+                    })
+                }
+            },
+            clickHand(value){//点击按钮触发手动执行
+                if(value == '0000' || value == '0110' || value == '0101'){
+                    this.byHand()
+                }else if(value == '0100'){
+                    this.getHz(1,'0')
+                }else if(value == '0011'){
+                    this.getHz(2,'0')
+                }
+            },
+            async getNowPosition(){
+                let {result, success, message} = await getLocalDeg({devNo: this.$route.name})
+                if(success){
+                    this.gestureData.devJd = result.devJd
+                    this.gestureData.devWd = result.devWd
+                    this.stargestureData.devJd = result.devJd
+                    this.stargestureData.devWd = result.devWd
+                }
+            },
+            getHz(flag,data){//根据水平或者垂直选择频率
+                if(flag == 1){
+                    this.starModel.freq = data == '0'? this.starMap[this.starModel.star].horizon:this.starMap[this.starModel.star].vertical
+                }else{
+                    this.zoneData.freq = data == '0'? this.starMap[this.zoneDirect.star].horizon:this.starMap[this.zoneDirect.star].vertical
+                }
+
+            },
+            getStar(flag,data){//选择卫星
+                if(data){
+                    if(flag == 1){
+                        this.getHz(1,'0')
+                    }else{
+                        this.getHz(2,'0')
+                    }
+                }
+
+            },
+            async  starPrepare(flag){//星预置选择卫星
+                let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
+                let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
+                let obj = {
+                    isLevel:level,
+                    satJd:satJd,
+                }
+                if(flag == 2){
+                    obj = Object.assign(obj,this.gestureData)
+                }else{
+                    obj = Object.assign(obj,this.stargestureData)
+                }
+                let {result, success, message} = await ctrlAngle(obj)
+                if(success){
+                    if(flag == 1){
+                        this.starModel.az = result.az
+                        this.starModel.el = result.el
+                        this.starModel.pol = result.pol
+
+                    }else{
+                        this.zoneData.az = result.az
+                        this.zoneData.el = result.el
+                        this.zoneData.pol = result.pol
+                    }
+
+                }else{
+                    this.$Notice.error({
+                        title: '失败',
+                        desc: message,
+                        duration: 3
+                    })
+                }
+            },
+            async byHand(flag){//手动
+                let obj={
+                    devNo:this.$route.name,
+                    func:this.btnCheck,
+                }
+                if(flag == 2){
+                    obj = Object.assign(obj,this.zoneData)
+                }else if(flag == 1){
+                    let param = {
+                        az:this.starModel.az,
+                        el:this.starModel.el,
+                        pol:this.starModel.pol,
+                        freq:this.starModel.freq
+                    }
+                    obj = Object.assign(obj,param)
+                }else if(flag == 3){
+                    let param = {
+                        az:this.automic.az,
+                        el:this.automic.el,
+                        pol:this.automic.pol,
+                        jc:this.automic.jc
+                    }
+                    obj = Object.assign(obj,param)
+                }else if(flag == 4){
+                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
+                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
+                    let param = {
+                        satJd:satJd,
+                        satWd:this.starModel.satWd,
+                        isLevel:level,
+                        freq:this.starModel.freq
+                    }
+                    obj = Object.assign(obj,param)
+                }
+                let {result, success, message} = await operCtrl(obj)
+                if(success){
+                    this.$Notice.success({
+                        title: '成功',
+                        desc: message,
+                        duration: 3
+                    })
+                }else{
+                    this.$Notice.error({
+                        title: '失败',
+                        desc: message,
+                        duration: 3
+                    })
+                }
+            },
+            async byAuto(flag){//自动
+                let obj={
+                    devNo:this.$route.name,
+                    func:this.btnCheck,
+                }
+                if(flag == 2){
+                    obj = Object.assign(obj,this.zoneData)
+                }else if(flag == 1){
+                    let param = {
+                        az:this.starModel.az,
+                        el:this.starModel.el,
+                        pol:this.starModel.pol,
+                        freq:this.starModel.freq
+                    }
+                    obj = Object.assign(obj,param)
+                }else if(flag == 4){
+                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
+                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
+                    let param = {
+                        az:satJd,
+                        el:this.starModel.satWd,
+                        pol:level,
+                        freq:this.starModel.freq
+                    }
+                    obj = Object.assign(obj,param)
+                }
+                let {result, success, message} = await autoCtrl(obj)
+                if(success){
+                    this.$Notice.success({
+                        title: '成功',
+                        desc: message,
+                        duration: 3
+                    })
+                }else{
+                    this.$Notice.error({
+                        title: '失败',
+                        desc: message,
+                        duration: 3
+                    })
+                }
+            },
         }
-      }
     }
-  },
-  mounted(){
-      this.getNowPosition()
-      // this.getHz('0')
-  },
-  methods:{
-   async run(name,value,tag){
-     let obj={
-       func:this.btnCheck,
-       devNo:this.$route.name
-     }
-     obj[name] = value
-     let {result, success, message} = await operCtrl(obj)
-     if(success){
-       if(tag){
-         this.$set(this.handmic,name,0)
-       }
-       this.$Notice.success({
-         title: '成功',
-         desc: message,
-         duration: 3
-       })
-     }else{
-       this.$Notice.error({
-         title: '失败',
-         desc: message,
-         duration: 3
-       })
-     }
-    },
-    clickHand(value){//点击按钮触发手动执行
-        if(value == '0000' || value == '0110' || value == '0101'){
-          this.byHand()
-        }else if(value == '0100'){
-          this.getHz(1,'0')
-        }else if(value == '0011'){
-          this.getHz(2,'0')
-        }
-    },
-    async getNowPosition(){
-      let {result, success, message} = await getLocalDeg({devNo: this.$route.name})
-      if(success){
-          this.gestureData.devJd = result.devJd
-          this.gestureData.devWd = result.devWd
-          this.stargestureData.devJd = result.devJd
-          this.stargestureData.devWd = result.devWd
-      }
-    },
-    getHz(flag,data){//根据水平或者垂直选择频率
-      if(flag == 1){
-        this.starModel.freq = data == '0'? this.starMap[this.starModel.star].horizon:this.starMap[this.starModel.star].vertical
-      }else{
-        this.zoneData.freq = data == '0'? this.starMap[this.zoneDirect.star].horizon:this.starMap[this.zoneDirect.star].vertical
-      }
-
-    },
-    getStar(flag,data){//选择卫星
-      if(flag == 1){
-        this.getHz(1,'0')
-      }else{
-        this.getHz(2,'0')
-      }
-    },
-    async  starPrepare(flag){//星预置选择卫星
-      let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-      let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
-      let obj = {
-        isLevel:level,
-        satJd:satJd,
-      }
-      if(flag == 2){
-        obj = Object.assign(obj,this.gestureData)
-      }else{
-        obj = Object.assign(obj,this.stargestureData)
-      }
-      let {result, success, message} = await ctrlAngle(obj)
-      if(success){
-        if(flag == 1){
-          this.starModel.az = result.az
-          this.starModel.el = result.el
-          this.starModel.pol = result.pol
-
-        }else{
-          this.zoneData.az = result.az
-          this.zoneData.el = result.el
-          this.zoneData.pol = result.pol
-        }
-
-      }else{
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
-        })
-      }
-    },
-    async byHand(flag){//手动
-      let obj={
-        devNo:this.$route.name,
-        func:this.btnCheck,
-      }
-      if(flag == 2){
-        obj = Object.assign(obj,this.zoneData)
-      }else if(flag == 1){
-        let param = {
-          az:this.starModel.az,
-          el:this.starModel.el,
-          pol:this.starModel.pol,
-          freq:this.starModel.freq
-        }
-        obj = Object.assign(obj,param)
-      }else if(flag == 3){
-        let param = {
-          az:this.automic.az,
-          el:this.automic.el,
-          pol:this.automic.pol,
-          jc:this.automic.jc
-        }
-        obj = Object.assign(obj,param)
-      }
-      let {result, success, message} = await operCtrl(obj)
-      if(success){
-        this.$Notice.success({
-          title: '成功',
-          desc: message,
-          duration: 3
-        })
-      }else{
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
-        })
-      }
-    },
-    async byAuto(flag){//自动
-      let obj={
-        devNo:this.$route.name,
-        func:this.btnCheck,
-      }
-      if(flag == 2){
-        obj = Object.assign(obj,this.zoneData)
-      }else if(flag == 1){
-        let param = {
-          az:this.starModel.az,
-          el:this.starModel.el,
-          pol:this.starModel.pol,
-          freq:this.starModel.freq
-        }
-        obj = Object.assign(obj,param)
-      }
-      let {result, success, message} = await autoCtrl(obj)
-      if(success){
-        this.$Notice.success({
-          title: '成功',
-          desc: message,
-          duration: 3
-        })
-      }else{
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
-        })
-      }
-    },
-  }
-}
 </script>
 
 <style scoped>
-.col-24{
-  margin-right: 10px;height: 150px;
-}
-.col-17{
-  margin-right: 10px;border: 1px solid grey;height: 320px
-}
-.col-6{
-  border: 1px solid grey;height: 320px
-}
-.title-text {
-  width: 100%;
-  text-align: center;
-  background:  #009688;
-  color: whitesmoke;
-  margin-bottom: 15px;
-  height: 30px;
-  line-height: 30px
-}
-.zone-title{
-  width:100%;height: 100px;border:1px solid #b6b3b3;margin-bottom: 10px;padding: 5px;border-radius: 10px
-}
+  .col-text{
+    float: left;
+    width: 145px;
+    text-align: center;
+    cursor: pointer;
+    height: 70px;
+    position: relative;
+    margin-bottom: -10px;
+    margin-left: 24px;
+  }
+  .col-24{
+    margin-right: 10px;height: 150px;
+  }
+  .col-17{
+    margin-right: 10px;border: 1px solid grey;height: 320px;
+  }
+  .col-6{
+    border: 1px solid grey;height: 320px
+  }
+  .title-text {
+    width: 100%;
+    text-align: center;
+    background:  #009688;
+    color: whitesmoke;
+    margin-bottom: 15px;
+    height: 30px;
+    line-height: 30px
+  }
+  .zone-title{
+    width:100%;height: 100px;border:1px solid #b6b3b3;margin-bottom: 10px;padding: 5px;border-radius: 10px
+  }
 </style>
