@@ -46,6 +46,17 @@ export const autoCtrl = info => {
   })
 }
 
+/**
+ * 获取当前状态
+ */
+export const getNowState = info => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/monitor/acuCtrl/getCurrentStage',
+    method: 'post',
+    data: qs.stringify(info)
+  })
+}
+
 
 
 
