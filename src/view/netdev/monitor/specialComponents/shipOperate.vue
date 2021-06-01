@@ -239,8 +239,8 @@
                     <FormItem>
                       <!--                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认-->
                       <!--                      </Button>-->
-                      <Button  @click="byHand(4)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
-                      <Button  @click="byAuto(4)" style="background: #009688;color: white" >自动</Button>
+                      <Button  @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
+                      <Button  @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
                     </FormItem>
                   </Col>
                   <Col :xs="24" :lg="24" :md="24"></Col>
@@ -581,6 +581,11 @@
                 let {result, success, message} = await getNowState({devNo:this.$route.name})
                 if(success){
                     this.btnCheck = result.func
+                    if(result.func == '0100'){
+                        this.getHz(1,'0')
+                    }else if(result.func == '0011'){
+                        this.getHz(2,'0')
+                    }
                 }
             },
             async changePos(name,symb){//1是-，2是+
@@ -725,16 +730,6 @@
                         jc:this.automic.jc
                     }
                     obj = Object.assign(obj,param)
-                }else if(flag == 4){
-                    let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
-                    let param = {
-                        satJd:satJd,
-                        satWd:this.starModel.satWd,
-                        isLevel:level,
-                        freq:this.starModel.freq
-                    }
-                    obj = Object.assign(obj,param)
                 }
                 let {result, success, message} = await operCtrl(obj)
                 if(success){
@@ -759,21 +754,16 @@
                 if(flag == 2){
                     obj = Object.assign(obj,this.zoneData)
                 }else if(flag == 1){
-                    let param = {
-                        az:this.starModel.az,
-                        el:this.starModel.el,
-                        pol:this.starModel.pol,
-                        freq:this.starModel.freq
-                    }
-                    obj = Object.assign(obj,param)
-                }else if(flag == 4){
                     let level = flag == 1?(this.starModel.isLevel == '0'?true:false):(this.zoneDirect.isLevel == '0'?true:false)
-                    let satJd = flag == 1?(this.starModel.star == 1?'134.0':'110.5'):(this.zoneDirect.star == 1?'134.0':'110.5')
                     let param = {
-                        satJd:satJd,
                         satWd:this.starModel.satWd,
                         isLevel:level,
                         freq:this.starModel.freq
+                    }
+                    if(this.isCheck){
+                        param.satJd = this.nowSel
+                    }else{
+                        param.satJd = flag == 1?(this.nowSel == 1?'134.0':'110.5'):(this.nowSel == 1?'134.0':'110.5')
                     }
                     obj = Object.assign(obj,param)
                 }
