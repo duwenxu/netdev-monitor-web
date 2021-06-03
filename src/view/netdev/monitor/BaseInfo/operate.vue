@@ -171,7 +171,7 @@
               devIsLinkList:[],
                 rulePro: {
                             devNo: [
-                          {required: true, message: '设备类型不能为空', trigger: 'blur'}
+                          {required: true, message: '设备编号不能为空', trigger: 'blur'}
                         ],
                             devType: [
                             {required: true, message: '设备类型不能为空', trigger: 'blur'}
