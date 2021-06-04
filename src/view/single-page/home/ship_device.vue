@@ -93,15 +93,15 @@ export default {
           isUseStandby: false,
           masterOrSlave: '0'
         },
-        // {
-        //   devNo: '32',
-        //   name: '天线控制单元',
-        //   isInterrupt: '0',
-        //   workStatus: '0',
-        //   isAlarm: '0',
-        //   isUseStandby: false,
-        //   masterOrSlave: '0'
-        // },
+        {
+          devNo: '32',
+          name: '天线控制单元',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '0'
+        },
         {
           devNo: '37',
           name: '上变频器2',
@@ -138,54 +138,54 @@ export default {
         },
         '12': {
           mark: 'A调制解调器2',
-          top: '203px',
+          top: '204px',
           left: '910px',
 
         },
         '13': {
           mark: 'B调制解调器1',
-          top: '323px',
+          top: '325px',
           left: '910px',
 
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '411px',
+          top: '414px',
           left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '178px',
+          top: '183px',
           left: '327px',
 
         },
-        // '32': {
-        //   mark: '天线控制单元',
-        //   top: '232px',
-        //   left: '100px',
-        // },
+        '32': {
+          mark: '天线控制单元',
+          top: '635px',
+          left: '278px',
+        },
         '36': {
           mark: '上变频器1',
-          top: '126px',
+          top: '132px',
           left: '547px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '207px',
+          top: '203px',
           left: '547px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '360px',
+          top: '358px',
           left: '545px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '435px',
+          top: '434px',
           left: '545px',
 
         },
@@ -196,7 +196,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '120px',
+          top: '121px',
           left: '785px',
         },
         '12': {
@@ -204,7 +204,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '208px',
+          top: '210px',
           left: '785px',
         },
         '13': {
@@ -212,7 +212,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '328px',
+          top: '331px',
           left: '785px',
         },
         '14': {
@@ -220,31 +220,31 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '416px',
+          top: '420px',
           left: '785px',
         },
         '16': {
           mark: '400W高功放',
           border: '',
-          width: '125px',
+          width: '135px',
           height: '62px',
-          top: '700px',
-          left: '100px',
+          top: '178px',
+          left: '218px',
         },
-        // '32': {
-        //   mark: '天线控制单元',
-        //   border: '5px solid green',
-        //   width: '132px',
-        //   height: '32px',
-        //   top: '554px',
-        //   left: '136px',
-        // },
+        '32': {
+          mark: '天线控制单元',
+          border: '5px solid green',
+          width: '142px',
+          height: '58px',
+          top: '645px',
+          left: '216px',
+        },
         '36': {
           mark: '上变频器1',
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '127px',
+          top: '133px',
           left: '463px',
         },
         '37': {
@@ -252,7 +252,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '208px',
+          top: '206px',
           left: '463px',
         },
         '24': {
@@ -260,7 +260,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '360px',
+          top: '359px',
           left: '458px',
         },
         '40': {
@@ -445,7 +445,7 @@ export default {
         width: this.masterPosition[equipment.devNo].width,
         height: this.masterPosition[equipment.devNo].height,
         // border: this.masterPosition[equipment.devNo].border,
-        border: equipment.masterOrSlave == '0' && equipment.devNo != 16 ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+        border: equipment.masterOrSlave == '0' && (equipment.devNo != '32' && equipment.devNo != '16') ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
       }
     },
     resize() {
@@ -518,7 +518,7 @@ export default {
         {
           x: '260',
           y: '150',
-          nodeName: '天线控制单元',
+          nodeName: '\n天线控制单元',
           img: 'rect',
           size: [140, 50],
           color: '#c4e889',
@@ -1241,7 +1241,7 @@ export default {
 </script>
 <style>
 .charts {
-
+  /*border: 1px solid red;*/
   height: 750px;
   width: 1000px;
 
@@ -1328,7 +1328,7 @@ export default {
 
 .device_title {
   cursor: pointer;
-  margin-top: -35px;
+  margin-top: -36px;
   z-index: 999;
   position: relative;
 }
