@@ -45,11 +45,15 @@
                              <span slot="prefix">{{ temp.param }}</span>
                            </Select>
                            <template v-else>
-                             <Poptip v-if="temp.paraValMin || temp.paraValMax" trigger="focus" transfer>
+                             <Poptip v-if="temp.paraValMin1 || temp.paraValMax1" trigger="focus" transfer>
                                <Input v-model.trim="temp.inputVal" @on-blur="textValid(temp)" number  @on-change="splitValue(info,temp)">
                                  <span slot="prefix">{{ temp.param }}</span>
                                </Input>
-                               <div slot="content">下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}</div>
+                               <div slot="content">
+                                 <span v-if="temp.paraValMin1 || temp.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ temp.paraValMin1 }}~上限:{{ temp.paraValMax1 }}</span><Br/>
+                                 <span v-if="temp.paraValMin2 || temp.paraValMax2">或下限:{{ temp.paraValMin2 }}~上限:{{ temp.paraValMax2 }}</span>
+<!--                                 下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}-->
+                               </div>
                              </Poptip>
                              <Input v-else v-model.trim="temp.inputVal" @on-blur="textValid(temp)"  @on-change="splitValue(info,temp)">
                                <span slot="prefix">{{ temp.param }}</span>
@@ -89,9 +93,10 @@
                             <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
                    <template v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+<!--                   <template v-if="info.selected">-->
                      <Col :xs="16" :lg="16" push="4" style="display: flex">
                        <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
-                         <template v-if="info.paraValMin || info.paraValMax">
+                         <template v-if="info.paraValMin1 || info.paraValMax1">
                            <Poptip trigger="focus" transfer>
                              <InputNumber v-if="info.paraValStep" v-model="info.inputVal"  @on-change="setValues(info)"
                                           :step='info.paraValStep' @on-blur="textValid(info)" style="width: 100%"></InputNumber>
@@ -99,7 +104,10 @@
                                     :placeholder="info.paraName" @on-blur="textValid(info)"  @on-change="setValues(info)" number>
                                <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                              </Input>
-                             <div slot="content">下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}</div>
+                             <div slot="content">
+                               <span v-if="info.paraValMin1 || info.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ info.paraValMin1 }}~上限:{{ info.paraValMax1 }}</span><Br/>
+                               <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{ info.paraValMin2 }}~上限:{{ info.paraValMax2 }}</span>
+                             </div>
                            </Poptip>
                          </template>
                          <template v-else>
@@ -217,8 +225,10 @@ export default {
         })
         info.splitArr.forEach(v => {
           if (obj.paraCode == v.name) {
-            this.$set(v, 'paraValMax', Number(obj.paraValMax))
-            this.$set(v, 'paraValMin', Number(obj.paraValMin))
+            this.$set(v, 'paraValMax1', Number(obj.paraValMax1))
+            this.$set(v, 'paraValMin1', Number(obj.paraValMin1))
+            this.$set(v, 'paraValMax2', Number(obj.paraValMax2))
+            this.$set(v, 'paraValMin2', Number(obj.paraValMin2))
             this.$set(v, 'paraValStep', Number(obj.paraValStep))
             this.$set(v, 'paraSimpleDatatype', obj.paraSimpleDatatype)
             this.$set(v, 'paraStrLen', Number(obj.paraStrLen))
@@ -256,8 +266,10 @@ export default {
       info.subParaList.forEach(v => {
         info.splitArr.forEach(x => {
           if (data == v.subParaLinkVal && v.paraCode == x.name) {
-            this.$set(x, 'paraValMax', Number(v.paraValMax))
-            this.$set(x, 'paraValMin', Number(v.paraValMin))
+            this.$set(x, 'paraValMax1', Number(v.paraValMax1))
+            this.$set(x, 'paraValMin1', Number(v.paraValMin1))
+            this.$set(x, 'paraValMax2', Number(v.paraValMax2))
+            this.$set(x, 'paraValMin2', Number(v.paraValMin2))
             this.$set(x, 'paraValStep', Number(v.paraValStep))
             this.$set(x, 'paraSimpleDatatype', v.paraSimpleDatatype)
             this.$set(x, 'paraStrLen', Number(v.paraStrLen))
@@ -273,23 +285,37 @@ export default {
               this.validTag = true
               this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
             }else {
+              this.$set(info, 'errorMsg','')
               this.validTag = false
             }
           } else {
+            this.$set(info, 'errorMsg','')
             this.validTag = false
           }
         } else {
           let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
           if (reg.test(info.inputVal)) {
-            if (info.paraValMax && info.paraValMin) {
-              if (info.inputVal > info.paraValMax || info.inputVal < info.paraValMin) {
-                this.validTag = true
-                this.$set(info, 'errorMsg', '下限:' + info.paraValMin + '--上限:' + info.paraValMax)
-
-
-              } else {
-                this.validTag = false
+            if (info.paraValMax1 && info.paraValMin1) {
+              if(info.paraValMin2 && info.paraValMax2){
+                if ((Number(info.inputVal) > Number(info.paraValMax1) || Number(info.inputVal) < Number(info.paraValMin1)) &&
+                  (Number(info.inputVal) > Number(info.paraValMax2) || Number(info.inputVal) < Number(info.paraValMin2))
+                ) {
+                  this.validTag = true
+                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 +'或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
+                } else {
+                  this.validTag = false
+                  this.$set(info, 'errorMsg','')
+                }
+              }else{
+                if (Number(info.inputVal) > Number(info.paraValMax1) || Number(info.inputVal) < Number(info.paraValMin1)) {
+                  this.validTag = true
+                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
+                } else {
+                  this.validTag = false
+                  this.$set(info, 'errorMsg','')
+                }
               }
+
             }
           } else {
             this.validTag = true
