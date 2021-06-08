@@ -21,7 +21,7 @@
         <common :infos="info.subParaList"></common>
       </div>
     </div>
-    <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
+    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
   </div>
