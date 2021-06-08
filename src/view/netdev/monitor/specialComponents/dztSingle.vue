@@ -20,6 +20,7 @@ export default {
   name: "test",
   data(){
     return{
+      devNo:'',
       normalHeight:450,
       pageObj:{},
       infos:[],
@@ -51,6 +52,7 @@ export default {
       }
     },
     getInfo(data){
+      this.devNo = data.devNo
       data.forEach(item=>{
         if(item.itfPagePath == 'dztSingle'){
           this.pageObj = item
@@ -67,7 +69,7 @@ export default {
       this.page_socket.onmessage = this.getPageData
     },
     pageSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo': this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
+      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo':this.devNo?this.devNo: this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
       this.page_socket.send(obj)
     },
     getPageData(frame){

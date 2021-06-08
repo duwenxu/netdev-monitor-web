@@ -223,6 +223,7 @@ export default {
             }
           })
           this.tabs = this.tabs.concat(data)
+          result.devNo = this.devNo ? this.devNo : this.$route.name
           this.$nextTick(() => {
             this.$xy.vector.$emit('pageInfo', result)
           })

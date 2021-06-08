@@ -89,6 +89,7 @@ export default {
     next()
   },
   methods: {
+    //1.5m天线切换开关
     async  switchChange(data){
         let {result, success, message} = await switchCheck({channel:data?'A':'B'})
         if(success){
@@ -987,8 +988,10 @@ export default {
           inputVal: stageChar[index],
           oldVal: JSON.parse(JSON.stringify(resultChar[index])),
           errorMsg: '',
-          paraValMax: null,
-          paraValMin: null,
+          paraValMax1: null,
+          paraValMin1: null,
+          paraValMax2: null,
+          paraValMin2: null,
           paraValStep: null,
           paraSimpleDatatype: v.paraSimpleDatatype,
           paraStrLen: v.paraStrLen,
@@ -1092,7 +1095,7 @@ export default {
 
 .sub-wrap {
   border: 1px solid #009688;
-  height: 250px;
+  height: 280px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;

@@ -411,6 +411,7 @@
         name: "shipOperate",
         data() {
             return {
+              devNo:'',
                 saveValue1:'',
                 saveValue2:'',
                 stepAngel:0.1,
@@ -488,15 +489,26 @@
             }
         },
         mounted(){
+          if(this.$route.name != 'home'){
             this.getState()
             this.getNowPosition()
+          }
 
         },
         created:function(){
+          this.$xy.vector.$on('pageInfo', this.getDevNo)
             this.oldArr = this.selects;    //页面初次加载，下拉列表就是原始列表
             this.starArr = this.selects;    //页面初次加载，下拉列表就是原始列表
         },
+      beforeDestroy: function () {
+        this.$xy.vector.$off('pageInfo', this.getDevNo)
+      },
         methods:{
+          getDevNo(data){
+            this.devNo = data.devNo
+            this.getState()
+            this.getNowPosition()
+          },
             filterMethod:function(value,arr,flag) {
                 var newArr = [];
                 for(var i=0;i<arr.length;i++){
@@ -578,7 +590,7 @@
                 }
             },
             async getState(){
-                let {result, success, message} = await getNowState({devNo:this.$route.name})
+                let {result, success, message} = await getNowState({devNo:this.devNo ? this.devNo : this.$route.name})
                 if(success){
                     this.btnCheck = result.func
                     if(result.func == '0100'){
@@ -590,7 +602,7 @@
             },
             async changePos(name,symb){//1是-，2是+
                 let obj = {
-                    devNo:this.$route.name,
+                    devNo:this.devNo ? this.devNo : this.$route.name,
                     func:this.btnCheck,
                 }
                 obj[name] = symb == 1?-this.stepAngel:this.stepAngel
@@ -612,7 +624,7 @@
             async run(name,value,tag){
                 let obj={
                     func:this.btnCheck,
-                    devNo:this.$route.name
+                    devNo:this.devNo ? this.devNo : this.$route.name
                 }
                 obj[name] = value
                 let {result, success, message} = await operCtrl(obj)
@@ -646,7 +658,7 @@
                 }
             },
             async getNowPosition(){
-                let {result, success, message} = await getLocalDeg({devNo: this.$route.name})
+                let {result, success, message} = await getLocalDeg({devNo: this.devNo ? this.devNo : this.$route.name})
                 if(success){
                     this.gestureData.devJd = result.devJd
                     this.gestureData.devWd = result.devWd
@@ -704,7 +716,7 @@
             },
             async byHand(flag){//手动
                 let obj={
-                    devNo:this.$route.name,
+                    devNo:this.devNo ? this.devNo : this.$route.name,
                     func:this.btnCheck,
                 }
                 if(flag == 2){
@@ -748,7 +760,7 @@
             },
             async byAuto(flag){//自动
                 let obj={
-                    devNo:this.$route.name,
+                    devNo:this.devNo ? this.devNo : this.$route.name,
                     func:this.btnCheck,
                 }
                 if(flag == 2){
