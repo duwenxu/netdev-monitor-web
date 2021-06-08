@@ -1,8 +1,10 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
+
       <div class="device_status" :style="devicePosition(equipment)">
-        <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
+
+        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
       </div>
       <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
     </template>
@@ -640,17 +642,7 @@
             //     "stationId":null,
             //     "workStatus":"0"
             //   },
-            //   {
-            //     "devDeployType":"0031002",
-            //     "devNo":"2",
-            //     "devTypeCode":"3",
-            //     "isAlarm":"0",
-            //     "isInterrupt":"0",
-            //     "isUseStandby":"0",
-            //     "masterOrSlave":this.number,
-            //     "stationId":null,
-            //     "workStatus":"0"
-            //   },
+            //
             //   {
             //     "devDeployType":"0031003",
             //     "devNo":"3",
@@ -721,7 +713,7 @@
             //     "devDeployType":"0031001",
             //     "devNo":"20",
             //     "devTypeCode":"1",
-            //     "isAlarm":this.number,
+            //     "isAlarm":'1',
             //     "isInterrupt":"0",
             //     "isUseStandby":"0",
             //     "masterOrSlave":"0",
@@ -760,7 +752,18 @@
             //     "masterOrSlave":"0",
             //     "stationId":null,
             //     "workStatus":"0"
-            //   }
+            //   },
+            //   {
+            //     "devDeployType":"0031002",
+            //     "devNo":"2",
+            //     "devTypeCode":"3",
+            //     "isAlarm":"1",
+            //     "isInterrupt":"0",
+            //     "isUseStandby":"0",
+            //     "masterOrSlave":'1',
+            //     "stationId":null,
+            //     "workStatus":"0"
+            //   },
             // ]
             //     this.getWSData(data)
             //   }, 1000)
@@ -769,21 +772,14 @@
             getWSData(WSdata) {
                 if (WSdata.length) {
                     this.equipments.forEach(device => {
-                        let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
-                        if (dIndex > -1) {
                             WSdata.forEach(item => {
-                                if (item.devNo == 2 && device.devNo == '2-2') {
+                                if (item.devNo == '2' && device.devNo == '2-2') {
                                     this.setWSDate(item, device, 1)
                                 }
                                 if (item.devNo == device.devNo) {
                                     this.setWSDate(item, device, 0)
                                 }
                             })
-                        } else {
-                            if(device.devNo != '2-2'){
-                                this.$set(device,'noData',true)
-                            }
-                        }
                     })
                 }
             },
@@ -795,7 +791,6 @@
                         obj.masterOrSlave = '1'
                     }
                 } else {
-
                     if (data.devNo != 20) {
                         obj.masterOrSlave = data.masterOrSlave || ''
                     }
@@ -808,25 +803,34 @@
             },
             judgeDeviceStatus(device) {
                 let info = {}
+               if(device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave) && device.isAlarm == '1'){
+                 device.isAlarm = 0
+               }
+              if(device.devNo == '2' && (device.masterOrSlave == '1' || !device.masterOrSlave) && device.isAlarm == '1'){
+                device.isAlarm = 0
+              }
                 if (device.isInterrupt === '0') {//是否中断 否0
-                    if (device.workStatus === '0') {//如果工作状态正常 0
-                        if (device.isAlarm === '1') {//告警为1  则告警
-                            info = {background: '#eeb24b'}
-                        } else {//告警为0  则状态为正常
-
-                            info = {background: '#009688'}
-                        }
-                    } else {//不正常 则直接故障
-                        info = {background: '#ff1400'}
+                  if (device.workStatus === '0') {//如果工作状态正常 0
+                    if (device.isAlarm === '1') {//告警为1  则告警
+                      info = {background: '#eeb24b'}
+                    } else {//告警为0  则状态为正常
+                      info = {background: '#009688'}
                     }
+                  } else {//不正常 则直接故障
+                    info = {background: '#ff1400'}
+                  }
+
+                 if(device.devNo == '2'){
+                   if(device.masterOrSlave == '1'){
+                     info = {background: 'black'}
+                   }
+                 }else if(device.devNo == '2-2'){
+                   if(device.masterOrSlave == '1' || !device.masterOrSlave){
+                     info = {background: 'black'}
+                   }
+                 }
                 } else {//中断 是 1
                     info = {background: '#ff1400'}
-                }
-                if ((device.devNo == '2' && device.masterOrSlave == '1') || (device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave))) {
-                    info = {background: 'black'}
-                }
-                if(device.noData){
-                    info = {background: 'black'}
                 }
                 return info
             },
