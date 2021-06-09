@@ -85,6 +85,24 @@ export default {
           masterOrSlave: '0'
         },
         {
+          devNo: '30',
+          name: '1:1转换单元(上调制)',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '31',
+          name: '1:1转换单元(下调制)',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
           devNo: '36',
           name: '上变频器',
           isInterrupt: '0',
@@ -133,59 +151,69 @@ export default {
       position: {
         '11': {
           mark: 'A调制解调器1',
-          top: '114px',
+          top: '117px',
           left: '910px',
         },
         '12': {
           mark: 'A调制解调器2',
-          top: '204px',
+          top: '205px',
           left: '910px',
 
         },
         '13': {
           mark: 'B调制解调器1',
-          top: '325px',
+          top: '322px',
           left: '910px',
 
         },
         '14': {
           mark: 'B调制解调器2',
-          top: '414px',
+          top: '408px',
           left: '910px',
 
         },
         '16': {
           mark: '400W高功放',
-          top: '183px',
+          top: '174px',
           left: '327px',
 
         },
+        '30': {
+          mark: '1:1转换开关（上）',
+          top: '192px',
+          left: '910px',
+        },
+        '31': {
+          mark: '1:1转换开关（下）',
+          top: '382px',
+          left: '910px',
+        },
         '32': {
           mark: '天线控制单元',
-          top: '635px',
+          top: '646px',
           left: '278px',
         },
         '36': {
           mark: '上变频器1',
-          top: '132px',
+          top: '148px',
           left: '547px',
 
         },
         '37': {
           mark: '上变频器2',
-          top: '203px',
+          top: '213px',
           left: '547px',
 
         },
         '24': {
           mark: '下变频器1',
-          top: '358px',
+          top: '362px',
           left: '545px',
 
         },
         '40': {
           mark: '下变频器2',
-          top: '434px',
+          top: '436px',
           left: '545px',
 
         },
@@ -196,7 +224,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '121px',
+          top: '120px',
           left: '785px',
         },
         '12': {
@@ -212,7 +240,7 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '331px',
+          top: '326px',
           left: '785px',
         },
         '14': {
@@ -220,7 +248,23 @@ export default {
           border: '5px solid green',
           width: '152px',
           height: '32px',
-          top: '420px',
+          top: '413px',
+          left: '785px',
+        },
+        '30': {
+          mark: '1:1（上）',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
+          top: '197px',
+          left: '785px',
+        },
+        '31': {
+          mark: '1:1（下）',
+          border: '5px solid green',
+          width: '152px',
+          height: '32px',
+          top: '388px',
           left: '785px',
         },
         '16': {
@@ -233,7 +277,7 @@ export default {
         },
         '32': {
           mark: '天线控制单元',
-          border: '5px solid green',
+          border: '',
           width: '142px',
           height: '58px',
           top: '645px',
@@ -244,7 +288,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '133px',
+          top: '148px',
           left: '463px',
         },
         '37': {
@@ -252,7 +296,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '206px',
+          top: '214px',
           left: '463px',
         },
         '24': {
@@ -260,7 +304,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '359px',
+          top: '361px',
           left: '458px',
         },
         '40': {
@@ -268,7 +312,7 @@ export default {
           border: '5px solid green',
           width: '110px',
           height: '42px',
-          top: '437px',
+          top: '439px',
           left: '458px',
         },
       },
@@ -438,6 +482,7 @@ export default {
       }
     },
     masterStatus(equipment) {
+      // if(equipment.devNo !=30 && equipment.devNo !=31){
       return {
         zIndex: this.masterPosition[equipment.devNo].zIndex ? this.masterPosition[equipment.devNo].zIndex : 999,
         top: this.masterPosition[equipment.devNo].top,
@@ -445,8 +490,9 @@ export default {
         width: this.masterPosition[equipment.devNo].width,
         height: this.masterPosition[equipment.devNo].height,
         // border: this.masterPosition[equipment.devNo].border,
-        border: equipment.masterOrSlave == '0' && (equipment.devNo != '32' && equipment.devNo != '16') ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+        border: equipment.masterOrSlave == '0' && (equipment.devNo != '32' && equipment.devNo != '16' && equipment.devNo !=30 && equipment.devNo !=31) ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
       }
+      // }
     },
     resize() {
       this.dom.resize()
@@ -1328,13 +1374,13 @@ export default {
 
 .device_title {
   cursor: pointer;
-  margin-top: -36px;
+  margin-top: -34px;
   z-index: 999;
   position: relative;
 }
 
 .device_status {
-  margin-top: -35px;
+  margin-top: -34px;
   z-index: 100;
   position: relative;
 
