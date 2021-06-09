@@ -25,11 +25,13 @@
 import {queryPageInfo, queryCtrlInfo} from "@/api/monitor/DeviceParam"
 import Operate from "./operate"
 import ctrlParams from "./ctrlParams"
+import shipOperate from "../specialComponents/shipOperate"
 
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 const mStores = {
   Operate,
-  ctrlParams
+  ctrlParams,
+  shipOperate
 }
 context.keys().forEach(key => {
   const name = key.split('.')[1].split('/')[1]
@@ -56,7 +58,8 @@ export default {
       navName: '',
       navIndex: 0,
       tabs: [
-        {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
+        {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'},
+        // {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
       ],
       logColumns: [
         {
@@ -220,6 +223,7 @@ export default {
             }
           })
           this.tabs = this.tabs.concat(data)
+          result.devNo = this.devNo ? this.devNo : this.$route.name
           this.$nextTick(() => {
             this.$xy.vector.$emit('pageInfo', result)
           })
@@ -230,7 +234,7 @@ export default {
     },
     getCtrlWs() {
       let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+        // let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.ctrl_socket = new WebSocket(wsurl)
       this.ctrl_socket.onopen = this.ctrlSend
       this.ctrl_socket.onmessage = this.getCtrlData
@@ -247,8 +251,8 @@ export default {
     },
     /*-----------------日志/告警--------------*/
     logWs() {
-      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+        // let let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.logSocket = new WebSocket(wsurl)
       this.logSocket.onopen = this.logSendMsg
       this.logSocket.onmessage = this.getLogMsg

@@ -1,53 +1,70 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
-    <Row>
+
       <Col :xs="24" :md="24" v-for="item in infos">
         <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
         <div v-for="temp in item.subInterList">
           <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
-            <Row>
-              <template v-if="temp.subParaList.length">
-                <div v-for="(info,index) in temp.subParaList">
+
+
+              <Row v-if="temp.subParaList.length">
+                <template v-for="(info,index) in temp.subParaList">
                   <Col :xs="24" :lg="8">
                     <Row>
+                      <Col :xs="24" :lg="24">
                       <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
                       <template v-if="info.parahowMode == '0024001'">
                         <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                           <Row>
-                            <Col :xs="11" :lg="11">
+                            <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                               <div style="text-align: right">
                                 <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                               </div>
                             </Col>
-                            <Col :xs="13" :lg="13">
-                                  <span>{{(info.transViewFmt != null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;<span
-                                    v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+                            <Col :xs="12" :lg="info.paraName.length<=10?13:12">
+<!--                                  <span>{{(info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;</span>-->
+                              <template v-if="info.splitArr.length">
+                                <template v-for="item in info.splitArr">
+                                 <span>{{item.param}}
+                                   <template v-for="cell in item.subList">
+                                     <span v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}</span>
+                                   </template>
+                                 </span>
+                                </template>
+                              </template>
+                             <template v-else>
+                               <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+                             </template>
                             </Col>
-                            <div v-if="info.selected">
-                              <Col :xs="24" :lg="24">
-                                <template v-for="temp in info.splitArr">
-                                  <Col :xs="info.splitArr.length<=2?8:6" :lg="info.splitArr.length<=2?8:6">
-                                    <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
-                                      <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
-                                      </Option>
-                                      <span slot="prefix">{{ temp.param }}</span>
-                                    </Select>
-                                    <template v-else>
-                                      <Poptip v-if="temp.paraValMin || temp.paraValMax" trigger="focus" transfer>
-                                        <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
+                              <Col :xs="24" :lg="24" v-if="info.selected">
+                                <Row>
+                                  <template v-for="temp in info.splitArr">
+                                    <Col :xs="info.splitArr.length<=2?12:6" :lg="info.splitArr.length<=2?12:6">
+                                      <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
+                                        <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
+                                        </Option>
+                                        <span slot="prefix">{{ temp.param }}</span>
+                                      </Select>
+                                      <template v-else>
+                                        <Poptip v-if="temp.paraValMin1 || temp.paraValMax1" trigger="focus" transfer>
+                                          <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
+                                            <span slot="prefix">{{ temp.param }}</span>
+                                          </Input>
+                                          <div slot="content">
+                                            <span v-if="temp.paraValMin1 || temp.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ temp.paraValMin1 }}~上限:{{ temp.paraValMax1 }}</span><Br/>
+                                            <span v-if="temp.paraValMin2 || temp.paraValMax2">或下限:{{ temp.paraValMin2 }}~上限:{{ temp.paraValMax2 }}</span>
+<!--                                            下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}-->
+                                          </div>
+                                        </Poptip>
+                                        <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)">
                                           <span slot="prefix">{{ temp.param }}</span>
                                         </Input>
-                                        <div slot="content">下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}</div>
-                                      </Poptip>
-                                      <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)">
-                                        <span slot="prefix">{{ temp.param }}</span>
-                                      </Input>
-                                      <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
-                                    </template>
-                                  </Col>
-                                </template>
+                                        <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
+                                      </template>
+                                    </Col>
+                                  </template>
+                                </Row>
                               </Col>
-                            </div>
                             <Col :xs="24" :lg="24">&nbsp;</Col>
                           </Row>
                         </template>
@@ -55,26 +72,30 @@
                           <Row>
                             <Col :xs="11" :lg="11">
                               <div style="text-align: right">
-
                                 <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                               </div>
                             </Col>
                             <Col :xs="13" :lg="13">
-                                      <span>{{(info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
+                                      <span style="color:#009688;">{{(info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
                                         <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                             </Col>
                             <template v-if="info.selected">
-                              <Col :xs="16" :lg="16" push="4" style="display: flex">
+                              <Row>
+                              <Col :xs="16" :lg="16" push="8" style="display: flex">
                                 <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
-                                  <template v-if="info.paraValMin || info.paraValMax">
+                                  <template v-if="info.paraValMin1 || info.paraValMax1">
                                     <Poptip trigger="focus" transfer>
                                       <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                                   :step='info.paraValStep' @on-blur="textValid(info)"></InputNumber>
-                                      <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
+                                                   :step='info.paraValStep' @on-blur="textValid(info)" style="width: 200px"></InputNumber>
+                                      <Input v-if="!info.paraValStep" v-model.trim="info.paraVal" style="width: 200px"
                                              :placeholder="info.paraName" @on-blur="textValid(info)" number>
                                         <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                                       </Input>
-                                      <div slot="content">下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}</div>
+                                      <div slot="content">
+                                        <span v-if="info.paraValMin1 || info.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ info.paraValMin1 }}~上限:{{ info.paraValMax1 }}</span><Br/>
+                                        <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{ info.paraValMin2 }}~上限:{{ info.paraValMax2 }}</span>
+<!--                                        下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}-->
+                                      </div>
                                     </Poptip>
                                   </template>
                                   <template v-else>
@@ -91,6 +112,7 @@
                               <Col :xs="16" :lg="16" push="4">
                                 <span v-if="info.errorMsg" style="color: red;font-size: 12px">{{ info.errorMsg }}</span>
                               </Col>
+                              </Row>
                             </template>
                             <Col :xs="24" :lg="24">&nbsp;</Col>
                           </Row>
@@ -100,21 +122,20 @@
                         <Row>
                           <Col :xs="11" :lg="11">
                             <div style="text-align: right">
-
                               <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                             </div>
                           </Col>
                           <Col :xs="13" :lg="13">
                             <template v-if="info.oldVal">
                               <div v-for="(item,i) in info.spinnerInfoList">
-                                <span style="cursor: pointer" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                                <span style="cursor: pointer;color:#009688;" v-if="info.oldVal == item.code">{{ item.name }}</span>
                               </div>
                             </template>
                             <template v-else>
-                              <span >暂无数据</span>
+                              <span style="color: #009688">暂无数据</span>
                             </template>
                           </Col>
-                          <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex">
+                          <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex;">
                             <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
                               <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
                               </Option>
@@ -124,23 +145,24 @@
                         </Row>
                       </template>
                       </template>
+                      </Col>
                     </Row>
                   </Col>
-                </div>
+                </template>
+              </Row>
+              <template v-else>
+                <Col :xs="24" :lg="24">
+                  <div style="margin-left: 40px"> 暂无数据</div>
+                </Col>
               </template>
-            <template v-else>
-              <Col :xs="24" :lg="24">
-                <div style="margin-left: 40px"> 暂无数据</div>
-              </Col>
-            </template>
               <Col :xs="24" :lg="24">
                 <Button v-if="temp.subParaList.length" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
                 <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
               </Col>
-            </Row>
+
         </div>
       </Col>
-    </Row>
+
   </div>
 </template>
 
@@ -156,6 +178,7 @@ export default {
       normalHeight:450,
       infos: [],
       validTag: false,
+        receiveMsg:false,
       paramType: ['0019002', '0019003']
     }
   },
@@ -179,66 +202,82 @@ export default {
       }
     },
     getMsg(data) {
-      let result = JSON.parse(data.data)
-      result.forEach(item=>{
-        item.subInterList.forEach(key=>{
-          this.$set(key, 'selected', false)
-          key.subParaList.forEach(v => {
-            this.$set(v, 'selected', false)
-            v.errorMsg = ''
-            if (v.parahowMode == '0024001') {//数字类型Number转换
-              if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
-                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-                v.splitArr = []
-                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-                let index = -1
-                let saveOffset = 0
-                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
-                  let len = param.length
-                  let pos = index == -1 ? 0 : saveOffset + len + 2
-                  index++
-                  v.splitArr.push({
-                    param: v.copyFmt.substring(pos, offset),
-                    paraVal: resultChar[index],
-                    name: param,
-                    oldVal: JSON.parse(JSON.stringify(resultChar[index])),
-                    errorMsg: '',
-                    paraValMax: null,
-                    paraValMin: null,
-                    paraValStep: null,
-                    paraSimpleDatatype: v.paraSimpleDatatype,
-                    paraStrLen: v.paraStrLen,
-                  })
-                  saveOffset = offset
-                  return match = resultChar[index]
-                })
-                if (v.subParaList.length) {
-                  v.subParaList.forEach(n => {
-                    v.splitArr.forEach(x => {
-                      if (n.paraCode == x.name) {
-                        if (n.spinnerInfoList) {
-                          x.subList = n.spinnerInfoList || []
+        if(!this.receiveMsg){
+            let result = JSON.parse(data.data)
+            result.forEach(item=>{
+                item.subInterList.forEach(key=>{
+                    this.$set(key, 'selected', false)
+                    key.subParaList.forEach(v => {
+                        this.$set(v, 'selected', false)
+                        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+                        v.errorMsg = ''
+                        if (v.parahowMode == '0024001') {//数字类型Number转换
+                            if (this.paramType.indexOf(v.paraCmplexLevel) > -1 || v.paraSpellFmt) {//如果存在复杂参数，组合参数，切割
+                                v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
+                                v.splitArr = []
+                                let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
+                                let index = -1
+                                let saveOffset = 0
+                                v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+                                    let len = param.length
+                                    let pos = index == -1 ? 0 : saveOffset + len + 2
+                                    index++
+                                    v.splitArr.push({
+                                        param: v.copyFmt.substring(pos, offset),
+                                        paraVal: resultChar[index],
+                                        name: param,
+                                        oldVal: JSON.parse(JSON.stringify(resultChar[index])),
+                                        errorMsg: '',
+                                        paraValMax1: null,
+                                        paraValMin1: null,
+                                         paraValMax2: null,
+                                         paraValMin2: null,
+                                        paraValStep: null,
+                                        paraSimpleDatatype: v.paraSimpleDatatype,
+                                        paraStrLen: v.paraStrLen,
+                                    })
+                                    saveOffset = offset
+                                    if (v.subParaList.length) {
+                                        if (v.subParaList[index].spinnerInfoList) {
+                                            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
+                                            return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
+                                        } else {
+                                            return match = resultChar[index]
+                                        }
+                                    } else {
+                                        return match = resultChar[index]
+                                    }
+                                })
+                                if (v.subParaList.length) {
+                                    v.subParaList.forEach(n => {
+                                        v.splitArr.forEach(x => {
+                                            if (n.paraCode == x.name) {
+                                                if (n.spinnerInfoList) {
+                                                    x.subList = n.spinnerInfoList || []
+                                                }
+                                            }
+                                        })
+                                    })
+                                }
+                                // viewArr.push(v)
+                            } else {
+                                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
+                                    v.paraValStep = Number(v.paraValStep)
+                                    v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
+                                }
+                                // textArr.push(v)
+                            }
                         }
-                      }
+
                     })
-                  })
-                }
-                // viewArr.push(v)
-              } else {
-                if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
-                  v.paraValStep = Number(v.paraValStep)
-                  v.paraVal = (v.paraVal == null || v.paraVal == '') ? null : Number(v.paraVal)
-                }
-                // textArr.push(v)
-              }
-            }
-            v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
-          })
-        })
-      })
-      this.infos = result
+                })
+            })
+            this.infos = result
+        }
+
     },
     changeMode(temp) {
+      this.receiveMsg = !this.receiveMsg
       this.validTag = false
       this.$set(temp, 'selected', !temp.selected)
       temp.subParaList.forEach(info=>{
@@ -256,8 +295,10 @@ export default {
           })
           info.splitArr.forEach(v => {
             if (obj.paraCode == v.name) {
-              this.$set(v, 'paraValMax', Number(obj.paraValMax))
-              this.$set(v, 'paraValMin', Number(obj.paraValMin))
+              this.$set(v, 'paraValMax1', Number(obj.paraValMax1))
+              this.$set(v, 'paraValMin1', Number(obj.paraValMin1))
+              this.$set(v, 'paraValMax2', Number(obj.paraValMax2))
+              this.$set(v, 'paraValMin2', Number(obj.paraValMin2))
               this.$set(v, 'paraValStep', Number(obj.paraValStep))
               this.$set(v, 'paraSimpleDatatype', obj.paraSimpleDatatype)
               this.$set(v, 'paraStrLen', Number(obj.paraStrLen))
@@ -274,8 +315,10 @@ export default {
       info.subParaList.forEach(v => {
         info.splitArr.forEach(x => {
           if (data == v.subParaLinkVal && v.paraCode == x.name) {
-            this.$set(x, 'paraValMax', Number(v.paraValMax))
-            this.$set(x, 'paraValMin', Number(v.paraValMin))
+            this.$set(x, 'paraValMax1', Number(v.paraValMax1))
+            this.$set(x, 'paraValMin1', Number(v.paraValMin1))
+            this.$set(x, 'paraValMax2', Number(v.paraValMax2))
+            this.$set(x, 'paraValMin2', Number(v.paraValMin2))
             this.$set(x, 'paraValStep', Number(v.paraValStep))
             this.$set(x, 'paraSimpleDatatype', v.paraSimpleDatatype)
             this.$set(x, 'paraStrLen', Number(v.paraStrLen))
@@ -300,14 +343,27 @@ export default {
         } else {
           let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
           if (reg.test(info.paraVal)) {
-            if (info.paraValMax && info.paraValMin) {
-              if (info.paraVal > info.paraValMax || info.paraVal < info.paraValMin) {
-                this.validTag = true
-                this.$set(info, 'errorMsg', '下限:' + info.paraValMin + '--上限:' + info.paraValMax)
-              } else {
-                this.validTag = false
-                this.$set(info, 'errorMsg', '')
+            if (info.paraValMax1 && info.paraValMin1) {
+              if(info.paraValMin2 && info.paraValMax2){
+                if ((Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) &&
+                  (Number(info.paraVal) > Number(info.paraValMax2) || Number(info.paraVal) < Number(info.paraValMin2))
+                ) {
+                  this.validTag = true
+                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 +'或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
+                } else {
+                  this.validTag = false
+                  this.$set(info, 'errorMsg','')
+                }
+              }else{
+                if (Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) {
+                  this.validTag = true
+                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
+                } else {
+                  this.validTag = false
+                  this.$set(info, 'errorMsg','')
+                }
               }
+
             }
           } else {
             this.validTag = true

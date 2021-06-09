@@ -20,6 +20,7 @@ export default {
   name: "test",
   data(){
     return{
+      devNo:'',
       normalHeight:450,
       pageObj:{},
       infos:[],
@@ -51,6 +52,7 @@ export default {
       }
     },
     getInfo(data){
+      this.devNo = data.devNo
       data.forEach(item=>{
         if(item.itfPagePath == 'dztSingle'){
           this.pageObj = item
@@ -60,14 +62,14 @@ export default {
     },
     getWs() { //初始化weosocket
       let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+        // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
       this.page_socket = new WebSocket(wsurl)
       this.page_socket.onopen = this.pageSend
       this.page_socket.onmessage = this.getPageData
     },
     pageSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo': this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
+      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo':this.devNo?this.devNo: this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
       this.page_socket.send(obj)
     },
     getPageData(frame){

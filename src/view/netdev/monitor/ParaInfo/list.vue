@@ -1,8 +1,12 @@
 <template>
     <div class="content-box">
         <Row>
-            <search :search-data='searchData'></search>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            <Col :xs="24" :sm="24" :md="24" :lg="20">
+              <search :search-data='searchData'></search>
+            </Col>
+            <Col :xs="24" :sm="24" :md="24" :lg="4">
+              <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -92,13 +96,23 @@
                                 width: 100
                             },
                             {
-                                title: '最大值',
-                                key: 'ndpaValMax',
+                                title: '最大值1',
+                                key: 'ndpaValMax1',
                                 width: 100
                             },
                             {
-                                title: '最小值',
-                                key: 'ndpaValMin',
+                                title: '最小值1',
+                                key: 'ndpaValMin1',
+                                width: 100
+                            },
+                            {
+                                title: '最大值2',
+                                key: 'ndpaValMax2',
+                                width: 100
+                            },
+                            {
+                                title: '最小值2',
+                                key: 'ndpaValMin2',
                                 width: 100
                             },
                             {
