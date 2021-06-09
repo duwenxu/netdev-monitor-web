@@ -18,7 +18,6 @@
     <div class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
-
   </div>
 </template>
 
@@ -874,6 +873,9 @@ export default {
       }
     },
     initWebSocket() { //初始化weosocket
+      this.infos = []
+      this.orderDatas =  []
+      this.combineList =  []
       let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       // const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
@@ -895,6 +897,7 @@ export default {
       msg.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
@@ -936,11 +939,11 @@ export default {
           }
         }
 
-        v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
+
       })
-      this.orderDatas = oderArr
-      this.combineList = parentArr
-      this.infos = msg
+      this.orderDatas = oderArr || []
+      this.combineList = parentArr || []
+      this.infos = msg || []
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
@@ -949,13 +952,13 @@ export default {
       }
     },
     commonFmt(v) {
+      if(v.paraViewFmt){
       v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
       let saveOffset = 0
-      console.log(resultChar)
       v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
         let len = param.length
         let pos = index == -1 ? 0 : saveOffset + len + 2
@@ -996,7 +999,7 @@ export default {
           })
         })
       }
-      console.log(v)
+      }
     },
     async save(info) {
       let obj = {

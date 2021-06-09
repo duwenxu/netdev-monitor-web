@@ -99,32 +99,19 @@ export default {
       logs: [],
       alertColumns: [
         {
-          title: '设备类型',
-          key: 'devType_paraName',
-        },
-        {
-          title: '设备编号',
-          key: 'devNo',
-        },
-        {
-          title: '参数编号',
-          key: 'ndpaNo',
+            title: '告警级别',
+            width: 110,
+            key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
+            width: 110,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-        },
-        {
-          title: '站号',
-          key: 'alertStationNo',
-        },
-        {
-          title: '告警级别',
-          key: 'alertLevel_paraName',
+            width: 200,
         },
         {
           title: '告警描述',
@@ -202,8 +189,18 @@ export default {
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
       let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success && result.length) {
-        this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
+      if (success) {
+        if(result.length){
+          let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
+          if(fIndex == -1){
+            this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
+          }
+
+        }else{
+          this.tabs  = [
+            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
+          ]
+        }
         this.getTabsPage()
         this.getCtrlWs()
       }
@@ -211,15 +208,24 @@ export default {
     //纯显示的tab
     async getTabsPage() {
       let {result, success, message} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success && result.length) {
+      if (success) {
         let data = []
-        result.forEach(item => {
-          data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
-        })
-        this.tabs = this.tabs.concat(data)
-        this.$nextTick(() => {
-          this.$xy.vector.$emit('pageInfo', result)
-        })
+        if(result.length){
+          result.forEach(item => {
+            if(item.itfPagePath){
+              let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
+              if(fIndex == -1){
+                data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
+              }
+            }
+          })
+          this.tabs = this.tabs.concat(data)
+          this.$nextTick(() => {
+            this.$xy.vector.$emit('pageInfo', result)
+          })
+        }else{
+          this.tabs = this.tabs.concat(data)
+        }
       }
     },
     getCtrlWs() {
