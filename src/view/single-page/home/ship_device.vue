@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="border: 1px solid red">
     <template v-for="equipment in equipments">
       <div class="device_status" :style="devicePosition(equipment)">
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
