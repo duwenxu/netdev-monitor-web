@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="border: 1px solid red">
     <template v-for="equipment in equipments">
       <div class="device_status" :style="devicePosition(equipment)">
         <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1000" :mask-closable="false">
+           width="800" :mask-closable="false">
       <div slot="header"><span>参数信息</span>
         <Button style="float: right" size="small" @click="confirm">关闭</Button>
       </div>
