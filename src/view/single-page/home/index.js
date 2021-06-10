@@ -1,2 +1,2 @@
-import home from './home.vue'
+import home from './second_device.vue'
 export default home

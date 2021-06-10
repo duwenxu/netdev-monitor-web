@@ -16,7 +16,7 @@
       </div>
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1000" :mask-closable="false">
+           width="800" :mask-closable="false">
       <div slot="header"><span>参数信息</span>
         <Button style="float: right" size="small" @click="confirm">关闭</Button>
       </div>
@@ -757,12 +757,12 @@
             //     "devDeployType":"0031002",
             //     "devNo":"2",
             //     "devTypeCode":"3",
-            //     "isAlarm":"1",
+            //     "isAlarm":"0",
             //     "isInterrupt":"0",
             //     "isUseStandby":"0",
-            //     "masterOrSlave":'1',
+            //     "masterOrSlave":'0',
             //     "stationId":null,
-            //     "workStatus":"0"
+            //     "workStatus":"1"
             //   },
             // ]
             //     this.getWSData(data)
@@ -822,11 +822,11 @@
 
                  if(device.devNo == '2'){
                    if(device.masterOrSlave == '1'){
-                     info = {background: 'black'}
+                     info = {background: '#009688'}
                    }
                  }else if(device.devNo == '2-2'){
                    if(device.masterOrSlave == '1' || !device.masterOrSlave){
-                     info = {background: 'black'}
+                     info = {background: '#009688'}
                    }
                  }
                 } else {//中断 是 1
@@ -2357,7 +2357,7 @@
 
     span {
       display: inline-block;
-      background: black;
+      background: #009688;
       height: 10px;
       width: 10px;
       border-radius: 50%;
@@ -2370,7 +2370,7 @@
 
     span {
       display: inline-block;
-      background: black;
+      background: #009688;
       height: 10px;
       width: 10px;
       border-radius: 50%;

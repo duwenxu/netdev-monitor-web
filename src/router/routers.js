@@ -73,12 +73,18 @@ export default [
           // notCache: true,
           icon: 'md-home'
         },
-        //船载拓扑图
-        // component: () => import('@/view/single-page/home/third_device.vue')
+        //一类船载拓扑图
         // component: () => import('@/view/single-page/home/ship_device.vue')
+        //一类车载
         component: () => import('@/view/single-page/home/WN_device.vue')
-        // component: () => import('@/view/single-page/home/treeHome.vue')
-        // component: () => import('@/view/single-page/home/home.vue')
+        //二类型车__1
+        // component: () => import('@/view/single-page/home/second_device.vue')
+        //三类车载
+        // component: () => import('@/view/single-page/home/third_device.vue')
+        //四类车载
+        // component: () => import('@/view/single-page/home/forth_device.vue')
+
+        //最早版本
         // component: () => import('@/view/netdev/deviceStatus/status1.vue')
       }
     ]
