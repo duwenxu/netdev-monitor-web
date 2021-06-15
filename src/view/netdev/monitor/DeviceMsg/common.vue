@@ -19,13 +19,19 @@
                      <!--                      <span style="cursor: pointer" @click="changeMode(info)">{{-->
                      <!--                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'-->
                      <!--                        }}&nbsp;&nbsp;-->
+<!--                     {{info.splitArr}}-->
                      <template v-if="info.splitArr.length">
                        <template v-for="item in info.splitArr">
                                  <span style="cursor: pointer;" @click="changeMode(info)">{{item.param}}
-                                   <template v-for="cell in item.subList">
+                                   <template v-if="item.subList.length">
+                                      <template v-for="cell in item.subList">
                                      <span  v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}
                                      </span>
                                    </template>
+                                   </template>
+                                     <template v-else>
+                                       <span   style="color: #009688">{{item.paraVal}}</span>
+                                     </template>
                                  </span>
                        </template>
 

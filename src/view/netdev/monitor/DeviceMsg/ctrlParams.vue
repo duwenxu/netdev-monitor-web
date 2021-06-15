@@ -26,9 +26,14 @@
                               <template v-if="info.splitArr.length">
                                 <template v-for="item in info.splitArr">
                                  <span>{{item.param}}
-                                   <template v-for="cell in item.subList">
+                                    <template v-if="item.subList.length">
+                                      <template v-for="cell in item.subList">
                                      <span v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}</span>
                                    </template>
+                                   </template>
+                                     <template v-else>
+                                       <span   style="color: #009688">{{item.paraVal}}</span>
+                                     </template>
                                  </span>
                                 </template>
                               </template>
@@ -228,6 +233,7 @@ export default {
                                         name: param,
                                         oldVal: JSON.parse(JSON.stringify(resultChar[index])),
                                         errorMsg: '',
+                                      subList:[],
                                         paraValMax1: null,
                                         paraValMin1: null,
                                          paraValMax2: null,
