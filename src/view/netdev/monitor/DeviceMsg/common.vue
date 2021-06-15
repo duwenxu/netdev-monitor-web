@@ -44,8 +44,9 @@
                      <Col :xs="24" :lg="24">
                        <Row>
                        <template v-for="temp in info.splitArr">
+<!--                         {{temp.subList}}-->
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
-                           <Select v-if="temp.subList" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
+                           <Select v-if="temp.subList.length" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
                              <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                              </Option>
                              <span slot="prefix">{{ temp.param }}</span>
