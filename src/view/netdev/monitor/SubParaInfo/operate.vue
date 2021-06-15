@@ -66,13 +66,19 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最大值" prop="ndpaValMax">
-            <Input v-model="ParaInfo.ndpaValMax" placeholder="请输入最大值"></Input>
+          <FormItem label="最小值" prop="ndpaValMin">
+            <Input v-model="ParaInfo.ndpaValMin1" placeholder="请输入最小值"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最小值" prop="ndpaValMin">
-            <Input v-model="ParaInfo.ndpaValMin" placeholder="请输入最小值"></Input>
+          <FormItem label="最大值" prop="ndpaValMax">
+            <Input v-model="ParaInfo.ndpaValMax1" placeholder="请输入最大值"></Input>
+          </FormItem>
+        </Col>
+
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="数据格式" prop="ndpaValFormat">
+            <Input v-model="ParaInfo.ndpaValFormat" placeholder="请输入数据格式"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -283,11 +289,14 @@
           ndpaShowMode: [
             {required: true, message: '显示模式不能为空', trigger: 'blur'}
           ],
-          ndpaValMax: [
+          ndpaValMax1: [
             {required: false}
           ],
-          ndpaValMin: [
+          ndpaValMin1: [
             {required: false}
+          ],
+          ndpaValFormat: [
+              {required: false}
           ],
           ndpaValStep: [
             {required: false}
