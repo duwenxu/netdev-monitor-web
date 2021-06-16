@@ -102,13 +102,28 @@
                         width: 100
                     },
                     {
-                        title: '最大值',
-                        key: 'ndpaValMax',
+                        title: '数据格式',
+                        key: 'ndpaValFormat',
                         width: 100
                     },
                     {
-                        title: '最小值',
-                        key: 'ndpaValMin',
+                        title: '最大值1',
+                        key: 'ndpaValMax1',
+                        width: 100
+                    },
+                    {
+                        title: '最小值1',
+                        key: 'ndpaValMin1',
+                        width: 100
+                    },
+                    {
+                        title: '最大值2',
+                        key: 'ndpaValMax2',
+                        width: 100
+                    },
+                    {
+                        title: '最小值2',
+                        key: 'ndpaValMin2',
                         width: 100
                     },
                     {
