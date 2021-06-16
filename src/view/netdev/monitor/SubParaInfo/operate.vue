@@ -111,7 +111,11 @@
 <!--            </Select>-->
 <!--          </FormItem>-->
 <!--        </Col>-->
-
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="上报OID" prop="ndpaRptOid">
+            <Input v-model="ParaInfo.ndpaRptOid" placeholder="请输入oid"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="字段类型" prop="ndpaAlertPara">
             <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
@@ -315,6 +319,9 @@
           ],
           ndpaOutterStatus: [
             {required: true, message: '是否该字段提供给54所访问不能为空', trigger: 'blur'}
+          ],
+          ndpaRptOid: [
+            {required: false}
           ],
           ndpaTransRule: [
             {required: false}
