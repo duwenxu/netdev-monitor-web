@@ -19,13 +19,19 @@
                      <!--                      <span style="cursor: pointer" @click="changeMode(info)">{{-->
                      <!--                          (info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'-->
                      <!--                        }}&nbsp;&nbsp;-->
+<!--                     {{info.splitArr}}-->
                      <template v-if="info.splitArr.length">
                        <template v-for="item in info.splitArr">
                                  <span style="cursor: pointer;" @click="changeMode(info)">{{item.param}}
-                                   <template v-for="cell in item.subList">
+                                   <template v-if="item.subList.length">
+                                      <template v-for="cell in item.subList">
                                      <span  v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}
                                      </span>
                                    </template>
+                                   </template>
+                                     <template v-else>
+                                       <span   style="color: #009688">{{item.paraVal}}</span>
+                                     </template>
                                  </span>
                        </template>
 
@@ -38,8 +44,9 @@
                      <Col :xs="24" :lg="24">
                        <Row>
                        <template v-for="temp in info.splitArr">
+<!--                         {{temp.subList}}-->
                          <Col :xs="info.splitArr.length<=2?9:8" :lg="info.splitArr.length<=2?9:8">
-                           <Select v-if="temp.subList" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
+                           <Select v-if="temp.subList.length" v-model="temp.inputVal" @on-change="validCombine(info,$event,temp)">
                              <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                              </Option>
                              <span slot="prefix">{{ temp.param }}</span>
