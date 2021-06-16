@@ -59,16 +59,19 @@
 
   /*home页面——start*/
   //@bg_equipment_master_status: rgba(201, 201, 201, 0.66);
-  @bg_equipment_master_status: rgba(0,150,136,0.05);
+  @bg_equipment_master_status: rgba(0, 150, 136, 0.05);
   .home {
     color: @font-color-text;
+
     .equipment_box {
-      border: 1px solid rgba(111,121,150,0.3);
+      border: 1px solid rgba(111, 121, 150, 0.3);
 
     }
+
     .equipment_child {
-      border: 1px solid rgba(111,121,150,0.3);
+      border: 1px solid rgba(111, 121, 150, 0.3);
       background: @bg-home-device;
+
       &.equipment_master_status {
         border: 1px solid #009688;
         background: @bg_equipment_master_status;
@@ -84,20 +87,23 @@
   .tag-nav-wrapper {
     height: 40px;
     background: @bg-color-card;
+
     .contextmenu {
       z-index: 9999;
       background: @bg-color-card;
+
       li:hover {
         background: @color-blue;
       }
     }
+
     .ivu-tag {
       height: 40px;
       line-height: 40px;
       padding: 0 17px;
       color: @font-color-text;
       background: @bg-color-card;
-      border-color:  #F1F2F3;
+      border-color: #F1F2F3;
       position: relative;
       cursor: pointer;
       margin: 2px 0;
@@ -160,7 +166,7 @@
       }
     }
   }
-  .ivu-input-prefix, .ivu-input-suffix{
+  .ivu-input-prefix, .ivu-input-suffix {
     line-height: 32px;
   }
   & > div,
@@ -199,6 +205,7 @@
         align-items: center;
         justify-content: space-between;
         color: @font-color-text;
+
         &:hover {
           background: @color-blue;
         }
@@ -307,6 +314,7 @@
         &:after {
           background: transparent;
         }
+
         .ivu-table-fixed-right::before {
           background-color: transparent;
         }
@@ -394,6 +402,7 @@
     }
 
     /*--------------------------公共组件------------------*/
+
     .ivu-form {
       .ivu-form-item-label {
         color: @font-color-text !important;
@@ -401,6 +410,7 @@
     }
 
     /*tabs*/
+
     .ivu-tabs-bar {
       border-color: @border-table-th;
 
@@ -421,11 +431,13 @@
 
     .ivu-table-cell-tree {
       background-color: transparent;
+
       &:hover {
         color: @color-blue;
         border-color: @color-blue;
       }
     }
+
     .ivu-tag-primary {
       background: @color-blue;
     }
@@ -459,11 +471,13 @@
     }
 
     /*遮罩*/
+
     .ivu-modal-mask {
       background: rgba(0, 0, 0, 0.7);
     }
 
     /*modal*/
+
     .ivu-modal {
 
       .ivu-modal-content {
@@ -539,6 +553,7 @@
     }
 
     /*----input---placeholder-----*/
+
     .ivu-input {
       background: transparent;
       color: @font-color-2;
@@ -550,6 +565,7 @@
     }
 
     /*select*/
+
     .ivu-select-selection {
       border-color: @border-color-input;
       background: transparent;
@@ -565,6 +581,7 @@
     }
 
     /*table*/
+
     .ivu-table-wrapper {
       border: none;
 
@@ -573,6 +590,7 @@
         &:after {
           background: transparent;
         }
+
         .ivu-table-fixed-right::before {
           background-color: transparent;
         }
@@ -610,6 +628,7 @@
     }
 
     /*分页*/
+
     .ivu-page {
       text-align: right;
       margin-top: 10px;
@@ -645,6 +664,7 @@
     }
 
     /*日期选择*/
+
     .ivu-date-picker-cells-cell:hover em {
       background: @color-blue;
       color: @font-color-text;
@@ -661,6 +681,7 @@
     }
 
     /*日期下拉框*/
+
     .ivu-picker-panel-body {
       color: @font-color-text;
 
@@ -679,22 +700,24 @@
               background: @color-green;
             }
           }
+
           &.ivu-date-picker-cells-focused {
             em {
               box-shadow: 0 0 0 1px @color-blue inset;
             }
           }
+
           &.ivu-date-picker-cells-cell-selected {
             em {
               background: @color-blue;
             }
           }
+
           &:hover em {
             background: @color-blue;
             color: @color-white;
           }
         }
-
 
 
         .ivu-date-picker-cells-header span {
@@ -732,6 +755,7 @@
       }
 
     }
+
     //&.ivu-select-dropdown {
     //  max-height: 300px;
     //  background: @bg-color-card !important;
@@ -741,15 +765,18 @@
     //
     //}
     /*下拉框*/
+
     &.ivu-select-dropdown,
     .ivu-select-dropdown {
       max-height: 400px;
       background: @bg-color-card !important;
+
       .ivu-select-item {
         color: @font-color-text;
         margin-top: 1px;
         box-sizing: border-box;
       }
+
       .ivu-select-item-focus {
         background: @color-blue;
       }
@@ -773,6 +800,7 @@
     }
 
     /*搜索*/
+
     .ivu-select {
       .ivu-select-selection {
         border-color: @border-color-input;
@@ -785,6 +813,7 @@
     }
 
     /*input*/
+
     .ivu-input {
       font-size: @font-size-text;
       border-color: @border-color-input;
@@ -807,6 +836,7 @@
     //}
 
     /*page*/
+
     .ivu-page {
       .ivu-page-options-elevator input,
       .ivu-page-item,
@@ -828,6 +858,7 @@
     }
 
     /*button*/
+
     .ivu-btn-primary {
       font-size: @font-color-text;
       background: @bg-color-btn-search;
@@ -863,6 +894,7 @@
     }
 
     /*ivu-divider*/
+
     .ivu-divider {
       .ivu-divider-inner-text {
         color: @divider-color
@@ -870,8 +902,10 @@
     }
 
     /*ivu-breadcrumb*/
+
     .ivu-breadcrumb {
       color: @font-color-text;
+
       a {
         color: @bread-color;
       }
@@ -884,32 +918,39 @@
     }
 
     /*icon-菜单*/
+
     .side-menu-wrapper a.drop-menu-a {
       height: @height-menu-item;
       line-height: @height-menu-item;
+
       i {
         color: rgba(255, 255, 255, 0.8) !important;
       }
     }
+
     .ivu-dropdown-menu {
       .ivu-dropdown-item:hover {
         background: #009688;
       }
+
       .ivu-dropdown {
         padding: 7px 16px;
         display: block;
+
         .ivu-select-dropdown {
           .ivu-dropdown-item:hover {
             background: #009688;
           }
         }
       }
+
       .ivu-dropdown-rel {
         a {
           color: @font-color-text;
         }
       }
     }
+
     a.drop-menu-a {
       i {
         color: @font-color-text !important;
@@ -925,11 +966,11 @@
 
   .main-logo {
     background: @main-header;
+
     span {
       color: @font-color-text;
     }
   }
-
 
 
   .resultText {
@@ -951,7 +992,6 @@
   }
 
 
-
   /*--------------------------------------------------------main*/
   .main {
     font-size: @font-size-text;
@@ -961,7 +1001,7 @@
     .main-header {
       height: @height-header;
       line-height: @height-header;
-      background:  @main-header;
+      background: @main-header;
 
       .user-avatar-dropdown {
         margin-right: 60px;
@@ -999,7 +1039,7 @@
 
     .ivu-menu-dark,
     .left-slider {
-      background:#393d49;
+      background: #393d49;
     }
 
   }
@@ -1010,24 +1050,25 @@
       background: #393d49;
 
       .ivu-menu-item {
+        //padding-left:20px!important;
         font-size: @font-size-text;
         margin-top: 1px;
         color: #F1F2F3;
 
         &:hover {
-          background:#009688;
-          color:#F1F2F3;
+          background: #009688;
+          color: #F1F2F3;
         }
 
         &.ivu-menu-item-active:not(.ivu-menu-submenu) {
           background: #009688;
-          color:#F1F2F3;
+          color: #F1F2F3;
         }
       }
 
       &.ivu-menu-light {
         .ivu-menu-submenu {
-          color:#F1F2F3;
+          color: #F1F2F3;
 
           &.ivu-menu-opened { // 打开组
             & > ul {
@@ -1044,7 +1085,7 @@
             font-size: @font-size-text;
             height: @height-menu-item;
             line-height: @height-menu-item;
-            //padding: 0 @padding-menu;
+            //padding: 0 20px!important;
             margin-top: 1px;
 
             &:hover {
@@ -1099,59 +1140,68 @@
   }
 
   /*icon-首页*/
- .home_page{
-   overflow: hidden;
-   .text_color {
-     color: @color-blue;
-     padding: 20px;
-     font-size: 15px;
-   }
-   .fre_wrapper{
-     height: 360px;
-     width: 100%;
-     background-color: @bg-color-card;
-   }
-   .send_wrapper {
-     height: 360px;
-     width: 98%;
-     background-color: @bg-color-card;
-   }
+  .home_page {
+    overflow: hidden;
 
-   .center_top {
-     height: 130px;
-     .top_wrapper {
-       height: 130px;
-       min-width: 350px;
-       background-color: @bg-color-card;
-       img {
-         opacity: 0.8;
-         background: @bg-home-img;
-       }
-     }
-     .center_top_long {
-       cursor: pointer;
-       background-color: @bg-color-card;
-       height: 130px;
-       width: 95%;
-       .img_class {
-         width: 100%;
-         height: 130px;
-         display: table;
-         .imgBox {
-           display: table-cell;
-           vertical-align: middle;
-           text-align: center;
-           img {
-             opacity: 0.8;
-             background: @bg-home-img;
-           }
-         }
-       }
-     }
-   }
- }
+    .text_color {
+      color: @color-blue;
+      padding: 20px;
+      font-size: 15px;
+    }
 
-  .send-msg-class{
+    .fre_wrapper {
+      height: 360px;
+      width: 100%;
+      background-color: @bg-color-card;
+    }
+
+    .send_wrapper {
+      height: 360px;
+      width: 98%;
+      background-color: @bg-color-card;
+    }
+
+    .center_top {
+      height: 130px;
+
+      .top_wrapper {
+        height: 130px;
+        min-width: 350px;
+        background-color: @bg-color-card;
+
+        img {
+          opacity: 0.8;
+          background: @bg-home-img;
+        }
+      }
+
+      .center_top_long {
+        cursor: pointer;
+        background-color: @bg-color-card;
+        height: 130px;
+        width: 95%;
+
+        .img_class {
+          width: 100%;
+          height: 130px;
+          display: table;
+
+          .imgBox {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+
+            img {
+              opacity: 0.8;
+              background: @bg-home-img;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .send-msg-class {
     .pro_title {
       color: @font-color-text;
       font-size: 14px;
@@ -1159,12 +1209,14 @@
 
     .device_class {
       padding: 5px 5px;
-      color:  @font-color-text;
+      color: @font-color-text;
       font-size: 14px;
     }
+
     .other_color {
-      color:  @font-color-text;
+      color: @font-color-text;
     }
+
     .log_content {
       margin-bottom: 20px;
       height: 350px;
@@ -1172,10 +1224,11 @@
     }
 
   }
-  .inside_border{
+  .inside_border {
     .pro_color {
       color: @font-color-text;
     }
+
     .pro_title {
       color: @font-color-text;
       font-size: 14px;
@@ -1209,7 +1262,8 @@
       }
     }
 
-  }//<=1919的设备
+  }
+  //<=1919的设备
   @media (max-width: 1919px) {
     .side-menu-wrapper {
       .ivu-menu {
@@ -1223,7 +1277,8 @@
       }
     }
 
-  }//<=1919的设备
+  }
+  //<=1919的设备
   @media (max-width: 1199px) {
     .side-menu-wrapper {
       .ivu-menu-vertical {
@@ -1232,27 +1287,63 @@
         }
       }
     }
-    .main{
+
+    .main {
       .main-header {
         height: 60px;
-        line-height:60px;
+        line-height: 60px;
       }
     }
-  }//<=1199的设备
-  @media (max-width: 991px){
+
     .side-menu-wrapper {
+
+      .ivu-menu-submenu-has-parent-submenu {
+        .ivu-menu {
+          font-size: 12px;
+          .ivu-menu-item {
+            font-size: 12px;
+            padding-left: 28px !important;
+          }
+        }
+      }
+
       .ivu-menu {
+        .ivu-menu-item {
+          font-size: 12px;
+          padding-left: 20px !important;
+        }
+
         &.ivu-menu-light {
           .ivu-menu-submenu {
             .ivu-menu-submenu-title {
-              padding: 0 10px;
+              font-size: 12px;
+              padding: 0 20px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  //<=1199的设备
+  @media (max-width: 991px) {
+    .side-menu-wrapper {
+      .ivu-menu {
+        .ivu-menu-item {
+          padding: 0 20px !important;
+        }
+
+        &.ivu-menu-light {
+          .ivu-menu-submenu {
+            .ivu-menu-submenu-title {
+              padding: 0 20px !important;
             }
           }
         }
       }
     }
 
-  }//<=991的设备
+  }
+  //<=991的设备
   /*@media (max-width: 767px){
 
   }//<=767的设备*/

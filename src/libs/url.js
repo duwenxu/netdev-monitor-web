@@ -7,9 +7,8 @@ const Setting = {}
 Setting.vector = new Vue()
 let proto = document.location.protocol
 
-
-Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.5.226:8080')
-Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.5.226:8888')
+Setting.SPACE_URL = ('https:' == proto ? '' : 'http://localhost:8089')
+Setting.SOCKET_URL = ('https:' == proto ? '' : 'localhost:8888')
 //
 // Setting.SPACE_URL = ('https:' == proto ? '' : 'http://172.21.7.4:8080')
 // Setting.SOCKET_URL = ('https:' == proto ? '' : '172.21.7.4:8888')

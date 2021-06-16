@@ -174,7 +174,12 @@
         return this.$store.state.app.hasReadErrorPage
       }
     },
-
+    created: function () {
+      this.$xy.vector.$on('siderTriggher', this.handleCollapsedChange)
+    },
+    beforeDestroy: function () {
+      this.$xy.vector.$off('siderTriggher', this.handleCollapsedChange)
+    },
     methods: {
       ...mapMutations([
         'setBreadCrumb',
@@ -255,7 +260,7 @@
         const that = this
         that.screenWidth = document.body.clientWidth
         if (that.screenWidth <= 991 || that.screenWidth <= 1199 ) {
-          that.menuWidth = 214
+          that.menuWidth = 180
           that.setMediaWidthType(0)
         } else if (that.screenWidth <= 1919 || that.screenWidth >= 1920) {
           that.menuWidth = 260

@@ -39,6 +39,7 @@ export const treeDevice = (data) => {
   for (var item in data) {
     data[item].meta = {}
     data[item].name = data[item].devNo
+    data[item].meta.devType = data[item].devType
     data[item].meta.title = data[item].devName
     data[item].meta.icon = "ios-body"
     data[item].meta.noalive = true
@@ -47,7 +48,7 @@ export const treeDevice = (data) => {
     if ('subMap' in data[item]) {
       let array = []
       for (var temp in data[item]['subMap']) {
-        data[item].path = 'list/' + data[item]['subMap'].devNo +'/0'
+        data[item].path = 'list/' + data[item]['subMap'].devNo+'/0'
         data[item].component = 'view/netdev/monitor/DeviceMsg/deviceMain.vue'
         array.push(data[item]['subMap'][temp])
       }
@@ -75,6 +76,7 @@ export const treeDevice = (data) => {
     component: 'components/main',
     children: result
   },]
+
   return router
 }
 
@@ -123,13 +125,16 @@ const backendMenuToRoute = (menu) => {
 export const getMenuByRouter = (list, access) => {
   let res = []
   forEach(list, item => {
+
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
       let obj = {
         icon: (item.meta && item.meta.icon) || '',
         name: item.name,
         meta: item.meta
       }
-
+if(item.devType){
+  obj.devType = item.devType
+}
       if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access)) {
         obj.children = getMenuByRouter(item.children, access)
       }
@@ -137,6 +142,7 @@ export const getMenuByRouter = (list, access) => {
       if (showThisMenuEle(item, access)) res.push(obj)
     }
   })
+
   return res
 }
 

@@ -43,11 +43,12 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
+                                width: 180
                             },
                             {
                                 title: '解析协议',
                                 key: 'fmtId',
-                                width: 300,
+                                width: 220,
                                 render:(h,params) =>{
                                     return h('span',this.handlerPrtFomat(params.row.fmtId));
                                 },
@@ -59,7 +60,7 @@
                             {
                                 title: '接口名称',
                                 key: 'itfName',
-                                width: 300
+                                width: 220
                             },
                             {
                                 title: '接口类型',

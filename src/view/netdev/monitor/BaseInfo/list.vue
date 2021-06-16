@@ -1,9 +1,13 @@
 <template>
     <div class="content-box">
         <Row>
-            <search :search-data='searchData'></search>
+            <Col :xs="24" :sm="24" :md="24" :lg="20">
+              <search :search-data='searchData'></search>
+            </Col>
             <!--<Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="downFile">下载</Button>-->
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 490px" type="primary" @click="operate()">新增</Button>
+            <Col :xs="24" :sm="24" :md="24" :lg="4">
+              <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
