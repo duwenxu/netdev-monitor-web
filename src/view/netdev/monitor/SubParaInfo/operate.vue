@@ -66,13 +66,19 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最大值" prop="ndpaValMax">
-            <Input v-model="ParaInfo.ndpaValMax" placeholder="请输入最大值"></Input>
+          <FormItem label="最小值1" prop="ndpaValMin1">
+            <Input v-model="ParaInfo.ndpaValMin1" placeholder="请输入最小值"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最小值" prop="ndpaValMin">
-            <Input v-model="ParaInfo.ndpaValMin" placeholder="请输入最小值"></Input>
+          <FormItem label="最大值1" prop="ndpaValMax1">
+            <Input v-model="ParaInfo.ndpaValMax1" placeholder="请输入最大值"></Input>
+          </FormItem>
+        </Col>
+
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="数据格式" prop="ndpaValFormat">
+            <Input v-model="ParaInfo.ndpaValFormat" placeholder="请输入数据格式"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -105,7 +111,11 @@
 <!--            </Select>-->
 <!--          </FormItem>-->
 <!--        </Col>-->
-
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="上报OID" prop="ndpaRptOid">
+            <Input v-model="ParaInfo.ndpaRptOid" placeholder="请输入oid"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="字段类型" prop="ndpaAlertPara">
             <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择字段类型">
@@ -283,11 +293,14 @@
           ndpaShowMode: [
             {required: true, message: '显示模式不能为空', trigger: 'blur'}
           ],
-          ndpaValMax: [
+          ndpaValMax1: [
             {required: false}
           ],
-          ndpaValMin: [
+          ndpaValMin1: [
             {required: false}
+          ],
+          ndpaValFormat: [
+              {required: false}
           ],
           ndpaValStep: [
             {required: false}
@@ -306,6 +319,9 @@
           ],
           ndpaOutterStatus: [
             {required: true, message: '是否该字段提供给54所访问不能为空', trigger: 'blur'}
+          ],
+          ndpaRptOid: [
+            {required: false}
           ],
           ndpaTransRule: [
             {required: false}
