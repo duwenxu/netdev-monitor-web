@@ -141,6 +141,11 @@
                                 key: 'ndpaOutterStatus_paraName',
                                 width: 150
                             },
+                            {
+                              title: '上报OID',
+                              key: 'ndpaRptOid',
+                              width: 100
+                            },
                             // {
                             //     title: '数据映射规则',
                             //     key: 'ndpaTransRule',
