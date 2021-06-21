@@ -233,7 +233,7 @@ export default {
                                         name: param,
                                         oldVal: JSON.parse(JSON.stringify(resultChar[index])),
                                         errorMsg: '',
-                                      subList:[],
+                                       subList:[],
                                         paraValMax1: null,
                                         paraValMin1: null,
                                          paraValMax2: null,
@@ -259,7 +259,7 @@ export default {
                                         v.splitArr.forEach(x => {
                                             if (n.paraCode == x.name) {
                                                 if (n.spinnerInfoList) {
-                                                    x.subList = n.spinnerInfoList || []
+                                                    x.subList = n.spinnerInfoList
                                                 }
                                             }
                                         })
