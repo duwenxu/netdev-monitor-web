@@ -1,11 +1,11 @@
 <template>
   <div>
-    <template v-for="equipment in equipments">
-      <div class="device_status" :style="devicePosition(equipment)">
-        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
-      </div>
-      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
-    </template>
+<!--    <template v-for="equipment in equipments">-->
+<!--      <div class="device_status" :style="devicePosition(equipment)">-->
+<!--        <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>-->
+<!--      </div>-->
+<!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
+<!--    </template>-->
     <div ref="dom" class="charts"></div>
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
@@ -502,7 +502,7 @@ export default {
         {
           x: '30',
           y: '730',
-          nodeName: '1.5m天线   \n(含伺服)',
+          nodeName: ' ',
           img: 'image://' + require('@/assets/images/home/antenna.png'),
           size: [170, 160]
         },

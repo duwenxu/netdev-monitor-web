@@ -995,6 +995,7 @@ export default {
           paraValStep: null,
           paraSimpleDatatype: v.paraSimpleDatatype,
           paraStrLen: v.paraStrLen,
+          subList:[],
         })
         saveOffset = offset
         if (v.subParaList.length) {
@@ -1013,7 +1014,7 @@ export default {
           v.splitArr.forEach(x => {
             if (n.paraCode == x.name) {
               if (n.spinnerInfoList) {
-                x.subList = n.spinnerInfoList || []
+                x.subList = n.spinnerInfoList
               }
             }
           })
