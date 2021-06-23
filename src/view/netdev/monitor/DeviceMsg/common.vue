@@ -11,7 +11,7 @@
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
                       <span style="color: red;"
-                            v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                            v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
                        <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                      </div>
                    </Col>
@@ -35,7 +35,7 @@
                        <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
                      </template>
                    </Col>
-                   <template  v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                   <template  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
                        <Row>
                          <template v-for="temp in info.splitArr">
@@ -83,7 +83,7 @@
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
                   <span style="color: red;"
-                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                        v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
                        <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                      </div>
                    </Col>
@@ -94,7 +94,7 @@
                             }}&nbsp;&nbsp;
                             <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
                    </Col>
-                   <template v-if="info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+                   <template v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <!--                   <template v-if="info.selected">-->
                      <Col :xs="16" :lg="16" push="4" style="display: flex">
                        <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
@@ -142,7 +142,7 @@
                  <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                    <div style="text-align: right">
                   <span style="color: red;"
-                        v-if="info.accessRight == '0022003' || info.accessRight == '0022001'">*</span>
+                        v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
                      <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
                    </div>
                  </Col>
@@ -157,7 +157,7 @@
                    </template>
                  </Col>
                  <Col :xs="16" :lg="16" push="4"
-                      v-if="info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
+                      v-if="accessView && info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                       style="display: flex">
                    <Select v-if="info.selected" v-model="info.inputVal" :placeholder="info.paraName"  @on-change="setValues(info)">
                      <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
@@ -199,10 +199,16 @@ export default {
     return{
       lgCol:8,
       validTag: false,
-      paramType: ['0019002']
+      paramType: ['0019002'],
+      accessView:false,
     }
   },
   mounted() {
+    let obj = JSON.parse(sessionStorage.userInfo)
+    if(obj.userName == 'admin'){
+      this.accessView = true
+    }
+
     if(window.screen.width<=1024 || this.$route.name == 'home'){
       this.lgCol = 12
     }
@@ -215,6 +221,7 @@ export default {
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
     },
     changeMode(info) {
+      if(this.accessView){
       this.validTag = false
       if (info.subParaList.length) {
         let obj = {}
@@ -247,6 +254,7 @@ export default {
         this.$Message.error('无数据时无法更改，请稍后再试。')
       }
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.oldVal,splitArr:info.splitArr})
+      }
     },
     close(info) {
       if (!info.paraSpellFmt) {
