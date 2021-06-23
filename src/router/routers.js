@@ -83,6 +83,8 @@ export default [
         // component: () => import('@/view/single-page/home/third_device.vue')
         //四类车载
         // component: () => import('@/view/single-page/home/forth_device.vue')
+        //地面站
+        // component: () => import('@/view/single-page/home/highland_device.vue')
 
         //最早版本
         // component: () => import('@/view/netdev/deviceStatus/status1.vue')

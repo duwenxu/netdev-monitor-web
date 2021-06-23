@@ -24,53 +24,53 @@
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="menuTitle">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
+                        <InputNumber :disabled="!accessView" :active-change="false" :min="handMin" :max="handMax" :step="0.1" style="width: 95%" v-model.trim="handmic.az" placeholder="方位"></InputNumber>
                         <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
                       </Poptip>
 
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="run('az',handmic.az)">执行</Button>
-                    <Button style="background: #009688;color: white"@click="run('az',0,true)">停止</Button>
+                    <Button :disabled="!accessView" style="background: #009688;color: white" @click="run('az',handmic.az)">执行</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white"@click="run('az',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="menuName">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
+                        <InputNumber :disabled="!accessView" :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.el" placeholder="俯仰"></InputNumber>
                         <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
                       </Poptip>
 
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="run('el',handmic.el)">执行</Button>
-                    <Button style="background: #009688;color: white" @click="run('el',0,true)">停止</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('el',handmic.el)">执行</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('el',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="menuName">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.jc" placeholder="交叉"></InputNumber>
                         <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
                       </Poptip>
 
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="run('jc',handmic.jc)">执行</Button>
-                    <Button style="background: #009688;color: white" @click="run('jc',0,true)">停止</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('jc',handmic.jc)">执行</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('jc',0,true)">停止</Button>
                   </Col>
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="menuName">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false" :min="handMin" :max="handMax" :step="0.1"  style="width: 95%" v-model.trim="handmic.pol" placeholder="极化"></InputNumber>
                         <div slot="content">最小值:{{ handMin }} ~ 最大值:{{handMax}}</div>
                       </Poptip>
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="run('pol',handmic.pol)">执行</Button>
-                    <Button style="background: #009688;color: white" @click="run('pol',0,true)">停止</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('pol',handmic.pol)">执行</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="run('pol',0,true)">停止</Button>
                   </Col>
                 </Row>
               </Form>
@@ -137,7 +137,7 @@
                 <Col :xs="24" :lg="24" :md="24" style="margin-top: 30px">
                   <Form>
                     <FormItem label="步进角度" :label-width="90">
-                      <InputNumber :min="0" :max="360" :step="0.1" style="width: 40%" v-model.trim="stepAngel" placeholder="步进角度"></InputNumber>
+                      <InputNumber :disabled="!accessView"  :min="0" :max="360" :step="0.1" style="width: 40%" v-model.trim="stepAngel" placeholder="步进角度"></InputNumber>
                     </FormItem>
                   </Form>
                 </Col>
@@ -154,7 +154,7 @@
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="方位" prop="az">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="0" :max="360" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false" :min="0" :max="360" :step="0.1" style="width: 95%" v-model.trim="automic.az" placeholder="方位"></InputNumber>
                         <div slot="content">最小值:0 ~ 最大值:360</div>
                       </Poptip>
                     </FormItem>
@@ -162,7 +162,7 @@
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="俯仰" prop="el">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false"  :min="15" :max="110" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false"  :min="15" :max="110" :step="0.1" style="width: 95%" v-model.trim="automic.el" placeholder="俯仰"></InputNumber>
                         <div slot="content">最小值:15 ~ 最大值:110</div>
                       </Poptip>
 
@@ -171,7 +171,7 @@
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="交叉" prop="jc">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="-25" :max="25" :step="0.1"  style="width: 95%" v-model.trim="automic.jc" placeholder="交叉"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false" :min="-25" :max="25" :step="0.1"  style="width: 95%" v-model.trim="automic.jc" placeholder="交叉"></InputNumber>
                         <div slot="content">最小值:-25 ~ 最大值:25</div>
                       </Poptip>
 
@@ -180,14 +180,14 @@
                   <Col :xs="16" :lg="16" :md="16">
                     <FormItem label="极化" prop="pol">
                       <Poptip trigger="focus">
-                        <InputNumber :active-change="false" :min="-45" :max="225" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
+                        <InputNumber :disabled="!accessView"  :active-change="false" :min="-45" :max="225" :step="0.1"  style="width: 95%" v-model.trim="automic.pol" placeholder="极化"></InputNumber>
                         <div slot="content">最小值:-45 ~ 最大值:225</div>
                       </Poptip>
 
                     </FormItem>
                   </Col>
                   <Col :xs="8" :lg="8" :md="8">
-                    <Button style="background: #009688;color: white" @click="byHand(3)">执行</Button>
+                    <Button :disabled="!accessView"  style="background: #009688;color: white" @click="byHand(3)">执行</Button>
                   </Col>
                 </Row>
               </Form>
@@ -217,12 +217,12 @@
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="卫星纬度" prop="satWd">
-                      <Input v-model.trim="starModel.satWd" placeholder="卫星纬度" Number></Input>
+                      <Input :disabled="!accessView"  v-model.trim="starModel.satWd" placeholder="卫星纬度" Number></Input>
                     </FormItem>
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem  label="极化形式" prop="isLevel">
-                      <Select @on-change="getHz(1,$event)" v-model="starModel.isLevel">
+                      <Select :disabled="!accessView"  @on-change="getHz(1,$event)" v-model="starModel.isLevel">
                         <Option value="0">水平极化</Option>
                         <Option value="1">垂直极化</Option>
                       </Select>
@@ -230,7 +230,7 @@
                   </Col>
                   <Col :xs="24" :lg="12" :md="12">
                     <FormItem label="频率" prop="freq">
-                      <Input v-model.trim="starModel.freq" placeholder="频率" Number>
+                      <Input :disabled="!accessView"  v-model.trim="starModel.freq" placeholder="频率" Number>
                         <span slot="suffix">MHs</span>
                       </Input>
                     </FormItem>
@@ -239,8 +239,8 @@
                     <FormItem>
                       <!--                      <Button @click="starPrepare(1)" style="margin-right: 20px;background: #009688;color: white">确认-->
                       <!--                      </Button>-->
-                      <Button  @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
-                      <Button  @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
+                      <Button :disabled="!accessView"   @click="byHand(1)"   style="margin-right: 20px;background: #009688;color: white" >手动</Button>
+                      <Button :disabled="!accessView"   @click="byAuto(1)" style="background: #009688;color: white" >自动</Button>
                     </FormItem>
                   </Col>
                   <Col :xs="24" :lg="24" :md="24"></Col>
@@ -270,12 +270,12 @@
                     <Row>
                       <Col :xs="24" :lg="24" :md="24">
                         <FormItem label="经度" prop="devJd">
-                          <Input v-model.trim="stargestureData.devJd" placeholder="经度"></Input>
+                          <Input :disabled="!accessView"  v-model.trim="stargestureData.devJd" placeholder="经度"></Input>
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24">
                         <FormItem label="纬度" prop="devWd">
-                          <Input v-model.trim="stargestureData.devWd" placeholder="纬度"></Input>
+                          <Input :disabled="!accessView"  v-model.trim="stargestureData.devWd" placeholder="纬度"></Input>
                         </FormItem>
                       </Col>
                       <!--                      <FormItem>-->
@@ -328,13 +328,13 @@
                       </Col>
                       <Col :xs="24" :lg="24" :md="24"></Col>
                       <Col :xs="17" :lg="17" :md="17" push="2">
-                        <RadioGroup @on-change="getHz(2,$event)" v-model="zoneDirect.isLevel">
+                        <RadioGroup :disabled="!accessView"  @on-change="getHz(2,$event)" v-model="zoneDirect.isLevel">
                           <Radio label="0">水平极化</Radio>
                           <Radio label="1">垂直极化</Radio>
                         </RadioGroup>
                       </Col>
                       <Col :xs="3" :lg="3" :md="3">
-                        <Button @click="starPrepare(2)" style="margin-top: 4px;background: #009688;color: white" type="primary" size="small">确认
+                        <Button :disabled="!accessView"  @click="starPrepare(2)" style="margin-top: 4px;background: #009688;color: white" type="primary" size="small">确认
                         </Button>
                       </Col>
                     </Row>
@@ -344,30 +344,30 @@
                   <Row>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="方位" prop="az">
-                        <Input v-model.trim="zoneData.az" placeholder="方位" Number></Input>
+                        <Input :disabled="!accessView"  v-model.trim="zoneData.az" placeholder="方位" Number></Input>
                       </FormItem>
                     </Col>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="俯仰" prop="el">
-                        <Input v-model.trim="zoneData.el" placeholder="俯仰" Number></Input>
+                        <Input :disabled="!accessView"  v-model.trim="zoneData.el" placeholder="俯仰" Number></Input>
                       </FormItem>
                     </Col>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="极化" prop="pol">
-                        <Input v-model.trim="zoneData.pol" placeholder="极化" Number></Input>
+                        <Input  :disabled="!accessView" v-model.trim="zoneData.pol" placeholder="极化" Number></Input>
                       </FormItem>
                     </Col>
                     <Col :xs="24" :lg="12" :md="12">
                       <FormItem label="频率" prop="freq">
-                        <Input v-model.trim="zoneData.freq" placeholder="频率" Number>
+                        <Input :disabled="!accessView"  v-model.trim="zoneData.freq" placeholder="频率" Number>
                           <span slot="suffix">MHs</span>
                         </Input>
                       </FormItem>
                     </Col>
                     <Col :xs="24" :lg="24" :md="24">
                       <FormItem>
-                        <Button @click="byHand(2)"  style="margin-right: 20px;background: #009688;color: white">手动</Button>
-                        <Button @click="byAuto(2)"  style="background: #009688;color: white" >自动</Button>
+                        <Button :disabled="!accessView"  @click="byHand(2)"  style="margin-right: 20px;background: #009688;color: white">手动</Button>
+                        <Button :disabled="!accessView"  @click="byAuto(2)"  style="background: #009688;color: white" >自动</Button>
                       </FormItem>
                     </Col>
                   </Row>
@@ -383,12 +383,12 @@
                     <Row>
                       <Col :xs="24" :lg="24" :md="24">
                         <FormItem label="经度" prop="devJd">
-                          <Input v-model.trim="gestureData.devJd" placeholder="经度" Number></Input>
+                          <Input :disabled="!accessView"  v-model.trim="gestureData.devJd" placeholder="经度" Number></Input>
                         </FormItem>
                       </Col>
                       <Col :xs="24" :lg="24" :md="24">
                         <FormItem label="纬度" prop="devWd">
-                          <Input v-model.trim="gestureData.devWd" placeholder="纬度" Number></Input>
+                          <Input :disabled="!accessView"  v-model.trim="gestureData.devWd" placeholder="纬度" Number></Input>
                         </FormItem>
                       </Col>
                     </Row>
@@ -411,6 +411,7 @@
         name: "shipOperate",
         data() {
             return {
+              accessView:false,
               devNo:'',
                 saveValue1:'',
                 saveValue2:'',
@@ -489,6 +490,10 @@
             }
         },
         mounted(){
+          let obj = JSON.parse(sessionStorage.userInfo)
+          if(obj.userName == 'admin'){
+            this.accessView = true
+          }
           if(this.$route.name != 'home'){
             this.getState()
             this.getNowPosition()
