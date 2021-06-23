@@ -251,7 +251,7 @@ export default {
     },
     /*-----------------日志/告警--------------*/
     logWs() {
-      wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
         // let let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       this.logSocket = new WebSocket(wsurl)
       this.logSocket.onopen = this.logSendMsg
