@@ -26,9 +26,14 @@
                               <template v-if="info.splitArr.length">
                                 <template v-for="item in info.splitArr">
                                  <span>{{item.param}}
-                                   <template v-for="cell in item.subList">
+                                    <template v-if="item.subList.length">
+                                      <template v-for="cell in item.subList">
                                      <span v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}</span>
                                    </template>
+                                   </template>
+                                     <template v-else>
+                                       <span   style="color: #009688">{{item.paraVal}}</span>
+                                     </template>
                                  </span>
                                 </template>
                               </template>
@@ -40,7 +45,7 @@
                                 <Row>
                                   <template v-for="temp in info.splitArr">
                                     <Col :xs="info.splitArr.length<=2?12:6" :lg="info.splitArr.length<=2?12:6">
-                                      <Select v-if="temp.subList" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
+                                      <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
                                         <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                                         </Option>
                                         <span slot="prefix">{{ temp.param }}</span>
@@ -156,7 +161,7 @@
                 </Col>
               </template>
               <Col :xs="24" :lg="24">
-                <Button v-if="temp.subParaList.length" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
+                <Button v-if="temp.subParaList.length && accessView" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
                 <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
               </Col>
 
@@ -179,7 +184,8 @@ export default {
       infos: [],
       validTag: false,
         receiveMsg:false,
-      paramType: ['0019002', '0019003']
+      paramType: ['0019002', '0019003'],
+      accessView:false
     }
   },
   created: function () {
@@ -192,6 +198,10 @@ export default {
 
   },
   mounted() {
+    let obj = JSON.parse(sessionStorage.userInfo)
+    if(obj.userName == 'admin'){
+      this.accessView = true
+    }
   },
   methods: {
     sizeInfo(data){
@@ -228,6 +238,7 @@ export default {
                                         name: param,
                                         oldVal: JSON.parse(JSON.stringify(resultChar[index])),
                                         errorMsg: '',
+                                       subList:[],
                                         paraValMax1: null,
                                         paraValMin1: null,
                                          paraValMax2: null,
@@ -253,7 +264,7 @@ export default {
                                         v.splitArr.forEach(x => {
                                             if (n.paraCode == x.name) {
                                                 if (n.spinnerInfoList) {
-                                                    x.subList = n.spinnerInfoList || []
+                                                    x.subList = n.spinnerInfoList
                                                 }
                                             }
                                         })

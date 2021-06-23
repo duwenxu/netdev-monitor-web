@@ -114,7 +114,11 @@
             </Select>
           </FormItem>
         </Col>
-
+        <Col :xs="20" :sm="16" :md="16" :lg="8">
+          <FormItem label="上报OID" prop="ndpaRptOid">
+            <Input v-model="ParaInfo.ndpaRptOid" placeholder="请输入oid"></Input>
+          </FormItem>
+        </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="状态上报类型" prop="ndpaAlertPara">
             <Select v-model="ParaInfo.ndpaAlertPara" clearable   placeholder="请选择状态上报类型">
@@ -260,6 +264,9 @@
           ],
           devType: [
             {required: true, message: '设备类型不能为空', trigger: 'blur'}
+          ],
+          ndpaRptOid: [
+            {required: false}
           ],
           ndpaAccessRight: [
             {required: true, message: '访问权限不能为空', trigger: 'blur'}
@@ -423,7 +430,7 @@
         })
       },
       async initRemark2DataList(){
-        this.remark2DataList = ["0020008","0020012","0020017","0020018","0020020","0020023"];
+        this.remark2DataList = ["0020008","0020012","0020017","0020018","0020020","0020023","0020028"];
       },
       async getParaCodecList(){
         axios.request({

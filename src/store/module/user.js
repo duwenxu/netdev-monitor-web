@@ -94,7 +94,9 @@ export default {
           password
         }).then(res => {
           const data = res.result.userInfo;
+          sessionStorage.setItem('userInfo',JSON.stringify(data))
           commit('setToken', res.result.token)
+          commit('setUserName', data.userName)
           resolve(data)
         }).catch(err => {
           reject(err)
@@ -104,18 +106,6 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        // logout(state.token).then(() => {
-        //   commit('setToken', '')
-        //   commit('setAccess', [])
-        //   commit('setHasGetInfo',false)
-        //   commit('setHasGetRouter',false)
-        //   sessionStorage.clear()
-        //   resolve()
-        // }).catch(err => {
-        //   reject(err)
-        // })
-        // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // console.log('234444')
         commit('setToken', '')
         commit('setAccess', [])
         commit('setHasGetInfo', false)
@@ -126,35 +116,44 @@ export default {
     },
     // 获取用户相关信息
     getUserInfo ({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          if(sessionStorage.userInfo){
-            let obj = JSON.parse(sessionStorage.userInfo)
-            commit('setAvator', obj.avator)
-            commit('setUserName', obj.name)
-            commit('setUserId', obj.user_id)
-            commit('setAccess', obj.access)
-            commit('setHasGetInfo', true)
-            resolve(obj)
-          }else{
-            getUserInfo(state.token).then(res => {
-              console.log('this is userList')
-              const data = res.data.data
-              sessionStorage.setItem('userInfo',JSON.stringify(data))
-              commit('setAvator', data.avator)
-              commit('setUserName', data.name)
-              commit('setUserId', data.user_id)
-              commit('setAccess', data.access)
-              commit('setHasGetInfo', true)
-              resolve(data)
-            }).catch(err => {
-              reject(err)
-            })
-          }
-        } catch (error) {
-          reject(error)
-        }
-      })
+      if(sessionStorage.userInfo){
+        let obj = JSON.parse(sessionStorage.userInfo)
+        // commit('setAvator', obj.avator)
+        commit('setUserName', obj.userName)
+        commit('setUserId', obj.userId)
+        commit('setAccess', obj.access || ['1'])
+        commit('setHasGetInfo', true)
+        // resolve(obj)
+      }
+      // return new Promise((resolve, reject) => {
+      //   try {
+      //     if(sessionStorage.userInfo){
+      //       let obj = JSON.parse(sessionStorage.userInfo)
+      //       commit('setAvator', obj.avator)
+      //       commit('setUserName', obj.name)
+      //       commit('setUserId', obj.user_id)
+      //       commit('setAccess', obj.access)
+      //       commit('setHasGetInfo', true)
+      //       resolve(obj)
+      //     }else{
+      //       getUserInfo(state.token).then(res => {
+      //         console.log('this is userList')
+      //         const data = res.data.data
+      //         sessionStorage.setItem('userInfo',JSON.stringify(data))
+      //         commit('setAvator', data.avator)
+      //         commit('setUserName', data.name)
+      //         commit('setUserId', data.user_id)
+      //         commit('setAccess', data.access)
+      //         commit('setHasGetInfo', true)
+      //         resolve(data)
+      //       }).catch(err => {
+      //         reject(err)
+      //       })
+      //     }
+      //   } catch (error) {
+      //     reject(error)
+      //   }
+      // })
     },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount ({ state, commit }) {

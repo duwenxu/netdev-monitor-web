@@ -2,7 +2,7 @@
   <div>
 <!--    <template v-for="equipment in equipments">-->
 <!--      <div class="device_status" :style="devicePosition(equipment)">-->
-<!--        <span :style="judgeDeviceStatus(equipment)" :class="equipment.isAlarm == 1?'point-flicker':''"></span>-->
+<!--        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>-->
 <!--      </div>-->
 <!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
 <!--    </template>-->
