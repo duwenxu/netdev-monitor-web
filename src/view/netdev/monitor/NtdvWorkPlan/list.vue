@@ -41,11 +41,6 @@
                 name: '',
                 columns1: [
                     {
-                        title: '值班类型',
-                        key: 'wpStatus_paraName',
-                        width: 300
-                    },
-                    {
                         title: '计划值班人员',
                         key: 'wpName',
                         width: 350
@@ -59,6 +54,10 @@
                         title: '值班结束时间',
                         key: 'wpEndTime',
                         width: 350
+                    },
+                    {
+                        title: '状态',
+                        key: 'wpStatus_paraName',
                     },
                     {
                         title: '操作',
@@ -113,25 +112,10 @@
                         data: [],
                         placeholder: '请输入计划值班人员'
                     },
-                    {
-                        type: 2,
-                        key: 'wpStatus',
-                        name: '值班类型',
-                        value: '',
-                        data: [],
-                        placeholder: '请选择值班类型'
-                    },
-                    /*{
-                        type: 3,
-                        key: ['wpStartTime_begin','wpStartTime_end'],
-                        name: '开始时间范围',
-                        value: '',
-                        data: [],
-                        placeholder: '请选择开始时间范围'
-                    },
-*/
                 ],
-                search: {},
+                search: {
+                    wpStatus:'0001001'
+                },
                 current: 1,
                 page: {
                     current: 1,

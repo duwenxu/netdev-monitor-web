@@ -40,12 +40,6 @@
                 operateModal: false,
                 name: '',
                 columns1: [
-
-                    {
-                        title: '值班类型',
-                        key: 'wpStatus_paraName',
-                        width: 100
-                    },
                     {
                         title: '计划值班人员',
                         key: 'wpName',
@@ -85,6 +79,11 @@
                         title: '值班备注',
                         key: 'wpDesc',
                         width: 300
+                    },
+                    {
+                        title: '状态',
+                        key: 'wpStatus_paraName',
+                        width: 100
                     },
 
                     {
@@ -140,23 +139,6 @@
                         data: [],
                         placeholder: '请输入值班人'
                     },
-                    {
-                        type: 2,
-                        key: 'wpStatus',
-                        name: '值班类型',
-                        value: '',
-                        data: [],
-                        placeholder: '请选择值班类型'
-                    },
-                    /*{
-                        type: 3,
-                        key: ['wpStartTime_begin','wpStartTime_end'],
-                        name: '开始时间范围',
-                        value: '',
-                        data: [],
-                        placeholder: '请选择开始时间范围'
-                    },*/
-
                 ],
                 search: {},
                 current: 1,
@@ -224,43 +206,6 @@
                 this.page.current = page
                 this.doQuery()
             },
-            // delete(wpId) {
-            //     let that = this
-            //     let modal = that.$Modal;
-            //     let notice = that.$Notice;
-            //     modal.confirm({
-            //         title: '你确定要删除这条值班安排吗?',
-            //         content: '删除后将无法撤销！',
-            //         onOk: () => {
-            //             that.deleteData(wpId)
-            //         },
-            //         onCancel: () => {
-            //             notice.warning({
-            //                 title: '取消',
-            //                 desc: '已取消！',
-            //                 duration: 3
-            //             })
-            //         }
-            //     })
-            // },
-            // async deleteData(wpId) {
-            //     let {data, code, msg} = await deleteWorkPlan(wpId)
-            //     let notice = this.$Notice;
-            //     if (code == 200) {
-            //         notice.success({
-            //             title: '成功',
-            //             desc: '删除成功！',
-            //             duration: 3
-            //         })
-            //         this.doQuery();
-            //     } else {
-            //         notice.error({
-            //             title: '失败',
-            //             desc: msg,
-            //             duration: 3
-            //         })
-            //     }
-            // },
             operate(WorkPlanRecord) {
                 /*this.name = WorkPlanRecord == null ? '添加值班记录' : '编辑值班记录'*/
                 this.operateModal = true
