@@ -161,7 +161,7 @@
                 </Col>
               </template>
               <Col :xs="24" :lg="24">
-                <Button v-if="temp.subParaList.length" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
+                <Button v-if="temp.subParaList.length && accessView" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
                 <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
               </Col>
 
@@ -184,7 +184,8 @@ export default {
       infos: [],
       validTag: false,
         receiveMsg:false,
-      paramType: ['0019002', '0019003']
+      paramType: ['0019002', '0019003'],
+      accessView:false
     }
   },
   created: function () {
@@ -197,6 +198,10 @@ export default {
 
   },
   mounted() {
+    let obj = JSON.parse(sessionStorage.userInfo)
+    if(obj.userName == 'admin'){
+      this.accessView = true
+    }
   },
   methods: {
     sizeInfo(data){
