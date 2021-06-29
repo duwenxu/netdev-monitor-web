@@ -48,7 +48,7 @@
             {
               title: '协议名称',
               key: 'fmtName',
-              width: 220
+              width: 200
             },
             {
               title: '设备类型',
@@ -58,22 +58,22 @@
             {
               title: '查询关键字',
               key: 'fmtSkey',
-              width: 110
+              width: 120
             },
             {
               title: '控制关键字',
               key: 'fmtCkey',
-              width: 110
+              width: 120
             },
             {
               title: '控制响应关键字',
               key: 'fmtCckey',
-              width: 135
+              width: 140
             },
             {
               title: '查询响应关键字',
               key: 'fmtSckey',
-              width: 135
+              width: 140
             },
             {
               title: '查询响应条数',
@@ -152,7 +152,7 @@
               name: '协议名称',
               value: '',
               data: [],
-              placeholder: '请输入协议名称'
+              placeholder: '协议名称'
             },
             {
               type: 2,
@@ -160,14 +160,14 @@
               name: '设备类型',
               value: '',
               data: [],
-              placeholder: '请输入设备类型'
+              placeholder: '设备类型'
             }
           ],
           search: {},
           current: 1,
           page: {
             current: 1,
-            size: 10
+            size: 8
           },
           otherPage: {
             total: 0,
@@ -287,6 +287,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

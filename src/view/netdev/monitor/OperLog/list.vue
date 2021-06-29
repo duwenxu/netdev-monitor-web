@@ -38,40 +38,50 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
+                               width:100,
                             },
                             {
-                                title: '设备编号',
+                                title: '编号',
                                 key: 'devNo',
+                              width:70,
                             },
                             {
                                 title: '日志时间',
                                 key: 'logTime',
+                              width:170,
                             },
                             {
                                 title: '访问类型',
                                 key: 'logAccessType_paraName',
+                              width:100,
                             },
                             {
                                 title: '操作类型',
                                 key: 'logOperType_paraName',
+                              width:100,
                             },
                             {
                                 title: '操作对象',
                                 key: 'logOperObjName',
+                              width:100,
+                              tooltip:true
                             },
                             {
                                 title: '操作内容',
                                 key: 'logOperContent',
+                              width:100,
                                 tooltip:true
                             },
                             {
                                 title: '原始数据',
                                 key: 'orignData',
+                              width:100,
                                 tooltip:true
                             },
                             {
                                 title: '操作人',
                                 key: 'logUserId',
+                              width:90,
                             },
                 ],
                 infos: [],
@@ -100,7 +110,7 @@
                 },
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -208,6 +218,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

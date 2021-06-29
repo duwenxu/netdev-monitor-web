@@ -3,15 +3,15 @@
     <template v-for='(data,index) in searchData'>
       <template v-if='data.type==1 && !data.isHide'>
         <Input v-model.trim="data.value" :name='data.key'
-               :placeholder="data.placeholder" :readonly="data.readonly" clearable style="width: 200px;margin-right: 10px"></Input>
+               :placeholder="data.placeholder" :readonly="data.readonly" clearable style="width: 120px;margin-right: 10px"></Input>
       </template>
       <template v-if='data.type==2'>
-        <Select v-model="data.value" clearable :placeholder="data.placeholder" @on-change="handleClick(data,$event)" style="width:200px;margin-right: 10px">
+        <Select v-model="data.value" clearable :placeholder="data.placeholder" @on-change="handleClick(data,$event)" style="width:120px;margin-right: 10px">
           <Option  v-for='choose in data.data' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
         </Select>
       </template>
       <template v-if='data.type==3'>
-        <DatePicker :placeholder="data.placeholder" v-model="data.value" :style="{width: data.long == 2?'200px':'300px'}" :type="data.long == 2?'date':'datetimerange'" style="margin-right: 10px"></DatePicker>
+        <DatePicker :placeholder="data.placeholder" v-model="data.value" :style="{width: data.long == 2?'150px':'250px'}" :type="data.long == 2?'date':'datetimerange'" style="margin-right: 10px"></DatePicker>
       </template>
       <template v-if='index==searchData.length-1'>
         <Button @click="init" style="background-color: #fea230;border: 0px;color: #ffffff;">搜索</Button>
