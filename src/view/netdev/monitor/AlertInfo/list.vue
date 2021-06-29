@@ -71,6 +71,14 @@
                 infos: [],
                 searchData: [//搜索框根据需要自定义添加
                     {
+                        type: 2,
+                        key: 'devType',
+                        name: '设备类型',
+                        value: '',
+                        data:[] ,
+                        placeholder: '设备类型'
+                    },
+                    {
                         type: 3,
                         key: ['startTime', 'endTime'],
                         name: '时间',
@@ -78,19 +86,11 @@
                         long: 1,
                         placeholder: '请选择时间范围',
                     },
-                    {
-                        type: 1,
-                        key: 'devNo',
-                        name: '设备序号',
-                        value: '',
-                        data:[] ,
-                        placeholder: '设备序号'
-                    },
                 ],
                 search: {
                     startTime:'',
                     endTime:'',
-                    devNo:'',
+                    devType:'',
                 },
                 page: {
                     current: 1,
@@ -112,6 +112,7 @@
         },
         mounted() {
             this.init();
+            this.initSelect()
         },
         methods: {
             rowClassName(row, index) {
@@ -153,8 +154,8 @@
             },
             //搜索框填充数据方法
             handleClick(data, item) {
-                if (data.key == 'devNo') {
-                    this.search.devNo = data.value
+                if (data.key == 'devType') {
+                    this.search.devType = data.value
                 }
                 if (data.key == 'startTime') {
                     this.search.startTime = data.value
@@ -184,6 +185,13 @@
                 } else {
                     this.$Message.info("表格数据不能为空！")
                 }
+            },
+            initSelect() {
+                this.$xy.getParamGroup('0020').then(res => {
+                    this.searchData[0].data = res.filter(value => {
+                        return value.status == '0001001'
+                    })
+                })
             },
         }
     }
