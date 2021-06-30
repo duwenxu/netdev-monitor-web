@@ -45,8 +45,8 @@
           </FormItem>
         </Col>
         <Col :xs="10" :sm="8" :md="8" :lg="8">
-          <FormItem label="值班类型" prop="wpStatus">
-            <Select clearable placeholder="请选择值班类型" disabled="" v-model="WorkPlanRecoed.wpStatus">
+          <FormItem label="状态" prop="wpStatus">
+            <Select clearable placeholder="请选择状态" disabled="" v-model="WorkPlanRecoed.wpStatus">
               <Option :key="choose.id" :value='choose.value' v-for='choose in wpStatusList'>{{choose.name}}
               </Option>
             </Select>
@@ -187,7 +187,7 @@
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
             },async getWpStatusList () {
-                this.$xy.getParamGroup('0303').then(res => {
+                this.$xy.getParamGroup('0001').then(res => {
                     this.wpStatusList = res
                 })
             },
