@@ -57,11 +57,6 @@
             minWidth: 100
           },
           {
-            title: '用户类型',
-            key: 'userType_paraName',
-            minWidth: 100
-          },
-          {
             title: '用户手机号',
             key: 'userPhone',
             minWidth: 140
