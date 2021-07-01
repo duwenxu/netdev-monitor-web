@@ -158,7 +158,7 @@
         current: 1,
         page: {
           current: 1,
-          size: 10
+          size: 8
         },
         otherPage: {
           total: 0,
@@ -283,6 +283,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>

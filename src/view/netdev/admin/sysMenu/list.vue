@@ -257,6 +257,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>

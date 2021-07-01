@@ -8,7 +8,7 @@
             <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
           </Col>
           <Col :xs="24" :sm="24" :md="24" :lg="24">
-            <Table  :columns="columns1" :data="infos" ref="alterTable"></Table>
+            <Table :columns="columns1" :data="infos" ref="alterTable"></Table>
             <div class="text-right page">
                 <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
                       :page-size-opts='otherPage.pageSize'
@@ -36,36 +36,40 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
+                              width:120,
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
+                              width:100,
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
+                              width:100,
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
+                              width:100,
                             },
                             {
                                 title: '告警时间',
                                 key: 'alertTime',
-                                width: 180
+                                width: 170
                             },
                             {
                                 title: '站号',
                                 key: 'alertStationNo',
                             },
                             {
-                                title: '告警级别',
+                                title: '级别',
                                 key: 'alertLevel_paraName',
                             },
                             {
-                                title: '告警描述',
+                                title: '描述',
                                 key: 'alertDesc',
-                                width: 400
+                              tooltip: true,
                             },
                 ],
                 infos: [],
@@ -84,7 +88,7 @@
                         name: '时间',
                         value: '',
                         long: 1,
-                        placeholder: '请选择时间范围',
+                        placeholder: '时间范围',
                     },
                 ],
                 search: {
@@ -94,7 +98,7 @@
                 },
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -203,6 +207,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

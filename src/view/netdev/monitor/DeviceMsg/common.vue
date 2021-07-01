@@ -180,9 +180,9 @@
 
      </template>
    </Row>
-<!--  <div v-else>-->
-<!--    <span>暂无数据</span>-->
-<!--  </div>-->
+  <div v-else>
+    <span>暂无数据</span>
+  </div>
  </div>
 </template>
 
@@ -367,7 +367,7 @@ export default {
         if (success) {
           this.$Notice.success({
             title: '成功',
-            desc: message,
+            desc: '修改成功！',
             duration: 1
           })
           this.close(info)
