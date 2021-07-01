@@ -367,7 +367,7 @@ export default {
         if (success) {
           this.$Notice.success({
             title: '成功',
-            desc: message,
+            desc: '修改成功！',
             duration: 1
           })
           this.close(info)

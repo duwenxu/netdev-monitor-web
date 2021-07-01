@@ -956,13 +956,11 @@ export default {
             }
           }
         }
-
-
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText)
-    },
+      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
+         },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
