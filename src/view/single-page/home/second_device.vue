@@ -37,7 +37,7 @@ export default {
         {
           x: '110',
           y: '400',
-          nodeName: 'ka\n发射\n\n\n\n\n\n\nKa\n接收',
+          nodeName: 'ka\n发射\n\n\n\n\n\n\n\n\nKa\n接收',
           img: 'rect',
           size: [30, 180],
           color: 'rgb(228,225,192)'
@@ -45,7 +45,7 @@ export default {
         {
           x: '110',
           y: '200',
-          nodeName: 'ku\n发射\n\n\n\n\n\n\nKu\n接收',
+          nodeName: '\n\nku\n发射\n\n\n\n\n\n\nKu\n接收',
           img: 'rect',
           size: [30, 180],
           color: 'rgb(228,225,192)'
@@ -165,7 +165,7 @@ export default {
           color: 'rgba(184,181,181)'
         },
         {
-          x: '180',
+          x: '190',
           y: '340',
           nodeName: 'Ka LNA ',
           img: 'triangle',
@@ -382,7 +382,7 @@ export default {
         },
 
         {
-          x: '180',
+          x: '190',
           y: '140',
           nodeName: 'Ku LNA  ',
           img: 'triangle',
@@ -428,7 +428,7 @@ export default {
         {
           x: '660',
           y: '400',
-          nodeName: '调制解调(1:1)\n\n\n\n\n\n\n',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [110, 120],
@@ -439,7 +439,7 @@ export default {
         {
           x: '660',
           y: '420',
-          nodeName: '2300调制解调   ',
+          nodeName: '2300调制解调器  ',
           img: 'rect',
           size: [95, 20],
           color: '#b1f83c',
@@ -458,7 +458,7 @@ export default {
         {
           x: '660',
           y: '360',
-          nodeName: '2300调制解调   ',
+          nodeName: '2300调制解调器  ',
           img: 'rect',
           size: [95, 20],
           color: 'rgba(184,181,181)',
@@ -467,7 +467,7 @@ export default {
         {
           x: '660',
           y: '270',
-          nodeName: '调制解调(1:1)\n\n\n\n\n\n\n',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [110, 120],
@@ -477,7 +477,7 @@ export default {
         {
           x: '660',
           y: '290',
-          nodeName: '2300调制解调   ',
+          nodeName: '2300调制解调器  ',
           img: 'rect',
           size: [95, 20],
           color: '#b1f83c',
@@ -495,7 +495,7 @@ export default {
         {
           x: '660',
           y: '230',
-          nodeName: '2300调制解调   ',
+          nodeName: '2300调制解调器  ',
           img: 'rect',
           size: [95, 20],
           color: 'rgba(184,181,181)',
@@ -839,32 +839,23 @@ export default {
             },
           },
         ],
+        //折线
         linesData: [
           {
             mark: '设备->天线驱动单元ADU',
             name: '',
-            coords: [[40, 100], [100, 100]],
-
+            coords: [[350, 50], [40, 50],[40,270]],
             lineStyle: {
               normal: {
                 color: '#020202'
               }
             },
           },
-          {
-            mark: '设备->天线驱动单元ADU',
-            name: '',
-            coords: [[0, 100], [0, 590]],
-            lineStyle: {
-              normal: {
-                color: '#020202'
-              }
-            }
-          },
+
           {
             mark: '天线驱动单元ADU->天线控制单元acu',
             name: '',
-            coords: [[840, 80], [880, 80]],
+            coords: [[410, 50], [440, 50]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -874,7 +865,7 @@ export default {
           {
             mark: '天线控制单元acu->天线驱动单元ADU',
             name: '',
-            coords: [[880, 120], [840, 120]],
+            coords: [[440, 50], [410, 50]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -885,38 +876,17 @@ export default {
           {
             mark: 'L波段-》天线控制单元ACU',
             name: '',
-            coords: [[1200, 280], [1200, 250]],
+            coords: [[540, 130], [540, 110],[470,110],[470,90]],
             lineStyle: {
               normal: {
                 color: '#020202'
               }
             }
           },
-          {
-            mark: 'I频段跟踪接收-》天线控制单元ACU',
-            name: '',
-            coords: [[1200, 250], [920, 250]],
-            lineStyle: {
-              normal: {
-                color: '#020202'
-              }
-            }
-          },
-          {
-            mark: 'I频段跟踪接收-》天线控制单元ACU',
-            name: '',
-            coords: [[920, 250], [920, 200]],
-            lineStyle: {
-              normal: {
-                color: '#020202'
-              }
-            }
-          },
-
           //----------------------------上行------------
           {
             mark: 'KU发射接收->设备',
-            coords: [[200, 600], [120, 600]],
+            coords: [[95, 280], [65, 280]],
             lineStyle: {
               normal: {
                 color: '#dc6414 '
@@ -929,7 +899,7 @@ export default {
           //一段式连线
           {
             mark: 'KA发射接收->设备',
-            coords: [[200, 1130], [70, 1130]],
+            coords: [[95, 460], [40, 460],[40,290]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -939,36 +909,12 @@ export default {
               color: '#dc6414'
             }
           },
-          {
-            mark: 'KA发射接收->设备',
-            coords: [[70, 1130], [70, 900]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
 
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: 'Ka到ka发射接收',
-            name: 'LHCP',
-            coords: [[410, 1130], [300, 1130]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
+
           {
             mark: 'ku iwta到ku发射接收',
             name: '',
-            coords: [[375, 600], [290, 600]],
+            coords: [[150, 240], [125, 240]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -981,7 +927,7 @@ export default {
           {
             mark: 'lc上变频-》ka发射机',
             name: '',
-            coords: [[890, 1130], [530, 1130]],
+            coords: [[380, 460], [210, 460]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -994,7 +940,7 @@ export default {
           {
             mark: 'l ku上变频->ku iwta',
             name: '',
-            coords: [[650, 600], [560, 600]],
+            coords: [[270, 240], [220, 240]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1007,7 +953,7 @@ export default {
           {
             mark: 'L波段中频矩阵 上行->L-c上变频',
             name: '',
-            coords: [[1160, 1130], [1080, 1130]],
+            coords: [[520, 460], [450, 460]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1021,7 +967,7 @@ export default {
           {
             mark: 'L波段中频矩阵 上行->L-ku 上变频',
             name: '',
-            coords: [[1160, 1000], [1110, 1000]],
+            coords: [[520, 400], [490, 400],[490,240],[350,240]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1032,8 +978,9 @@ export default {
             }
           },
           {
+            mark: '上方 调制解调器 -》L波段中频上行 ',
             name: '',
-            coords: [[1110, 1000], [1110, 600]],
+            coords: [[605, 400], [560, 400]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1044,34 +991,9 @@ export default {
             }
           },
           {
+            mark: '下方 调制解调器 -》L波段中频上行 ',
             name: '',
-            coords: [[1110, 600], [850, 600]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '上方 调制解调 -》L波段中频上行 ',
-            name: '',
-            coords: [[1300, 1000], [1235, 1000]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '下方 调制解调 -》L波段中频上行 ',
-            name: '',
-            coords: [[1300, 800], [1235, 800]],
+            coords: [[605, 320], [560, 320]],
             lineStyle: {
               normal: {
                 color: '#dc6414'
@@ -1086,7 +1008,7 @@ export default {
           {
             mark: '设备->KA发射接收',
             name: '',
-            coords: [[120, 880], [200, 880]],
+            coords: [[50, 290], [50, 340],[95,340]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1099,7 +1021,7 @@ export default {
           //一段式连线
           {
             mark: '设备->KU发射接收',
-            coords: [[70, 590], [70, 400]],
+            coords: [[50, 270], [50, 140],[95,140]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1121,10 +1043,11 @@ export default {
               color: '#143fdc '
             }
           },
+
           {
-            mark: 'ka发射接收到Ka lwa',
-            name: 'RHCP',
-            coords: [[300, 880], [410, 880]],
+            mark: 'ku-》ku lna',
+            name: '',
+            coords: [[125, 140], [160, 140]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1135,9 +1058,9 @@ export default {
             }
           },
           {
-            mark: 'ku-》ku lwa',
+            mark: 'ka lna ->ka-c下变频',
             name: '',
-            coords: [[300, 400], [410, 400]],
+            coords: [[220, 340], [280, 340]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1148,22 +1071,9 @@ export default {
             }
           },
           {
-            mark: 'ka lwa ->ka-c下变频',
+            mark: 'ku lna -> ku-l下变频',
             name: '',
-            coords: [[500, 880], [650, 880]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc '
-              }
-            },
-            effect: {
-              color: '#143fdc '
-            }
-          },
-          {
-            mark: 'ku lwa -> ku-l下变频',
-            name: '',
-            coords: [[530, 400], [650, 400]],
+            coords: [[220, 140], [280, 140]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1176,7 +1086,7 @@ export default {
           {
             mark: ' ku-l下变频 -》L波段中频矩阵下行',
             name: '',
-            coords: [[850, 400], [1160, 400]],
+            coords: [[350, 140], [520, 140]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1189,7 +1099,7 @@ export default {
           {
             mark: 'ka c下变频->cl下变频',
             name: '',
-            coords: [[840, 880], [890, 880]],
+            coords: [[350, 340], [400, 340]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1203,7 +1113,7 @@ export default {
           {
             mark: 'c-l-》l波段中频下行',
             name: '',
-            coords: [[1080, 880], [1130, 880]],
+            coords: [[450, 340], [520, 340]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1214,47 +1124,23 @@ export default {
             }
           },
           {
+            mark: 'L波段中频下行-》下方 调制解调器 ',
             name: '',
-            coords: [[1130, 880], [1130, 500]],
+            coords: [[560, 230], [605, 230]],
             lineStyle: {
               normal: {
-                color: '#143fdc '
+                color: '#143fdc'
               }
             },
             effect: {
-              color: '#143fdc '
-            }
-          },
-          {
-            name: '',
-            coords: [[1130, 500], [1160, 500]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc '
-              }
-            },
-            effect: {
-              color: '#143fdc '
-            }
-          },
-          {
-            mark: 'L波段中频下行-》下方 调制解调 ',
-            name: '',
-            coords: [[1240, 650], [1300, 650]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc '
-              }
-            },
-            effect: {
-              color: '#143fdc '
+              color: '#143fdc'
             }
           },
           //一段式
           {
-            mark: 'L波段中频下行-》上方 调制解调 ',
+            mark: 'L波段中频下行-》上方 调制解调器',
             name: '',
-            coords: [[1240, 700], [1290, 700]],
+            coords: [[560, 240], [570, 240],[570,350],[605,350]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1265,7 +1151,7 @@ export default {
             }
           },
           {
-            mark: 'L波段中频下行-》调制解调 上方',
+            mark: 'L波段中频下行-》调制解调器 上方',
             coords: [[1290, 700], [1290, 950]],
             lineStyle: {
               normal: {
@@ -1276,22 +1162,11 @@ export default {
               color: '#143fdc '
             }
           },
-          {
-            mark: 'L波段中频下行-》调制解调 上方',
-            coords: [[1290, 950], [1310, 950]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc '
-              }
-            },
-            effect: {
-              color: '#143fdc '
-            }
-          },
+
           {
             mark: 'L波段中频下行-》频谱监测接收',
             name: '',
-            coords: [[1240, 500], [1310, 500]],
+            coords: [[560, 160], [600, 160]],
             lineStyle: {
               normal: {
                 color: '#143fdc '
@@ -1301,78 +1176,65 @@ export default {
               color: '#143fdc '
             }
           },
-          // {
-          //   mark: 'L波段中频下行-》I频段跟踪接收',
-          //   name: '',
-          //   coords: [[1240, 400], [1310, 400]],
-          //   lineStyle: {
-          //     normal: {
-          //       color: '#143fdc '
-          //     }
-          //   },
-          //   effect: {
-          //     color: '#143fdc '
-          //   }
-          // },
           //双向
           {
-            mark: '网络承载分系统-》调制解调',
+            mark: '网络承载分系统-》调制解调器',
             name: '',
-            coords: [[1660, 1000], [1500, 1000]],
+            coords: [[715, 380], [780, 380]],
             lineStyle: {
               normal: {
-                color: '#7f14dc'
+                color: '#143fdc'
               }
             },
             effect: {
-              color: '#7f14dc'
+              color: '#143fdc'
             }
           },
           {
-            mark: '网络承载分系统-》调制解调',
+            mark: '网络承载分系统-》调制解调器',
             name: '',
-            coords: [[1500, 950], [1660, 950]],
+            coords: [[780, 400], [715, 400]],
             lineStyle: {
               normal: {
-                color: '#7f14dc'
+                color: '#dc6414'
               }
             },
             effect: {
-              color: '#7f14dc'
+              color: '#dc6414'
             }
           },
           //双向
           {
-            mark: '网络承载分系统-》调制解调',
+            mark: '网络承载分系统-》调制解调器',
             name: '',
-            coords: [[1660, 750], [1500, 750]],
+            coords: [[715, 260], [780, 260]],
             lineStyle: {
               normal: {
-                color: '#7f14dc'
+                color: '#143fdc'
               }
             },
             effect: {
-              color: '#7f14dc'
+              color: '#143fdc'
             }
           },
           {
-            mark: '网络承载分系统-》调制解调',
+            mark: '网络承载分系统-》调制解调器',
             name: '',
-            coords: [[1500, 700], [1660, 700]],
+            coords: [[780, 280], [715, 280]],
             lineStyle: {
               normal: {
-                color: '#7f14dc'
+                color: '#dc6414'
               }
             },
             effect: {
-              color: '#7f14dc'
+              color: '#dc6414'
             }
           },
           //2级网管站-》网管计算机
           {
             mark: '2级网管站-》网管计算机',
             name: '',
-            coords: [[1610, 130], [1540, 130]],
+            coords: [[740, 50], [700, 50]],
             lineStyle: {
               normal: {
                 color: 'rgb(57 181 74)'
@@ -1385,7 +1247,7 @@ export default {
           {
             mark: '网管计算机-》2级网管站',
             name: '',
-            coords: [[1540, 80], [1610, 80]],
+            coords: [[700, 50], [740, 50]],
             lineStyle: {
               normal: {
                 color: 'rgb(57 181 74)'
@@ -1425,7 +1287,7 @@ export default {
           {
             mark: '网管计算机-》串口服务',
             name: '',
-            coords: [[1360, 130], [1290, 130]],
+            coords: [[605, 50], [635, 50]],
             lineStyle: {
               normal: {
                 color: 'rgb(57 181 74)'
@@ -1438,7 +1300,7 @@ export default {
           {
             mark: '串口服务->网管计算机',
             name: '',
-            coords: [[1290, 80], [1360, 80]],
+            coords: [[635, 50], [605, 50]],
             lineStyle: {
               normal: {
                 color: 'rgb(57 181 74)'
@@ -1446,6 +1308,35 @@ export default {
             },
             effect: {
               color: 'rgb(57 181 74)'
+            }
+          },
+        ],
+        //直线
+        lines:[
+          {
+            mark: 'Ka发射机到ka发射接收',
+            name: 'LHCP',
+            coords: [[155, 460], [125, 460]],
+            lineStyle: {
+              normal: {
+                color: '#dc6414'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: 'ka发射接收到Ka lwa',
+            name: 'RHCP',
+            coords: [[125, 340], [160, 340]],
+            lineStyle: {
+              normal: {
+                color: '#143fdc '
+              }
+            },
+            effect: {
+              color: '#143fdc '
             }
           },
         ]
@@ -1495,6 +1386,7 @@ export default {
         },
         series: [{
           type: 'graph',
+          z: 4,
           coordinateSystem: 'cartesian2d',
           label: {
             normal: {
@@ -1542,8 +1434,9 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 6
+              symbolSize: 3
             },
+            //箭头
             markPoint:{
               itemStyle:{
                 color:'black'
@@ -1779,7 +1672,7 @@ export default {
           {
             type: 'lines',
             symbol: ['none', 'none'],
-            zlevel: 1,
+            z: 3,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -1787,52 +1680,51 @@ export default {
               position: 'middle',
             },
             lineStyle: {
-              width:3,
-              cap:'square',
-              // normal: {
-              //   color: 'green',
-              //   width: 2,
-              //   opacity: 1,
-              //   curveness: 0
-              // }
+              normal: {
+                color: 'green',
+                width: 1,
+                opacity: 1,
+                curveness: 0
+              }
             },
-            // markLine:{
-            //   data: [
-            //     [
-            //       {
-            //         symbol:'none',
-            //         x: 100,
-            //         y: 100
-            //       },
-            //       {
-            //         symbol:'none',
-            //         x: 200,
-            //         y: 100
-            //       },
-            //     ],
-            //     [
-            //       {
-            //         symbol:'none',
-            //         x: 200,
-            //         y: 100
-            //       },
-            //       {
-            //         symbol:'arrow',
-            //         x: 200,
-            //         y: 50
-            //       },
-            //     ]
-            //   ]
-            // },
             effect: {
               show: true,
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 8
+              symbolSize: 3
+            },
+            data: charts.lines
+          },
+          {
+            type: 'lines',
+            symbol: ['none', 'none'],
+            polyline: true,
+            z:1,
+            symbolSize: 10,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              normal: {
+                color: 'green',
+                width: 1,
+                opacity: 1,
+                curveness: 0
+              }
+            },
+            effect: {
+              show: true,
+              trailLength: 0.1,
+              symbol: 'arrow',
+              color: '#87e2ef',
+              symbolSize: 3
             },
             data: charts.linesData
-          }]
+          },
+        ]
       }
       var that = this
       this.dom.on('mouseover', function (e) {
