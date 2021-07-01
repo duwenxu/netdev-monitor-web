@@ -180,7 +180,7 @@ export default {
   components: {common},
   data() {
     return {
-      normalHeight:450,
+      normalHeight:250,
       infos: [],
       validTag: false,
         receiveMsg:false,
@@ -206,9 +206,9 @@ export default {
   methods: {
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 450
+        this.normalHeight = 250
       }else{
-        this.normalHeight = 680
+        this.normalHeight = 400
       }
     },
     getMsg(data) {
@@ -404,7 +404,7 @@ export default {
       if(success){
         this.$Notice.success({
                 title: '成功',
-                desc: message,
+                desc: '修改成功！',
                 duration: 1
               })
         this.changeMode(temp)

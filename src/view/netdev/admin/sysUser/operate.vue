@@ -17,34 +17,13 @@
             <Input v-model.trim="sysUser.userPwd" placeholder="请输入登录密码"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="用户类型" prop="userType">
-            <Select v-model="sysUser.userType" clearable style="width:200px;margin-right: 15px" @on-change="selectUserType" placeholder="请选择用户类型">
-              <Option  v-for='choose in userTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
-            </Select>
-          </FormItem>
-        </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem v-if="showDept" label="所属部门" prop="userOrgid">
-            <Select v-model="sysUser.userOrgid" clearable style="width:200px;margin-right: 15px" placeholder="请选择用户类型">
-              <Option  v-for='item in deptList' :value='item.departId' :key="item.departId">{{item.departName}}</Option>
-            </Select>
-          </FormItem>
-        </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem v-if="showCstmr" label="所属客户" prop="userOrgid">
-            <Select v-model="sysUser.userOrgid" clearable style="width:200px;margin-right: 15px" placeholder="请选择用户类型" >
-              <Option  v-for='item in cstmrList' :value='item.ctmrId' :key="item.ctmrId">{{item.ctmrName}}</Option>
-            </Select>
-          </FormItem>
-        </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem v-if="showStation" label="所属测站" prop="userOrgid">
-            <Select v-model="sysUser.userOrgid" clearable style="width:200px;margin-right: 15px"  placeholder="请选择所属测站">
-              <Option  v-for='item in stationList' :value='item.stationId' :key="item.stationId">{{item.stationName}}</Option>
-            </Select>
-          </FormItem>
-        </Col>
+<!--        <Col :xs="20" :sm="16" :md="16" :lg="8">-->
+<!--          <FormItem label="用户类型" prop="userType">-->
+<!--            <Select v-model="sysUser.userType" clearable style="width:200px;margin-right: 15px" @on-change="selectUserType" placeholder="请选择用户类型">-->
+<!--              <Option  v-for='choose in userTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>-->
+<!--            </Select>-->
+<!--          </FormItem>-->
+<!--        </Col>-->
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="用户手机号" prop="userPhone">
             <Input  v-model.trim="sysUser.userPhone" placeholder="请输入用户手机号"></Input>
