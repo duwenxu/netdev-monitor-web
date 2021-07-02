@@ -54,7 +54,7 @@ export default {
         {
           x: '120',
           y: '390',
-          nodeName: 'ka\n发射\n\n\n\n\n\nKa\n接收',
+          nodeName: 'ka\n发射\n\n\n\n\n\n\nKa\n接收',
           img: 'rect',
           size: [30, 200],
           color: 'rgb(228,225,192)'
@@ -62,7 +62,7 @@ export default {
         {
           x: '120',
           y: '160',
-          nodeName: 'ku\n发射\n\n\n\n\n\nKu\n接收',
+          nodeName: 'ku\n发射\n\n\n\n\n\n\nKu\n接收',
           img: 'rect',
           size: [30, 200],
           color: 'rgb(228,225,192)'
@@ -217,7 +217,7 @@ export default {
         //-------------------down_lc上变频器---------
         {
           x: '490',//310  120
-          y: '480',//270  220
+          y: '470',//270  220
           nodeName: ' L-C       \n   上变频器A     ',
           img: 'rect',
           size: [70, 30],
@@ -225,7 +225,7 @@ export default {
         },
         {
           x: '470',
-          y: '450',
+          y: '440',
           nodeName: '',
           img: 'rect',
           size: [10, 5],
@@ -233,7 +233,7 @@ export default {
         },
         {
           x: '510',
-          y: '450',
+          y: '440',
           nodeName: '',
           img: 'rect',
           size: [10, 5],
@@ -241,7 +241,7 @@ export default {
         },
         {
           x: '540',
-          y: '450',
+          y: '440',
           nodeName: '',
           img: 'circle',
           size: [10, 10],
@@ -250,7 +250,7 @@ export default {
         },
         {
           x: '440',
-          y: '450',
+          y: '440',
           nodeName: '',
           img: 'circle',
           size: [10, 10],
@@ -259,7 +259,7 @@ export default {
         },
         {
           x: '490',
-          y: '420',
+          y: '410',
           nodeName: ' L-C       \n   上变频器B     ',
           img: 'rect',
           size: [70, 30],
@@ -534,7 +534,7 @@ export default {
           {
             mark: '设备->天线驱动单元',
             name: '',
-            coords: [ [100, 210],[600, 210]],
+            coords: [ [100, 440],[600, 440]],
             lineStyle: {
               normal: {
                 color: '#020202'
