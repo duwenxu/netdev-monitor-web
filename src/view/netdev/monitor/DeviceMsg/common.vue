@@ -372,11 +372,7 @@ export default {
            })
            this.close(info)
          } else {
-           this.$Notice.error({
-             title: '失败',
-             desc: error,
-             duration: 3
-           })
+           this.$Notice.error()
          }
       } else {
         this.$set(info, 'paraVal', info.oldVal)
