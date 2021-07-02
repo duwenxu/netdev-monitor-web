@@ -1,6 +1,15 @@
 <template>
 <!--  四类车-->
-  <div ref="dom" class="charts"></div>
+  <div style="border:1px solid red">
+    <div  ref="dom" class="charts"></div>
+    <div class="legend">
+      <div class="legend_status" v-for="(item, index) in legendType" :key="index">
+        <span :class="[item.shape]"
+              :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -11,7 +20,15 @@ import {on, off} from '@/libs/tools'
 export default {
   data() {
     return {
-      dom: null
+      dom: null,
+      legendType: [
+        {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
+        {shape: 'square', color: '#b1f83c', description: '主机'},
+        {shape: 'square', color: 'rgba(184,181,181)', description: '备机'},
+        {shape: 'circle', color: '#009688', description: '正常'},
+        {shape: 'circle', color: '#ff1400', description: '故障'},
+        {shape: 'circle', color: '#ffbe08', description: '告警'}
+      ],
     }
   },
   beforeDestroy() {
@@ -28,690 +45,487 @@ export default {
     init() {
       var nodes = [
         {
-          x: '70',
-          y: '760',
+          x: '40',
+          y: '280',
           nodeName: '',
-          img: 'image://' + require('@/assets/images/home/track.png'),
-          size: [320,200]
+          img: 'image://' + require('@/assets/images/home/wn_track.png'),
+          size: [120,80]
         },
         {
-          x: '250',
-          y: '1000',
-          nodeName: 'ka发射\n\n\n\n\n\n\n\nKa接收',
+          x: '120',
+          y: '390',
+          nodeName: 'ka\n发射\n\n\n\n\n\nKa\n接收',
           img: 'rect',
-          size: [60, 260],
+          size: [30, 200],
           color: 'rgb(228,225,192)'
         },
         {
-          x: '250',
-          y: '600',
-          nodeName: 'ku发射\n\n\n\n\n\n\n\nKu接收',
+          x: '120',
+          y: '160',
+          nodeName: 'ku\n发射\n\n\n\n\n\nKu\n接收',
           img: 'rect',
-          size: [60, 260],
+          size: [30, 200],
           color: 'rgb(228,225,192)'
         },
+
         //---------------------------------天线座
+
         {
-          mark:'天线座',
-          x: '500',
-          y: '1000',
-          nodeName: '天线座\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [340, 300],
-        },
-        {
-          x: '470',
-          y: '1080',
+          x: '210',
+          y: '440',
           nodeName: 'ka发射机',
           img: 'rect',
-          size: [90, 60],
-          color: '#c4e889'
+          size: [70, 30],
+          color: '#e9cdf6'
         },
         {
-          x: '410',
-          y: '920',
-          nodeName: 'LNA',
+          x: '200',
+          y: '335',
+          nodeName: 'LNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [60, 90],
+          size: [40, 45],
+          color: '#e9cdf6'
+        },
+        //-------------------up_noKa-c下---------
+        {
+          x: '310',
+          y: '365',
+          nodeName: ' Ka-c       \n  下变频器     ',
+          img: 'rect',
+          size: [70, 30],
+          color: '#b1f83c'
+        },
+        {
+          x: '290',
+          y: '335',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
           color: '#c4e889'
         },
-        //Ka-C下变频器
         {
-          x: '600',
-          y: '920',
-          nodeName: 'Ka-C \n下变频器 \n\n\n\nKa-C \n下变频器',
-          img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [180, 110]
+          x: '330',
+          y: '335',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '260',
+          y: '335',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '360',
+          y: '335',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '310',
+          y: '305',
+          nodeName: ' Ka-c       \n  下变频器     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
         },
 //----------------------------维修仓
+        //-------------------up_noKu发射机---------
         {
-          mark:'维修',
-          x: '500',
-          y: '680',
-          nodeName: '                                                                  维修仓\n\n\n\n\n\n',
+          x: '260',
+          y: '240',
+          nodeName: 'Ku       \n 发射机     ',
           img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [340, 120],
+          size: [70, 30],
+          color: '#b1f83c'
         },
         {
-          x: '470',
-          y: '680',
-          nodeName: 'Ku  发射机  \n\n\n\n\nKu  发射机',
-          img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
-          size: [180, 110]
+          x: '240',
+          y: '210',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
         },
-
-
+        {
+          x: '280',
+          y: '210',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '310',
+          y: '210',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '210',
+          y: '210',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '260',
+          y: '180',
+          nodeName: 'Ku       \n 发射机     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
+        },
 
         //---------------------------------天线座 下
         {
-          mark:'天线座',
-          x: '500',
-          y: '410',
-          nodeName: '                                                                  天线座\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [340, 230],
-        },
-
-        {
-          x: '470',
-          y: '520',
-          nodeName: 'LNA',
+          x: '230',
+          y: '110',
+          nodeName: 'LNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [60, 90],
-          color: '#c4e889'
+          size: [40, 45],
+          color: '#e9cdf6'
         },
         {
-          x: '480',
-          y: '320',
-          nodeName: '天线驱动单元',
+          x: '250',
+          y: '25',
+          nodeName: '天线驱动单元  ',
           img: 'rect',
-          size: [180, 50],
+          size: [110, 30],
           color: 'rgb(202,196,185)'
         },
 
 
 
 //--------------------------------卫通信道分系统
+
+        //-------------------down_lc上变频器---------
         {
-          mark:'卫通信道分系统',
-          x: '1020',
-          y: '730',
-          nodeName: '卫通信道分系统                                                                                                                               \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
+          x: '490',//310  120
+          y: '480',//270  220
+          nodeName: ' L-C       \n   上变频器A     ',
           img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [640, 680],
+          size: [70, 30],
+          color: '#b1f83c'
         },
-        //L-Ku 上变频器
         {
-          x: '850',
-          y: '680',
-          nodeName: 'L-Ku \n上变频器 \n\n\n\nL-Ku \n上变频器',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [180, 110]
+          x: '470',
+          y: '450',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
         },
-        //L-Ku 下变频器
+        {
+          x: '510',
+          y: '450',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '540',
+          y: '450',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '440',
+          y: '450',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '490',
+          y: '420',
+          nodeName: ' L-C       \n   上变频器B     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
+        },
+
+
+        //-------------------up_cl下---------
+        {
+          x: '490',
+          y: '365',
+          nodeName: ' C-L       \n   下变频器A     ',
+          img: 'rect',
+          size: [70, 30],
+          color: '#b1f83c'
+        },
+        {
+          x: '510',
+          y: '335',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '470',
+          y: '335',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '540',
+          y: '335',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '440',
+          y: '335',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '490',
+          y: '305',
+          nodeName: ' C-L       \n   下变频器B     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
+        },
+
+
+
+        //-------------------down l-KU上---------
+        {
+          x: '490',
+          y: '240',
+          nodeName: ' L-ku       \n   上变频器A     ',
+          img: 'rect',
+          size: [70, 30],
+          color: '#b1f83c'
+        },
+        {
+          x: '510',
+          y: '210',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '470',
+          y: '210',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '540',
+          y: '210',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '440',
+          y: '210',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '490',
+          y: '180',
+          nodeName: ' L-ku       \n   上变频器B     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
+        },
+
+        //-------------------down ku-l下---------
+        {
+          x: '490',
+          y: '140',
+          nodeName: ' Ku-L       \n   下变频器A     ',
+          img: 'rect',
+          size: [70, 30],
+          color: '#b1f83c'
+        },
+        {
+          x: '510',
+          y: '110',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '470',
+          y: '110',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '540',
+          y: '110',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '440',
+          y: '110',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '490',
+          y: '80',
+          nodeName: ' Ku-L       \n   下变频器B     ',
+          img: 'rect',
+          size: [70, 30],
+          color: 'rgba(184,181,181)'
+        },
 
         {
-          x: '850',
-          y: '520',
-          nodeName: 'Ku-L \n下变频器 \n\n\n\nKu-L \n下变频器',
-          img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [180, 110]
-        },
-        //C-L 下变频器
-        {
-          x: '850',
-          y: '920',
-          nodeName: 'C-L \n下变频器 \n\n\n\nC-L \n下变频器',
-          img: 'image://' + require('@/assets/images/home/up_trans.png'),
-          size: [180, 110]
-        },
-        //L-C上变频器
-        {
-          x: '850',
-          y: '1080',
-          nodeName: 'L-C \n上变频器 \n\n\n\nL-C \n上变频器',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [180, 110]
-        },
-
-        {
-          x: '850',
-          y: '320',
-          nodeName: '天线控制单元',
+          x: '600',
+          y: '25',
+          nodeName: '天线控制单元   ',
           img: 'rect',
-          size: [180, 60],
+          size: [110, 30],
           color: 'rgb(202,196,185)'
         },
         {
-          x: '1050',
-          y: '800',
+          x: '620',
+          y: '280',
           nodeName: 'L\n\n波\n\n段\n\n中\n\n频\n\n矩\n\n阵\n',
           img: 'rect',
-          size: [60, 580],
+          size: [30, 400],
           color: '#c4e889'
         },
 
         {
-          x: '1250',
-          y: '1040',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n',
+          x: '750',
+          y: '400',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
-          size: [160, 200],
+          size: [120, 140],
           category: 1,
           color: 'rgb(214,188,169)'
         },
         {
-          x: '1250',
-          y: '1100',
-          nodeName: '2300调制解调器',
+          x: '750',
+          y: '430',
+          nodeName: '2300调制解调器   ',
           img: 'rect',
-          size: [120, 30],
+          size: [110, 25],
+          color: '#b1f83c',
+          category: 2
+        },
+        {
+          x: '750',
+          y: '390',
+          nodeName: '1:1转换单元    ',
+          img: 'rect',
+          size: [110, 25],
           color: 'white',
           category: 2
         },
         {
-          x: '1250',
-          y: '1030',
-          nodeName: '1:1转换单元',
+          x: '750',
+          y: '350',
+          nodeName: '2300调制解调器   ',
           img: 'rect',
-          size: [120, 30],
-          color: 'white',
+          size: [110, 25],
+          color: 'rgba(184,181,181)',
           category: 2
         },
+
         {
-          x: '1250',
-          y: '960',
-          nodeName: '2300调制解调器',
-          img: 'rect',
-          size: [120, 30],
-          color: 'white',
-          category: 2
-        },
-        {
-          x: '1250',
-          y: '620',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n\n\n',
+          x: '750',
+          y: '220',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
-          size: [160, 200],
+          size: [120, 140],
+          category: 1,
           color: 'rgb(214,188,169)'
         },
         {
-          x: '1250',
-          y: '680',
-          nodeName: '2300调制解调器',
+          x: '750',
+          y: '250',
+          nodeName: '2300调制解调器   ',
           img: 'rect',
-          size: [120, 30],
+          size: [110, 25],
+          color: '#b1f83c',
+          category: 2
+        },
+        {
+          x: '750',
+          y: '210',
+          nodeName: '1:1转换单元    ',
+          img: 'rect',
+          size: [110, 25],
           color: 'white',
           category: 2
         },
         {
-          x: '1250',
-          y: '610',
-          nodeName: '1:1转换单元',
+          x: '750',
+          y: '180',
+          nodeName: '2300调制解调器   ',
           img: 'rect',
-          size: [120, 30],
-          color: 'white',
+          size: [110, 25],
+          color: 'rgba(184,181,181)',
           category: 2
         },
         {
-          x: '1250',
-          y: '540',
-          nodeName: '2300调制解调器',
-          img: 'rect',
-          size: [120, 30],
-          color: 'white',
-          category: 2
-        },
-        {
-          x: '1250',
-          y: '400',
+          x: '750',
+          y: '100',
           nodeName: 'L频段跟踪接收机',
           img: 'rect',
-          size: [180, 60],
+          size: [110, 30],
           color: 'rgb(206,215,209)'
         },
-//--------------------------------业务承载网分系统
-        {
-          mark:'业务承载网分系统',
-          x: '1550',
-          y: '700',
-          nodeName: '业务承载网分系统\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [330, 750],
-        },
-        {
-          mark:'信息安全分系统',
-          x: '1550',
-          y: '700',
-          nodeName: '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n信息安全分系统',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [160, 470],
-        },
-        {
-          mark:'路由器2',
-          x: '1420',
-          y: '750',
-          nodeName: '路\n\n由\n\n器\n\n2',
-          img: 'rect',
-          size: [40, 540],
-        },
-        {
-          mark:'保密机2',
-          x: '1510',
-          y: '750',
-          nodeName: '保\n\n密\n\n机\n\n2',
-          img: 'rect',
-          size: [40, 350],
-        },
-        {
-          mark:'多功能网络防护设备',
-          x: '1590',
-          y: '750',
-          nodeName: '多\n功\n能\n网\n络\n防\n护\n设\n备',
-          img: 'rect',
-          size: [40, 350],
-        },
 
-        {
-          mark:'接入交换机2',
-          x: '1680',
-          y: '920',
-          nodeName: '接\n入\n交\n换\n机\n2',
-          img: 'rect',
-          size: [40, 320],
-        },
-        {
-          mark:'接入交换机2',
-          x: '1680',
-          y: '410',
-          nodeName: '接\n入\n交\n换\n机\n2\n（备）',
-          img: 'rect',
-          size: [40, 320],
-        },
-        //------------------------时间统一分系统
-        {
-          mark:'时间统一分系统',
-          x: '2040',
-          y: '1150',
-          nodeName: '时间统一分系统\n\n\n\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [550, 180],
-        },
-        {
-          mark:'时间统一设备',
-          x: '1880',
-          y: '1140',
-          nodeName: '时间统一设备',
-          img: 'rect',
-          size: [150, 110],
-        },
-
-        {
-          mark:'B（AC）,B（DC）',
-          x: '2150',
-          y: '1180',
-          nodeName: 'B（AC）,B（DC）',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2150',
-          y: '1140',
-          nodeName: '10M,5M',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2150',
-          y: '1100',
-          nodeName: '北斗/GPS天线',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2150',
-          y: '1060',
-          nodeName: '长波天线',
-          img: 'rect',
-          size: [150, 20],
-        },
-        //------------------------通信业务分系统
-        {
-          mark:'通信业务分系统',
-          x: '2040',
-          y: '840',
-          nodeName: '                                                                                                           通信业务分系统\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [550, 240],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '980',
-          nodeName: '通信业务服务器',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2050',
-          y: '980',
-          nodeName: '普通电话X10',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2050',
-          y: '940',
-          nodeName: '高标清视频编码X4',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2250',
-          y: '940',
-          nodeName: '光学图像X3+X1',
-          img: 'rect',
-          size: [120, 20],
-        },
-
-
-        {
-          mark:'',
-          x: '2050',
-          y: '900',
-          nodeName: '多格式视频编码X2',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2250',
-          y: '900',
-          nodeName: '视频切换设备',
-          img: 'rect',
-          size: [120, 20],
-        },
-
-
-        {
-          mark:'',
-          x: '2050',
-          y: '820',
-          nodeName: 'IP电话单机X4',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2250',
-          y: '820',
-          nodeName: '显示器X2',
-          img: 'rect',
-          size: [120, 20],
-        },
-
-
-        {
-          mark:'',
-          x: '1840',
-          y: '940',
-          nodeName: 'IP调度单机X10',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '900',
-          nodeName: '高清网络摄像机X3',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '860',
-          nodeName: '操作维护终端X2',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '820',
-          nodeName: 'IP语音网关',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '780',
-          nodeName: 'IP语音网关',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '740',
-          nodeName: '会商终端',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '700',
-          nodeName: '录音录像服务器',
-          img: 'rect',
-          size: [150, 20],
-        },
-
-        //------------------------业务承载网分系统
-        {
-          mark:'业务承载网分系统',
-          x: '2040',
-          y: '625',
-          nodeName: '业务承载网分系统\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [550, 50],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '620',
-          nodeName: '网络测试设备',
-          img: 'rect',
-          size: [150, 20],
-        },
-
-        //------------------------信息安全分系统
-        {
-          mark:'信息安全分系统',
-          x: '2040',
-          y: '490',
-          nodeName: '信息安全分系统\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [550, 130],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '540',
-          nodeName: '指纹仪、TF卡X10',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '500',
-          nodeName: '安全运维终端',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '460',
-          nodeName: '安全网管服务器',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '420',
-          nodeName: '操作管理平台',
-          img: 'rect',
-          size: [150, 20],
-        },
-        //------------------------通信网络管理分系统
-        {
-          mark:'通信网络管理分系统',
-          x: '2040',
-          y: '300',
-          nodeName: '通信网络管理分系统\n\n\n\n\n\n',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [550, 120],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '360',
-          nodeName: '通信网管服务器',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '320',
-          nodeName: '串口服务器',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '2100',
-          y: '320',
-          nodeName: '串口设备监控信息',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '280',
-          nodeName: '通信网管客户机',
-          img: 'rect',
-          size: [150, 20],
-        },
-        {
-          mark:'',
-          x: '1840',
-          y: '240',
-          nodeName: '其它设备监控信息',
-          img: 'rect',
-          size: [150, 20],
-        },
-
-
-        //------------------------供电分系统
-        {
-          mark:'供电分系统',
-          x: '1970',
-          y: '60',
-          nodeName: '\n\n\n\n\n\n\n                                                                                                     供电分系统',
-          img: 'rect',
-          color:'white',
-          border:'dotted',
-          id:1,
-          size: [700, 130],
-        },
-        {
-          mark:'',
-          x: '1720',
-          y: '120',
-          nodeName: '配电及控保单元',
-          img: 'rect',
-          size: [160, 40],
-        },
-        {
-          mark:'',
-          x: '1950',
-          y: '120',
-          nodeName: 'UPS',
-          img: 'rect',
-          size: [160, 40],
-        },
-        {
-          mark:'',
-          x: '1950',
-          y: '0',
-          nodeName: '市电',
-          img: 'rect',
-          size: [160, 30],
-        },
-
-        {
-          mark:'',
-          x: '2200',
-          y: '120',
-          nodeName: '1:1油机',
-          img: 'rect',
-          size: [160, 40],
-        },
-        // {
-        //   x: '330',
-        //   y: '680',
-        //   nodeName: '维修仓',
-        //   size: 0
-        // }
       ]
       var charts = {
         nodes: [],
@@ -720,7 +534,7 @@ export default {
           {
             mark: '设备->天线驱动单元',
             name: '',
-            coords: [ [50, 720],[50, 320], [370, 320]],
+            coords: [ [100, 210],[600, 210]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -813,7 +627,7 @@ export default {
             }
           },
           {
-            mark: 'lc上变频器-》ka发射机',
+            mark: 'lc上变频器器-》ka发射机',
             name: '',
             coords: [[760, 1080], [530, 1080]],
             lineStyle: {
@@ -826,7 +640,7 @@ export default {
             }
           },
           {
-            mark: 'l ku上变频器->ku 发射机',
+            mark: 'l ku上变频器器->ku 发射机',
             name: '',
             coords: [[760, 680], [570, 680]],
             lineStyle: {
@@ -839,7 +653,7 @@ export default {
             }
           },
           {
-            mark: 'L波段中频矩阵 上行->L-c上变频器',
+            mark: 'L波段中频矩阵 上行->L-c上变频器器',
             name: '',
             coords: [[1010, 1080], [950, 1080]],
             lineStyle: {
@@ -852,7 +666,7 @@ export default {
             }
           },
           {
-            mark: 'L波段中频矩阵 上行->L-ku 上变频器',
+            mark: 'L波段中频矩阵 上行->L-ku 上变频器器',
             name: '',
             coords: [[1010, 680], [950, 680]],
             lineStyle: {
@@ -1074,7 +888,7 @@ export default {
             }
           },
           {
-            mark: 'ka lwa ->ka-c下变频器',
+            mark: 'ka lwa ->ka-c下变频器器',
             name: '',
             coords: [[470, 920], [500, 920]],
             lineStyle: {
@@ -1087,7 +901,7 @@ export default {
             }
           },
           {
-            mark: 'lna -> ku-l下变频器',
+            mark: 'lna -> ku-l下变频器器',
             name: '',
             coords: [[530, 520], [750, 520]],
             lineStyle: {
@@ -1100,7 +914,7 @@ export default {
             }
           },
           {
-            mark: ' ku-l下变频器 -》L波段中频矩阵下行',
+            mark: ' ku-l下变频器器 -》L波段中频矩阵下行',
             name: '',
             coords: [[950, 520], [1010, 520]],
             lineStyle: {
@@ -1113,7 +927,7 @@ export default {
             }
           },
           {
-            mark: 'ka c下变频器->cl下变频器',
+            mark: 'ka c下变频器器->cl下变频器器',
             name: '',
             coords: [[700, 920], [750, 920]],
             lineStyle: {
@@ -1152,19 +966,6 @@ export default {
             }
           },
 
-          {
-            mark: '路由器2 -》调制解调器上',
-            name: '',
-            coords: [[1390, 1080], [1340, 1080]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
 
 
           {
@@ -1180,796 +981,51 @@ export default {
               color: '#dc6414'
             }
           },
-          {
-            mark: '路由器2 - 》调制解调器 下-》',
-            name: '',
-            coords: [[1390, 680], [1340, 680]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '保密机=》路由器2-》保密机-》',
-            name: '',
-            coords: [[1490, 700], [1440, 700]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '多功能=》保密机-》-》',
-            name: '',
-            coords: [[1570, 700], [1530, 700]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '接入交换机 备用 - 》多功能-》',
-            name: '',
-            coords: [[1660, 550], [1610, 550]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '接入交换机 主用 - 》多功能-》',
-            name: '',
-            coords: [[1660, 950], [1610, 950]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
 
+        ],
+        dottedLines:[
           {
-            mark: '接入交换机 主用 - 》多功能-》',
+            mark: '天线座',
             name: '',
-            coords: [[1670, 700], [1670, 640]],
+            coords: [ [150, 500],[400, 500],[400,280],[150,280],[150,500]],
             lineStyle: {
               normal: {
-                color: '#dc6414'
+                color: '#020202'
               }
-            },
-            effect: {
-              color: '#dc6414'
             }
           },
           {
-            mark: '时间统一设备 - 》主交换机-》',
+            mark: '维修仓',
             name: '',
-            coords: [[1800, 1140], [1700, 1140]],
+            coords: [ [150, 270],[400, 270],[400,150],[150,150],[150,270]],
             lineStyle: {
               normal: {
-                color: '#dc6414'
+                color: '#020202'
               }
-            },
-            effect: {
-              color: '#dc6414'
             }
           },
           {
-            mark: '时间统一设备 - 》BAC BDC',
+            mark: '天线座',
             name: '',
-            coords: [[1960, 1180], [2070, 1180]],
+            coords: [ [150, 140],[400, 140],[400,0],[150,0],[150,140]],
             lineStyle: {
               normal: {
-                color: '#143fdc'
+                color: '#020202'
               }
-            },
-            effect: {
-              color: '#143fdc'
             }
           },
           {
-            mark: '时间统一设备 - 》10M 5M',
+            mark: '卫通信道分系统',
             name: '',
-            coords: [[1960, 1140], [2070, 1140]],
+            coords: [ [410, 500],[820, 500],[820,0],[410,0],[410,500]],
             lineStyle: {
               normal: {
-                color: '#143fdc'
+                color: '#020202'
               }
-            },
-            effect: {
-              color: '#143fdc'
             }
           },
-          {
-            mark: '北斗-》时间统一设备',
-            name: '',
-            coords: [[2070, 1100], [2030, 1100],[2030, 1080],[1960, 1080]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '北斗-》时间统一设备',
-            name: '',
-            coords: [[2070, 1060], [2030, 1060],[2030, 1080],[1960, 1080]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,980],[1760,980]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,980],[1700,980]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,940],[1760,940]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,940],[1700,940]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,900],[1760,900]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,900],[1700,900]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,860],[1760,860]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,860],[1700,860]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,820],[1760,820]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,820],[1700,820]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,780],[1760,780]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,780],[1700,780]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,740],[1760,740]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,740],[1700,740]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1700,700],[1760,700]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1760,700],[1700,700]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1920,980],[1945,980],[1945,940],[1970,940]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1920,980],[1945,980],[1945,900],[1970,900]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1920,980],[1970,980]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1970,980],[1920,980]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1920,820],[1970,820]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '接入交换机-》通信分系统',
-            name: '',
-            coords: [[1970,820],[1920,820]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '光学图像-》高标清视频',
-            name: '',
-            coords: [[2190,940],[2130,940]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[2130,900],[2190,900]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[2190,900],[2130,900]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[2200,880],[2200,830]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[2200,830],[2200,880]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-
-
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[1760,620],[1700,620]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '视频切换-》多格式视频',
-            name: '',
-            coords: [[1700,620],[1760,620]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-
-
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1760,540],[1700,540]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1700,540],[1760,540]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1760,500],[1700,500]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1700,500],[1760,500]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1760,460],[1700,460]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1700,460],[1760,460]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1760,420],[1700,420]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》信息安全分系统',
-            name: '',
-            coords: [[1700,420],[1760,420]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1760,360],[1700,360]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1700,360],[1760,360]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1760,320],[1700,320]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1700,320],[1760,320]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1760,280],[1700,280]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1700,280],[1760,280]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1760,240],[1700,240]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1700,240],[1760,240]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-
-          {
-            mark: '交换机备用-》通信网络管理分系统',
-            name: '',
-            coords: [[1920,320],[2020,320]],
-            lineStyle: {
-              normal: {
-                color: '#dc6414'
-              }
-            },
-            effect: {
-              color: '#dc6414'
-            }
-          },
-
-
-
-          {
-            mark: '市电-》UPS',
-            name: '',
-            coords: [[1950,30],[1950,90]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc'
-              }
-            },
-            effect: {
-              color: '#143fdc'
-            }
-          },
-        ]
+        ],
+        polyLines:[]
       }
       for (var j = 0; j < nodes.length; j++) {
         var x = parseInt(nodes[j].x)
@@ -2000,33 +1056,30 @@ export default {
         charts.nodes.push(node)
       }
       var option = {
-        grid: {
-          left: '3%',
-          right: '8%',
-          top:'5%'
-        },
+        grid:  {left: '10',bottom:'15',top:'5',right:'5'},
         xAxis: {
           min: 0,
-          max:2210,
+          max:830,
           show: false,
           type: 'value'
         },
         yAxis: {
           min: 0,
-          max:1250,
+          max:510,
           show: false,
           type: 'value'
         },
         series: [{
           type: 'graph',
           coordinateSystem: 'cartesian2d',
+          z:4,
           label: {
             normal: {
               show: true,
               position: 'inside',
               //offset: [0,-60],//居上 20
               textStyle: {
-                fontSize: 14,
+                fontSize: 12,
                 color: 'black',
 
               }
@@ -2044,12 +1097,13 @@ export default {
           },
           data: charts.nodes,
         },
+          //正常折线
           {
             type: "lines",
             coordinateSystem: "cartesian2d",
             polyline: true,
             symbol: ['none', 'none'],
-            zlevel: 1,
+            z:3,
             symbolSize: 6,
 
             label: {
@@ -2059,7 +1113,7 @@ export default {
             lineStyle: {
               normal: {
                 color: 'green',
-                width: 1.5,
+                width: 1,
                 opacity: 1,
                 curveness: 0
               }
@@ -2069,10 +1123,66 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 6
+              symbolSize: 4
             },
             data: charts.linesData
-          }]
+          },
+          //虚线框
+          {
+            type: "lines",
+            coordinateSystem: "cartesian2d",
+            polyline: true,
+            symbol: ['none', 'none'],
+            z:2,
+            symbolSize: 6,
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              type: [5, 10],
+              dashOffset: 5,
+              color: 'green',
+              // normal: {
+              //   color: 'green',
+              //   width: 1,
+              //   opacity: 1,
+              //   curveness: 0
+              // }
+            },
+            data: charts.dottedLines
+          },
+          //功放组图线条
+          {
+            type: "lines",
+            coordinateSystem: "cartesian2d",
+            polyline: true,
+            symbol: ['none', 'none'],
+            z:1,
+            symbolSize: 6,
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+
+              normal: {
+                color: 'green',
+                width: 1,
+                opacity: 1,
+                curveness: 0
+              }
+            },
+            effect: {
+              show: true,
+              trailLength: 0.1,
+              symbol: 'arrow',
+              color: '#87e2ef',
+              symbolSize: 4
+            },
+            data: charts.polyLines
+          },
+          ]
       }
       var that = this
       this.dom.on('mouseover', function (e) {
@@ -2091,7 +1201,111 @@ export default {
 </script>
 <style>
 .charts {
-  height:1000px;
-  width: 2400px;
+  height: 518px;
+  width: 830px;
+  border:1px solid red
+}
+</style>
+<style lang="less" scoped>
+/* 设置动画前颜色 */
+.point-flicker:after {
+  background-color: #ffbe08;
+}
+
+/* 设置动画后颜色 */
+.point-flicker:before {
+  background-color: rgba(255, 190, 8, 0.2);
+}
+
+/* 设置动画 */
+.point-flicker:before,
+.point-flicker:after {
+  content: '';
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  animation: warn 1.5s ease-out 0s infinite;
+}
+
+/* @keyframes 规则用于创建动画。在 @keyframes 中规定某项 CSS 样式，就能创建由当前样式逐渐改为新样式的动画效果。 */
+@keyframes warn {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+
+.legend {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+
+  .legend_status {
+    margin-top: -8px;
+    //display: flex;
+    //flex-direction: row;
+    margin-right: 10px;
+    align-items: center;
+
+    &:first-child {
+      margin-right: 10px;
+
+      span {
+        border: 2px solid;
+      }
+    }
+
+    span {
+      display: inline-block;
+      background: #ccc;
+      height: 16px;
+      width: 16px;
+      margin-right: 5px;
+    }
+
+    .circle {
+      border-radius: 50%;
+    }
+  }
+
+}
+
+.device_title {
+  cursor: pointer;
+  margin-top: -27px;
+  z-index: 999;
+  position: relative;
+  span {
+    display: inline-block;
+    background: #009688;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+}
+.device_status {
+  margin-top: -27px;
+  z-index: 100;
+  position: relative;
+  span {
+    display: inline-block;
+    background: #009688;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
 }
 </style>
