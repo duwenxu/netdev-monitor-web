@@ -1,0 +1,370 @@
+<template>
+  <div class="content-box">
+    <Row>
+      <Col :xs="24" :sm="24" :md="24" :lg="24">
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增
+        </Button>
+        <search :search-data='searchData'></search>
+      </Col>
+      <Col :xs="24" :sm="24" :md="24" :lg="24">
+        <Table :columns="columns1" :data="infos"></Table>
+        <div class="text-right page">
+          <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
+                :page-size-opts='otherPage.pageSize'
+                show-elevator @on-change='changePage'
+                @on-page-size-change='skipPage'></Page>
+        </div>
+      </Col>
+    </Row>
+    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+      <operate-row></operate-row>
+    </Modal>
+
+    <Modal v-model="transModal" width="800" title="绑定设备" footer-hide :mask-closable="false">
+      <trans left-name="未绑定设备" right-name="绑定设备"></trans>
+    </Modal>
+  </div>
+</template>
+
+<script>
+  import {
+    queryTruckInfoPageList,
+    deleteTruckInfo,
+    getUnlinkedDevs,
+    getLinkedDevs,
+    editTruckInfo
+  } from '@/api/monitor/TruckInfo'
+  import search from '@/components/tables/search'
+  import operateRow from './operate'
+  import trans from '@/components/tables/trans'
+  import {queryPrtclFormatAllList} from '@/api/monitor/PrtclFormat'
+
+  export default {
+    components: {
+      search,
+      operateRow,
+      trans
+    },
+    data() {
+      return {
+        operateModal: false,
+        name: '',
+        columns1: [
+          {
+            title: '卫通车名称',
+            key: 'truckName',
+            minWidth: 200,
+          },
+          {
+            title: '卫通车类型',
+            key: 'truckType_paraName',
+            minWidth: 190,
+          },
+          {
+            title: '卫通车所属机构',
+            key: 'truckDept',
+            minWidth: 200,
+          },
+          {
+            title: '卫通车状态',
+            key: 'truckStatus_paraName',
+            minWidth: 100,
+          },
+          {
+            title: '操作',
+            key: 'action',
+            width: 240,
+            fixed: 'right',
+            align: 'center',
+            render: (h, rows) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    icon: 'md-create',
+                    type: 'primary'
+                  },
+                  attrs: {
+                    title: '编辑'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.operate(rows.row)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    icon: 'ios-browsers-outline',
+                    type: 'success'
+                  },
+                  attrs: {
+                    title: '选择设备'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    display: true
+                  },
+                  on: {
+                    click: () => {
+                      this.editParam(rows.row.truckId)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    icon: 'md-trash',
+                    type: 'error'
+                  },
+                  attrs: {
+                    title: '删除'
+                  },
+                  on: {
+                    click: () => {
+                      this.delete(rows.row.truckId)//id需要修改
+                    }
+                  }
+                })
+              ])
+            }
+          }
+        ],
+        infos: [],
+        searchData: [//搜索框根据需要自定义添加
+          {
+            type: 2,
+            key: 'truckType',
+            name: '卫通车类型',
+            value: '',
+            data: [],
+            placeholder: '卫通车类型'
+          }
+        ],
+        search: {
+          devType: '',
+        },
+        page: {
+          current: 1,
+          size: 8
+        },
+        otherPage: {
+          total: 0,
+          pageSize: [10, 20, 30]
+        },
+        transModal: false,
+        prtclList: [],   //协议列表
+        eventInfos: {
+          itfId: ''
+        },
+      }
+    },
+    created: function () {
+      this.$xy.vector.$on('closeModal', this.closeModal)
+      this.$xy.vector.$on('sendReq', this.sendReq)
+      this.$xy.vector.$on('closeTrans', this.closeTrans)
+      this.$xy.vector.$on('saveTrans', this.saveTrans)
+    },
+    beforeDestroy: function () {
+      this.$xy.vector.$off('closeModal', this.closeModal)
+      this.$xy.vector.$off('sendReq', this.sendReq)
+      this.$xy.vector.$off('closeTrans', this.closeTrans)
+      this.$xy.vector.$off('saveTrans', this.saveTrans)
+    },
+    mounted() {
+      this.init();
+    },
+    methods: {
+      rowClassName(row, index) {
+        return 'demo-table-info-row'
+      },
+      closeModal() {
+        this.operateModal = false
+        this.doQuery();
+      },
+      sendReq: function (obj) {
+        this.search = Object.assign(this.search, obj)
+        this.init()
+      },
+      async init() {
+        this.page.current = 1;
+        this.doQuery();
+        this.getInterTypeList();
+        this.getPrtclList();
+      },
+      async doQuery() {
+        let searchAll = this.page
+        searchAll = Object.assign(searchAll, this.search)
+        let {result, success, message} = await queryTruckInfoPageList(searchAll)
+        if (success) {
+          this.infos = result.records
+          this.page.current = result.current ? result.current : result.current + 1
+          this.otherPage.total = result.total
+        } else {
+          let notice = this.$Notice;
+          notice.error({
+            title: '失败',
+            desc: message,
+            duration: 3
+          })
+        }
+        ;
+      },
+      skipPage: function (page) {
+        this.page.current = page
+        this.doQuery()
+      },
+      changePage(page) {
+        this.page.current = page
+        this.doQuery()
+      },
+      delete(id) {
+        let that = this
+        let modal = that.$Modal;
+        let notice = that.$Notice;
+        modal.confirm({
+          title: '你确定要删除这条设备接口吗?',
+          content: '删除后将无法撤销！',
+          onOk: () => {
+            that.deleteData(id)
+          },
+          onCancel: () => {
+            notice.warning({
+              title: '取消',
+              desc: '已取消！',
+              duration: 3
+            })
+          }
+        })
+      },
+      async deleteData(id) {
+        let {data, code, msg} = await deleteTruckInfo(id)
+        let notice = this.$Notice;
+        if (code == 200) {
+          notice.success({
+            title: '成功',
+            desc: '删除成功！',
+            duration: 3
+          })
+          this.doQuery();
+        } else {
+          notice.error({
+            title: '失败',
+            desc: msg,
+            duration: 3
+          })
+        }
+      },
+      operate(TruckInfo) {
+        this.name = TruckInfo == null ? '添加设备接口' : '编辑设备接口'
+        this.operateModal = true
+        this.$xy.vector.$emit('operateRow', TruckInfo)
+      },
+      //编辑弹出窗口关闭按钮触发方法
+      closeModal() {
+        this.operateModal = false
+        this.doQuery();
+      },
+      //绑定弹出窗口关闭按钮触发方法
+      closeTrans() {
+        this.transModal = false;
+        this.doQuery()
+      },
+      //绑定参数
+      async editParam(id) {
+        this.transModal = true;
+        this.eventInfos.itfId = id;
+        this.getUnLinkedDev(id);
+        this.getLinkedDev(id);
+      },
+      //查询未绑定参数
+      async getUnLinkedDev(id) {
+        let {result, success, msg} = await getUnlinkedDevs(id);
+        if (success) {
+          this.leftInfos = result;
+          this.$xy.vector.$emit('initLeft', {leftInfos: this.leftInfos})
+        }
+      },
+      //查询绑定参数
+      async getLinkedDev(id) {
+        let {result, success, msg} = await getLinkedDevs(id);
+        if (success) {
+          this.rightInfos = result;
+          this.$xy.vector.$emit('initRight', {rightInfos: this.rightInfos})
+        }
+      },
+      //保存绑定的数据格式：设备参数
+      saveTrans: async function (obj) {
+        var params = '';
+        if (obj.length > 0) {
+          obj.forEach(trans => {
+            params = params + trans.id + ",";
+          })
+          //剔除掉最后一个逗号
+          //params = params.substr(0,params.length-1)
+        }
+        var devInter = {
+          itfId: this.eventInfos.itfId,
+          itfDataFormat: params
+        };
+        let {result, success, message} = await editTruckInfo(devInter);
+        if (success) {
+          this.transModal = false;
+          this.$Notice.success({
+            title: '成功',
+            desc: message,
+            duration: 3
+          });
+        }
+        this.init();
+      },
+      //查询接口类型
+      async getInterTypeList() {
+        this.$xy.getParamGroup('0020').then(res => {
+          this.searchData[0].data = res
+        })
+      },
+      //查询协议列表
+      async getPrtclList() {
+        let that = this
+        let {result, success, message} = await queryPrtclFormatAllList()
+        if (success) {
+          that.prtclList = result
+        }
+      },
+      //协议id和名称转换
+      handlerPrtFomat(prtId) {
+        let lists = this.prtclList
+        for (var value in lists) {
+          if (lists[value].fmtId == prtId) {
+            return lists[value].fmtName
+          }
+        }
+        return ''
+      },
+      //子接口查看
+      subItfFrameList(obj) {
+        this.$router.push(
+          {
+            path: '/monitor/subTruckInfo',
+            query: {
+              itfId: obj.itfId,
+              devType: obj.devType
+            }
+          }
+        )
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .text-right {
+    text-align: right;
+  }
+
+  .page {
+    margin-top: 5px;
+  }
+</style>
