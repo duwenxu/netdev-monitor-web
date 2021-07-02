@@ -1,9 +1,7 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-
       <div class="device_status" :style="devicePosition(equipment)">
-
         <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
       </div>
       <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
@@ -16,10 +14,10 @@
       </div>
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="800" :mask-closable="false">
-      <div slot="header"><span>参数信息</span>
-        <Button style="float: right" size="small" @click="confirm">关闭</Button>
-      </div>
+           width="850" :mask-closable="false">
+<!--      <div slot="header"><span>参数信息</span>-->
+<!--        <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
+<!--      </div>-->
       <DeviceMain></DeviceMain>
     </Modal>
   </div>

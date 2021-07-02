@@ -15,8 +15,8 @@
         <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
         <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
       </div>
-      <div :style="{height:220+'px',overflow:'auto'}">
-        <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs"></Table>
+      <div  :style="{height:200+'px',overflow:'auto'}">
+        <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs" ></Table>
         <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
       </div>
   </div>
@@ -47,8 +47,8 @@ export default {
   data() {
     return {
       devNo: null,
-      showLog: false,
-      showAlert: true,
+      showLog: true,
+      showAlert: false,
       wsurl: 'ws://' + this.$xy.SOCKET_URL + '/ws',
       ctrl_socket: null,
       logSocket: null,
@@ -64,17 +64,17 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width: 200,
+          width: 180,
           key: 'logTime',
         },
         {
-          title: '访问类型名称',
-          width: 120,
+          title: '访问类型',
+          width: 100,
           key: 'logAccessTypeName',
         },
         {
-          title: '操作类型名称',
-          width: 120,
+          title: '操作类型',
+          width: 100,
           key: 'logOperTypeName',
         },
         {
@@ -83,20 +83,22 @@ export default {
           key: 'logCmdMark',
         },
         {
-          title: '操作对象名称',
-          width: 200,
+          title: '操作对象',
+          // width: 180,
+          width: 100,
           key: 'logOperObjName',
+          tooltip: true,
         },
         {
-          title: '操作内容',
+          title: '内容',
           key: 'logOperContent',
-
           tooltip: true,
         },
         {
           title: '原始数据',
-
+          width: 100,
           key: 'orignData',
+          tooltip: true,
         },
       ],
       logs: [],
@@ -276,6 +278,8 @@ export default {
     },
     getWarnLog(frame) {
       let msg = JSON.parse(frame.data)
+      this.showAlert = true
+      this.showLog = false
       this.alertInfos = msg
     },
   }

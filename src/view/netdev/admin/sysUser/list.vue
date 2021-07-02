@@ -57,11 +57,6 @@
             minWidth: 100
           },
           {
-            title: '用户类型',
-            key: 'userType_paraName',
-            minWidth: 100
-          },
-          {
             title: '用户手机号',
             key: 'userPhone',
             minWidth: 140
@@ -163,7 +158,7 @@
         current: 1,
         page: {
           current: 1,
-          size: 10
+          size: 8
         },
         otherPage: {
           total: 0,
@@ -288,6 +283,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>

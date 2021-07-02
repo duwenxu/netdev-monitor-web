@@ -17,7 +17,7 @@
     </div>
     <div class="sub-wrap" v-if="combineList.length">
       <div v-for="info in combineList">
-        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
     </div>
@@ -44,8 +44,8 @@ export default {
   data() {
     return {
         orderSwitch:true,
-      orderHeight: 360,
-      normalHeight: 450,
+      orderHeight: 160,
+      normalHeight: 250,
       devNo: null,
       paramSocket: null,
       logSocket: null,
@@ -881,11 +881,11 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.orderHeight = 360
-        this.normalHeight = 450
+        this.orderHeight = 160
+        this.normalHeight = 250
       } else {
-        this.orderHeight = 580
-        this.normalHeight = 680
+        this.orderHeight = 380
+        this.normalHeight = 400
       }
     },
     initWebSocket() { //初始化weosocket
@@ -956,13 +956,11 @@ export default {
             }
           }
         }
-
-
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText)
-    },
+      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
+         },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
@@ -995,6 +993,7 @@ export default {
           paraValStep: null,
           paraSimpleDatatype: v.paraSimpleDatatype,
           paraStrLen: v.paraStrLen,
+          subList:[],
         })
         saveOffset = offset
         if (v.subParaList.length) {
@@ -1013,7 +1012,7 @@ export default {
           v.splitArr.forEach(x => {
             if (n.paraCode == x.name) {
               if (n.spinnerInfoList) {
-                x.subList = n.spinnerInfoList || []
+                x.subList = n.spinnerInfoList
               }
             }
           })
@@ -1104,7 +1103,7 @@ export default {
 
 .param-wrap {
   border: 1px solid #009688;
-  height: 450px;
+  height: 250px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;

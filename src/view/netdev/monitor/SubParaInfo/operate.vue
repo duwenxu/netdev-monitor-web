@@ -66,12 +66,12 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最小值" prop="ndpaValMin">
+          <FormItem label="最小值1" prop="ndpaValMin1">
             <Input v-model="ParaInfo.ndpaValMin1" placeholder="请输入最小值"></Input>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="最大值" prop="ndpaValMax">
+          <FormItem label="最大值1" prop="ndpaValMax1">
             <Input v-model="ParaInfo.ndpaValMax1" placeholder="请输入最大值"></Input>
           </FormItem>
         </Col>

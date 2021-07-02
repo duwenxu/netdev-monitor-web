@@ -1,93 +1,82 @@
 <template>
-  <div style="height:100%;padding: 10px 10px">
+  <div class="content-box">
     <Row>
       <Col :xs="24" :sm="24" :md="24" :lg="20">
         <search :search-data='searchData'></search>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="4">
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 800px" type="primary"
+                @click="operate()">新增
+        </Button>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-        <Table  :columns="columns1" :data="infos"></Table>
+        <Table :columns="columns1" :data="infos"></Table>
         <div class="text-right page">
-          <Page :current.sync="current" :total="otherPage.total" :page-size='page.size'
+          <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
                 :page-size-opts='otherPage.pageSize'
                 show-elevator @on-change='changePage'
                 @on-page-size-change='skipPage'></Page>
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
-    </Modal>
-    <Modal v-model="authModal" width="500" :title="authName" :scrollable="true"  footer-hide :mask-closable="false" :closable="true">
-      <assign-menu></assign-menu>
     </Modal>
   </div>
 </template>
 
 <script>
-    import {queryRoleList, deleteRole} from '@/api/admin/sysRole'
-    import search from '@/components/tables/search'
+    import {queryWorkPlanPageList, deleteWorkPlan} from '@/api/monitor/NtdvWorkPlan'
+    import search from '@/components/tables/searchCheck'
     import operateRow from './operate'
-    import assignMenu from './auth'
 
     export default {
         components: {
             search,
-            operateRow,
-            assignMenu
+            operateRow
         },
         data() {
             return {
                 operateModal: false,
-                authModal:false,
                 name: '',
-                authName:'',
                 columns1: [
                     {
-                        title: '角色名称',
-                        key: 'roleName',
-                        minWidth: 120,
+                        title: '计划值班人员',
+                        key: 'wpName',
+                        width: 350
                     },
                     {
-                        title: '角色状态',
-                        key: 'roleStatus',
-                        minWidth: 100,
+                        title: '值班开始时间',
+                        key: 'wpStartTime',
+                        width: 350
                     },
                     {
-                        title: '角色描述',
-                        key: 'roleDesc',
-                        minWidth: 210,
+                        title: '值班结束时间',
+                        key: 'wpEndTime',
+                        width: 350
                     },
                     {
-                        title: '创建人',
-                        key: 'roleUesrid_userName',
-                        minWidth: 100,
-                    },
-                    {
-                        title: '创建日期',
-                        key: 'roleDate',
-                        minWidth: 170,
+                        title: '状态',
+                        key: 'wpStatus_paraName',
                     },
                     {
                         title: '操作',
                         key: 'action',
+                        width: 260,
                         fixed: 'right',
-                        width: 190,
                         align: 'center',
                         render: (h, rows) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        icon:'md-create',
+                                        icon: 'md-create',
+                                        type: 'primary'
                                     },
-                                    attrs:{
-                                        title:'编辑'
+                                    attrs: {
+                                        title: '编辑'
                                     },
-                                    class:'edit_btn',
                                     style: {
-                                        marginRight: '10px',
+                                        marginRight: '30px',
                                     },
                                     on: {
                                         click: () => {
@@ -97,32 +86,15 @@
                                 }),
                                 h('Button', {
                                     props: {
-                                        icon:'md-hand',
+                                        icon: 'md-trash',
+                                        type: 'error'
                                     },
-                                    attrs:{
-                                        title:'授权'
-                                    },
-                                    class:'edit_btn3',
-                                    style: {
-                                        marginRight: '10px',
+                                    attrs: {
+                                        title: '删除'
                                     },
                                     on: {
                                         click: () => {
-                                            this.assignMenu(rows.row)
-                                        }
-                                    }
-                                }),
-                                h('Button', {
-                                    props: {
-                                        icon:'md-trash',
-                                    },
-                                    attrs:{
-                                        title:'删除'
-                                    },
-                                    class:'edit_btn2',
-                                    on: {
-                                        click: () => {
-                                            this.delete(rows.row.roleId)
+                                            this.delete(rows.row.wpId)//id需要修改
                                         }
                                     }
                                 })
@@ -131,17 +103,18 @@
                     }
                 ],
                 infos: [],
-                searchData: [
+                searchData: [//搜索框根据需要自定义添加
                     {
                         type: 1,
-                        key: 'roleName',
-                        name: '角色名称',
+                        key: 'wpName',
+                        name: '值班人',
                         value: '',
-                        placeholder: '角色名称'
-                    }
+                        data: [],
+                        placeholder: '请输入计划值班人员'
+                    },
                 ],
                 search: {
-                    roleName: ''
+                    wpStatus:'0001001'
                 },
                 current: 1,
                 page: {
@@ -156,33 +129,23 @@
         },
         created: function () {
             this.$xy.vector.$on('closeModal', this.closeModal)
-            this.$xy.vector.$on('closeAuthModal', this.closeAuthModal)
             this.$xy.vector.$on('sendReq', this.sendReq)
         },
         beforeDestroy: function () {
             this.$xy.vector.$off('closeModal', this.closeModal)
-            this.$xy.vector.$off('closeAuthModal', this.closeAuthModal)
             this.$xy.vector.$off('sendReq', this.sendReq)
         },
         mounted() {
             this.init();
-            //this.initSelect();
+            this.initSelect()
         },
         methods: {
-            /*initSelect(){
-                this.$xy.getParamGroup('0001').then(res=>{
-                    this.searchData[3].data = res
-                })
-            },*/
             rowClassName(row, index) {
                 return 'demo-table-info-row'
             },
             closeModal() {
-                this.operateModal = false;
-                this.init()
-            },
-            closeAuthModal() {
-                this.authModal = false;
+                this.operateModal = false
+                this.doQuery();
             },
             sendReq: function (obj) {
                 this.search = Object.assign(this.search, obj)
@@ -195,18 +158,20 @@
             async doQuery() {
                 let searchAll = this.page
                 searchAll = Object.assign(searchAll, this.search)
-                let {result, success, message} = await queryRoleList(searchAll)
+                let {result, success, message} = await queryWorkPlanPageList(searchAll)
                 if (success) {
                     this.infos = result.records
-                    this.current = result.current ? result.current : result.current + 1
+                    this.page.current = result.current ? result.current : result.current + 1
                     this.otherPage.total = result.total
-                }else {
-                    this.$Notice.error({
+                } else {
+                    let notice = this.$Notice;
+                    notice.error({
                         title: '失败',
                         desc: message,
                         duration: 3
                     })
-                };
+                }
+                ;
             },
             skipPage: function (page) {
                 this.page.current = page
@@ -216,42 +181,53 @@
                 this.page.current = page
                 this.doQuery()
             },
-            delete(id) {
+            delete(wpId) {
                 let that = this
-                that.$Modal.confirm({
-                    title: '你确定要删除这条参数吗?',
+                let modal = that.$Modal;
+                let notice = that.$Notice;
+                modal.confirm({
+                    title: '你确定要删除这条值班安排吗?',
                     content: '删除后将无法撤销！',
                     onOk: () => {
-                        that.deleteData(id)
+                        that.deleteData(wpId)
+                    },
+                    onCancel: () => {
+                        notice.warning({
+                            title: '取消',
+                            desc: '已取消！',
+                            duration: 3
+                        })
                     }
                 })
             },
-            async deleteData(id) {
-                let {data, code, msg} = await deleteRole(id)
+            async deleteData(wpId) {
+                let {data, code, msg} = await deleteWorkPlan(wpId)
+                let notice = this.$Notice;
                 if (code == 200) {
-                    this.$Notice.success({
+                    notice.success({
                         title: '成功',
                         desc: '删除成功！',
                         duration: 3
                     })
-                    this.init()
+                    this.doQuery();
                 } else {
-                    this.$Notice.error({
+                    notice.error({
                         title: '失败',
                         desc: msg,
                         duration: 3
                     })
                 }
             },
-            operate(sysRole) {
-                this.name = sysRole == null ? '添加角色' : '编辑角色'
+            operate(WorkPlan) {
+                this.name = WorkPlan == null ? '添加值班安排' : '编辑值班安排'
                 this.operateModal = true
-                this.$xy.vector.$emit('operateRow', sysRole)
+                this.$xy.vector.$emit('operateRow', WorkPlan)
             },
-            assignMenu(sysRole){
-                this.authName = '角色菜单配置';
-                this.authModal = true
-                this.$xy.vector.$emit('assignMenu', sysRole)
+            initSelect() {
+                this.$xy.getParamGroup('0303').then(res => {
+                    this.searchData[1].data = res
+                    this.doQuery()
+                })
             }
         }
     }
@@ -263,6 +239,6 @@
   }
 
   .page {
-    margin-top: 5px;
+    margin-top: 20px;
   }
 </style>
