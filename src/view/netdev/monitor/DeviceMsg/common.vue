@@ -363,21 +363,21 @@ export default {
         obj.paraVal = info.inputVal
       }
       if (obj.paraVal !== '') {
-        let {result, success, message} = await editParamValue(obj)
+        let {success,error} = await editParamValue(obj)
         if (success) {
-          this.$Notice.success({
-            title: '成功',
-            desc: '修改成功！',
-            duration: 1
-          })
-          this.close(info)
-        } else {
-          this.$Notice.error({
-            title: '失败',
-            desc: message,
-            duration: 3
-          })
-        }
+           this.$Notice.success({
+             title: '成功',
+             desc: '修改成功！',
+             duration: 1
+           })
+           this.close(info)
+         } else {
+           this.$Notice.error({
+             title: '失败',
+             desc: message,
+             duration: 3
+           })
+         }
       } else {
         this.$set(info, 'paraVal', info.oldVal)
         this.$set(info, 'inputVal', info.oldVal)
