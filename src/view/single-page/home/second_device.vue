@@ -1,17 +1,476 @@
 <template>
 <!-- 二类车-->
+  <div style="    margin-top: -40px;">
+    <template v-for="equipment in equipments">
+      <div class="device_status" :style="devicePosition(equipment)">
+        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
+      </div>
+      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
+    </template>
   <div style="border:1px solid red" ref="dom" class="charts"></div>
+  <div class="legend">
+    <div class="legend_status" v-for="(item, index) in legendType" :key="index">
+        <span :class="[item.shape]"
+              :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
+    </div>
+  </div>
+    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
+           width="850" :mask-closable="false">
+      <DeviceMain></DeviceMain>
+    </Modal>
+  </div>
 </template>
 
 <script>
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
-
+import {mapState} from "vuex";
+import mixin from "../../../components/common/websocket";
+import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {
+  components: {DeviceMain},
+  mixins: [mixin],
   data() {
     return {
-      dom: null
+      dom: null,
+      paramModal:false,
+      equipments: [
+
+        {
+          devNo: '11',
+          name: '2300调制解调器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '0'
+        },
+        {
+          devNo: '12',
+          name: '2300调制解调器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '13',
+          name: '2300调制解调器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '0'
+        },
+        {
+          devNo: '14',
+          name: '2300调制解调器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '30',
+          name: '1:1转换单元(上调制)',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '31',
+          name: '1:1转换单元(下调制)',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '20',
+          name: '2.4m天线ACU',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+
+        },
+        {
+          devNo: '21',
+          name: '天线驱动',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+
+        },
+        {
+          devNo: '22',
+          name: '频谱监测',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+
+        },
+        {
+          devNo: '40',
+          name: 'ku400w下变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '41',
+          name: 'ku400w下变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '42',
+          name: 'kac下变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '43',
+          name: 'kac下变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '44',
+          name: 'kul下变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '45',
+          name: 'kul下变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '46',
+          name: 'cl下变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '47',
+          name: 'cl下变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '48',
+          name: 'lc上变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '49',
+          name: 'lc上变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '50',
+          name: 'lku上变频器1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+        {
+          devNo: '51',
+          name: 'lku上变频器2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: ''
+        },
+      ],
+      position: {
+
+        '11': {
+          top: '106px',
+          left: '695px',
+        },
+        '12': {
+          top: '154px',
+          left: '695px',
+        },
+        '13': {
+          top: '217px',
+          left: '695px',
+        },
+        '14': {
+          top: '275px',
+          left: '695px',
+        },
+        '30': {
+          top: '124px',
+          left: '485px',
+        },
+        '31': {
+          top: '246px',
+          left: '485px',
+        },
+        '20': {
+          top: '450px',
+          left: '445px',
+        },
+        '21': {
+          top: '450px',
+          left: '445px',
+        },
+        '22': {
+          top: '450px',
+          left: '445px',
+        },
+        '40': {
+          top: '340px',
+          left: '248px',
+        },
+        '41': {
+          top: '380px',
+          left: '248px',
+        },
+        '42': {
+          top: '380px',
+          left: '248px',
+        },
+        '43': {
+          top: '380px',
+          left: '248px',
+        },
+        '44': {
+          top: '380px',
+          left: '248px',
+        },
+        '45': {
+          top: '380px',
+          left: '248px',
+        },
+        '46': {
+          top: '380px',
+          left: '248px',
+        },
+        '47': {
+          top: '380px',
+          left: '248px',
+        },
+        '48': {
+          top: '380px',
+          left: '248px',
+        },
+        '49': {
+          top: '380px',
+          left: '248px',
+        },
+        '50': {
+          top: '380px',
+          left: '248px',
+        },
+        '51': {
+          top: '380px',
+          left: '248px',
+        },
+      },
+      masterPosition: {
+        '11': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '108px',
+          left: '607px',
+        },
+        '12': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '166px',
+          left: '607px',
+        },
+        '13': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '235px',
+          left: '607px',
+        },
+        '14': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '293px',
+          left: '607px',
+        },
+        '20': {
+          border: '2px solid purple',
+          width: '53px',
+          height: '82px',
+          top: '285px',
+          left: '445px',
+        },
+        '21': {
+          border: '2px solid green',
+          width: '53px',
+          height: '82px',
+          top: '250px',
+          left: '425px',
+        },
+        '22': {
+          border: '2px solid green',
+          width: '122px',
+          height: '32px',
+          top: '125px',
+          left: '405px',
+        },
+        '30': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '125px',
+          left: '405px',
+        },
+        '31': {
+          border: '2px solid green',
+          width: '102px',
+          height: '22px',
+          top: '247px',
+          left: '405px',
+        },
+        '40': {
+          border: '2px solid red',
+          width: '53px',
+          height: '32px',
+          top: '268px',
+          left: '288px',
+        },
+        '41': {
+          border: '2px solid green',
+          width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '42': {
+          border: '2px solid green',
+          width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '43': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '44': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '45': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '46': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '47': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '48': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '49': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '50': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+        '51': {
+          border: '2px solid green',
+         width: '53px',
+          height: '32px',
+          top: '380px',
+          left: '200px',
+        },
+      },
+      legendType: [
+        {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
+        {shape: 'square', color: '#b1f83c', description: '主机'},
+        {shape: 'square', color: 'rgba(184,181,181)', description: '备机'},
+        {shape: 'circle', color: '#009688', description: '正常'},
+        {shape: 'circle', color: '#ff1400', description: '故障'},
+        {shape: 'circle', color: '#ffbe08', description: '告警'}
+      ],
     }
   },
   beforeDestroy() {
@@ -24,6 +483,75 @@ export default {
   methods: {
     resize() {
       this.dom.resize()
+    },
+    getWSData(WSdata) {
+      if (WSdata.length) {
+        this.equipments.forEach(device => {
+          let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
+          if (dIndex > -1) {
+            WSdata.forEach(item => {
+              if (item.devNo == device.devNo) {
+                this.setWSDate(item, device)
+              }
+            })
+          } else {
+            this.$set(device, 'noData', true)
+          }
+        })
+      }
+    },
+    setWSDate(data, obj) {
+      obj.masterOrSlave = data.masterOrSlave
+      obj.devDeployType = data.devDeployType
+      obj.isInterrupt = data.isInterrupt
+      obj.workStatus = data.workStatus
+      obj.isUseStandby = data.isUseStandby
+      obj.isAlarm = data.isAlarm
+    },
+    judgeDeviceStatus(device) {
+      let info = {}
+      if (device.isInterrupt === '0') {//是否中断 否0
+        if (device.workStatus === '0') {//如果工作状态正常 0
+          if (device.isAlarm === '1') {//告警为1  则告警
+            info = {background: '#eeb24b'}
+          } else {//告警为0  则状态为正常
+
+            info = {background: '#009688'}
+          }
+        } else {//不正常 则直接故障
+          info = {background: '#ff1400'}
+        }
+      } else {//中断 是 1
+        info = {background: '#ff1400'}
+      }
+      if (device.noData) {//推送的数据中不存在当前设备状态
+        info = {background: 'black'}
+      }
+      return info
+    },
+    devicePosition(equipment) {
+      return {
+        top: this.position[equipment.devNo].top,
+        marginLeft: this.position[equipment.devNo].left,
+        width: this.position[equipment.devNo].width,
+        height: this.position[equipment.devNo].height,
+      }
+    },
+    masterStatus(equipment) {
+      // if(equipment.devNo !=30 && equipment.devNo !=31){
+      return {
+        top: this.masterPosition[equipment.devNo].top,
+        marginLeft: this.masterPosition[equipment.devNo].left,
+        width: this.masterPosition[equipment.devNo].width,
+        height: this.masterPosition[equipment.devNo].height,
+        border: this.masterPosition[equipment.devNo].border,
+        // border: equipment.masterOrSlave == '0' && (equipment.devNo != '32' && equipment.devNo != '16' && equipment.devNo !=30 && equipment.devNo !=31) ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+      }
+      // // }
+    },
+    confirm() {
+      this.paramModal = false
+      this.$xy.vector.$emit("closeModal")
     },
     init() {
       var nodes = [
@@ -56,7 +584,7 @@ export default {
           nodeName: 'ka发射机',
           img: 'rect',
           size: [50, 30],
-          color: '#c4e889'
+          color: '#e9cdf6'
         },
 
 
@@ -171,7 +699,7 @@ export default {
           img: 'triangle',
           symbolRotate: -90,
           size: [40, 60],
-          color: '#c4e889'
+          color: '#e9cdf6'
         },
 
         //-------------------up_noKa-c下---------
@@ -388,7 +916,7 @@ export default {
           img: 'triangle',
           symbolRotate: -90,
           size: [40, 60],
-          color: '#c4e889'
+          color: '#e9cdf6'
         },
 
 
@@ -415,7 +943,7 @@ export default {
           nodeName: 'L波段\n中频\n矩阵\n(上行)',
           img: 'rect',
           size: [40, 170],
-          color: '#c4e889'
+          color: '#e9cdf6'
         },
         {
           x: '540',
@@ -423,7 +951,7 @@ export default {
           nodeName: 'L波段\n中频\n矩阵\n(下行)',
           img: 'rect',
           size: [40, 170],
-          color: '#c4e889'
+          color: '#e9cdf6'
         },
         {
           x: '660',
@@ -441,16 +969,16 @@ export default {
           y: '420',
           nodeName: '2300调制解调器  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: '#b1f83c',
           category: 2
         },
         {
           x: '660',
           y: '390',
-          nodeName: '1:1转换单元',
+          nodeName: '1:1转换单元  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: 'white',
           category: 2
         },
@@ -460,7 +988,7 @@ export default {
           y: '360',
           nodeName: '2300调制解调器  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: 'rgba(184,181,181)',
           category: 2
         },
@@ -479,16 +1007,16 @@ export default {
           y: '290',
           nodeName: '2300调制解调器  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: '#b1f83c',
           category: 2
         },
         {
           x: '660',
           y: '260',
-          nodeName: '1:1转换单元',
+          nodeName: '1:1转换单元  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: 'white',
           category: 2
         },
@@ -497,7 +1025,7 @@ export default {
           y: '230',
           nodeName: '2300调制解调器  ',
           img: 'rect',
-          size: [95, 20],
+          size: [100, 20],
           color: 'rgba(184,181,181)',
           category: 2
         },
@@ -575,7 +1103,7 @@ export default {
         {
           x: '570',
           y: '50',
-          nodeName: '串口服务',
+          nodeName: '串口服务器',
           img: 'rect',
           size:[70, 40],
           color: 'rgb(202,196,185)'
@@ -1031,18 +1559,7 @@ export default {
               color: '#143fdc '
             }
           },
-          {
-            mark: '设备->KU发射接收',
-            coords: [[70, 400], [210, 400]],
-            lineStyle: {
-              normal: {
-                color: '#143fdc '
-              }
-            },
-            effect: {
-              color: '#143fdc '
-            }
-          },
+
 
           {
             mark: 'ku-》ku lna',
@@ -1258,32 +1775,32 @@ export default {
             }
           },
 
-          // {
-          //   mark: '网管交换机-》网管计算机',
-          //   name: '',
-          //   coords: [[1650, 470], [1650, 180]],
-          //   lineStyle: {
-          //     normal: {
-          //       color: 'rgb(57 181 74)'
-          //     }
-          //   },
-          //   effect: {
-          //     color: 'rgb(57 181 74)'
-          //   }
-          // },
-          // {
-          //   mark: '网管计算机-》网管交换机',
-          //   name: '',
-          //   coords: [[1750, 180], [1750, 470]],
-          //   lineStyle: {
-          //     normal: {
-          //       color: 'rgb(57 181 74)'
-          //     }
-          //   },
-          //   effect: {
-          //     color: 'rgb(57 181 74)'
-          //   }
-          // },
+          {
+            mark: '串口-》调制上',
+            name: '',
+            coords: [[580, 70], [580, 390],[605,390]],
+            lineStyle: {
+              normal: {
+                color: 'rgb(57 181 74)'
+              }
+            },
+            effect: {
+              color: 'rgb(57 181 74)'
+            }
+          },
+          {
+            mark: '串口-》调制下',
+            name: '',
+            coords: [[590, 70], [590, 260],[605,260]],
+            lineStyle: {
+              normal: {
+                color: 'rgb(57 181 74)'
+              }
+            },
+            effect: {
+              color: 'rgb(57 181 74)'
+            }
+          },
           {
             mark: '网管计算机-》串口服务',
             name: '',
@@ -1301,6 +1818,32 @@ export default {
             mark: '串口服务->网管计算机',
             name: '',
             coords: [[635, 50], [605, 50]],
+            lineStyle: {
+              normal: {
+                color: 'rgb(57 181 74)'
+              }
+            },
+            effect: {
+              color: 'rgb(57 181 74)'
+            }
+          },
+          {
+            mark: '串口服务->网管交换机',
+            name: '',
+            coords: [[600, 70], [600, 110],[760,110],[760,135]],
+            lineStyle: {
+              normal: {
+                color: 'rgb(57 181 74)'
+              }
+            },
+            effect: {
+              color: 'rgb(57 181 74)'
+            }
+          },
+          {
+            mark: '网管计算机->网管交换机',
+            name: '',
+            coords: [[670, 70], [670, 90],[780,90],[780,135]],
             lineStyle: {
               normal: {
                 color: 'rgb(57 181 74)'
@@ -1434,7 +1977,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 3
+              symbolSize: 4
             },
             //箭头
             markPoint:{
@@ -1692,7 +2235,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 3
+              symbolSize: 4
             },
             data: charts.lines
           },
@@ -1720,7 +2263,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 3
+              symbolSize: 4
             },
             data: charts.linesData
           },
@@ -1745,5 +2288,108 @@ export default {
 .charts {
   height: 518px;
   width: 830px;
+}
+</style>
+<style lang="less" scoped>
+/* 设置动画前颜色 */
+.point-flicker:after {
+  background-color: #ffbe08;
+}
+
+/* 设置动画后颜色 */
+.point-flicker:before {
+  background-color: rgba(255, 190, 8, 0.2);
+}
+
+/* 设置动画 */
+.point-flicker:before,
+.point-flicker:after {
+  content: '';
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  animation: warn 1.5s ease-out 0s infinite;
+}
+
+/* @keyframes 规则用于创建动画。在 @keyframes 中规定某项 CSS 样式，就能创建由当前样式逐渐改为新样式的动画效果。 */
+@keyframes warn {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+
+.legend {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+
+  .legend_status {
+    margin-top: -15px;
+    //display: flex;
+    //flex-direction: row;
+    margin-right: 10px;
+    align-items: center;
+
+    &:first-child {
+      margin-right: 10px;
+
+      span {
+        border: 2px solid;
+      }
+    }
+
+    span {
+      display: inline-block;
+      background: #ccc;
+      height: 16px;
+      width: 16px;
+      margin-right: 5px;
+    }
+
+    .circle {
+      border-radius: 50%;
+    }
+  }
+
+}
+
+.device_title {
+  cursor: pointer;
+  margin-top: -27px;
+  z-index: 999;
+  position: relative;
+  span {
+    display: inline-block;
+    background: #009688;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+}
+.device_status {
+  margin-top: -27px;
+  z-index: 100;
+  position: relative;
+  span {
+    display: inline-block;
+    background: #009688;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
 }
 </style>
