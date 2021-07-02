@@ -374,7 +374,7 @@ export default {
          } else {
            this.$Notice.error({
              title: '失败',
-             desc: message,
+             desc: error,
              duration: 3
            })
          }
