@@ -180,7 +180,7 @@ export default {
   components: {common},
   data() {
     return {
-      normalHeight:250,
+      normalHeight:450,
       infos: [],
       validTag: false,
         receiveMsg:false,
@@ -190,11 +190,11 @@ export default {
   },
   created: function () {
     this.$xy.vector.$on('ctrlTag', this.getMsg)
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('ctrlTag', this.getMsg)
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
 
   },
   mounted() {
@@ -206,9 +206,9 @@ export default {
   methods: {
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 250
+        this.normalHeight = 450
       }else{
-        this.normalHeight = 400
+        this.normalHeight = 720
       }
     },
     getMsg(data) {

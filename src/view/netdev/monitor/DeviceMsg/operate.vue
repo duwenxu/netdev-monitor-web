@@ -21,7 +21,7 @@
         <common :infos="info.subParaList"></common>
       </div>
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
+    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:combineList.length?orderHeight+'px':(orderDatas.length?height+'px':normalHeight+'px')}">
       <common :infos="infos"></common>
     </div>
   </div>
@@ -44,8 +44,9 @@ export default {
   data() {
     return {
         orderSwitch:true,
-      orderHeight: 160,
-      normalHeight: 250,
+      orderHeight: 240,
+      normalHeight: 450,
+      height:350,
       devNo: null,
       paramSocket: null,
       logSocket: null,
@@ -60,14 +61,14 @@ export default {
     }
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
     this.$xy.vector.$on('closeModal', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
 
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
     this.$xy.vector.$off('closeModal', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
@@ -880,11 +881,21 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.orderHeight = 160
-        this.normalHeight = 250
+        if(this.combineList.length){
+          this.orderHeight = 240
+        }else if(this.orderDatas.length){
+          this.height = 400
+        }else{
+          this.normalHeight = 470
+        }
       } else {
-        this.orderHeight = 380
-        this.normalHeight = 400
+        if(this.combineList.length){
+          this.orderHeight = 470
+        }else if(this.orderDatas.length){
+          this.height = 610
+        }else{
+          this.normalHeight = 720
+        }
       }
     },
     initWebSocket() { //初始化weosocket
@@ -1093,7 +1104,7 @@ export default {
 
 .sub-wrap {
   border: 1px solid #009688;
-  height: 280px;
+  height: 240px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -1102,7 +1113,7 @@ export default {
 
 .param-wrap {
   border: 1px solid #009688;
-  height: 250px;
+  height: 450px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;

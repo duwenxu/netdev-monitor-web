@@ -38,12 +38,12 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                               width:100,
+
                             },
                             {
                                 title: '编号',
                                 key: 'devNo',
-                              width:70,
+                              width:100,
                             },
                             {
                                 title: '日志时间',
@@ -53,29 +53,29 @@
                             {
                                 title: '访问类型',
                                 key: 'logAccessType_paraName',
-                              width:100,
+                              width:150,
                             },
                             {
                                 title: '操作类型',
                                 key: 'logOperType_paraName',
-                              width:100,
+                              width:150,
                             },
                             {
                                 title: '操作对象',
                                 key: 'logOperObjName',
-                              width:100,
+                              width:200,
                               tooltip:true
                             },
                             {
                                 title: '操作内容',
                                 key: 'logOperContent',
-                              width:100,
+                              width:250,
                                 tooltip:true
                             },
                             {
                                 title: '原始数据',
                                 key: 'orignData',
-                              width:100,
+                              width:250,
                                 tooltip:true
                             },
                             {
@@ -110,7 +110,7 @@
                 },
                 page: {
                     current: 1,
-                    size: 8
+                    size: 10
                 },
                 otherPage: {
                     total: 0,

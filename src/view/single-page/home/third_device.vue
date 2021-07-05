@@ -15,7 +15,7 @@
       </div>
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1000" :mask-closable="false">
+           width="1300" :mask-closable="false">
       <div slot="header"><span>参数信息</span>
         <Button style="float: right" size="small" @click="confirm">关闭</Button>
       </div>
@@ -177,37 +177,37 @@ export default {
         },
         '135': {
           mark: '无线宽带基站',
-          top: '448px',
+          top: '441px',
           left: '620px',
 
         },
         '137': {
           mark: '时统',
-          top: '348px',
+          top: '341px',
           left: '1545px',
 
         },
         '151': {
           mark: 'sdh',
-          top: '345px',
+          top: '340px',
           left: '847px',
 
         },
         '154': {
           mark: '路由器',
-          top: '252px',
+          top: '250px',
           left: '1128px',
 
         },
         '19': {
           mark: '频谱监测',
-          top: '289px',
+          top: '283px',
           left: '605px',
 
         },
         '252': {
           mark: '24口交换机',
-          top: '185px',
+          top: '180px',
           left: '1010px',
 
         },
@@ -219,31 +219,31 @@ export default {
         },
         '34': {
           mark: '被复线',
-          top: '397px',
+          top: '391px',
           left: '847px',
         },
 
         '51': {
           mark: '多媒体1',
-          top: '142px',
+          top: '136px',
           left: '864px',
         },
 
         '52': {
           mark: '多媒体2',
-          top: '181px',
+          top: '176px',
           left: '864px',
         },
 
         '53': {
           mark: '多媒体3',
-          top: '221px',
+          top: '215px',
           left: '864px',
         },
 
         '54': {
           mark: '多媒体4',
-          top: '261px',
+          top: '255px',
           left: '864px',
         },
 
@@ -496,8 +496,8 @@ export default {
       return {
         top: this.position[equipment.devNo].top,
         marginLeft: this.position[equipment.devNo].left,
-        width: this.position[equipment.devNo].width,
-        height: this.position[equipment.devNo].height,
+        width: '16px',
+        height: '16px',
       }
     },
     masterStatus(equipment) {
@@ -820,6 +820,7 @@ export default {
           border: 'black',
         },
         {
+          devNo: '65',
           x: '1000',
           y: '155',
           nodeName: '通\n信\n控\n制\n器',
@@ -2884,7 +2885,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 4
+              symbolSize: 5
             },
             data: charts.polyLines
           },
@@ -2928,7 +2929,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 4
+              symbolSize: 5
             },
             data: charts.linesData
           },
@@ -3070,7 +3071,7 @@ export default {
 }
 
 .device_status {
-  margin-top: -22px;
+  margin-top: -16px;
   z-index: 100;
   position: relative;
 

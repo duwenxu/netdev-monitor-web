@@ -208,10 +208,10 @@ export default {
     if(obj.userName == 'admin'){
       this.accessView = true
     }
-
-    if(window.screen.width<=1024 || this.$route.name == 'home'){
-      this.lgCol = 12
-    }
+    //
+    // if(window.screen.width<=1024 || this.$route.name == 'home'){
+    //   this.lgCol = 12
+    // }
   },
   methods:{
     setValues(info){

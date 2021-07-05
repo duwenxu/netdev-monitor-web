@@ -107,7 +107,7 @@
                     {
                         type: 1,
                         key: 'wpName',
-                        name: '值班人',
+                        name: '',
                         value: '',
                         data: [],
                         placeholder: '请输入计划值班人员'
@@ -119,7 +119,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 8
+                    size: 10
                 },
                 otherPage: {
                     total: 0,

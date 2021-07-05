@@ -21,7 +21,7 @@ export default {
   data(){
     return{
       devNo:'',
-      normalHeight:250,
+      normalHeight:450,
       pageObj:{},
       infos:[],
       page_socket:null
@@ -31,11 +31,11 @@ export default {
 
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('pageInfo', this.getInfo)
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.changeSize)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('pageInfo', this.getInfo)
   },
   beforeRouteLeave(to, from, next) {
@@ -46,9 +46,9 @@ export default {
   methods:{
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 250
+        this.normalHeight = 450
       }else{
-        this.normalHeight = 400
+        this.normalHeight = 720
       }
     },
     getInfo(data){

@@ -11,11 +11,11 @@
           告<Br/>警
         </div>
       </div>
-      <div class="fix-btn-warn">
+      <div class="fix-btn-warn"  @click="changeInfo(2)">
         <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
-        <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
+        <div style="margin-top:5px;">日<Br/>志</div>
       </div>
-      <div  :style="{height:200+'px',overflow:'auto'}">
+      <div v-if="showLog || showAlert"  :style="{height:240+'px',overflow:'auto'}">
         <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs" ></Table>
         <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
       </div>
@@ -69,12 +69,12 @@ export default {
         },
         {
           title: '访问类型',
-          width: 100,
+          width: 150,
           key: 'logAccessTypeName',
         },
         {
           title: '操作类型',
-          width: 100,
+          width: 150,
           key: 'logOperTypeName',
         },
         {
@@ -84,8 +84,8 @@ export default {
         },
         {
           title: '操作对象',
-          // width: 180,
-          width: 100,
+          width: 180,
+          // width: 100,
           key: 'logOperObjName',
           tooltip: true,
         },
@@ -96,7 +96,7 @@ export default {
         },
         {
           title: '原始数据',
-          width: 100,
+          width: 250,
           key: 'orignData',
           tooltip: true,
         },
@@ -105,18 +105,18 @@ export default {
       alertColumns: [
         {
             title: '告警级别',
-            width: 110,
+            width: 150,
             key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
-            width: 110,
+            width: 150,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-            width: 200,
+            width: 220,
         },
         {
           title: '告警描述',
@@ -177,19 +177,24 @@ export default {
     },
     //切换日志告警信息
     changeInfo(value) {
+      console.log(value)
       //告警
+
       if (value == 1) {
         this.showLog = false
         this.showAlert = !this.showAlert
+        this.$xy.vector.$emit('changesize', obj)
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
+        console.log(this.showLog)
+
       }
       let obj = {
         showLog: this.showLog,
         showAlert: this.showAlert
       }
-      this.$xy.vector.$emit('changeSize', obj)
+      this.$xy.vector.$emit('changesize', obj)
     },
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
@@ -277,10 +282,15 @@ export default {
       this.warnSocket.send(obj)
     },
     getWarnLog(frame) {
+
       let msg = JSON.parse(frame.data)
-      this.showAlert = true
-      this.showLog = false
-      this.alertInfos = msg
+      console.log(msg)
+      if(msg.length){
+        this.showAlert = true
+        this.showLog = false
+        this.alertInfos = msg
+      }
+
     },
   }
 }

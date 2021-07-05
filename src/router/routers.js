@@ -81,7 +81,7 @@ export default [
         // component: () => import('@/view/single-page/home/second_device.vue')
         //三类车载
         component: () => import('@/view/single-page/home/third_device.vue')
-        //四类车载（*）
+        // 四类车载（*）
         // component: () => import('@/view/single-page/home/forth_device.vue')
         //地面站
         // component: () => import('@/view/single-page/home/highland_device.vue')
