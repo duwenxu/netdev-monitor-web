@@ -1,11 +1,12 @@
 <template>
   <div>
-<!--    <template v-for="equipment in equipments">-->
-<!--      <div class="device_status" :style="devicePosition(equipment)">-->
-<!--        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>-->
-<!--      </div>-->
+    <template v-for="equipment in equipments">
+      <div class="device_status" :style="devicePosition(equipment)">
+        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
+        </span>
+      </div>
 <!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
-<!--    </template>-->
+    </template>
     <div ref="dom" class="charts"></div>
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
@@ -40,8 +41,8 @@ export default {
       paramModal: false,
       equipments: [
         {
-          devNo: '11',
-          name: 'A调制解调器1',
+          devNo: '121',
+          name: 'C中频切换矩阵',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -49,8 +50,8 @@ export default {
           masterOrSlave: '0'
         },
         {
-          devNo: '12',
-          name: 'A调制解调器2',
+          devNo: '135',
+          name: '无线宽带中心站',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -58,8 +59,8 @@ export default {
           masterOrSlave: '1'
         },
         {
-          devNo: '13',
-          name: 'B调制解调器1',
+          devNo: '137',
+          name: '时间统一设备',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -67,8 +68,8 @@ export default {
           masterOrSlave: '0'
         },
         {
-          devNo: '14',
-          name: 'B调制解调器2',
+          devNo: '151',
+          name: 'SDH',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -76,8 +77,8 @@ export default {
           masterOrSlave: '1'
         },
         {
-          devNo: '16',
-          name: '400W高功放',
+          devNo: '154',
+          name: '路由器',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -85,26 +86,17 @@ export default {
           masterOrSlave: '0'
         },
         {
-          devNo: '36',
-          name: '上变频器',
+          devNo: '19',
+          name: '频谱监测',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '0'
         },
-        // {
-        //   devNo: '32',
-        //   name: '天线控制单元',
-        //   isInterrupt: '0',
-        //   workStatus: '0',
-        //   isAlarm: '0',
-        //   isUseStandby: false,
-        //   masterOrSlave: '0'
-        // },
         {
-          devNo: '37',
-          name: '上变频器2',
+          devNo: '253',
+          name: '48口交换机（前）',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -112,8 +104,8 @@ export default {
           masterOrSlave: '1'
         },
         {
-          devNo: '24',
-          name: '下变频器1',
+          devNo: '252',
+          name: '24口交换机',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
@@ -121,73 +113,144 @@ export default {
           masterOrSlave: '0'
         },
         {
-          devNo: '40',
-          name: '下变频器2',
+          devNo: '34',
+          name: '被复线',
           isInterrupt: '0',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '1'
         },
+
+        {
+          devNo: '51',
+          name: 'FDMACDMA1',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '52',
+          name: 'FDMACDMA2',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '53',
+          name: 'FDMACDMA3',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '54',
+          name: 'FDMACDMA4',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+        {
+          devNo: '65',
+          name: '通信控制器',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: '0',
+          isUseStandby: false,
+          masterOrSlave: '1'
+        },
+
       ],
       position: {
-        '11': {
-          mark: 'A调制解调器1',
-          top: '114px',
-          left: '910px',
+        '121': {
+          mark: 'C中频切换矩阵',
+          top: '80px',
+          left: '570px',
         },
-        '12': {
-          mark: 'A调制解调器2',
-          top: '203px',
-          left: '910px',
+        '135': {
+          mark: '无线宽带基站',
+          top: '448px',
+          left: '620px',
 
         },
-        '13': {
-          mark: 'B调制解调器1',
-          top: '323px',
-          left: '910px',
+        '137': {
+          mark: '时统',
+          top: '348px',
+          left: '1545px',
 
         },
-        '14': {
-          mark: 'B调制解调器2',
-          top: '411px',
-          left: '910px',
+        '151': {
+          mark: 'sdh',
+          top: '345px',
+          left: '847px',
 
         },
-        '16': {
-          mark: '400W高功放',
-          top: '178px',
-          left: '327px',
+        '154': {
+          mark: '路由器',
+          top: '252px',
+          left: '1128px',
 
         },
-        // '32': {
-        //   mark: '天线控制单元',
-        //   top: '232px',
-        //   left: '100px',
-        // },
-        '36': {
-          mark: '上变频器1',
-          top: '126px',
-          left: '547px',
+        '19': {
+          mark: '频谱监测',
+          top: '289px',
+          left: '605px',
 
         },
-        '37': {
-          mark: '上变频器2',
-          top: '207px',
-          left: '547px',
+        '252': {
+          mark: '24口交换机',
+          top: '185px',
+          left: '1010px',
 
         },
-        '24': {
-          mark: '下变频器1',
-          top: '360px',
-          left: '545px',
+        '253': {
+          mark: '48口交换机',
+          top: '385px',
+          left: '1333px',
 
         },
-        '40': {
-          mark: '下变频器2',
-          top: '435px',
-          left: '545px',
+        '34': {
+          mark: '被复线',
+          top: '397px',
+          left: '847px',
+        },
 
+        '51': {
+          mark: '多媒体1',
+          top: '142px',
+          left: '864px',
+        },
+
+        '52': {
+          mark: '多媒体2',
+          top: '181px',
+          left: '864px',
+        },
+
+        '53': {
+          mark: '多媒体3',
+          top: '221px',
+          left: '864px',
+        },
+
+        '54': {
+          mark: '多媒体4',
+          top: '261px',
+          left: '864px',
+        },
+
+        '65': {
+          mark: '通信控制器',
+          top: '570px',
+          left: '1010px',
         },
       },
       masterPosition: {
@@ -424,9 +487,9 @@ export default {
       } else {//中断 是 1
         info = {background: '#ff1400'}
       }
-      if (device.noData) {//推送的数据中不存在当前设备状态
-        info = {background: 'black'}
-      }
+      // if (device.noData) {//推送的数据中不存在当前设备状态
+      //   info = {background: 'black'}
+      // }
       return info
     },
     devicePosition(equipment) {
@@ -475,7 +538,7 @@ export default {
           nodeName: ' 400W Ka发射机',
           img: 'rect',
           size: [130, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -484,7 +547,7 @@ export default {
           nodeName: '100W ku发射机',
           img: 'rect',
           size: [130, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
 
@@ -494,7 +557,7 @@ export default {
           nodeName: 'Ka接收机',
           img: 'rect',
           size: [130, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -503,7 +566,7 @@ export default {
           nodeName: 'Ku接收机',
           img: 'rect',
           size: [130, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -512,25 +575,27 @@ export default {
           nodeName: '天通手持终端',
           img: 'rect',
           size: [130, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'121',
           x: '550',
           y: '640',
           nodeName: 'C\n频\n段\n切\n换\n矩\n阵',
           img: 'rect',
           size: [50, 220],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'19',
           x: '550',
           y: '500',
-          nodeName: '频谱检测设备',
+          nodeName: '频谱监测  ',
           img: 'rect',
           size: [100, 30],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -539,7 +604,7 @@ export default {
           nodeName: 'TDMA终端',
           img: 'rect',
           size: [130, 20],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -548,52 +613,57 @@ export default {
           nodeName: 'TDMA终端',
           img: 'rect',
           size: [130, 20],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'51',
           x: '790',
           y: '650',
-          nodeName: 'FDMACDMA终端',
+          nodeName: 'FDMACDMA终端    ',
           img: 'rect',
-          size: [130, 20],
-          color: '#77e278',
+          size: [140, 20],
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'52',
           x: '790',
           y: '610',
-          nodeName: 'FDMACDMA终端',
+          nodeName: 'FDMACDMA终端    ',
           img: 'rect',
-          size: [130, 20],
-          color: '#77e278',
+          size: [140, 20],
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'53',
           x: '790',
           y: '570',
-          nodeName: 'FDMACDMA终端',
+          nodeName: 'FDMACDMA终端    ',
           img: 'rect',
-          size: [130, 20],
-          color: '#77e278',
+          size: [140, 20],
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'54',
           x: '790',
           y: '530',
-          nodeName: 'FDMACDMA终端',
+          nodeName: 'FDMACDMA终端   ',
           img: 'rect',
-          size: [130, 20],
-          color: '#77e278',
+          size: [140, 20],
+          color: '#e2c777',
           border: 'black',
         },
         {
+          devNo:'253',
           x: '1000',
           y: '550',
-          nodeName: '交\n换\n机',
+          nodeName: '48\n口\n交\n换\n机',
           img: 'rect',
           size: [40, 440],
-          color: '#76bd06',
+          color: '#d3f1a5',
           border: 'black',
         },
 
@@ -611,9 +681,10 @@ export default {
           border: 'black',
         },
         {
+          devNo:'151',
           x: '790',
           y: '442',
-          nodeName: 'SDH光端机',
+          nodeName: 'SDH光端机   ',
           img: 'rect',
           size: [110, 30],
           color: 'rgba(227,221,152,1)',
@@ -629,9 +700,10 @@ export default {
           border: 'black',
         },
         {
+          devNo:'34',
           x: '790',
           y: '390',
-          nodeName: '恢复线',
+          nodeName: '被复线',
           img: 'rect',
           size: [110, 30],
           color: 'rgba(227,221,152,1)',
@@ -647,9 +719,10 @@ export default {
           border: 'black',
         },
         {
+          devNo:'135',
           x: '550',
           y: '340',
-          nodeName: '无线宽带中心站',
+          nodeName: '无线宽带中心站     ',
           img: 'rect',
           size: [120, 30],
           color: '#c4e889',
@@ -752,16 +825,17 @@ export default {
           nodeName: '通\n信\n控\n制\n器',
           img: 'rect',
           size: [40, 320],
-          color: '#76bd06',
+          color: '#d3f1a5',
           border: 'black',
         },
         {
+          devNo:'154',
           x: '1120',
           y: '500',
           nodeName: '路\n由\n器',
           img: 'rect',
           size: [40, 100],
-          color: '#76bd06',
+          color: '#d3f1a5',
           border: 'black',
         },
         {
@@ -783,12 +857,13 @@ export default {
           border: '',
         },
         {
+          devNo:'252',
           x: '1330',
           y: '350',
-          nodeName: '交\n换\n机',
+          nodeName: '24\n口\n交\n换\n机',
           img: 'rect',
           size: [40, 700],
-          color: '#76bd06',
+          color: '#d3f1a5',
           border: 'black',
         },
         {
@@ -797,7 +872,7 @@ export default {
           nodeName: 'TDMA网管',
           img: 'rect',
           size: [120, 40],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -806,7 +881,7 @@ export default {
           nodeName: '集中监控',
           img: 'rect',
           size: [120, 40],
-          color: '#77e278',
+          color: '#e2c777',
           border: 'black',
         },
         {
@@ -815,13 +890,14 @@ export default {
           nodeName: '规划管理计算机',
           img: 'rect',
           size: [120, 40],
-          color: '#76bd06',
+          color: '#d3f1a5',
           border: 'black',
         },
         {
+          devNo: '137',
           x: '1500',
           y: '440',
-          nodeName: '时间统一设备',
+          nodeName: '时间统一设备    ',
           img: 'rect',
           size: [120, 40],
           color: '#b4dfea',
@@ -1082,7 +1158,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'恢复线',
+          mark:'被复线',
           x: '800',
           y: '415',
           nodeName: '',
@@ -1092,7 +1168,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'频谱检测',
+          mark:'频谱监测',
           x: '565',
           y: '474',
           nodeName: '',
@@ -1906,7 +1982,7 @@ export default {
             }
           },
           {
-            mark: '-》车载转接盒2-->恢复线',
+            mark: '-》车载转接盒2-->被复线',
             name: '',
             coords: [[100,390], [800, 390]],
             lineStyle: {
@@ -1919,7 +1995,7 @@ export default {
             }
           },
           {
-            mark: '恢复线-》车载转接盒2',
+            mark: '被复线-》车载转接盒2',
             name: '',
             coords: [[850,390], [980, 390]],
             lineStyle: {
@@ -1932,7 +2008,7 @@ export default {
             }
           },
           {
-            mark: '车载转接盒2-》恢复线-》',
+            mark: '车载转接盒2-》被复线-》',
             name: '',
             coords: [[980,390], [850, 390]],
             lineStyle: {
@@ -2808,7 +2884,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 3
+              symbolSize: 4
             },
             data: charts.polyLines
           },
@@ -2852,7 +2928,7 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 3
+              symbolSize: 4
             },
             data: charts.linesData
           },
@@ -2994,7 +3070,7 @@ export default {
 }
 
 .device_status {
-  margin-top: -31px;
+  margin-top: -22px;
   z-index: 100;
   position: relative;
 

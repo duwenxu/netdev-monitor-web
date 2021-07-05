@@ -78,7 +78,6 @@ export default {
 
   },
   mounted() {
-      // console.log(this.$route)
     if (this.$route.name != 'home') {
       this.initWebSocket()
     }
