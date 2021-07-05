@@ -208,7 +208,7 @@ export default {
       if(data.showAlert || data.showLog){
         this.normalHeight = 450
       }else{
-        this.normalHeight = 720
+        this.normalHeight = 710
       }
     },
     getMsg(data) {

@@ -15,13 +15,13 @@
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length">
+    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in combineList">
-        <div style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:combineList.length?orderHeight+'px':(orderDatas.length?height+'px':normalHeight+'px')}">
+    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
   </div>
@@ -43,10 +43,9 @@ export default {
   },
   data() {
     return {
-        orderSwitch:true,
-      orderHeight: 240,
+      orderSwitch:true,
+      comHeight: 450,
       normalHeight: 450,
-      height:350,
       devNo: null,
       paramSocket: null,
       logSocket: null,
@@ -89,6 +88,7 @@ export default {
     next()
   },
   methods: {
+
     //1.5m天线切换开关
     async  switchChange(data){
         let {result, success, message} = await switchCheck({channel:data?'A':'B'})
@@ -881,20 +881,22 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        if(this.combineList.length){
-          this.orderHeight = 240
-        }else if(this.orderDatas.length){
-          this.height = 400
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 450
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 450
         }else{
-          this.normalHeight = 470
+          this.comHeight = 240
+          this.normalHeight = 240
         }
       } else {
-        if(this.combineList.length){
-          this.orderHeight = 470
-        }else if(this.orderDatas.length){
-          this.height = 610
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 710
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 710
         }else{
-          this.normalHeight = 720
+          this.comHeight = 350
+          this.normalHeight = 350
         }
       }
     },
@@ -917,6 +919,14 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
+      if(this.combineList.length && !this.infos.length){
+        this.comHeight = 450
+      }else if(!this.combineList.length && this.infos.length){
+        this.normalHeight = 450
+      }else{
+        this.comHeight = 240
+        this.normalHeight = 240
+      }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
