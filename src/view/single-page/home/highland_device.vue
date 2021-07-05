@@ -1,7 +1,5 @@
 <template>
   <div style="border: 1px solid red">
-    <div class="device_status"></div>
-    <div class="device_title"></div>
 <!--    <template v-for="equipment in equipments">-->
 <!--      <div class="device_status" :style="devicePosition(equipment)">-->
 <!--        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>-->
@@ -502,26 +500,289 @@ export default {
     init() {
       let nodes = [
         {
-          x: '30',
-          y: '730',
-          nodeName: '1.5m天线   \n(含伺服)',
-          img: 'image://' + require('@/assets/images/home/antenna.png'),
-          size: [170, 160]
+          x: '490',
+          y: '435',
+          nodeName: '',
+          img: 'rect',
+          color: 'white',
+          size: [1000, 745]
         },
         {
-          x: '260',
-          y: '760',
-          nodeName: ' 400W高功放     ',
+          x: '0',
+          y: '500',
+          nodeName: '',
+          img: 'image://' + require('@/assets/images/home/antenna.png'),
+          size: [100, 110]
+        },
+        {
+          x: '90',
+          y: '660',
+          nodeName: 'Ka\n发射\n\n\n\n\n\nKa\n接收\n\n\n\n\nKa\n跟踪\n',
           img: 'rect',
-          size: [130, 50],
+          size: [30, 240],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '90',
+          y: '410',
+          nodeName: 'Ku\n接收\n\n\n\n\n\n\nKu\n发射\n\n',
+          img: 'rect',
+          size: [30, 160],
+          color: '#c4e889',
+          border: 'black',
+        },
+        //--------------天线中心体------------------------
+        {
+          x: '200',
+          y: '765',
+          nodeName: 'Ka频段\n100W功放\n\n\nKa频段\n100W功放',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '200',
+          y: '660',
+          nodeName: 'KaLNA    \n\n\n\nKaLNA   ',
+          img: 'image://' + require('@/assets/images/home/tranigle_up.png'),
+          size: [110, 80],
+        },
+        {
+          x: '470',
+          y: '765',
+          nodeName: 'C-Ka\n上变频器\n\n\nC-Ka\n上变频器',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '470',
+          y: '660',
+          nodeName: 'Ka-C\n下变频器\n\n\nKa-C\n下变频器',
+          img: 'image://' + require('@/assets/images/home/up_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '200',
+          y: '570',
+          nodeName: 'Ka频段LNA    ',
+          img: 'triangle',
+          symbolRotate: -90,
+          size: [45, 80],
+          color: '#c4e889'
+        },
+        {
+          x: '200',
+          y: '480',
+          nodeName: 'KuLNA    \n\n\n\nKuLNA   ',
+          img: 'image://' + require('@/assets/images/home/tranigle_up.png'),
+          size: [110, 80],
+        },
+
+        {
+          x: '320',
+          y: '660',
+          nodeName: '耦合器',
+          img: 'rect',
+          size: [50, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '340',
+          y: '570',
+          nodeName: '合成网络',
+          img: 'rect',
+          size: [60, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '470',
+          y: '570',
+          nodeName: 'Ka-L下变频器',
+          img: 'rect',
+          size: [100, 30],
           color: '#c4e889',
           border: 'black',
         },
 
+
+//-------------------------射频机房----------------------------
+        {
+          x: '460',
+          y: '480',
+          nodeName: 'Ku-L\n下变频器\n\n\nKu-L\n下变频器',
+          img: 'image://' + require('@/assets/images/home/up_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '200',
+          y: '360',
+          nodeName: 'Ku频段\n400W功放\n\n\nKu频段\n400W功放',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '380',
+          y: '360',
+          nodeName: 'L-Ku频段\n上变频器\n\n\nL-Ku频段\n上变频器',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '640',
+          y: '765',
+          nodeName: 'L-C\n上变频器\n\n\nL-C\n上变频器',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '225',
+          y: '260',
+          nodeName: '',
+          id: 1,
+          img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
+          size: [100, 70]
+        },
+        {
+          x: '640',
+          y: '660',
+          nodeName: 'C-L\n下变频器\n\n\nC-L\n下变频器',
+          img: 'image://' + require('@/assets/images/home/up_trans.png'),
+          size: [110, 80],
+        },
+        {
+          x: '760',
+          y: '760',
+          nodeName: 'L频段\n中频光\n传输设备',
+          img: 'rect',
+          size: [60, 80],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '600',
+          y: '480',
+          nodeName: '功分器',
+          img: 'rect',
+          size: [60, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '620',
+          y: '420',
+          nodeName: 'L频段跟踪接收机',
+          img: 'rect',
+          size: [100, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '200',
+          y: '220',
+          nodeName: '六选一开关',
+          img: 'rect',
+          size: [80, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '380',
+          y: '280',
+          nodeName: 'KaLNA切换单元',
+          img: 'rect',
+          size: [100, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '380',
+          y: '230',
+          nodeName: 'KaLNA切换单元',
+          img: 'rect',
+          size: [100, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '340',
+          y: '170',
+          nodeName: '天线驱动单元\n（ADU）',
+          img: 'rect',
+          size: [80, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '380',
+          y: '130',
+          nodeName: '轴角编码单元\n（PDU）',
+          img: 'rect',
+          size: [80, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '420',
+          y: '90',
+          nodeName: '轴角编码单元\n（PCU）',
+          img: 'rect',
+          size: [80, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '200',
+          y: '20',
+          nodeName: '供电',
+          img: 'rect',
+          size: [120, 30],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '540',
+          y: '130',
+          nodeName: '天线控制\n单元\n（ACU）',
+          img: 'rect',
+          size: [60, 150],
+          color: '#c4e889',
+          border: 'black',
+        },
+
+
+
+
       ]
       var charts = {
         nodes: [],
+        dottedLines:[
+          {
+            mark: '天线中心体线框',
+            name: '',
+            coords: [[120, 820], [540, 820],[120, 820], [120, 430],[120, 430], [380, 430],[380, 430], [380, 540],[540,540],[540,820]],
+            lineStyle: {
+              normal: {
+                color: '#c670de'
+              }
+            }
+          },
+
+          // {
+          //   mark: '射频机房',
+          //   name: '',
+          //   coords: [],
+          //   lineStyle: {
+          //     normal: {
+          //       color: '#c670de'
+          //     }
+          //   }
+          // },
+
+        ],
         linesData: [
+
           {
             mark: '设备->低噪声放大器',
             name: '',
@@ -588,6 +849,37 @@ export default {
           type: 'value'
         },
         series: [
+          {
+            type: "lines",
+            symbol: ['none', 'none'],
+            z: 4,
+            symbolSize: 10,
+            polyline: true,
+            coordinateSystem: "cartesian2d",
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              type: [5, 10],
+              dashOffset: 5,
+              color: 'green',
+              width: 1.5,
+              opacity: 1,
+              curveness: 0
+            },
+            // effect: {
+            //   show: true,
+            //   trailLength: 0.1,
+            //   symbol: 'arrow',
+            //   color: '#87e2ef',
+            //   symbolSize: 6
+            // },
+            data: charts.dottedLines
+          },
+
+
+
 
           {
             type: "lines",
@@ -646,7 +938,7 @@ export default {
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
-              fontSize: 16,
+              fontSize: 12,
               color: 'black',
               position: 'inside',
               formatter: function (item) {
