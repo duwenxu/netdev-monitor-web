@@ -79,7 +79,7 @@ export default {
         },
         {
           title: '命令标识符',
-          width: 120,
+          width: 110,
           key: 'logCmdMark',
         },
         {

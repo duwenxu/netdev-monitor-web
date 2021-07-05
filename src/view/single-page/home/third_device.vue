@@ -15,7 +15,7 @@
       </div>
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1300" :mask-closable="false">
+           width="1400" :mask-closable="false">
       <div slot="header"><span>参数信息</span>
         <Button style="float: right" size="small" @click="confirm">关闭</Button>
       </div>
@@ -205,15 +205,15 @@ export default {
           left: '605px',
 
         },
-        '252': {
-          mark: '24口交换机',
-          top: '180px',
+        '253': {
+          mark: '48口交换机',
+          top: '175px',
           left: '1010px',
 
         },
-        '253': {
-          mark: '48口交换机',
-          top: '385px',
+        '252': {
+          mark: '24口交换机',
+          top: '376px',
           left: '1333px',
 
         },
