@@ -8,7 +8,7 @@ import iView from 'view-design'
 import url from '@/libs/url'
 import i18n from '@/locale'
 import config from '@/config'
-import TreeTable from 'tree-table-vue'
+// import TreeTable from 'tree-table-vue'
 import bread from './libs/bread'
 
 import installPlugin from '@/plugin'
@@ -29,7 +29,7 @@ Vue.use(iView, {
 
 Vue.use(url);
 Vue.use(bread)
-Vue.use(TreeTable)
+// Vue.use(TreeTable)
 /**
  * @description 注册admin内置插件
  */
