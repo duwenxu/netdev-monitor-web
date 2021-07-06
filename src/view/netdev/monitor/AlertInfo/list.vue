@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {queryAlertInfoPageByTime} from '@/api/monitor/AlertInfo'
+    import {queryAlertInfoPageByTime,queryAlertInfoList} from '@/api/monitor/AlertInfo'
     import search from '@/components/tables/search'
     import exportCsv from "../../../../components/tables/tables";
 
@@ -173,8 +173,9 @@
             },
             //导出
             async exportData() {
-                if (this.infos.length) {
-                    if (this.infos.length > 500) {
+                let {result, success, message} = await queryAlertInfoList(this.search)
+                if (success) {
+                    if (result.length > 500) {
                         this.$Notice.error({
                             title: '查询到的条数过多',
                             desc: '查询到的告警条数不得超过500条，请您重新选择查询条件',
@@ -185,7 +186,7 @@
                             filename: "告警信息列表",
                             original: false,
                             columns: this.columns1,
-                            data: this.infos
+                            data: result
                         });
                     }
                 } else {
