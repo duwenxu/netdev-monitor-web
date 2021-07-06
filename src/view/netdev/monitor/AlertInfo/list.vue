@@ -36,35 +36,37 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                              width:120,
+                              width:100,
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
-                              width:100,
+                              width:96,
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
-                              width:100,
+                              width:96,
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
-                              width:100,
+                              width:96,
                             },
                             {
                                 title: '告警时间',
                                 key: 'alertTime',
-                                width: 170
+                                width: 150
                             },
                             {
                                 title: '站号',
                                 key: 'alertStationNo',
+                                width: 66
                             },
                             {
                                 title: '级别',
                                 key: 'alertLevel_paraName',
+                                width: 66
                             },
                             {
                                 title: '描述',
