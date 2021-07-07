@@ -100,9 +100,9 @@
             },
             handleSubmit() {
                 let form = this.$refs['form']
-                form.validate((wpId) => {
-                    if (wpId != null) {
-                        this.save(wpId)
+                form.validate((valid) => {
+                    if (valid) {
+                        this.save(name)
                     } else {
                         this.$Message.error('验证未通过!')
                     }

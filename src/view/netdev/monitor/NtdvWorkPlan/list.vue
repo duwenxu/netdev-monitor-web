@@ -5,7 +5,7 @@
         <search :search-data='searchData'></search>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="4">
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 800px" type="primary"
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 500px" type="primary"
                 @click="operate()">新增
         </Button>
       </Col>
