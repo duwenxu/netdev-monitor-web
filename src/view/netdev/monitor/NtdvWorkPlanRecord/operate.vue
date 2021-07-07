@@ -22,7 +22,7 @@
         </Col>
         <Col :xs="10" :sm="8" :md="8" :lg="8">
           <FormItem label="实际值班人员" prop="wpRealName">
-            <Input clearable placeholder="请输入计划值班人员" v-model="WorkPlanRecoed.wpRealName">
+            <Input clearable placeholder="请输入实际值班人员" v-model="WorkPlanRecoed.wpRealName">
             </Input>
           </FormItem>
         </Col>
@@ -110,16 +110,16 @@
                 },
                 rulePro: {
                     wpName: [
-                        {required: true, message: '计划值班人不能为空', trigger: 'blur'}
+                        {required: true, message: '必填', trigger: 'blur'}
                     ],
                     wpStartTime: [
-                        {required: true, message: '值班开始时间不能为空', trigger: 'blur'}
+                        {required: true, message: '必填', trigger: 'blur'}
                     ],
                     wpEndTime: [
-                        {required: true, message: '值班结束时间不能为空', trigger: 'blur'}
+                        {required: true, message: '必填', trigger: 'blur'}
                     ],
                     wpStatus: [
-                        {required: true, message: '值班类型不能为空', trigger: 'blur'}
+                        {required: true, message: '必填', trigger: 'blur'}
                     ],
                     wpRealName: [
                     ],

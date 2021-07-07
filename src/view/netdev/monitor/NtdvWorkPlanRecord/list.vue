@@ -209,7 +209,7 @@
                 this.$xy.vector.$emit('operateRow', WorkPlanRecord)
             },
             initSelect() {
-                this.$xy.getParamGroup('0303').then(res => {
+                this.$xy.getParamGroup('0001').then(res => {
                     this.searchData[1].data = res
                     this.doQuery()
                 })
