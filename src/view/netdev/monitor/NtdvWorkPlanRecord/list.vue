@@ -19,7 +19,7 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal"  :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
   </div>
@@ -134,7 +134,7 @@
                     {
                         type: 1,
                         key: 'wpName',
-                        name: '值班人',
+                        name: '',
                         value: '',
                         data: [],
                         placeholder: '请输入值班人'
