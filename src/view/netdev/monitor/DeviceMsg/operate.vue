@@ -62,14 +62,14 @@ export default {
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
-    this.$xy.vector.$on('closeMaps', this.closeModal)
+    this.$xy.vector.$on('closeModal', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
 
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
-    this.$xy.vector.$off('closeMaps', this.closeModal)
+    this.$xy.vector.$off('closeModal', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
 
   },
