@@ -62,14 +62,14 @@ export default {
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
-    this.$xy.vector.$on('closeModal', this.closeModal)
+    this.$xy.vector.$on('closeMaps', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
 
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
-    this.$xy.vector.$off('closeModal', this.closeModal)
+    this.$xy.vector.$off('closeMaps', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
 
   },
@@ -1040,7 +1040,23 @@ export default {
       }
       }
     },
-    async save(info) {
+    save(info){
+      this.$Modal.confirm({
+        title: '确认执行当前命令吗?',
+        content: '确认后将无法取消！',
+        onOk: () => {
+          this.saveOrder(info)
+        },
+        onCancel: () => {
+          this.$Notice.warning({
+            title: '取消',
+            desc: '已取消！',
+            duration: 3
+          })
+        }
+      })
+    },
+    async saveOrder(info) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -1054,12 +1070,6 @@ export default {
           title: '成功',
           desc: '修改成功！',
           duration: 1
-        })
-      } else {
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
         })
       }
     }
