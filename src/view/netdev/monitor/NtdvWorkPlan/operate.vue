@@ -48,7 +48,12 @@
         data() {
             return {
                 updateMark: false,
-                WorkPlan: {},
+                WorkPlan: {
+                  wpName:'',
+                  wpStartTime:'',
+                  wpEndTime:'',
+                  wpStatus:'',
+                },
                 wpStatusList:[],
                 optionsCheckWpStartTime: {
                     disabledDate(datetime) {

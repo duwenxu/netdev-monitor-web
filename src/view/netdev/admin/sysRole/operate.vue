@@ -2,25 +2,25 @@
   <div style="height:100%;padding: 10px 10px">
     <Form ref="sysRole" :model="sysRole" :rules="rulePro" :label-width="150">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="角色名称" prop="roleName">
             <Input v-model.trim="sysRole.roleName" placeholder="请输入角色名称"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="10">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="角色状态" prop="roleStatus">
-            <Select v-model="sysRole.roleStatus" clearable style="width:200px;margin-right: 15px" placeholder="请选择角色状态">
+            <Select v-model="sysRole.roleStatus" clearable  placeholder="请选择角色状态">
               <Option  v-for='choose in roleStatus' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
 
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="角色描述" prop="roleDesc">
             <Input type="textarea"  v-model.trim="sysRole.roleDesc" placeholder="请输入备注信息"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit('sysRole')">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>
