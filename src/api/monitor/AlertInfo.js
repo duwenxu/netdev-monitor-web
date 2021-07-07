@@ -2,7 +2,11 @@ import axios from '@/libs/api.request'
 import xy from '../../libs/url'
 import qs from "qs";
 
-export const queryAlertInfoList = info => {
+/**
+ * 查询分页数据
+ * 暂时没用到（已被方法queryAlertInfoPageByTime替代）
+ */
+export const queryAlertInfoPageList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/alertInfo/list',
         method: 'post',

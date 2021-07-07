@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import {queryOperLogPageByTime,queryOperLogList} from '@/api/monitor/OperLog'
+    import {queryOperLogPageByTime} from '@/api/monitor/OperLog'
     import search from '@/components/tables/search'
     import exportCsv from "../../../../components/tables/tables";
 
@@ -38,45 +38,45 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width:100,
+                               width:100,
                             },
                             {
                                 title: '编号',
                                 key: 'devNo',
-                                width:66,
+                              width:70,
                             },
                             {
                                 title: '日志时间',
                                 key: 'logTime',
-                                width: 150
+                              width:170,
                             },
                             {
                                 title: '访问类型',
                                 key: 'logAccessType_paraName',
-                                width:96,
+                              width:100,
                             },
                             {
                                 title: '操作类型',
                                 key: 'logOperType_paraName',
-                                width:96,
+                              width:100,
                             },
                             {
                                 title: '操作对象',
                                 key: 'logOperObjName',
-                              tooltip:true,
-                                width:120
+                              width:100,
+                              tooltip:true
                             },
                             {
                                 title: '操作内容',
                                 key: 'logOperContent',
-                                tooltip:true,
-                                width:120
+                              width:100,
+                                tooltip:true
                             },
                             {
                                 title: '原始数据',
                                 key: 'orignData',
-                                tooltip:true,
-                                width:120
+                              width:100,
+                                tooltip:true
                             },
                             {
                                 title: '操作人',
@@ -169,34 +169,24 @@
             },
             //导出
             async exportData() {
-                let {result, success, message} = await queryOperLogList(this.search)
-                if (success) {
-                    if (result.length) {
-                        if (result.length > 500) {
-                            this.$Notice.error({
-                                title: '查询到的条数过多',
-                                desc: '查询到的日志条数不得超过500条，请您重新选择查询条件',
-                                duration: 5
-                            })
-                        } else {
-                            this.$refs.logTable.exportCsv({
-                                filename: "操作日志信息列表",
-                                original: false,
-                                columns: this.columns1,
-                                data: result
-                            });
-                        }
+                if (this.infos.length) {
+                    if (this.infos.length > 500) {
+                        this.$Notice.error({
+                            title: '查询到的条数过多',
+                            desc: '查询到的日志条数不得超过500条，请您重新选择查询条件',
+                            duration: 5
+                        })
                     } else {
-                        this.$Message.info("表格数据不能为空！")
+                        this.$refs.logTable.exportCsv({
+                            filename: "日志信息列表",
+                            original: false,
+                            columns: this.columns1,
+                            data: this.infos
+                        });
                     }
-                }else {
-                    let notice = this.$Notice;
-                    notice.error({
-                        title: '导出失败！',
-                        desc: message,
-                        duration: 3
-                    })
-                };
+                } else {
+                    this.$Message.info("表格数据不能为空！")
+                }
             },
             //搜索框填充数据方法
             handleClick(data, item) {

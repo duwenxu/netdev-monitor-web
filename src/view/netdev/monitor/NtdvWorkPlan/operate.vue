@@ -11,13 +11,13 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="值班开始时间" prop="wpStartTime">
             <Date-picker type="datetime" :options="optionsCheckWpStartTime" :value="WorkPlan.wpStartTime"
-                         placeholder="请输入值班开始时间" @on-change="WorkPlan.wpStartTime=$event"></Date-picker>
+                          placeholder="请输入值班开始时间" @on-change="WorkPlan.wpStartTime=$event"></Date-picker>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="值班结束时间" prop="wpEndTime">
             <Date-picker type="datetime" :options="optionsCheckWpEndTime" :value="WorkPlan.wpEndTime"
-                         placeholder="请输入值班结束时间" @on-change="WorkPlan.wpEndTime=$event"></Date-picker>
+                          placeholder="请输入值班结束时间" @on-change="WorkPlan.wpEndTime=$event"></Date-picker>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
@@ -48,7 +48,13 @@
         data() {
             return {
                 updateMark: false,
-                WorkPlan: {},
+                WorkPlan: {
+                    wpName:'',
+                    wpStartTime:'',
+                    wpEndTime:'',
+                    wpStatus:''
+
+                },
                 wpStatusList:[],
                 optionsCheckWpStartTime: {
                     disabledDate(datetime) {
@@ -69,13 +75,13 @@
                         {required: true, message: '必填', trigger: 'blur'}
                     ],
                     wpStartTime: [
-                        {required: true, message: '必填', trigger: 'blur'}
+                        {required: true, message: '必填', select: 'blur'}
                     ],
                     wpEndTime: [
-                        {required: true, message: '必填', trigger: 'blur'}
+                        {required: true, message: '必填', select: 'blur'}
                     ],
                     wpStatus: [
-                        {required: true, message: '必填', trigger: 'blur'}
+                        {required: true, message: '必填', select: 'blur'}
                     ]
                 }
             }
@@ -100,9 +106,9 @@
             },
             handleSubmit() {
                 let form = this.$refs['form']
-                form.validate((wpId) => {
-                    if (wpId != null) {
-                        this.save(wpId)
+                form.validate((valid) => {
+                    if (valid) {
+                        this.save(name)
                     } else {
                         this.$Message.error('验证未通过!')
                     }
@@ -131,14 +137,10 @@
             cancel() {
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
-            },async getWpStatusList () {
+            },
+            async getWpStatusList () {
                 this.$xy.getParamGroup('0001').then(res => {
                     this.wpStatusList = res
-                })
-            },
-            async getFmtCcTypeList () {
-                this.$xy.getParamGroup('0011').then(res => {
-                    this.fmtCcTypeList = res
                 })
             }
 

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {queryAlertInfoPageByTime,queryAlertInfoList} from '@/api/monitor/AlertInfo'
+    import {queryAlertInfoPageByTime} from '@/api/monitor/AlertInfo'
     import search from '@/components/tables/search'
     import exportCsv from "../../../../components/tables/tables";
 
@@ -36,37 +36,35 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                              width:100,
+                              width:120,
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
-                              width:96,
+                              width:100,
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
-                              width:96,
+                              width:100,
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
-                              width:96,
+                              width:100,
                             },
                             {
                                 title: '告警时间',
                                 key: 'alertTime',
-                                width: 150
+                                width: 170
                             },
                             {
                                 title: '站号',
                                 key: 'alertStationNo',
-                                width: 66
                             },
                             {
                                 title: '级别',
                                 key: 'alertLevel_paraName',
-                                width: 66
                             },
                             {
                                 title: '描述',
@@ -173,9 +171,8 @@
             },
             //导出
             async exportData() {
-                let {result, success, message} = await queryAlertInfoList(this.search)
-                if (success) {
-                    if (result.length > 500) {
+                if (this.infos.length) {
+                    if (this.infos.length > 500) {
                         this.$Notice.error({
                             title: '查询到的条数过多',
                             desc: '查询到的告警条数不得超过500条，请您重新选择查询条件',
@@ -186,7 +183,7 @@
                             filename: "告警信息列表",
                             original: false,
                             columns: this.columns1,
-                            data: result
+                            data: this.infos
                         });
                     }
                 } else {

@@ -2,7 +2,11 @@ import axios from '@/libs/api.request'
 import xy from '../../libs/url'
 import qs from 'qs'
 
-export const queryOperLogList = info => {
+/**
+ * 查询分页数据
+ * 暂时没用到（已被方法queryOperLogPageByTime替代）
+ */
+export const queryOperLogPageList = info => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/monitor/operLog/list',
         method: 'post',
