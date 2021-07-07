@@ -1,18 +1,18 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
-    <Form ref="sysUser" :model="sysUser" :rules="rulePro" :label-width="150">
+    <Form ref="sysUser" :model="sysUser" :rules="rulePro" :label-width="100">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem  label="登录账号" prop="paraCode">
             <Input  v-model.trim="sysUser.userName" placeholder="请输入用户账号"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="用户姓名" prop="userChname">
             <Input v-model.trim="sysUser.userChname" placeholder="请输入用户姓名"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem  label="登录密码" prop="userPwd">
             <Input v-model.trim="sysUser.userPwd" placeholder="请输入登录密码"></Input>
           </FormItem>
@@ -24,24 +24,24 @@
 <!--            </Select>-->
 <!--          </FormItem>-->
 <!--        </Col>-->
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="用户手机号" prop="userPhone">
-            <Input  v-model.trim="sysUser.userPhone" placeholder="请输入用户手机号"></Input>
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
+          <FormItem label="用户手机" prop="userPhone">
+            <Input  v-model.trim="sysUser.userPhone" placeholder="请输入用户手机"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="用户邮箱" prop="userEmail">
             <Input  v-model.trim="sysUser.userEmail" placeholder="请输入用户邮箱"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="用户角色" prop="roles">
-            <i-select v-model="sysUser.userRole" multiple label-in-value @on-change="saveRoleLable"  style="width:200px"   clearable filterable>
+            <i-select v-model="sysUser.userRole" multiple label-in-value @on-change="saveRoleLable"  style="width:100%"   clearable filterable>
               <i-option v-for="item in roleList" :value="item.roleId">{{ item.roleName }}</i-option>
             </i-select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button  type="primary" @click="handleSubmit('sysUser')">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

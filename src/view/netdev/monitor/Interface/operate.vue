@@ -2,49 +2,49 @@
   <div class="content-box">
     <Form ref="form" :model="Interface" :rules="rulePro" :label-width="150">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="设备类型" prop="devType">
             <Select v-model="Interface.devType" clearable>
               <Option v-for='choose in devTypeList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="解析协议" prop="fmtId">
             <Select v-model="Interface.fmtId" clearable>
               <Option v-for='choose in prtclList.filter(value => {return value.devType == Interface.devType})' :value='choose.fmtId' :key="choose.fmtId">{{choose.fmtName}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="接口编码" prop="itfCode">
             <Input v-model="Interface.itfCode" placeholder="请输入接口编码"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="接口名称" prop="itfName">
             <Input v-model="Interface.itfName" placeholder="请输入接口名称"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="接口类型" prop="itfType">
             <Select v-model="Interface.itfType" clearable>
               <Option v-for='choose in devInterList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="接口命令标识" prop="itfCmdMark">
             <Input v-model="Interface.itfCmdMark" placeholder="请输入接口命令标识"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="页面路径" prop="itfPagePath">
             <Input v-if="Interface.itfType != '0027003'" readonly placeholder="禁用"></Input>
             <Input v-else v-model="Interface.itfPagePath" placeholder="请输入页面路径"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="接口状态" prop="itfStatus">
             <Select v-model="Interface.itfStatus" clearable>
               <Option v-for='choose in isDefaultList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
@@ -56,7 +56,7 @@
             <Input v-model="Interface.itfDataFormat" placeholder="数据格式"></Input>
           </FormItem>
         </Col>-->
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

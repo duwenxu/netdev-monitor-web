@@ -2,59 +2,59 @@
   <div style="height:100%;padding: 10px 10px">
     <Form ref="sysMenu" :model="sysMenu" :rules="rulePro" :label-width="150">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单标题" prop="menuTitle">
             <Input v-model.trim="sysMenu.menuTitle" placeholder="请输入菜单中文标题"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单名称" prop="menuName">
             <Input v-model.trim="sysMenu.menuName" placeholder="请输入菜单英文名称"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单图标" prop="menuIcon">
             <Input v-model.trim="sysMenu.menuIcon" placeholder="请输入菜单图标"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单序号" prop="menuSeq">
             <Input v-model.trim="sysMenu.menuSeq" placeholder="请输入排序编号"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="是否隐藏菜单" prop="menuHidden">
             <Select v-model="sysMenu.menuHidden" clearable  placeholder="请选择菜单隐藏状态">
               <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="是否隐藏面包屑" prop="menuBread">
             <Select v-model="sysMenu.menuBread" clearable  placeholder="请选择面包屑隐藏状态">
               <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="是否添加缓存" prop="menuCache">
             <Select v-model="sysMenu.menuCache" clearable  placeholder="请选择面包屑隐藏状态">
               <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="16">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单路径" prop="menuPath">
             <Input v-model.trim="sysMenu.menuPath" placeholder="请输入菜单路径"></Input>
           </FormItem>
         </Col>
 
-        <Col :xs="20" :sm="16" :md="16" :lg="16">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="菜单组件" prop="menuComponent">
             <Input v-model.trim="sysMenu.menuComponent" placeholder="请输入菜单组件"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit('sysMenu')">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

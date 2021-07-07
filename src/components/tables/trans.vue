@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row>
-      <Col :sm="10" :md="8" :lg="8">
+      <Col :sm="11" :md="11" :lg="11">
         <Card>
           <Checkbox @on-change="selectAll(listLeft,$event)" v-model="checkAllLeft">{{leftName}}&nbsp;&nbsp;</Checkbox>
           <span>{{leftSelect ? leftSelect : 0}}/{{listLeft.length}}</span>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </Col>
-      <Col :sm="10" :md="8" :lg="8">
+      <Col :sm="11" :md="11" :lg="11">
         <Card>
           <Checkbox @on-change="selectAll(listRight,$event)" v-model="checkAllRight">{{rightName}}&nbsp;&nbsp;
           </Checkbox>
@@ -205,7 +205,7 @@
   }
 
   .left, .right {
-    height: 350px;
+    height: 240px;
     padding: 5px 0;
     box-sizing: border-box;
     overflow-y: auto;

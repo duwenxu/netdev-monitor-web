@@ -14,7 +14,7 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal"  :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal"  width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
   </div>

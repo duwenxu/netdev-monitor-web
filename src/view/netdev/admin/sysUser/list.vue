@@ -17,10 +17,10 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
-    <Modal v-model="detailModal" width="1200" :title="detailName" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="detailModal" width="80%" :title="detailName" footer-hide :mask-closable="false" :closable="false">
       <detail-row></detail-row>
     </Modal>
   </div>

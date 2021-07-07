@@ -2,25 +2,25 @@
   <div class="content-box">
     <Form ref="form" :model="WorkPlan" :rules="rulePro" :label-width="150">
       <Row>
-        <Col :xs="10" :sm="8" :md="8" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="计划值班人员" prop="wpName">
             <Input clearable placeholder="请输入计划值班人员" v-model="WorkPlan.wpName">
             </Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="值班开始时间" prop="wpStartTime">
             <Date-picker type="datetime" :options="optionsCheckWpStartTime" :value="WorkPlan.wpStartTime"
                           placeholder="请输入值班开始时间" @on-change="WorkPlan.wpStartTime=$event"></Date-picker>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="值班结束时间" prop="wpEndTime">
             <Date-picker type="datetime" :options="optionsCheckWpEndTime" :value="WorkPlan.wpEndTime"
                           placeholder="请输入值班结束时间" @on-change="WorkPlan.wpEndTime=$event"></Date-picker>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="状态" prop="wpStatus">
             <Select clearable placeholder="请选择状态" v-model="WorkPlan.wpStatus">
               <Option :key="choose.id" :value='choose.value' v-for='choose in wpStatusList'>{{choose.name}}
@@ -28,7 +28,7 @@
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit()">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

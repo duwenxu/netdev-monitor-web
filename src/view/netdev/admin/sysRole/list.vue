@@ -17,7 +17,7 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
     <Modal v-model="authModal" width="500" :title="authName" :scrollable="true"  footer-hide :mask-closable="false" :closable="true">

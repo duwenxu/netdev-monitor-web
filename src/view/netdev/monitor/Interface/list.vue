@@ -19,11 +19,11 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
 
-    <Modal v-model="transModal" width="800" title="绑定参数" footer-hide :mask-closable="false">
+    <Modal v-model="transModal" width="90%"  footer-hide :mask-closable="false">
       <trans left-name="未绑定参数" right-name="绑定参数"></trans>
     </Modal>
   </div>
