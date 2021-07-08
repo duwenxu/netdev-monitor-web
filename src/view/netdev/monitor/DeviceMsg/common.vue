@@ -131,7 +131,6 @@
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
 export default {
-
   name: "common",
   props: {
     infos: {

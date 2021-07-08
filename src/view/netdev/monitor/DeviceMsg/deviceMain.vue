@@ -184,6 +184,10 @@ export default {
       this.logWs()
     },
     closeModal(){
+      this.tabs = []
+      this.logs = []
+      this.alertInfos =[]
+      this.orderDatas = []
       if (this.ctrl_socket) {
         this.ctrl_socket.close()
         this.ctrl_socket = null

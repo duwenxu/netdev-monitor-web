@@ -121,7 +121,7 @@ export default {
   components: {common},
   data() {
     return {
-      normalHeight:450,
+      normalHeight:250,
       infos: [],
       validTag: false,
         receiveMsg:false,
@@ -147,9 +147,9 @@ export default {
   methods: {
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 450
+        this.normalHeight = 250
       }else{
-        this.normalHeight = 710
+        this.normalHeight = 400
       }
     },
     getMsg(data) {

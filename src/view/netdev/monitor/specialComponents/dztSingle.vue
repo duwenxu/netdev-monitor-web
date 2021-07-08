@@ -21,7 +21,7 @@ export default {
   data(){
     return{
       devNo:'',
-      normalHeight:450,
+      normalHeight:250,
       pageObj:{},
       infos:[],
       page_socket:null
@@ -46,9 +46,9 @@ export default {
   methods:{
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 450
+        this.normalHeight = 250
       }else{
-        this.normalHeight = 720
+        this.normalHeight = 400
       }
     },
     getInfo(data){
@@ -92,7 +92,7 @@ export default {
   border: 1px solid #009688;
   margin-bottom: 10px;
   overflow: auto;
-  height: 450px;
+  height: 250px;
   border-radius: 5px;
   padding: 10px
 }

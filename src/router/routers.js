@@ -27,12 +27,12 @@ export default [
     },
     component: () => import('@/view/system/login/login.vue')
   },
-  {
-    //全局刷新
-    path: '/back',
-    name: 'back',
-    component: () => import('@/view/single-page/white.vue')
-  },
+  // {
+  //   //全局刷新
+  //   path: '/back',
+  //   name: 'back',
+  //   component: () => import('@/view/single-page/white.vue')
+  // },
   /*{
     name: '/index/large',
     path: '/ghome',
@@ -86,7 +86,7 @@ export default [
         //二类型车__1（*）
         // component: () => import('@/view/single-page/home/second_device.vue')
         //三类车载
-        component: () => import('@/view/single-page/home/third_device.vue')
+        // component: () => import('@/view/single-page/home/third_device.vue')
         // 四类车载（*）
         // component: () => import('@/view/single-page/home/forth_device.vue')
         //地面站

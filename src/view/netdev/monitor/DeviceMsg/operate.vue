@@ -26,14 +26,11 @@
     </div>
   </div>
 </template>
-
 <script>
-
 import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
-
 export default {
   components: {common},
   props: {
@@ -45,8 +42,8 @@ export default {
   data() {
     return {
       orderSwitch:true,
-      comHeight: 450,
-      normalHeight: 450,
+      comHeight: 160,
+      normalHeight: 250,
       devNo: null,
       paramSocket: null,
       infos: [],
@@ -62,16 +59,14 @@ export default {
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
-    this.$xy.vector.$on('closeMaps', this.closeModal)
+    this.$xy.vector.$on('closeModal', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
-
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
-    this.$xy.vector.$off('closeMaps', this.closeModal)
+    this.$xy.vector.$off('closeModal', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
-
   },
   mounted() {
     if (this.$route.name != 'home') {
@@ -87,7 +82,7 @@ export default {
        this.infos = []
       this.orderDatas = []
       this.combineList =[]
-    this.selectObj = {}
+      this.selectObj = {}
   },
   methods: {
 
@@ -883,23 +878,11 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 450
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 450
-        }else{
-          this.comHeight = 240
-          this.normalHeight = 240
-        }
+        this.comHeight = 160
+        this.normalHeight = 250
       } else {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 710
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 710
-        }else{
-          this.comHeight = 350
-          this.normalHeight = 350
-        }
+        this.comHeight = 380
+        this.normalHeight = 400
       }
     },
     initWebSocket() { //初始化weosocket
@@ -922,9 +905,9 @@ export default {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
       if(this.combineList.length && !this.infos.length){
-        this.comHeight = 450
+        this.comHeight = 400
       }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 450
+        this.normalHeight = 400
       }else{
         this.comHeight = 240
         this.normalHeight = 240
@@ -1135,7 +1118,7 @@ export default {
 
 .param-wrap {
   border: 1px solid #009688;
-  height: 450px;
+  height: 250px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;
