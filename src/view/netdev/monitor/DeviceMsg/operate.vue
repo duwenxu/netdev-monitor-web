@@ -88,9 +88,6 @@ export default {
       this.orderDatas = []
       this.combineList =[]
     this.selectObj = {}
-    this.paramSocket = null
-
-    console.warn('----------------------------------缓存2')
   },
   methods: {
 

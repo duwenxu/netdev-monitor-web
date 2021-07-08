@@ -35,8 +35,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.columns)
-    console.log(this.list)
+
   }
 }
 </script>

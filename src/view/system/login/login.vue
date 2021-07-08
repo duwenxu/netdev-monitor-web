@@ -138,7 +138,7 @@
 </script>
 
 
-<style>
+<style scoped>
   * {
     margin: 0;
   }

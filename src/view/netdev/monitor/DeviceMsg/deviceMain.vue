@@ -2,7 +2,7 @@
   <div id="deviceMain">
     <Tabs :animated="false" @on-click="goto" v-model="navName">
       <TabPane v-for="(tab,index) in tabs" :key="index" :label="tab.nav" :name="tab.name">
-        <component v-if="tab.componentName" :is="tab.componentName"></component>
+        <component  :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
       <div class="fix-btn">
@@ -26,6 +26,7 @@ import ctrlParams from "./ctrlParams"
 import shipOperate from "../specialComponents/shipOperate"
 import logTable from "./logTable"
 import warnTable from "./warnTable"
+import leaveMixin from "./mixin";
 
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 const mStores = {
@@ -45,7 +46,7 @@ context.keys().forEach(key => {
 })
 export default {
   components: mStores,
-
+  mixins: [leaveMixin],
   data() {
     return {
       devNo: null,
@@ -142,7 +143,6 @@ export default {
     this.logSocket = null
     this.warnSocket = null
 
-    console.warn('--------------------------------缓存1')
   },
   created: function () {
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
@@ -153,7 +153,6 @@ export default {
     this.$xy.vector.$off('closeModal', this.closeModal)
   },
   mounted() {
-    this.tabs = null
     this.logs = null
     this.alertInfos =null
     this.orderDatas = null
@@ -165,17 +164,19 @@ export default {
       this.logWs()
     }
   },
-  beforeRouteLeave(to, from, next) {
-    if (this.ctrl_socket) {
-      this.ctrl_socket.close()
-      this.ctrl_socket = null
-    }
-    this.warnSocket.close()
-    this.warnSocket = null
-    this.logSocket.close()
-    this.logSocket = null
-    next()
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (this.ctrl_socket) {
+  //     this.ctrl_socket.close()
+  //     this.ctrl_socket = null
+  //   }
+  //   this.warnSocket.close()
+  //   this.warnSocket = null
+  //   this.logSocket.close()
+  //   this.logSocket = null
+  //   // this.$destroy()
+  //   console.log('-----------destory----------')
+  //   // next()
+  // },
   methods: {
     getDevNo(data) {
       console.error(data)
@@ -223,7 +224,6 @@ export default {
           if(fIndex == -1){
             this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
           }
-
         }else{
           this.tabs  = [
             {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
