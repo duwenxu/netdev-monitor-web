@@ -16,15 +16,12 @@
     "echarts": "^5.1.1",
     "js-cookie": "^2.2.0",
     "qs": "^6.8.0",
-    "screenfull": "^4.0.1",
     "sockjs-client": "^1.3.0",
-    "stompjs": "^2.3.3",
-    "view-design": "^4.1.3",
+    "view-design": "^4.5.0",
     "vue": "^2.5.10",
     "vue-axios": "^2.1.5",
     "vue-i18n": "^7.8.0",
-    "vue-json-viewer": "^2.2.8",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.5.2",
     "vuedraggable": "^2.23.2",
     "vuex": "^3.0.1"
   },
@@ -41,7 +38,6 @@
     "less-loader": "^5.0.0",
     "lint-staged": "^6.0.0",
     "mockjs": "^1.0.1-beta3",
-    "vue-json-views": "^1.1.0",
     "vue-template-compiler": "^2.5.13"
   },
   "browserslist": [

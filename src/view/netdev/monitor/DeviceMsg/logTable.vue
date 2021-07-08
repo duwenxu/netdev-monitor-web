@@ -1,0 +1,115 @@
+<template>
+  <div class="bottom_wrapper">
+    <div style="clear:both"></div>
+    <div class="special-modal">
+      <div class="table-title">
+            <span v-for="info in columns" class="self-title" :style="{width:info.width +'%'}">
+              {{info.title}}
+            </span>
+      </div>
+      <div class="scroll-container table-container">
+        <table class="mytable">
+          <tr v-for="(info, index) in list" :key="index" :id="index">
+            <td style="width: 10%" align="center">{{info.logTime}}</td>
+            <td style="width: 10%" align="center">{{info.logAccessTypeName}}</td>
+            <td style="width: 10%" align="center">{{info.logOperTypeName}}</td>
+            <td style="width: 10%" align="center">{{info.logCmdMark}}</td>
+            <td style="width: 16%" align="center">{{info.logOperObjName}}</td>
+            <td style="width: 29%;" class="width_len" align="center">{{info.logOperContent}}</td>
+            <td style="width: 15%" align="center">{{info.orignData}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "customTable",
+  props:{
+    columns:{
+      type:Array,
+      default:[]
+    },
+    list:{
+      type:Array,
+      default:[]
+    },
+  },
+  mounted() {
+    console.log(this.columns)
+    console.log(this.list)
+  }
+}
+</script>
+<style scoped>
+.width_len{
+  max-width: 180px;
+}
+.bottom_wrapper {
+  height: 200px;
+
+  width: 100%;
+
+}
+
+.bottom_wrapper th {
+  border: 1px solid #e6e6e6;
+  line-height: 4vh;
+  color: #666666;
+  font-size: 16px;
+}
+
+.bottom_wrapper table {
+  border-collapse: collapse;
+  height: 400px;
+  width: 100%;
+}
+
+.mytable td {
+  padding: 5px;
+  border: 1px solid #e6e6e6;
+  font-size: 14px;
+
+  white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-head {
+  padding-right: 4px;
+  color: #000;
+  height: 5vh;
+}
+
+.table-body {
+  width: 100%;
+  height: 240px;
+  overflow-y: scroll;
+}
+
+.table-head table, .table-body table {
+  width: 100%;
+}
+
+.table-body::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+.table-body::-webkit-scrollbar-track {
+  background: #1D1F2E;
+}
+
+.table-body::-webkit-scrollbar-thumb {
+  background: #415dbe;
+  border-radius: 4px;
+}
+
+.table-body::-webkit-scrollbar-corner {
+  background: #415dbe;
+}
+
+
+</style>

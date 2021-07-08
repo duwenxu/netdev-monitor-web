@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="deviceMain">
     <Tabs :animated="false" @on-click="goto" v-model="navName">
       <TabPane v-for="(tab,index) in tabs" :key="index" :label="tab.nav" :name="tab.name">
-        <component :is="tab.componentName"></component>
+        <component v-if="tab.componentName" :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
       <div class="fix-btn">
@@ -15,10 +15,8 @@
         <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
         <div style="margin-top:5px;">日<Br/>志</div>
       </div>
-      <div v-if="showLog || showAlert"  :style="{height:240+'px',overflow:'auto'}">
-        <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs" ></Table>
-        <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
-      </div>
+        <log-table v-if="showLog" :columns="logColumns" :list="logs"></log-table>
+        <warn-table v-if="showAlert" :columns="alertColumns" :list="alertInfos"></warn-table>
   </div>
 </template>
 <script>
@@ -26,11 +24,15 @@ import {queryPageInfo, queryCtrlInfo} from "@/api/monitor/DeviceParam"
 import Operate from "./operate"
 import ctrlParams from "./ctrlParams"
 import shipOperate from "../specialComponents/shipOperate"
+import logTable from "./logTable"
+import warnTable from "./warnTable"
 
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 const mStores = {
   Operate,
   ctrlParams,
+  logTable,
+  warnTable,
   shipOperate
 }
 context.keys().forEach(key => {
@@ -64,27 +66,27 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width: 180,
+          width:10,
           key: 'logTime',
         },
         {
           title: '访问类型',
-          width: 150,
+          width:10,
           key: 'logAccessTypeName',
         },
         {
           title: '操作类型',
-          width: 150,
+          width:10,
           key: 'logOperTypeName',
         },
         {
           title: '命令标识符',
-          width: 110,
+          width:10,
           key: 'logCmdMark',
         },
         {
           title: '操作对象',
-          width: 180,
+          width:16,
           // width: 100,
           key: 'logOperObjName',
           tooltip: true,
@@ -92,11 +94,12 @@ export default {
         {
           title: '内容',
           key: 'logOperContent',
+          width:29,
           tooltip: true,
         },
         {
           title: '原始数据',
-          width: 250,
+          width:15,
           key: 'orignData',
           tooltip: true,
         },
@@ -105,23 +108,23 @@ export default {
       alertColumns: [
         {
             title: '告警级别',
-            width: 150,
+            width: 15,
             key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
-            width: 150,
+            width: 15,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-            width: 220,
+            width: 20,
         },
         {
           title: '告警描述',
           key: 'alertDesc',
-          tooltip: true,
+          width: 50,
         },
       ],
       alertInfos: [],
@@ -129,6 +132,17 @@ export default {
       viewLog:true
 
     }
+  },
+  destroyed() {
+    this.tabs = []
+    this.logs = []
+    this.alertInfos =[]
+    this.orderDatas = []
+    this.ctrl_socket = null
+    this.logSocket = null
+    this.warnSocket = null
+
+    console.warn('--------------------------------缓存1')
   },
   created: function () {
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
@@ -139,6 +153,13 @@ export default {
     this.$xy.vector.$off('closeModal', this.closeModal)
   },
   mounted() {
+    this.tabs = null
+    this.logs = null
+    this.alertInfos =null
+    this.orderDatas = null
+    // this.ctrl_socket = null
+    // this.logSocket = null
+    // this.warnSocket = null
     if (this.$route.name != 'home') {
       this.getTabsCtrl()
       this.logWs()
@@ -157,6 +178,7 @@ export default {
   },
   methods: {
     getDevNo(data) {
+      console.error(data)
       this.viewLog = false
       this.devNo = data
       this.getTabsCtrl()
@@ -171,15 +193,13 @@ export default {
       this.warnSocket = null
       this.logSocket.close()
       this.logSocket = null
+
     },
     goto: function (name) {
       this.navName = name
     },
     //切换日志告警信息
-    changeInfo(value) {
-      console.log(value)
-      //告警
-
+    changeInfo(value) {    //告警
       if (value == 1) {
         this.showLog = false
         this.showAlert = !this.showAlert
@@ -187,8 +207,6 @@ export default {
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
-        console.log(this.showLog)
-
       }
       let obj = {
         showLog: this.showLog,
@@ -275,6 +293,7 @@ export default {
     },
     getLogMsg(frame) {
       let msg = JSON.parse(frame.data)
+      this.logs = []
       this.logs = msg
     },
     warnSend() {
@@ -282,15 +301,13 @@ export default {
       this.warnSocket.send(obj)
     },
     getWarnLog(frame) {
-
       let msg = JSON.parse(frame.data)
-      console.log(msg)
       if(msg.length){
         this.showAlert = true
         this.showLog = false
+        this.alertInfos = []
         this.alertInfos = msg
       }
-
     },
   }
 }

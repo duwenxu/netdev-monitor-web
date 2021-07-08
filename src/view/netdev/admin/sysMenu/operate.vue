@@ -25,21 +25,21 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="是否隐藏菜单" prop="menuHidden">
             <Select v-model="sysMenu.menuHidden" clearable  placeholder="请选择菜单隐藏状态">
-              <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
+              <Option  v-for='(choose,index) in codiList'  :key="index"  :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="是否隐藏面包屑" prop="menuBread">
             <Select v-model="sysMenu.menuBread" clearable  placeholder="请选择面包屑隐藏状态">
-              <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
+              <Option   v-for='(choose,index) in codiList'  :key="index" :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="是否添加缓存" prop="menuCache">
             <Select v-model="sysMenu.menuCache" clearable  placeholder="请选择面包屑隐藏状态">
-              <Option  v-for='choose in codiList' :value='choose.value'>{{choose.name}}</Option>
+              <Option   v-for='(choose,index) in codiList'  :key="index"  :value='choose.value'>{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>

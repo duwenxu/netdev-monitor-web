@@ -9,7 +9,7 @@
             <span slot="close">B</span>
           </i-switch>
         </div>
-        <Button v-for="(info,index) in orderDatas" @click="save(info)"
+        <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
@@ -41,6 +41,7 @@ export default {
       type: Number
     }
   },
+
   data() {
     return {
       orderSwitch:true,
@@ -48,7 +49,6 @@ export default {
       normalHeight: 450,
       devNo: null,
       paramSocket: null,
-      logSocket: null,
       infos: [],
       orderDatas: [],
       combineList: [],
@@ -62,19 +62,15 @@ export default {
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
-    this.$xy.vector.$on('closeModal', this.closeModal)
+    this.$xy.vector.$on('closeMaps', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
 
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
-    this.$xy.vector.$off('closeModal', this.closeModal)
+    this.$xy.vector.$off('closeMaps', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
-
-  },
-  destroyed() {
-    clearInterval(this.timer)
 
   },
   mounted() {
@@ -86,6 +82,15 @@ export default {
     this.paramSocket.close()
     this.paramSocket = null
     next()
+  },
+  destroyed() {
+       this.infos = []
+      this.orderDatas = []
+      this.combineList =[]
+    this.selectObj = {}
+    this.paramSocket = null
+
+    console.warn('----------------------------------缓存2')
   },
   methods: {
 

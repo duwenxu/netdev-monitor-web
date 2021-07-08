@@ -48,28 +48,26 @@ export default {
     },
     handleChange () {
       this.handleFullscreen()
+    },
+    getValue(){
+      this.$emit('input', !this.value)
+      this.$emit('on-change', !this.value)
     }
   },
   mounted () {
     let isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen
     isFullscreen = !!isFullscreen
-    document.addEventListener('fullscreenchange', () => {
-      this.$emit('input', !this.value)
-      this.$emit('on-change', !this.value)
-    })
-    document.addEventListener('mozfullscreenchange', () => {
-      this.$emit('input', !this.value)
-      this.$emit('on-change', !this.value)
-    })
-    document.addEventListener('webkitfullscreenchange', () => {
-      this.$emit('input', !this.value)
-      this.$emit('on-change', !this.value)
-    })
-    document.addEventListener('msfullscreenchange', () => {
-      this.$emit('input', !this.value)
-      this.$emit('on-change', !this.value)
-    })
+    document.addEventListener('fullscreenchange', this.getValue)
+    document.addEventListener('mozfullscreenchange', this.getValue)
+    document.addEventListener('webkitfullscreenchange', this.getValue)
+    document.addEventListener('msfullscreenchange', this.getValue)
     this.$emit('input', isFullscreen)
+  },
+  beforeDestroy() {
+    document.removeEventListener('msfullscreenchange', this.getValue);
+    document.removeEventListener('fullscreenchange', this.getValue);
+    document.removeEventListener('webkitfullscreenchange', this.getValue);
+    document.removeEventListener('msfullscreenchange', this.getValue);
   }
 }
 </script>

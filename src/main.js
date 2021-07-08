@@ -6,10 +6,10 @@ import router from './router'
 import store from '@/store'
 import iView from 'view-design'
 import url from '@/libs/url'
-import i18n from '@/locale'
+// import i18n from '@/locale'
 import config from '@/config'
 // import TreeTable from 'tree-table-vue'
-import bread from './libs/bread'
+// import bread from './libs/bread'
 
 import installPlugin from '@/plugin'
 import './index.less'
@@ -18,17 +18,18 @@ import '@/assets/icons/home/iconfont.css'
 import '@/assets/themes/themeColor.less'
 import '@/assets/css/common.less'
 // 引入echarts
-import echarts from 'echarts'
+// import echarts from 'echarts'
 // const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
-Vue.prototype.$echarts = echarts
+// Vue.prototype.$echarts = echarts
 
 
-Vue.use(iView, {
-  i18n: (key, value) => i18n.t(key, value)
-})
+// Vue.use(iView, {
+//   i18n: (key, value) => i18n.t(key, value)
+// })
 
 Vue.use(url);
-Vue.use(bread)
+// Vue.use(bread)
+Vue.use(iView)
 // Vue.use(TreeTable)
 /**
  * @description 注册admin内置插件
@@ -51,9 +52,14 @@ Vue.prototype.$config = config
 new Vue({
   el: '#app',
   router,
-  i18n,
+  // i18n,
   store,
   render: h => h(App)
 })
 
-
+// export async function unmount() {
+//   instance.$destroy();
+//   instance.$el.innerHTML = '';
+//   instance = null;
+//
+// }

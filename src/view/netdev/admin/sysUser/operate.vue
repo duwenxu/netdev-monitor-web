@@ -37,7 +37,7 @@
         <Col :xs="20" :sm="16" :md="16" :lg="8">
           <FormItem label="用户角色" prop="roles">
             <i-select v-model="sysUser.userRole" multiple label-in-value @on-change="saveRoleLable"  style="width:200px"   clearable filterable>
-              <i-option v-for="item in roleList" :value="item.roleId">{{ item.roleName }}</i-option>
+              <i-option v-for="(item,index) in roleList" :key="index" :value="item.roleId">{{ item.roleName }}</i-option>
             </i-select>
           </FormItem>
         </Col>

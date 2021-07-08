@@ -1,13 +1,11 @@
 <template>
  <div>
-<!--   {{infos.length}}-->
    <Row v-if="infos.length">
      <template v-for="(info,index) in infos">
          <Col :xs="24" :lg="lgCol">
            <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
              <template v-if="info.parahowMode == '0024001'">
-               <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
-                 <Row>
+                 <Row  v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
                       <span style="color: red;"
@@ -25,15 +23,15 @@
                                      </span>
                                    </template>
                                    </template>
-                                     <template v-else>
-                                       <span   style="color: #009688">{{item.paraVal}}</span>
-                                     </template>
+
+                                       <span v-else  style="color: #009688">{{item.paraVal}}</span>
+
                                  </span>
                        </template>
                      </template>
-                     <template v-else>
-                       <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
-                     </template>
+
+                       <span  v-else style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+
                    </Col>
                    <template  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
                      <Col :xs="24" :lg="24">
@@ -77,9 +75,7 @@
                    </template>
                    <Col :xs="24" :lg="24">&nbsp;</Col>
                  </Row>
-               </template>
-               <template v-else>
-                 <Row>
+                 <Row v-else>
                    <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                      <div style="text-align: right">
                   <span style="color: red;"
@@ -135,10 +131,8 @@
                    </template>
                    <Col :xs="24" :lg="24">&nbsp;</Col>
                  </Row>
-               </template>
              </template>
-             <template v-else>
-               <Row>
+               <Row v-else>
                  <Col :xs="12" :lg="info.paraName.length<=10?11:12">
                    <div style="text-align: right">
                   <span style="color: red;"
@@ -172,12 +166,8 @@
                  </Col>
                  <Col :xs="24" :lg="24">&nbsp;</Col>
                </Row>
-             </template>
            </template>
-
          </Col>
-
-
      </template>
    </Row>
   <div v-else>
@@ -189,6 +179,7 @@
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
 export default {
+
   name: "common",
   props: {
     infos: {
@@ -208,10 +199,6 @@ export default {
     if(obj.userName == 'admin'){
       this.accessView = true
     }
-    //
-    // if(window.screen.width<=1024 || this.$route.name == 'home'){
-    //   this.lgCol = 12
-    // }
   },
   methods:{
     setValues(info){

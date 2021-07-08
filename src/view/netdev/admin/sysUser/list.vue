@@ -172,7 +172,7 @@
       this.$xy.vector.$on('sendReq', this.sendReq)
     },
     beforeDestroy: function () {
-      this.$xy.vector.$on('closeDetail', this.closeDetail)
+      this.$xy.vector.$off('closeDetail', this.closeDetail)
       this.$xy.vector.$off('closeModal', this.closeModal)
       this.$xy.vector.$off('sendReq', this.sendReq)
     },

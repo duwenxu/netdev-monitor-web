@@ -1,7 +1,7 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
 
-      <Col :xs="24" :md="24" v-for="item in infos">
+      <Col :xs="24" :md="24" v-for="(item,index) in infos"  :key="index" >
         <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
         <div v-for="temp in item.subInterList">
           <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>

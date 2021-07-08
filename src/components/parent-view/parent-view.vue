@@ -1,6 +1,6 @@
 <template>
   <keep-alive :include="cacheList" :exclude="notCacheName">
-    <router-view ref="child"/>
+    <router-view :key="$route.path + $route.query.t" ref="child"/>
   </keep-alive>
 </template>
 <script>

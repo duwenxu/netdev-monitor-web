@@ -2,7 +2,7 @@
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
   <Row>
     <template v-if="infos.length">
-      <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
+      <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
         <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
           <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
         </template>

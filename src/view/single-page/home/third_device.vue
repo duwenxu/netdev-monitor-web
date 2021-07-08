@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-      <div class="device_status" :style="devicePosition(equipment)">
+      <div class="device_status" :style="equipment.pos">
         <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
         </span>
       </div>
@@ -14,22 +14,25 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
+<div ref="test">
+
+
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1400" :mask-closable="false">
+           width="80%" :mask-closable="false">
       <div slot="header"><span>参数信息</span>
         <Button style="float: right" size="small" @click="confirm">关闭</Button>
       </div>
-      <DeviceMain></DeviceMain>
+        <DeviceMain></DeviceMain>
     </Modal>
-  </div>
+</div>
+</div>
+
 </template>
 <script>
 import * as echarts from 'echarts'
-import {on, off} from '@/libs/tools'
-import {mapState} from "vuex";
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
-// echarts.registerTheme('tdTheme');
+let dom = null
 export default {
   components: {DeviceMain},
   mixins: [mixin],
@@ -37,7 +40,8 @@ export default {
     return {
       shineData: [],
       devNo: null,
-      dom: null,
+      // dom: null,
+      addSubOrgModalVif: false,
       paramModal: false,
       equipments: [
         {
@@ -47,7 +51,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos:{
+            top: '80px',
+            marginLeft: '570px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '135',
@@ -56,7 +66,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '441px',
+            marginLeft: '620px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '137',
@@ -65,7 +81,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos:{
+            top: '341px',
+            marginLeft: '1545px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '151',
@@ -74,7 +96,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '340px',
+            marginLeft: '847px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '154',
@@ -83,7 +111,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos:{
+            top: '250px',
+            marginLeft: '1128px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '19',
@@ -92,7 +126,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos:{
+            top: '283px',
+            marginLeft: '605px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '253',
@@ -101,7 +141,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '175px',
+            marginLeft: '1010px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '252',
@@ -110,7 +156,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos:{
+            top: '376px',
+            marginLeft: '1333px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '34',
@@ -119,7 +171,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '391px',
+            marginLeft: '847px',
+            width: '16px',
+            height: '16px',
+          }
         },
 
         {
@@ -129,7 +187,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '136px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '52',
@@ -138,7 +202,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '176px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '53',
@@ -147,7 +217,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '215px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '54',
@@ -156,7 +232,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '255px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '65',
@@ -165,94 +247,15 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos:{
+            top: '570px',
+            marginLeft: '1010px',
+            width: '16px',
+            height: '16px',
+          }
         },
-
       ],
-      position: {
-        '121': {
-          mark: 'C中频切换矩阵',
-          top: '80px',
-          left: '570px',
-        },
-        '135': {
-          mark: '无线宽带基站',
-          top: '441px',
-          left: '620px',
-
-        },
-        '137': {
-          mark: '时统',
-          top: '341px',
-          left: '1545px',
-
-        },
-        '151': {
-          mark: 'sdh',
-          top: '340px',
-          left: '847px',
-
-        },
-        '154': {
-          mark: '路由器',
-          top: '250px',
-          left: '1128px',
-
-        },
-        '19': {
-          mark: '频谱监测',
-          top: '283px',
-          left: '605px',
-
-        },
-        '253': {
-          mark: '48口交换机',
-          top: '175px',
-          left: '1010px',
-
-        },
-        '252': {
-          mark: '24口交换机',
-          top: '376px',
-          left: '1333px',
-
-        },
-        '34': {
-          mark: '被复线',
-          top: '391px',
-          left: '847px',
-        },
-
-        '51': {
-          mark: '多媒体1',
-          top: '136px',
-          left: '864px',
-        },
-
-        '52': {
-          mark: '多媒体2',
-          top: '176px',
-          left: '864px',
-        },
-
-        '53': {
-          mark: '多媒体3',
-          top: '215px',
-          left: '864px',
-        },
-
-        '54': {
-          mark: '多媒体4',
-          top: '255px',
-          left: '864px',
-        },
-
-        '65': {
-          mark: '通信控制器',
-          top: '570px',
-          left: '1010px',
-        },
-      },
       masterPosition: {
         '11': {
           mark: 'A调制解调器1',
@@ -348,7 +351,13 @@ export default {
     }
   },
   beforeDestroy() {
-    off(window, 'resize', this.resize)
+    if(this.dom){
+      this.dom.clear()
+      this.dom = null
+    }
+    this.equipments = []
+
+  // off(window, 'resize', this.resize)
   },
   mounted() {
     // this.initTime()
@@ -364,19 +373,16 @@ export default {
   //   }),
   // },
   methods: {
-    getMediaWidth() {
-      // this.$nextTick(() => {
-      //   this.$xy.vector.$emit("siderTriggher", true)//收起菜单
-      // })
 
-      this.init()
-    },
     confirm() {
-      this.paramModal = false
+
       this.$xy.vector.$emit("closeModal")
+        this.paramModal = false
+
+      this.$refs.test.remove()
     },
     initTime() {
-      this.timer = setInterval(this.scrollAnimate, 2000);
+      this.timer = setInterval(this.scrollAnimate, 100);
     },
     scrollAnimate() {
       setTimeout(() => {
@@ -389,10 +395,10 @@ export default {
         let data = [
           {
             "devDeployType": "0031002",
-            "devNo": "11",
+            "devNo": "121",
             "devTypeCode": "8",
             "isAlarm": "0",
-            "isInterrupt": "0",
+            "isInterrupt": "1",
             "isUseStandby": "1",
             "masterOrSlave": this.number,
             "stationId": null,
@@ -401,9 +407,9 @@ export default {
 
           {
             "devDeployType": "0031002",
-            "devNo": "12",
+            "devNo": "135",
             "devTypeCode": "8",
-            "isAlarm": "0",
+            "isAlarm": "1",
             "isInterrupt": "0",
             "isUseStandby": "1",
             "masterOrSlave": "0",
@@ -412,7 +418,7 @@ export default {
           },
           {
             "devDeployType": "0031003",
-            "devNo": "13",
+            "devNo": "137",
             "devTypeCode": "8",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -423,7 +429,7 @@ export default {
           },
           {
             "devDeployType": "0031004",
-            "devNo": "35",
+            "devNo": "138",
             "devTypeCode": "4",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -434,7 +440,117 @@ export default {
           },
           {
             "devDeployType": "0031003",
-            "devNo": "14",
+            "devNo": "151",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "1",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "154",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "19",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "252",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "253",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "34",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "51",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "52",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "53",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "54",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "65",
             "devTypeCode": "8",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -445,7 +561,7 @@ export default {
           },
         ]
         this.getWSData(data)
-      }, 1000)
+      }, 100)
     },
     getWSData(WSdata) {
       if (WSdata.length) {
@@ -492,14 +608,6 @@ export default {
       // }
       return info
     },
-    devicePosition(equipment) {
-      return {
-        top: this.position[equipment.devNo].top,
-        marginLeft: this.position[equipment.devNo].left,
-        width: '16px',
-        height: '16px',
-      }
-    },
     masterStatus(equipment) {
       return {
         zIndex: this.masterPosition[equipment.devNo].zIndex ? this.masterPosition[equipment.devNo].zIndex : 999,
@@ -510,9 +618,6 @@ export default {
         // border: this.masterPosition[equipment.devNo].border,
         border: equipment.masterOrSlave == '0' && equipment.devNo != 16 ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
       }
-    },
-    resize() {
-      this.dom.resize()
     },
     init() {
       let nodes = [
@@ -2812,8 +2917,9 @@ export default {
             }
           },]
       }
-      // this.dom.clear()
+      this.dom.clear()
       this.dom.off('click')
+
       for (var j = 0; j < nodes.length; j++) {
         var x = parseInt(nodes[j].x)
         var y = parseInt(nodes[j].y)
@@ -2843,7 +2949,6 @@ export default {
           node.itemStyle.normal.borderColor = nodes[j].borderColor ? nodes[j].borderColor : 'grey'
           node.itemStyle.normal.borderWidth = '1'
         }
-
         charts.nodes.push(node)
       }
       var option = {
@@ -2862,7 +2967,6 @@ export default {
           type: 'value'
         },
         series: [
-
           {
             type: "lines",
             symbol: ['none', 'none'],
@@ -2961,8 +3065,21 @@ export default {
       });
       this.dom.on('click', function (info) {
         if (info.data.devNo) {
-          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+          // that.devNo = info.data.devNo
+
           that.paramModal = true
+          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+          that.addSubOrgModalVif = false
+          that.addSubOrgModalVif = true
+          // that.$nextTick(() => {
+          //   that.addSubOrgModalVif = true
+          // })
+
+
+
+          // this.addSubOrgModal = true
+
+
         }
       });
       this.dom.setOption(option);
@@ -2971,6 +3088,7 @@ export default {
     openParam(info) {
       if (info.devNo) {
         this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+        this.show = true
         this.paramModal = true
       }
     }
