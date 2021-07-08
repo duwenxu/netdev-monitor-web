@@ -37,7 +37,10 @@
   @bread-color,
   @divider-color,
   @main-header,
-  @bg-home-device
+  @bg-home-device,
+  @table-bottom-border,
+    @device-color,
+    @card-background
 ) {
   @font-color: rgba(0, 0, 0, 1);
   @color-white: #fff; //不变
@@ -217,7 +220,63 @@
     }
 
     .ivu-modal {
+      .bottom_wrapper {
+        height: 220px;
+        background: @card-background;
+        .more_btn {
+          cursor: pointer;
+          float: right;
+          margin-right: 10px;
+          margin-top: 5px;
+          color: #466BFF;
+          font-size: 16px;
+        }
+        .special-modal {
+          .table-title {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            background-color: @card-background;
+            border-bottom: 1px solid @table-bottom-border;
+            font-size: 14px;
+            color: @device-color;
+          }
+          .self-title {
+            display: inline-block;
+            text-align: center;
+          }
+          .table-container {
+            height: 200px;
+            overflow-y: auto;
+            .pro_wrapper {
+              width: 250px;
+              position: relative;
+              .ivu-progress{
+                top: 20px;
+              }
+              .progress_text {
+                position: absolute;
+                left: 20%;
+                bottom: 1px;
+                z-index: 9999;
+              }
+            }
 
+          }
+          .mytable {
+            width: 100%;
+            font-size: 14px;
+            line-height: 30px;
+            color: @device-color;
+            background-color: @card-background;
+            border-bottom: 1px solid @table-bottom-border;
+            td {
+              border: none;
+              border-bottom: 1px solid @table-bottom-border;
+            }
+          }
+        }
+      }
       .ivu-page {
         text-align: right;
         margin-top: 10px;
@@ -1196,6 +1255,64 @@
               background: @bg-home-img;
             }
           }
+        }
+      }
+    }
+  }
+
+  .bottom_wrapper {
+    height: 220px;
+    background: @card-background;
+    .more_btn {
+      cursor: pointer;
+      float: right;
+      margin-right: 10px;
+      margin-top: 5px;
+      color: #466BFF;
+      font-size: 16px;
+    }
+    .special-modal {
+      .table-title {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background-color: @card-background;
+        border-bottom: 1px solid @table-bottom-border;
+        font-size: 14px;
+        color: @device-color;
+      }
+      .self-title {
+        display: inline-block;
+        text-align: center;
+      }
+      .table-container {
+        height: 200px;
+        overflow-y: auto;
+        .pro_wrapper {
+          width: 250px;
+          position: relative;
+          .ivu-progress{
+            top: 20px;
+          }
+          .progress_text {
+            position: absolute;
+            left: 20%;
+            bottom: 1px;
+            z-index: 9999;
+          }
+        }
+
+      }
+      .mytable {
+        width: 100%;
+        font-size: 14px;
+        line-height: 30px;
+        color: @device-color;
+        background-color: @card-background;
+        border-bottom: 1px solid @table-bottom-border;
+        td {
+          border: none;
+          border-bottom: 1px solid @table-bottom-border;
         }
       }
     }

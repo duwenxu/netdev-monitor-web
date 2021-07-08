@@ -9,19 +9,19 @@
             <span slot="close">B</span>
           </i-switch>
         </div>
-        <Button v-for="(info,index) in orderDatas" @click="save(info)"
+        <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length">
+    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in combineList">
-        <div style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
+    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
   </div>
@@ -41,14 +41,14 @@ export default {
       type: Number
     }
   },
+
   data() {
     return {
-        orderSwitch:true,
-      orderHeight: 160,
-      normalHeight: 250,
+      orderSwitch:true,
+      comHeight: 450,
+      normalHeight: 450,
       devNo: null,
       paramSocket: null,
-      logSocket: null,
       infos: [],
       orderDatas: [],
       combineList: [],
@@ -60,21 +60,17 @@ export default {
     }
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
-    this.$xy.vector.$on('closeModal', this.closeModal)
+    this.$xy.vector.$on('closeMaps', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
 
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
-    this.$xy.vector.$off('closeModal', this.closeModal)
+    this.$xy.vector.$off('closeMaps', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
-
-  },
-  destroyed() {
-    clearInterval(this.timer)
 
   },
   mounted() {
@@ -87,7 +83,14 @@ export default {
     this.paramSocket = null
     next()
   },
+  destroyed() {
+       this.infos = []
+      this.orderDatas = []
+      this.combineList =[]
+    this.selectObj = {}
+  },
   methods: {
+
     //1.5m天线切换开关
     async  switchChange(data){
         let {result, success, message} = await switchCheck({channel:data?'A':'B'})
@@ -880,11 +883,23 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.orderHeight = 160
-        this.normalHeight = 250
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 450
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 450
+        }else{
+          this.comHeight = 240
+          this.normalHeight = 240
+        }
       } else {
-        this.orderHeight = 380
-        this.normalHeight = 400
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 710
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 710
+        }else{
+          this.comHeight = 350
+          this.normalHeight = 350
+        }
       }
     },
     initWebSocket() { //初始化weosocket
@@ -906,6 +921,14 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
+      if(this.combineList.length && !this.infos.length){
+        this.comHeight = 450
+      }else if(!this.combineList.length && this.infos.length){
+        this.normalHeight = 450
+      }else{
+        this.comHeight = 240
+        this.normalHeight = 240
+      }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
@@ -1103,7 +1126,7 @@ export default {
 
 .sub-wrap {
   border: 1px solid #009688;
-  height: 280px;
+  height: 240px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -1112,7 +1135,7 @@ export default {
 
 .param-wrap {
   border: 1px solid #009688;
-  height: 250px;
+  height: 450px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;

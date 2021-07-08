@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import {queryParamByParentId} from '@/api/admin/sysParam';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 
 const Setting = {}

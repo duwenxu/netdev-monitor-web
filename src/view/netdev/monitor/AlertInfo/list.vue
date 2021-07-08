@@ -36,17 +36,17 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                              width:120,
+
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
-                              width:100,
+
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
-                              width:100,
+
                             },
                             {
                                 title: '告警个数',
@@ -98,7 +98,7 @@
                 },
                 page: {
                     current: 1,
-                    size: 8
+                    size: 10
                 },
                 otherPage: {
                     total: 0,

@@ -1,11 +1,11 @@
 <template>
   <div>
     <template v-for="equipment in equipments">
-      <div class="device_status" :style="devicePosition(equipment)">
-        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
+      <div class="device_status" :style="equipment.pos">
+        <span :style="judgeDeviceStatus(equipment)"
+              :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
         </span>
       </div>
-<!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
     </template>
     <div ref="dom" class="charts"></div>
     <div class="legend">
@@ -14,30 +14,32 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-           width="1000" :mask-closable="false">
-      <div slot="header"><span>参数信息</span>
-        <Button style="float: right" size="small" @click="confirm">关闭</Button>
-      </div>
-      <DeviceMain></DeviceMain>
-    </Modal>
+    <div ref="test">
+      <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
+             width="80%" :mask-closable="false">
+<!--        <div slot="header"><span>参数信息</span>-->
+<!--          <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
+<!--        </div>-->
+        <DeviceMain v-show="paramModal"></DeviceMain>
+      </Modal>
+    </div>
   </div>
+
 </template>
 <script>
 import * as echarts from 'echarts'
-import {on, off} from '@/libs/tools'
-import {mapState} from "vuex";
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
-// echarts.registerTheme('tdTheme');
+
+let dom = null
 export default {
   components: {DeviceMain},
   mixins: [mixin],
   data() {
     return {
-      shineData: [],
       devNo: null,
-      dom: null,
+      // dom: null,
+      addSubOrgModalVif: false,
       paramModal: false,
       equipments: [
         {
@@ -47,7 +49,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos: {
+            top: '80px',
+            marginLeft: '570px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '135',
@@ -56,7 +64,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '441px',
+            marginLeft: '620px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '137',
@@ -65,7 +79,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos: {
+            top: '341px',
+            marginLeft: '1545px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '151',
@@ -74,7 +94,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '340px',
+            marginLeft: '847px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '154',
@@ -83,7 +109,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos: {
+            top: '250px',
+            marginLeft: '1128px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '19',
@@ -92,7 +124,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos: {
+            top: '283px',
+            marginLeft: '605px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '253',
@@ -101,7 +139,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '175px',
+            marginLeft: '1010px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '252',
@@ -110,7 +154,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0'
+          masterOrSlave: '0',
+          pos: {
+            top: '376px',
+            marginLeft: '1333px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '34',
@@ -119,7 +169,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '391px',
+            marginLeft: '847px',
+            width: '16px',
+            height: '16px',
+          }
         },
 
         {
@@ -129,7 +185,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '136px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '52',
@@ -138,7 +200,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '176px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '53',
@@ -147,7 +215,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '215px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '54',
@@ -156,7 +230,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '255px',
+            marginLeft: '864px',
+            width: '16px',
+            height: '16px',
+          }
         },
         {
           devNo: '65',
@@ -165,94 +245,15 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1'
+          masterOrSlave: '1',
+          pos: {
+            top: '570px',
+            marginLeft: '1010px',
+            width: '16px',
+            height: '16px',
+          }
         },
-
       ],
-      position: {
-        '121': {
-          mark: 'C中频切换矩阵',
-          top: '80px',
-          left: '570px',
-        },
-        '135': {
-          mark: '无线宽带基站',
-          top: '448px',
-          left: '620px',
-
-        },
-        '137': {
-          mark: '时统',
-          top: '348px',
-          left: '1545px',
-
-        },
-        '151': {
-          mark: 'sdh',
-          top: '345px',
-          left: '847px',
-
-        },
-        '154': {
-          mark: '路由器',
-          top: '252px',
-          left: '1128px',
-
-        },
-        '19': {
-          mark: '频谱监测',
-          top: '289px',
-          left: '605px',
-
-        },
-        '252': {
-          mark: '24口交换机',
-          top: '185px',
-          left: '1010px',
-
-        },
-        '253': {
-          mark: '48口交换机',
-          top: '385px',
-          left: '1333px',
-
-        },
-        '34': {
-          mark: '被复线',
-          top: '397px',
-          left: '847px',
-        },
-
-        '51': {
-          mark: '多媒体1',
-          top: '142px',
-          left: '864px',
-        },
-
-        '52': {
-          mark: '多媒体2',
-          top: '181px',
-          left: '864px',
-        },
-
-        '53': {
-          mark: '多媒体3',
-          top: '221px',
-          left: '864px',
-        },
-
-        '54': {
-          mark: '多媒体4',
-          top: '261px',
-          left: '864px',
-        },
-
-        '65': {
-          mark: '通信控制器',
-          top: '570px',
-          left: '1010px',
-        },
-      },
       masterPosition: {
         '11': {
           mark: 'A调制解调器1',
@@ -343,40 +344,34 @@ export default {
         {shape: 'circle', color: '#ff1400', description: '故障'},
         {shape: 'circle', color: '#ffbe08', description: '告警'}
       ],
-      number: '0',
-      screenWidth: document.documentElement.clientWidth,
     }
   },
   beforeDestroy() {
-    off(window, 'resize', this.resize)
+    if (this.dom) {
+      this.dom.clear()
+      this.dom = null
+    }
+    this.equipments = []
+
+    // off(window, 'resize', this.resize)
   },
   mounted() {
     // this.initTime()
+
     this.dom = echarts.init(this.$refs.dom);
-    // this.$nextTick(() => {
-    //   on(window, 'resize', this.resize)
-    // })
     this.init()
   },
-  // computed: {
-  //   ...mapState({
-  //     mediaWidthType: state => state.user.mediaWidthType
-  //   }),
-  // },
   methods: {
-    getMediaWidth() {
-      // this.$nextTick(() => {
-      //   this.$xy.vector.$emit("siderTriggher", true)//收起菜单
-      // })
-
-      this.init()
-    },
     confirm() {
-      this.paramModal = false
+      // if(this.dom){
+      //   this.dom.off('click')
+      // }
       this.$xy.vector.$emit("closeModal")
+      this.paramModal = false
+      this.$refs.test.remove()
     },
     initTime() {
-      this.timer = setInterval(this.scrollAnimate, 2000);
+      this.timer = setInterval(this.scrollAnimate, 100);
     },
     scrollAnimate() {
       setTimeout(() => {
@@ -389,10 +384,10 @@ export default {
         let data = [
           {
             "devDeployType": "0031002",
-            "devNo": "11",
+            "devNo": "121",
             "devTypeCode": "8",
             "isAlarm": "0",
-            "isInterrupt": "0",
+            "isInterrupt": "1",
             "isUseStandby": "1",
             "masterOrSlave": this.number,
             "stationId": null,
@@ -401,9 +396,9 @@ export default {
 
           {
             "devDeployType": "0031002",
-            "devNo": "12",
+            "devNo": "135",
             "devTypeCode": "8",
-            "isAlarm": "0",
+            "isAlarm": "1",
             "isInterrupt": "0",
             "isUseStandby": "1",
             "masterOrSlave": "0",
@@ -412,7 +407,7 @@ export default {
           },
           {
             "devDeployType": "0031003",
-            "devNo": "13",
+            "devNo": "137",
             "devTypeCode": "8",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -423,7 +418,7 @@ export default {
           },
           {
             "devDeployType": "0031004",
-            "devNo": "35",
+            "devNo": "138",
             "devTypeCode": "4",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -434,7 +429,117 @@ export default {
           },
           {
             "devDeployType": "0031003",
-            "devNo": "14",
+            "devNo": "151",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "1",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "154",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "19",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "252",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "253",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "34",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "51",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "52",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "53",
+            "devTypeCode": "8",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "1",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031004",
+            "devNo": "54",
+            "devTypeCode": "4",
+            "isAlarm": "0",
+            "isInterrupt": "0",
+            "isUseStandby": "0",
+            "masterOrSlave": "0",
+            "stationId": null,
+            "workStatus": "0"
+          },
+          {
+            "devDeployType": "0031003",
+            "devNo": "65",
             "devTypeCode": "8",
             "isAlarm": "0",
             "isInterrupt": "0",
@@ -445,7 +550,7 @@ export default {
           },
         ]
         this.getWSData(data)
-      }, 1000)
+      }, 100)
     },
     getWSData(WSdata) {
       if (WSdata.length) {
@@ -492,14 +597,6 @@ export default {
       // }
       return info
     },
-    devicePosition(equipment) {
-      return {
-        top: this.position[equipment.devNo].top,
-        marginLeft: this.position[equipment.devNo].left,
-        width: this.position[equipment.devNo].width,
-        height: this.position[equipment.devNo].height,
-      }
-    },
     masterStatus(equipment) {
       return {
         zIndex: this.masterPosition[equipment.devNo].zIndex ? this.masterPosition[equipment.devNo].zIndex : 999,
@@ -510,9 +607,6 @@ export default {
         // border: this.masterPosition[equipment.devNo].border,
         border: equipment.masterOrSlave == '0' && equipment.devNo != 16 ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
       }
-    },
-    resize() {
-      this.dom.resize()
     },
     init() {
       let nodes = [
@@ -579,7 +673,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'121',
+          devNo: '121',
           x: '550',
           y: '640',
           nodeName: 'C\n频\n段\n切\n换\n矩\n阵',
@@ -589,7 +683,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'19',
+          devNo: '19',
           x: '550',
           y: '500',
           nodeName: '频谱监测  ',
@@ -617,7 +711,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'51',
+          devNo: '51',
           x: '790',
           y: '650',
           nodeName: 'FDMACDMA终端    ',
@@ -627,7 +721,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'52',
+          devNo: '52',
           x: '790',
           y: '610',
           nodeName: 'FDMACDMA终端    ',
@@ -637,7 +731,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'53',
+          devNo: '53',
           x: '790',
           y: '570',
           nodeName: 'FDMACDMA终端    ',
@@ -647,7 +741,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'54',
+          devNo: '54',
           x: '790',
           y: '530',
           nodeName: 'FDMACDMA终端   ',
@@ -657,7 +751,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'253',
+          devNo: '253',
           x: '1000',
           y: '550',
           nodeName: '48\n口\n交\n换\n机',
@@ -666,9 +760,6 @@ export default {
           color: '#d3f1a5',
           border: 'black',
         },
-
-
-
 
 
         {
@@ -681,7 +772,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'151',
+          devNo: '151',
           x: '790',
           y: '442',
           nodeName: 'SDH光端机   ',
@@ -700,7 +791,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'34',
+          devNo: '34',
           x: '790',
           y: '390',
           nodeName: '被复线',
@@ -719,7 +810,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'135',
+          devNo: '135',
           x: '550',
           y: '340',
           nodeName: '无线宽带中心站     ',
@@ -820,6 +911,7 @@ export default {
           border: 'black',
         },
         {
+          devNo: '65',
           x: '1000',
           y: '155',
           nodeName: '通\n信\n控\n制\n器',
@@ -829,7 +921,7 @@ export default {
           border: 'black',
         },
         {
-          devNo:'154',
+          devNo: '154',
           x: '1120',
           y: '500',
           nodeName: '路\n由\n器',
@@ -857,7 +949,7 @@ export default {
           border: '',
         },
         {
-          devNo:'252',
+          devNo: '252',
           x: '1330',
           y: '350',
           nodeName: '24\n口\n交\n换\n机',
@@ -924,7 +1016,7 @@ export default {
 
 
         {
-          mark:'400w ka',
+          mark: '400w ka',
           x: '320',
           y: '755',
           nodeName: '',
@@ -935,7 +1027,7 @@ export default {
         },
 
         {
-          mark:'100w ku',
+          mark: '100w ku',
           x: '320',
           y: '695',
           nodeName: '',
@@ -945,7 +1037,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'天通手持终端',
+          mark: '天通手持终端',
           x: '320',
           y: '525',
           nodeName: '',
@@ -955,7 +1047,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'C频段',
+          mark: 'C频段',
           x: '570',
           y: '760',
           nodeName: '',
@@ -965,7 +1057,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '750',
           nodeName: '',
@@ -975,7 +1067,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '710',
           nodeName: '',
@@ -985,7 +1077,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '670',
           nodeName: '',
@@ -995,7 +1087,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '630',
           nodeName: '',
@@ -1005,7 +1097,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '590',
           nodeName: '',
@@ -1015,7 +1107,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'TDMA',
+          mark: 'TDMA',
           x: '800',
           y: '550',
           nodeName: '',
@@ -1026,7 +1118,7 @@ export default {
         },
 
         {
-          mark:'<-- 圆圈1',
+          mark: '<-- 圆圈1',
           x: '640',
           y: '730',
           nodeName: '',
@@ -1036,7 +1128,7 @@ export default {
           border: '',
         },
         {
-          mark:'<-- 圆圈2',
+          mark: '<-- 圆圈2',
           x: '640',
           y: '720',
           nodeName: '',
@@ -1046,7 +1138,7 @@ export default {
           border: '',
         },
         {
-          mark:'<-- 圆圈3',
+          mark: '<-- 圆圈3',
           x: '640',
           y: '710',
           nodeName: '',
@@ -1056,7 +1148,7 @@ export default {
           border: '',
         },
         {
-          mark:'<-- 圆圈4',
+          mark: '<-- 圆圈4',
           x: '640',
           y: '700',
           nodeName: '',
@@ -1066,7 +1158,7 @@ export default {
           border: '',
         },
         {
-          mark:'<-- 圆圈5',
+          mark: '<-- 圆圈5',
           x: '640',
           y: '690',
           nodeName: '',
@@ -1076,7 +1168,7 @@ export default {
           border: '',
         },
         {
-          mark:'<-- 圆圈6',
+          mark: '<-- 圆圈6',
           x: '640',
           y: '680',
           nodeName: '',
@@ -1087,7 +1179,7 @@ export default {
         },
 
         {
-          mark:'--> 圆圈1',
+          mark: '--> 圆圈1',
           x: '640',
           y: '600',
           nodeName: '',
@@ -1097,7 +1189,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 圆圈2',
+          mark: '--> 圆圈2',
           x: '640',
           y: '590',
           nodeName: '',
@@ -1107,7 +1199,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 圆圈3',
+          mark: '--> 圆圈3',
           x: '640',
           y: '580',
           nodeName: '',
@@ -1117,7 +1209,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 圆圈4',
+          mark: '--> 圆圈4',
           x: '640',
           y: '570',
           nodeName: '',
@@ -1127,7 +1219,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 圆圈5',
+          mark: '--> 圆圈5',
           x: '640',
           y: '560',
           nodeName: '',
@@ -1137,7 +1229,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 圆圈6',
+          mark: '--> 圆圈6',
           x: '640',
           y: '550',
           nodeName: '',
@@ -1148,7 +1240,7 @@ export default {
         },
 
         {
-          mark:'SDH光',
+          mark: 'SDH光',
           x: '800',
           y: '470',
           nodeName: '',
@@ -1158,7 +1250,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'被复线',
+          mark: '被复线',
           x: '800',
           y: '415',
           nodeName: '',
@@ -1168,7 +1260,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'频谱监测',
+          mark: '频谱监测',
           x: '565',
           y: '474',
           nodeName: '',
@@ -1178,7 +1270,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'无线宽带中心',
+          mark: '无线宽带中心',
           x: '565',
           y: '365',
           nodeName: '',
@@ -1188,7 +1280,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'超短波1',
+          mark: '超短波1',
           x: '565',
           y: '305',
           nodeName: '',
@@ -1198,7 +1290,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'超短波2',
+          mark: '超短波2',
           x: '565',
           y: '255',
           nodeName: '',
@@ -1208,7 +1300,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'超短波3',
+          mark: '超短波3',
           x: '565',
           y: '205',
           nodeName: '',
@@ -1218,7 +1310,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'超短波4',
+          mark: '超短波4',
           x: '565',
           y: '155',
           nodeName: '',
@@ -1228,7 +1320,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'短波',
+          mark: '短波',
           x: '565',
           y: '95',
           nodeName: '',
@@ -1238,7 +1330,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'高速数传',
+          mark: '高速数传',
           x: '565',
           y: '35',
           nodeName: '',
@@ -1248,7 +1340,7 @@ export default {
           border: 'black',
         },
         {
-          mark:'路由器',
+          mark: '路由器',
           x: '1135',
           y: '562',
           nodeName: '',
@@ -1259,9 +1351,8 @@ export default {
         },
 
 
-
         {
-          mark:'--> 交换机圆圈1',
+          mark: '--> 交换机圆圈1',
           x: '1275',
           y: '660',
           nodeName: '',
@@ -1271,7 +1362,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 交换机圆圈2',
+          mark: '--> 交换机圆圈2',
           x: '1275',
           y: '650',
           nodeName: '',
@@ -1281,7 +1372,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 交换机圆圈3',
+          mark: '--> 交换机圆圈3',
           x: '1275',
           y: '640',
           nodeName: '',
@@ -1291,7 +1382,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 交换机圆圈4',
+          mark: '--> 交换机圆圈4',
           x: '1275',
           y: '630',
           nodeName: '',
@@ -1301,7 +1392,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 交换机圆圈5',
+          mark: '--> 交换机圆圈5',
           x: '1275',
           y: '620',
           nodeName: '',
@@ -1311,7 +1402,7 @@ export default {
           border: '',
         },
         {
-          mark:'--> 交换机圆圈6',
+          mark: '--> 交换机圆圈6',
           x: '1275',
           y: '610',
           nodeName: '',
@@ -1322,7 +1413,7 @@ export default {
         },
 
       ]
-      var charts = {
+      let charts = {
         nodes: [],
         linesData: [
           {
@@ -1330,9 +1421,7 @@ export default {
             name: '',
             coords: [[25, 640], [230, 640]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1343,9 +1432,7 @@ export default {
             name: '',
             coords: [[230, 730], [25, 730]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1356,9 +1443,7 @@ export default {
             name: '',
             coords: [[230, 670], [55, 670]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1369,9 +1454,7 @@ export default {
             name: '',
             coords: [[75, 500], [230, 500]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1382,9 +1465,7 @@ export default {
             name: '',
             coords: [[230, 500], [75, 500]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1395,9 +1476,7 @@ export default {
             name: '',
             coords: [[370, 630], [525, 630]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1408,9 +1487,7 @@ export default {
             name: '',
             coords: [[370, 580], [525, 580]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1421,9 +1498,7 @@ export default {
             name: '',
             coords: [[525, 730], [370, 730]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1434,9 +1509,7 @@ export default {
             name: '',
             coords: [[525, 670], [370, 670]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1448,9 +1521,7 @@ export default {
             name: '',
             coords: [[580, 605], [610, 605]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1461,9 +1532,7 @@ export default {
             name: '',
             coords: [[580, 590], [610, 590]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1474,9 +1543,7 @@ export default {
             name: '',
             coords: [[580, 575], [610, 575]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1487,9 +1554,7 @@ export default {
             name: '',
             coords: [[580, 560], [610, 560]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1500,9 +1565,7 @@ export default {
             name: '',
             coords: [[580, 545], [610, 545]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1513,9 +1576,7 @@ export default {
             name: '',
             coords: [[580, 530], [610, 530]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1527,9 +1588,7 @@ export default {
             name: '',
             coords: [[610, 745], [580, 745]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1540,9 +1599,7 @@ export default {
             name: '',
             coords: [[610, 730], [580, 730]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1553,9 +1610,7 @@ export default {
             name: '',
             coords: [[610, 715], [580, 715]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1566,9 +1621,7 @@ export default {
             name: '',
             coords: [[610, 700], [580, 700]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1579,9 +1632,7 @@ export default {
             name: '',
             coords: [[610, 685], [580, 685]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1592,9 +1643,7 @@ export default {
             name: '',
             coords: [[610, 670], [580, 670]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1605,9 +1654,7 @@ export default {
             name: '',
             coords: [[715, 735], [680, 735]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1618,9 +1665,7 @@ export default {
             name: '',
             coords: [[680, 725], [715, 725]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1628,16 +1673,12 @@ export default {
           },
 
 
-
-
           {
             mark: 'TDMA <--',
             name: '',
             coords: [[715, 695], [680, 695]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1648,9 +1689,7 @@ export default {
             name: '',
             coords: [[680, 685], [715, 685]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1662,9 +1701,7 @@ export default {
             name: '',
             coords: [[715, 655], [680, 655]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1675,9 +1712,7 @@ export default {
             name: '',
             coords: [[680, 645], [715, 645]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1690,9 +1725,7 @@ export default {
             name: '',
             coords: [[715, 615], [680, 615]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1703,9 +1736,7 @@ export default {
             name: '',
             coords: [[680, 605], [715, 605]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1718,9 +1749,7 @@ export default {
             name: '',
             coords: [[715, 575], [680, 575]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1731,9 +1760,7 @@ export default {
             name: '',
             coords: [[680, 565], [715, 565]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1744,9 +1771,7 @@ export default {
             name: '',
             coords: [[715, 535], [680, 535]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1757,9 +1782,7 @@ export default {
             name: '',
             coords: [[680, 525], [715, 525]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1767,15 +1790,12 @@ export default {
           },
 
 
-
           {
             mark: 'TDMA1-->交换机',
             name: '',
             coords: [[860, 730], [1000, 730]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1786,9 +1806,7 @@ export default {
             name: '',
             coords: [[1000, 730], [860, 730]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1800,9 +1818,7 @@ export default {
             name: '',
             coords: [[860, 690], [1000, 690]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1813,9 +1829,7 @@ export default {
             name: '',
             coords: [[1000, 690], [860, 690]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1827,9 +1841,7 @@ export default {
             name: '',
             coords: [[860, 650], [1000, 650]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1840,9 +1852,7 @@ export default {
             name: '',
             coords: [[1000, 650], [860, 650]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1854,9 +1864,7 @@ export default {
             name: '',
             coords: [[860, 610], [1000, 610]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1867,9 +1875,7 @@ export default {
             name: '',
             coords: [[1000, 610], [860, 610]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1881,9 +1887,7 @@ export default {
             name: '',
             coords: [[860, 570], [1000, 570]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1894,9 +1898,7 @@ export default {
             name: '',
             coords: [[1000, 570], [860, 570]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1908,9 +1910,7 @@ export default {
             name: '',
             coords: [[860, 530], [1000, 530]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1921,9 +1921,7 @@ export default {
             name: '',
             coords: [[1000, 530], [860, 530]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1932,11 +1930,9 @@ export default {
           {
             mark: '车载转接盒1-->SDH',
             name: '',
-            coords: [[100,440], [800, 440]],
+            coords: [[100, 440], [800, 440]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -1945,11 +1941,9 @@ export default {
           {
             mark: 'SDH-》车载转接盒1-->',
             name: '',
-            coords: [[800,440], [100, 440]],
+            coords: [[800, 440], [100, 440]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -1958,11 +1952,9 @@ export default {
           {
             mark: 'SDH-》交换机-->',
             name: '',
-            coords: [[850,440], [980, 440]],
+            coords: [[850, 440], [980, 440]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -1971,11 +1963,9 @@ export default {
           {
             mark: '交换机-》SDH',
             name: '',
-            coords: [[980,440], [850, 440]],
+            coords: [[980, 440], [850, 440]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -1984,11 +1974,9 @@ export default {
           {
             mark: '-》车载转接盒2-->被复线',
             name: '',
-            coords: [[100,390], [800, 390]],
+            coords: [[100, 390], [800, 390]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -1997,11 +1985,9 @@ export default {
           {
             mark: '被复线-》车载转接盒2',
             name: '',
-            coords: [[850,390], [980, 390]],
+            coords: [[850, 390], [980, 390]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2010,11 +1996,9 @@ export default {
           {
             mark: '车载转接盒2-》被复线-》',
             name: '',
-            coords: [[980,390], [850, 390]],
+            coords: [[980, 390], [850, 390]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2024,11 +2008,9 @@ export default {
           {
             mark: '车载天线-》无线宽带-》-->',
             name: '',
-            coords: [[105,340], [488, 340]],
+            coords: [[105, 340], [488, 340]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2037,11 +2019,9 @@ export default {
           {
             mark: '无线宽带-》车载天线',
             name: '',
-            coords: [[488,340], [105, 340]],
+            coords: [[488, 340], [105, 340]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2050,11 +2030,9 @@ export default {
           {
             mark: '车载天线1-》无线宽带',
             name: '',
-            coords: [[610,340], [980, 340]],
+            coords: [[610, 340], [980, 340]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2063,11 +2041,9 @@ export default {
           {
             mark: '无线宽带-》车载天线1',
             name: '',
-            coords: [[980,340], [610, 340]],
+            coords: [[980, 340], [610, 340]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2077,11 +2053,9 @@ export default {
           {
             mark: '车载天线2-》超短波合路器',
             name: '',
-            coords: [[100,200], [300, 200]],
+            coords: [[100, 200], [300, 200]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2090,11 +2064,9 @@ export default {
           {
             mark: '超短波合路器-》车载天线2',
             name: '',
-            coords: [[300,200], [100, 200]],
+            coords: [[300, 200], [100, 200]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2104,11 +2076,9 @@ export default {
           {
             mark: '超短波合路器-》超短波电台1',
             name: '',
-            coords: [[330,280], [490, 280]],
+            coords: [[330, 280], [490, 280]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2117,11 +2087,9 @@ export default {
           {
             mark: '超短波电台1-》超短波合路器-》',
             name: '',
-            coords: [[490,280], [330, 280]],
+            coords: [[490, 280], [330, 280]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2130,11 +2098,9 @@ export default {
           {
             mark: '超短波电台1-》通信控制器',
             name: '',
-            coords: [[610,280], [980, 280]],
+            coords: [[610, 280], [980, 280]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2143,11 +2109,9 @@ export default {
           {
             mark: '通信控制器-》超短波电台1',
             name: '',
-            coords: [[980,280], [610, 280]],
+            coords: [[980, 280], [610, 280]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2156,11 +2120,9 @@ export default {
           {
             mark: '超短波合路器-》超短波电台2',
             name: '',
-            coords: [[330,230], [490, 230]],
+            coords: [[330, 230], [490, 230]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2170,11 +2132,9 @@ export default {
           {
             mark: '超短波电台2-》超短波合路器-》',
             name: '',
-            coords: [[490,230], [330, 230]],
+            coords: [[490, 230], [330, 230]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2183,11 +2143,9 @@ export default {
           {
             mark: '超短波电台2-》通信控制器-》',
             name: '',
-            coords: [[610,230], [980, 230]],
+            coords: [[610, 230], [980, 230]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2196,11 +2154,9 @@ export default {
           {
             mark: '通信控制器-》超短波电台2-》-》',
             name: '',
-            coords: [[980,230], [610, 230]],
+            coords: [[980, 230], [610, 230]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2210,11 +2166,9 @@ export default {
           {
             mark: '超短波合路器-》超短波电台3',
             name: '',
-            coords: [[330,180], [490, 180]],
+            coords: [[330, 180], [490, 180]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2223,11 +2177,9 @@ export default {
           {
             mark: '超短波电台3-》超短波合路器-》',
             name: '',
-            coords: [[490,180], [330, 180]],
+            coords: [[490, 180], [330, 180]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2236,11 +2188,9 @@ export default {
           {
             mark: '超短波电台3-》通信控制器-》',
             name: '',
-            coords: [[610,180], [980, 180]],
+            coords: [[610, 180], [980, 180]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2249,11 +2199,9 @@ export default {
           {
             mark: '通信控制器-》超短波电台3-》-》',
             name: '',
-            coords: [[980,180], [610, 180]],
+            coords: [[980, 180], [610, 180]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2263,11 +2211,9 @@ export default {
           {
             mark: '超短波合路器-》超短波电台4',
             name: '',
-            coords: [[330,130], [490, 130]],
+            coords: [[330, 130], [490, 130]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2276,11 +2222,9 @@ export default {
           {
             mark: '超短波电台4-》超短波合路器-》',
             name: '',
-            coords: [[490,130], [330, 130]],
+            coords: [[490, 130], [330, 130]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2289,11 +2233,9 @@ export default {
           {
             mark: '超短波电台4-》通信控制器-》',
             name: '',
-            coords: [[610,130], [980, 130]],
+            coords: [[610, 130], [980, 130]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2302,11 +2244,9 @@ export default {
           {
             mark: '通信控制器-》超短波电台4-》-》',
             name: '',
-            coords: [[980,130], [610, 130]],
+            coords: [[980, 130], [610, 130]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2315,11 +2255,9 @@ export default {
           {
             mark: '车载天线3-》短波电台',
             name: '',
-            coords: [[100,70], [490, 70]],
+            coords: [[100, 70], [490, 70]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2328,11 +2266,9 @@ export default {
           {
             mark: '短波电台-》车载天线3',
             name: '',
-            coords: [[490,70], [100, 70]],
+            coords: [[490, 70], [100, 70]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2341,11 +2277,9 @@ export default {
           {
             mark: '短波电台-》通信控制器',
             name: '',
-            coords: [[610,70], [980, 70]],
+            coords: [[610, 70], [980, 70]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2354,11 +2288,9 @@ export default {
           {
             mark: '通信控制器-》短波电台-》',
             name: '',
-            coords: [[980,70], [610, 70]],
+            coords: [[980, 70], [610, 70]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2367,11 +2299,9 @@ export default {
           {
             mark: '车载天线4-》高速数传',
             name: '',
-            coords: [[100,10], [490, 10]],
+            coords: [[100, 10], [490, 10]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2380,11 +2310,9 @@ export default {
           {
             mark: '高速数传-》车载天线4-》',
             name: '',
-            coords: [[490,10], [100, 10]],
+            coords: [[490, 10], [100, 10]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2393,11 +2321,9 @@ export default {
           {
             mark: '高速数传-》通信控制器-》',
             name: '',
-            coords: [[610,10], [980, 10]],
+            coords: [[610, 10], [980, 10]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2406,11 +2332,9 @@ export default {
           {
             mark: '通信控制器-》高速数传',
             name: '',
-            coords: [[980,10], [610, 10]],
+            coords: [[980, 10], [610, 10]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
@@ -2420,11 +2344,9 @@ export default {
           {
             mark: '交换机-》路由器',
             name: '',
-            coords: [[1010,500], [1100, 500]],
+            coords: [[1010, 500], [1100, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2433,11 +2355,9 @@ export default {
           {
             mark: '路由器-》交换机-》',
             name: '',
-            coords: [[1100,500], [1010, 500]],
+            coords: [[1100, 500], [1010, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2447,11 +2367,9 @@ export default {
           {
             mark: '路由器-》保密机',
             name: '',
-            coords: [[1140,500], [1200, 500]],
+            coords: [[1140, 500], [1200, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2460,11 +2378,9 @@ export default {
           {
             mark: '保密机-》路由器-》',
             name: '',
-            coords: [[1200,500], [1140, 500]],
+            coords: [[1200, 500], [1140, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2474,11 +2390,9 @@ export default {
           {
             mark: '保密机-》交换机2',
             name: '',
-            coords: [[1240,500], [1320, 500]],
+            coords: [[1240, 500], [1320, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2487,11 +2401,9 @@ export default {
           {
             mark: '交换机2-》保密机-》',
             name: '',
-            coords: [[1320,500], [1240, 500]],
+            coords: [[1320, 500], [1240, 500]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2500,11 +2412,9 @@ export default {
           {
             mark: '通信控制器-》交换机2-》',
             name: '',
-            coords: [[1010,200], [1320, 200]],
+            coords: [[1010, 200], [1320, 200]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2513,11 +2423,9 @@ export default {
           {
             mark: '交换机2-》通信控制器-》-》',
             name: '',
-            coords: [[1320,200], [1010, 200]],
+            coords: [[1320, 200], [1010, 200]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2527,11 +2435,9 @@ export default {
           {
             mark: '通信控制器-》交换机2-》',
             name: '',
-            coords: [[1010,150], [1320, 150]],
+            coords: [[1010, 150], [1320, 150]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2540,11 +2446,9 @@ export default {
           {
             mark: '交换机2-》通信控制器-》-》',
             name: '',
-            coords: [[1320,150], [1010, 150]],
+            coords: [[1320, 150], [1010, 150]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2554,11 +2458,9 @@ export default {
           {
             mark: '交换机2-》箭头-》-》',
             name: '',
-            coords: [[1250,700], [1300, 700]],
+            coords: [[1250, 700], [1300, 700]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2567,11 +2469,9 @@ export default {
           {
             mark: '箭头-》交换机2-》-》-》',
             name: '',
-            coords: [[1300,700], [1250, 700]],
+            coords: [[1300, 700], [1250, 700]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2581,11 +2481,9 @@ export default {
           {
             mark: '交换机2-》箭头-》-》',
             name: '',
-            coords: [[1250,680], [1300, 680]],
+            coords: [[1250, 680], [1300, 680]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2594,11 +2492,9 @@ export default {
           {
             mark: '箭头-》交换机2-》-》-》',
             name: '',
-            coords: [[1300,680], [1250, 680]],
+            coords: [[1300, 680], [1250, 680]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2608,11 +2504,9 @@ export default {
           {
             mark: '交换机2-》箭头-》-》',
             name: '',
-            coords: [[1250,590], [1300, 590]],
+            coords: [[1250, 590], [1300, 590]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2621,11 +2515,9 @@ export default {
           {
             mark: '箭头-》交换机2-》-》-》',
             name: '',
-            coords: [[1300,590], [1250, 590]],
+            coords: [[1300, 590], [1250, 590]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2635,11 +2527,9 @@ export default {
           {
             mark: '交换机2-》TDMA网管',
             name: '',
-            coords: [[1350,650], [1440, 650]],
+            coords: [[1350, 650], [1440, 650]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2648,11 +2538,9 @@ export default {
           {
             mark: 'TDMA网管-》交换机2-》-》-》',
             name: '',
-            coords: [[1440,650], [1350, 650]],
+            coords: [[1440, 650], [1350, 650]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2662,11 +2550,9 @@ export default {
           {
             mark: '交换机2-》集中监控',
             name: '',
-            coords: [[1350,580], [1440, 580]],
+            coords: [[1350, 580], [1440, 580]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2675,11 +2561,9 @@ export default {
           {
             mark: '集中监控-》交换机2',
             name: '',
-            coords: [[1440,580], [1350, 580]],
+            coords: [[1440, 580], [1350, 580]],
             lineStyle: {
-              normal: {
-                color: '#456bde'
-              }
+            color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2690,11 +2574,9 @@ export default {
           {
             mark: '交换机2-》时间统一设备',
             name: '',
-            coords: [[1350,440], [1440, 440]],
+            coords: [[1350, 440], [1440, 440]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2703,11 +2585,9 @@ export default {
           {
             mark: '时间统一设备-》交换机2',
             name: '',
-            coords: [[1440,440], [1350, 440]],
+            coords: [[1440, 440], [1350, 440]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2717,11 +2597,9 @@ export default {
           {
             mark: '交换机2-》北斗用户机',
             name: '',
-            coords: [[1350,370], [1440, 370]],
+            coords: [[1350, 370], [1440, 370]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2730,11 +2608,9 @@ export default {
           {
             mark: '北斗用户机-》交换机2',
             name: '',
-            coords: [[1440,370], [1350, 370]],
+            coords: [[1440, 370], [1350, 370]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2744,11 +2620,9 @@ export default {
           {
             mark: '交换机2-》音视频服务',
             name: '',
-            coords: [[1350,300], [1440, 300]],
+            coords: [[1350, 300], [1440, 300]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2757,11 +2631,9 @@ export default {
           {
             mark: '音视频服务-》交换机2',
             name: '',
-            coords: [[1440,300], [1350, 300]],
+            coords: [[1440, 300], [1350, 300]],
             lineStyle: {
-              normal: {
-                color: '#e6c835'
-              }
+            color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2773,25 +2645,21 @@ export default {
           {
             mark: 'KUKA->Ka接收机',
             name: '',
-            coords: [[10, 640], [10, 580],[230,580]],
+            coords: [[10, 640], [10, 580], [230, 580]],
             lineStyle: {
-              normal: {
-                color: 'rgb(203,44,44)'
-              }
+            color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
             }
           },
         ],
-        lines:[ {
+        lines: [{
           mark: 'C频段->频谱',
           name: '',
           coords: [[550, 530], [550, 500]],
           lineStyle: {
-            normal: {
-              color: 'black'
-            }
+            color: 'black'
           },
           effect: {
             color: 'black'
@@ -2802,21 +2670,19 @@ export default {
             name: '',
             coords: [[1010, 250], [1120, 250], [1120, 460]],
             lineStyle: {
-              normal: {
-                color: 'black'
-              }
+            color: 'black'
             },
             effect: {
               color: 'black'
             }
           },]
       }
-      // this.dom.clear()
-      this.dom.off('click')
-      for (var j = 0; j < nodes.length; j++) {
-        var x = parseInt(nodes[j].x)
-        var y = parseInt(nodes[j].y)
-        var node = {
+
+      let len = nodes.length
+      for (let j = 0; j < len; j++) {
+        let x = parseInt(nodes[j].x)
+        let y = parseInt(nodes[j].y)
+        let node = {
           isMajor: nodes[j].isMajor,
           devNo: nodes[j].devNo,
           showTag: nodes[j].id,
@@ -2830,24 +2696,21 @@ export default {
           category: nodes[j].category,
           symbolRotate: nodes[j].symbolRotate ? nodes[j].symbolRotate : '',
           itemStyle: {
-            normal: {
               color: nodes[j].color ? nodes[j].color : '#12b5d0',
-            }
           },
           emphasis: {}
         }
         if (nodes[j].border) {
-          node.itemStyle.normal.borderType = nodes[j].border
-          node.itemStyle.normal.borderDashOffset = nodes[j].offset
-          node.itemStyle.normal.borderColor = nodes[j].borderColor ? nodes[j].borderColor : 'grey'
-          node.itemStyle.normal.borderWidth = '1'
+          node.itemStyle.borderType = nodes[j].border
+          node.itemStyle.borderDashOffset = nodes[j].offset
+          node.itemStyle.borderColor = nodes[j].borderColor ? nodes[j].borderColor : 'grey'
+          node.itemStyle.borderWidth = '1'
         }
-
         charts.nodes.push(node)
       }
-      var option = {
+      let option = {
         animation: false,
-        grid: {left: '40',right:'15',bottom:'30',top:'10'},
+        grid: {left: '40', right: '15', bottom: '30', top: '10'},
         xAxis: {
           min: 0,
           max: 1600,
@@ -2861,7 +2724,6 @@ export default {
           type: 'value'
         },
         series: [
-
           {
             type: "lines",
             symbol: ['none', 'none'],
@@ -2884,14 +2746,14 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 4
+              symbolSize: 5
             },
             data: charts.polyLines
           },
           {
             type: "lines",
             symbol: ['none', 'none'],
-            z: 1,
+            z: 4,
             symbolSize: 4,
             polyline: true,
             coordinateSystem: "cartesian2d",
@@ -2928,13 +2790,13 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 4
+              symbolSize: 5
             },
             data: charts.linesData
           },
           {
             type: 'graph',
-            z: 4,
+            z: 6,
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
@@ -2949,27 +2811,20 @@ export default {
           },
         ]
       }
-      var that = this
-      this.dom.on('mouseover', function (e) {
-        if (e.data.showTag == 1) {
-          that.dom.dispatchAction({
-            type: 'downplay',
-            seriesIndex: e.seriesIndex
-          })
-        }
-      });
+      this.dom.off('click')
+      let that = this
       this.dom.on('click', function (info) {
         if (info.data.devNo) {
-          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
           that.paramModal = true
+          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
         }
       });
       this.dom.setOption(option);
-
     },
     openParam(info) {
       if (info.devNo) {
         this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+        this.show = true
         this.paramModal = true
       }
     }
@@ -3070,7 +2925,7 @@ export default {
 }
 
 .device_status {
-  margin-top: -22px;
+  margin-top: -16px;
   z-index: 100;
   position: relative;
 

@@ -78,7 +78,16 @@
         data() {
             return {
                 updateMark: false,
-                WorkPlanRecoed: {},
+                WorkPlanRecoed: {
+                  wpName:'',
+                  wpStartTime:'',
+                  wpEndTime:'',
+                  wpStatus:'',
+                  wpRealName:'',
+                  wpFlwinTime:'',
+                  wpFlwoutTime:'',
+                  wpWeather:'',
+                },
                 wpStatusList:[],
                 optionsCheckWpStartTime: {
                     disabledDate(datetime) {
