@@ -17,13 +17,14 @@
     <div ref="test">
       <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
              width="80%" :mask-closable="false">
-        <div slot="header"><span>参数信息</span>
-          <Button style="float: right" size="small" @click="confirm">关闭</Button>
-        </div>
-        <DeviceMain></DeviceMain>
+<!--        <div slot="header"><span>参数信息</span>-->
+<!--          <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
+<!--        </div>-->
+        <DeviceMain v-show="paramModal"></DeviceMain>
       </Modal>
     </div>
   </div>
+
 </template>
 <script>
 import * as echarts from 'echarts'
@@ -356,11 +357,15 @@ export default {
   },
   mounted() {
     // this.initTime()
+
     this.dom = echarts.init(this.$refs.dom);
     this.init()
   },
   methods: {
     confirm() {
+      // if(this.dom){
+      //   this.dom.off('click')
+      // }
       this.$xy.vector.$emit("closeModal")
       this.paramModal = false
       this.$refs.test.remove()
@@ -2672,8 +2677,7 @@ export default {
             }
           },]
       }
-      this.dom.clear()
-      this.dom.off('click')
+
       let len = nodes.length
       for (let j = 0; j < len; j++) {
         let x = parseInt(nodes[j].x)
@@ -2723,7 +2727,7 @@ export default {
           {
             type: "lines",
             symbol: ['none', 'none'],
-            zlevel: 2,
+            z: 2,
             symbolSize: 10,
             polyline: true,
             coordinateSystem: "cartesian2d",
@@ -2768,7 +2772,7 @@ export default {
           {
             type: "lines",
             symbol: ['none', 'none'],
-            zlevel: 3,
+            z: 3,
             symbolSize: 4,
             coordinateSystem: "cartesian2d",
             label: {
@@ -2792,7 +2796,7 @@ export default {
           },
           {
             type: 'graph',
-            zlevel: 6,
+            z: 6,
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
@@ -2807,35 +2811,15 @@ export default {
           },
         ]
       }
+      this.dom.off('click')
       let that = this
-      this.dom.on('mouseover', function (e) {
-        if (e.data.showTag == 1) {
-          that.dom.dispatchAction({
-            type: 'downplay',
-            seriesIndex: e.seriesIndex
-          })
-        }
-      });
       this.dom.on('click', function (info) {
         if (info.data.devNo) {
-          // that.devNo = info.data.devNo
-
           that.paramModal = true
           that.$xy.vector.$emit("deviceNumber", info.data.devNo)
-          that.addSubOrgModalVif = false
-          that.addSubOrgModalVif = true
-          // that.$nextTick(() => {
-          //   that.addSubOrgModalVif = true
-          // })
-
-
-          // this.addSubOrgModal = true
-
-
         }
       });
       this.dom.setOption(option);
-
     },
     openParam(info) {
       if (info.devNo) {

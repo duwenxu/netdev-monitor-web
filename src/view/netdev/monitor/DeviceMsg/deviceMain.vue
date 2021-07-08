@@ -142,7 +142,6 @@ export default {
     this.ctrl_socket = null
     this.logSocket = null
     this.warnSocket = null
-
   },
   created: function () {
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
@@ -179,7 +178,6 @@ export default {
   // },
   methods: {
     getDevNo(data) {
-      console.error(data)
       this.viewLog = false
       this.devNo = data
       this.getTabsCtrl()
