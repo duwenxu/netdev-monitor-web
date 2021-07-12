@@ -5,8 +5,8 @@
         <div v-for="temp in item.subInterList">
           <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
           <div v-if="temp.subParaList.length" class="box">
-            <div v-for="(info,index) in temp.subParaList" class="node">
-              <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+            <div v-for="(info,index) in temp.subParaList"  class="node" v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home'&& info.isShow)">
+<!--              <div  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home'&& info.isShow)">-->
                 <template v-if="info.parahowMode == '0024001'">
                   <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                     <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
@@ -101,7 +101,7 @@
                     </Select>
                   </div>
                 </template>
-              </template>
+<!--              </div>-->
             </div>
           </div>
            <div v-else style="margin-left: 40px"> 暂无数据</div>
@@ -153,7 +153,7 @@ export default {
       }
     },
     getMsg(data) {
-        if(!this.receiveMsg){
+     if(!this.receiveMsg){
             let result = JSON.parse(data.data)
             result.forEach(item=>{
                 item.subInterList.forEach(key=>{
