@@ -231,19 +231,32 @@ export default {
     textValid(info) {
       if (info.inputVal) {
         if (info.paraSimpleDatatype == 1) {
-          if (info.paraStrLen) {
-            if (info.inputVal.length > info.paraStrLen) {
+          if(info.paraDatatype == '0023006') {//ip校验
+            let valid = /((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))/.test(info.inputVal)
+            if (!valid) {
+              this.$set(info, 'errorMsg', '请输入正确的IP地址')
               this.validTag = true
-              this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
-            }else {
+            }else{
               this.$set(info, 'errorMsg','')
               this.validTag = false
             }
-          } else {
-            this.$set(info, 'errorMsg','')
-            this.validTag = false
+          }else{
+            if (info.paraStrLen) {
+              if (info.inputVal.length > info.paraStrLen) {
+                this.validTag = true
+                this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
+              }else {
+                this.$set(info, 'errorMsg','')
+                this.validTag = false
+              }
+            } else {
+              this.$set(info, 'errorMsg','')
+              this.validTag = false
+            }
           }
-        } else {
+
+        }
+        else {
           let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
           if (reg.test(info.inputVal)) {
             if (info.paraValMax1 && info.paraValMin1) {
@@ -286,7 +299,6 @@ export default {
       }
     },
     async save(info) {
-
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
