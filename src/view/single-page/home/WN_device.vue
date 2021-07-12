@@ -22,11 +22,8 @@
 </template>
 <script>
 import * as echarts from 'echarts'
-// import {on, off} from '@/libs/tools'
-import {mapState} from "vuex";
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
-// echarts.registerTheme('tdTheme');
 export default {
   components: {DeviceMain},
   mixins: [mixin],
@@ -45,6 +42,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:true,
           pos:{
             top: '245px',
             marginLeft: '244px',
@@ -60,6 +58,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:false,
           pos:{
             top: '284px',
             marginLeft: '244px',
@@ -75,6 +74,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:true,
           pos:{
             top: '94px',
             marginLeft: '485px',
@@ -90,6 +90,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:false,
           pos:{
             top: '152px',
             marginLeft: '485px',
@@ -105,6 +106,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:true,
           pos:{
             top: '214px',
             marginLeft: '485px',
@@ -120,6 +122,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:false,
           pos:{
             top: '272px',
             marginLeft: '485px',
@@ -180,6 +183,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:true,
           pos:{
             top: '342px',
             marginLeft: '248px',
@@ -195,6 +199,7 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster:false,
           pos:{
             top: '381px',
             marginLeft: '248px',
@@ -286,25 +291,24 @@ export default {
       number: '0',
     }
   },
-  // beforeDestroy() {
-  //   off(window, 'resize', this.resize)
-  // },
   mounted() {
     // this.initTime()
-    this.dom = echarts.init(this.$refs.dom);
+
     this.init()
   },
-  // computed: {
-  //   ...mapState({
-  //     mediaWidthType: state => state.user.mediaWidthType
-  //   }),
-  // },
+  beforeDestroy() {
+    let dom = echarts.getInstanceByDom(this.$refs.dom)
+    if (dom) {
+      dom.clear()
+      echarts.dispose(dom)
+    }
+  },
   methods: {
     confirm() {
       this.paramModal = false
       this.$xy.vector.$emit("closeModal")
     },
-    //
+
     // initTime() {
     //   this.timer = setInterval(this.scrollAnimate, 2000);
     // },
@@ -422,20 +426,10 @@ export default {
     //       "isAlarm": "0",
     //       "isInterrupt": "0",
     //       "isUseStandby": "1",
-    //       "masterOrSlave": "0",
+    //       "masterOrSlave": "1",
     //       "stationId": null,
     //       "workStatus": "0"
-    //     }, {
-    //       "devDeployType": "0031001",
-    //       "devNo": "33",
-    //       "devTypeCode": "12",
-    //       "isAlarm": "0",
-    //       "isInterrupt": "1",
-    //       "isUseStandby": "0",
-    //       "masterOrSlave": "0",
-    //       "stationId": null,
-    //       "workStatus": "0"
-    //     }, {
+    //     },  {
     //       "devDeployType": "0031002",
     //       "devNo": "12",
     //       "devTypeCode": "7",
@@ -529,50 +523,10 @@ export default {
     //       "devDeployType": "0031003",
     //       "devNo": "2",
     //       "devTypeCode": "2",
-    //       "isAlarm": "0",
+    //       "isAlarm": "1",
     //       "isInterrupt": "1",
     //       "isUseStandby": "0",
     //       "masterOrSlave": "1",
-    //       "stationId": null,
-    //       "workStatus": "0"
-    //     }, {
-    //       "devDeployType": "0031003",
-    //       "devNo": "3",
-    //       "devTypeCode": "2",
-    //       "isAlarm": "0",
-    //       "isInterrupt": "1",
-    //       "isUseStandby": "0",
-    //       "masterOrSlave": "1",
-    //       "stationId": null,
-    //       "workStatus": "0"
-    //     }, {
-    //       "devDeployType": "0031003",
-    //       "devNo": "4",
-    //       "devTypeCode": "2",
-    //       "isAlarm": "0",
-    //       "isInterrupt": "1",
-    //       "isUseStandby": "0",
-    //       "masterOrSlave": "1",
-    //       "stationId": null,
-    //       "workStatus": "0"
-    //     }, {
-    //       "devDeployType": "0031004",
-    //       "devNo": "8",
-    //       "devTypeCode": "6",
-    //       "isAlarm": "0",
-    //       "isInterrupt": "1",
-    //       "isUseStandby": "0",
-    //       "masterOrSlave": "0",
-    //       "stationId": null,
-    //       "workStatus": "0"
-    //     }, {
-    //       "devDeployType": "0031004",
-    //       "devNo": "9",
-    //       "devTypeCode": "6",
-    //       "isAlarm": "0",
-    //       "isInterrupt": "1",
-    //       "isUseStandby": "0",
-    //       "masterOrSlave": "0",
     //       "stationId": null,
     //       "workStatus": "0"
     //     }, {
@@ -592,7 +546,7 @@ export default {
     //       "isAlarm": "0",
     //       "isInterrupt": "0",
     //       "isUseStandby": "1",
-    //       "masterOrSlave": "0",
+    //       "masterOrSlave": "1",
     //       "stationId": null,
     //       "workStatus": "0"
     //     }, {
@@ -632,42 +586,43 @@ export default {
 
     getWSData(WSdata) {
       if (WSdata.length) {
+        let arr = ['30','31','20','11','13','40','2']
         this.equipments.forEach(device => {
-          WSdata.forEach(item => {
+         WSdata.forEach(item => {
             if (item.devNo == '2' && device.devNo == '2-2') {
-              this.setWSDate(item, device, 1)
+              this.setWSDate(item, device)
             }
-            if (item.devNo == device.devNo) {
-              this.setWSDate(item, device, 0)
+           if (item.devNo == '11' && device.devNo == '12') {
+             this.setWSDate(item, device)
+           }
+           if (item.devNo == '13' && device.devNo == '14') {
+             this.setWSDate(item, device)
+           }
+           if (item.devNo == '40' && device.devNo == '41') {
+             this.setWSDate(item, device)
+           }
+            if (arr.indexOf(item.devNo)>-1 && item.devNo == device.devNo) {
+
+              this.setWSDate(item, device)
             }
           })
         })
       }
     },
-    setWSDate(data, obj, type) {
-      if (type == 1) {
-        if (data.masterOrSlave == '1') {
-          obj.masterOrSlave = '0'
-        } else {
-          obj.masterOrSlave = '1'
-        }
-      } else {
-        if (data.devNo != 20) {
-          obj.masterOrSlave = data.masterOrSlave || ''
-        }
-      }
-      obj.devDeployType = data.devDeployType
-      obj.isInterrupt = data.isInterrupt
-      obj.workStatus = data.workStatus
-      obj.isUseStandby = data.isUseStandby
-      obj.isAlarm = data.isAlarm
+    setWSDate(item, device, type) {
+      device.masterOrSlave = item.masterOrSlave
+      device.devDeployType = item.devDeployType
+      device.isInterrupt = item.isInterrupt
+      device.workStatus = item.workStatus
+      device.isUseStandby = item.isUseStandby
+      device.isAlarm = item.isAlarm
     },
     judgeDeviceStatus(device) {
       let info = {}
-      if (device.devNo == '2-2' && (device.masterOrSlave == '1' || !device.masterOrSlave) && device.isAlarm == '1') {
+      if (device.devNo == '2-2' && device.masterOrSlave == '0' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
-      if (device.devNo == '2' && (device.masterOrSlave == '1' || !device.masterOrSlave) && device.isAlarm == '1') {
+      if (device.devNo == '2' && device.masterOrSlave == '1' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
       if (device.isInterrupt === '0') {//是否中断 否0
@@ -680,37 +635,44 @@ export default {
         } else {//不正常 则直接故障
           info = {background: '#ff1400'}
         }
-
         if (device.devNo == '2') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
           }
         } else if (device.devNo == '2-2') {
-          if (device.masterOrSlave == '1' || !device.masterOrSlave) {
+          if (device.masterOrSlave == '0') {
             info = {background: '#009688'}
           }
         }
       } else {//中断 是 1
         info = {background: '#ff1400'}
+        if (device.devNo == '2') {
+          if (device.masterOrSlave == '1') {
+            info = {background: '#009688'}
+          }
+        } else if (device.devNo == '2-2') {
+          if (device.masterOrSlave == '0') {
+            info = {background: '#009688'}
+          }
+        }
       }
       return info
     },
+
     masterStatus(equipment) {
-      if (equipment.devNo != 20) {
+      if (equipment.devNo != 20 ) {
         return {
           top: this.masterPosition[equipment.devNo].top,
           marginLeft: this.masterPosition[equipment.devNo].left,
           width: this.masterPosition[equipment.devNo].width,
           height: this.masterPosition[equipment.devNo].height,
           // border: this.masterPosition[equipment.devNo].border,
-          border: equipment.masterOrSlave == '0' && (equipment.devNo != '30' && equipment.devNo != '31') ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+          border: ((equipment.isMaster && equipment.masterOrSlave == '0') || (!equipment.isMaster && equipment.masterOrSlave == '1'))&& (equipment.devNo != '30' && equipment.devNo != '31')  ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
         }
       }
     },
-    resize() {
-      this.dom.resize()
-    },
     init() {
+      let dom = echarts.init(this.$refs.dom);
       let nodes = [
         {
           x: '25',
@@ -2094,24 +2056,24 @@ export default {
         ]
       }
 
-      this.dom.off('click')
-      this.dom.off('mouseover')
+      dom.off('click')
+      dom.off('mouseover')
       let that = this
-      this.dom.on('mouseover', function (e) {
+      dom.on('mouseover', function (e) {
         if (e.data.showTag == 1) {
-          that.dom.dispatchAction({
+          dom.dispatchAction({
             type: 'downplay',
             seriesIndex: e.seriesIndex
           })
         }
       });
-      this.dom.on('click', function (info) {
+      dom.on('click', function (info) {
         if (info.data.devNo) {
           that.$xy.vector.$emit("deviceNumber", info.data.devNo)
           that.paramModal = true
         }
       });
-      this.dom.setOption(option);
+      dom.setOption(option);
       // on(window, 'resize', this.resize)
     },
     openParam(info) {
