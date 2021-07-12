@@ -31,7 +31,7 @@ import * as echarts from 'echarts'
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 
-let dom = null
+// let dom = null
 export default {
   components: {DeviceMain},
   mixins: [mixin],
@@ -347,18 +347,18 @@ export default {
     }
   },
   beforeDestroy() {
-    if (this.dom) {
-      this.dom.clear()
-      this.dom = null
+    let dom = echarts.getInstanceByDom(this.$refs.dom)
+    if (dom) {
+      dom.clear()
+      echarts.dispose(dom)
     }
     this.equipments = []
-
     // off(window, 'resize', this.resize)
   },
   mounted() {
     // this.initTime()
 
-    this.dom = echarts.init(this.$refs.dom);
+
     this.init()
   },
   methods: {
@@ -609,6 +609,7 @@ export default {
       }
     },
     init() {
+       let dom = echarts.init(this.$refs.dom);
       let nodes = [
         {
           x: '34',
@@ -2811,15 +2812,15 @@ export default {
           },
         ]
       }
-      this.dom.off('click')
+      dom.off('click')
       let that = this
-      this.dom.on('click', function (info) {
+      dom.on('click', function (info) {
         if (info.data.devNo) {
           that.paramModal = true
           that.$xy.vector.$emit("deviceNumber", info.data.devNo)
         }
       });
-      this.dom.setOption(option);
+      dom.setOption(option);
     },
     openParam(info) {
       if (info.devNo) {
