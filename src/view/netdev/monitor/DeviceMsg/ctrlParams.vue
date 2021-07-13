@@ -5,7 +5,7 @@
         <div v-for="temp in item.subInterList">
           <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
           <div v-if="temp.subParaList.length" class="box">
-            <div v-for="(info,index) in temp.subParaList"  class="node" v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home'&& info.isShow)">
+            <div v-for="(info,index) in temp.subParaList"  class="node" v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home'&& info.ndpaIsTopology)">
 <!--              <div  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home'&& info.isShow)">-->
                 <template v-if="info.parahowMode == '0024001'">
                   <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >

@@ -1,8 +1,7 @@
 <template>
  <div>
    <div v-if="infos.length" class="box">
-     <div v-for="(info,index) in infos" class="node">
-       <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.isShow)">
+     <div v-for="(info,index) in infos" class="node" v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.ndpaIsTopology)">
          <template v-if="info.parahowMode == '0024001'">
            <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                  <span style="color: red;"  v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -119,7 +118,6 @@
              </Button>
            </div>
          </template>
-       </template>
      </div>
    </div>
   <div v-else>
