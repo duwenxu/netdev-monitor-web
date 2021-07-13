@@ -67,7 +67,7 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width:15,
+          width:18,
           key: 'logTime',
         },
         {
@@ -87,7 +87,7 @@ export default {
         },
         {
           title: '操作对象',
-          width:16,
+          width:15,
           // width: 100,
           key: 'logOperObjName',
           tooltip: true,
@@ -95,12 +95,12 @@ export default {
         {
           title: '内容',
           key: 'logOperContent',
-          width:29,
+          width:22,
           tooltip: true,
         },
         {
           title: '原始数据',
-          width:15,
+          width:13,
           key: 'orignData',
           tooltip: true,
         },

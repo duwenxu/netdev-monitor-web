@@ -6,7 +6,7 @@
           <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
           <div v-if="temp.subParaList.length" class="box">
             <div v-for="(info,index) in temp.subParaList" class="node">
-              <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.isShow)">
+              <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.ndpaIsTopology)">
                 <template v-if="info.parahowMode == '0024001'">
                   <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                     <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>

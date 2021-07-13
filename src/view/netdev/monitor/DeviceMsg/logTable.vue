@@ -10,13 +10,27 @@
       <div class="scroll-container table-container">
         <table class="mytable">
           <tr v-for="(info, index) in list" :key="index" :id="index">
-            <td style="width: 15%" align="center">{{info.logTime}}</td>
+            <td style="width: 20%" align="center">{{info.logTime}}</td>
             <td style="width: 10%" align="center">{{info.logAccessTypeName}}</td>
             <td style="width: 10%" align="center">{{info.logOperTypeName}}</td>
             <td style="width: 10%" align="center">{{info.logCmdMark}}</td>
-            <td style="width: 16%" align="center">{{info.logOperObjName}}</td>
-            <td style="width: 29%;" class="width_len" align="center">{{info.logOperContent}}</td>
-            <td style="width: 15%" align="center">{{info.orignData}}</td>
+            <td style="width: 15%"  align="center">
+              <Tooltip max-width="1000" :content="info.logOperObjName">
+                <div class="width_len">{{info.logOperObjName}}</div>
+              </Tooltip>
+<!--              {{info.logOperObjName}}-->
+            </td>
+            <td style="width: 22%;"  align="center">
+              <Tooltip max-width="1000" :content="info.logOperContent">
+                <div class="width_len">{{info.logOperContent}}</div>
+              </Tooltip>
+            </td>
+
+            <td style="width: 13%"   align="center">
+              <Tooltip max-width="200" :content="info.orignData">
+                <div class="width_len">{{info.orignData}}</div>
+              </Tooltip>
+            </td>
           </tr>
         </table>
       </div>
@@ -44,13 +58,16 @@ export default {
 </script>
 <style scoped>
 .width_len{
-  max-width: 180px;
+
+  margin-top: 10px;
+  max-width: 120px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .bottom_wrapper {
   height: 200px;
-
   width: 100%;
-
 }
 
 .bottom_wrapper th {
@@ -71,9 +88,7 @@ export default {
   border: 1px solid #e6e6e6;
   font-size: 14px;
 
-  white-space: break-spaces;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
 }
 
 .table-head {
