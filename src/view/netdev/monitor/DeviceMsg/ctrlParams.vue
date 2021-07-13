@@ -123,7 +123,6 @@ export default {
     return {
       normalHeight:450,
       infos: [],
-      validTag: false,
         receiveMsg:false,
       paramType: ['0019002', '0019003'],
       accessView:false
@@ -230,11 +229,11 @@ export default {
     },
     changeMode(temp) {
       this.receiveMsg = !this.receiveMsg
-      this.validTag = false
       this.$set(temp, 'selected', !temp.selected)
       temp.subParaList.forEach(info=>{
         // if (info.paraVal != null && info.paraVal) {
           this.$set(info, 'selected', !info.selected)
+          this.$set(info, 'errorMsg', '')
         // }
         if (info.subParaList.length) {
           let obj = {}
@@ -281,27 +280,22 @@ export default {
     textValid(info) {
       if (info.paraVal) {
         if (info.paraSimpleDatatype == 1) {
-          if(info.paraDatatype == '0023006') {//ip校验
+          if(info.paraDatatype == '0023004') {//ip校验
             let valid = /((25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))/.test(info.paraVal)
             if (!valid) {
               this.$set(info, 'errorMsg', '请输入正确的IP地址')
-              this.validTag = true
             }else{
               this.$set(info, 'errorMsg','')
-              this.validTag = false
             }
           }else{
             if (info.paraStrLen) {
               if (info.paraVal.length > info.paraStrLen) {
-                this.validTag = true
                 this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
               }else{
-                this.validTag = false
                 this.$set(info, 'errorMsg', '')
               }
             } else {
               this.$set(info, 'errorMsg', '')
-              this.validTag = false
             }
           }
         } else {
@@ -312,32 +306,30 @@ export default {
                 if ((Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) &&
                   (Number(info.paraVal) > Number(info.paraValMax2) || Number(info.paraVal) < Number(info.paraValMin2))
                 ) {
-                  this.validTag = true
                   this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 +'或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
                 } else {
-                  this.validTag = false
                   this.$set(info, 'errorMsg','')
                 }
               }else{
                 if (Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) {
-                  this.validTag = true
                   this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
                 } else {
-                  this.validTag = false
                   this.$set(info, 'errorMsg','')
                 }
               }
 
             }
           } else {
-            this.validTag = true
             this.$set(info, 'errorMsg', '请输入数字')
           }
         }
       }
     },
     handleSubmit(temp) {
-      if (!this.validTag) {
+      let valid = temp.subParaList.some(val=>{
+        return val.errorMsg != ''
+      })//一个不为空返回true
+      if (!valid) {
         this.save(temp)
       }
     },
