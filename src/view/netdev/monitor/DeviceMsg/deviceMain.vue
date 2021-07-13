@@ -67,7 +67,7 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width:10,
+          width:15,
           key: 'logTime',
         },
         {

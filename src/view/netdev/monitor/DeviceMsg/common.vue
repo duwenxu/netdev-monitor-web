@@ -2,7 +2,7 @@
  <div>
    <div v-if="infos.length" class="box">
      <div v-for="(info,index) in infos" class="node">
-       <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+       <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.isShow)">
          <template v-if="info.parahowMode == '0024001'">
            <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                  <span style="color: red;"  v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -331,8 +331,8 @@ export default {
 }
 .node{
   margin-bottom: 10px;
-  width: 30%;
-  margin-left: 30px;
+  width: 46%;
+  margin-left: 20px;
 
 }
 </style>
@@ -343,6 +343,13 @@ export default {
  }
   .ivu-input-with-prefix {
     padding-left: 22%;
+  }
+  .ivu-select-prefix{
+    width: 20%;
+    text-align: center;
+  }
+  .ivu-select-single .ivu-select-head-with-prefix, .ivu-select-multiple .ivu-select-head-with-prefix{
+    padding-left: 13px !important;
   }
 }
 </style>

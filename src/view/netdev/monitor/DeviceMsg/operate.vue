@@ -43,7 +43,7 @@ export default {
     return {
       orderSwitch:true,
       comHeight: 160,
-      normalHeight: 250,
+      normalHeight: 350,
       devNo: null,
       paramSocket: null,
       infos: [],
@@ -79,7 +79,7 @@ export default {
     next()
   },
   destroyed() {
-       this.infos = []
+      this.infos = []
       this.orderDatas = []
       this.combineList =[]
       this.selectObj = {}
@@ -879,7 +879,7 @@ export default {
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
         this.comHeight = 160
-        this.normalHeight = 250
+        this.normalHeight = 200
       } else {
         this.comHeight = 380
         this.normalHeight = 400
@@ -907,7 +907,7 @@ export default {
       if(this.combineList.length && !this.infos.length){
         this.comHeight = 400
       }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 400
+        this.normalHeight = 350
       }else{
         this.comHeight = 240
         this.normalHeight = 240

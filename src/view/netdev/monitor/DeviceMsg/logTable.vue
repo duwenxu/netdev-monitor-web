@@ -10,7 +10,7 @@
       <div class="scroll-container table-container">
         <table class="mytable">
           <tr v-for="(info, index) in list" :key="index" :id="index">
-            <td style="width: 10%" align="center">{{info.logTime}}</td>
+            <td style="width: 15%" align="center">{{info.logTime}}</td>
             <td style="width: 10%" align="center">{{info.logAccessTypeName}}</td>
             <td style="width: 10%" align="center">{{info.logOperTypeName}}</td>
             <td style="width: 10%" align="center">{{info.logCmdMark}}</td>
