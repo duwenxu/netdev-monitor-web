@@ -67,7 +67,7 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width:18,
+          width:20,
           key: 'logTime',
         },
         {
@@ -152,9 +152,9 @@ export default {
     this.$xy.vector.$off('closeModal', this.closeModal)
   },
   mounted() {
-    this.logs = null
-    this.alertInfos =null
-    this.orderDatas = null
+    this.logs = []
+    this.alertInfos =[]
+    this.orderDatas = []
     // this.ctrl_socket = null
     // this.logSocket = null
     // this.warnSocket = null

@@ -46,35 +46,28 @@ export default {
   max-width: 250px;
 }
 .bottom_wrapper {
-  height: 200px;
-
+  height: 160px;
   width: 100%;
-
 }
-
 .bottom_wrapper th {
   border: 1px solid #e6e6e6;
   line-height: 4vh;
   color: #666666;
   font-size: 16px;
 }
-
 .bottom_wrapper table {
   border-collapse: collapse;
   height: 400px;
   width: 100%;
 }
-
 .mytable td {
   padding: 5px;
   border: 1px solid #e6e6e6;
   font-size: 14px;
-
   white-space: break-spaces;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .table-head {
   padding-right: 4px;
   color: #000;
@@ -90,24 +83,5 @@ export default {
 .table-head table, .table-body table {
   width: 100%;
 }
-
-.table-body::-webkit-scrollbar {
-  width: 4px;
-  height: 8px;
-}
-
-.table-body::-webkit-scrollbar-track {
-  background: #1D1F2E;
-}
-
-.table-body::-webkit-scrollbar-thumb {
-  background: #415dbe;
-  border-radius: 4px;
-}
-
-.table-body::-webkit-scrollbar-corner {
-  background: #415dbe;
-}
-
 
 </style>

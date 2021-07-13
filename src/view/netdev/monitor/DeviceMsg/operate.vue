@@ -1,14 +1,17 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-      <div style="margin-bottom: 5px">命令区</div>
+<!--      <div style="margin-bottom: 5px">命令区</div>-->
+
       <div  style="display: flex;margin-left: 20px;">
+        <span style="margin-top: 8px;margin-right: 20px">命令区</span>
         <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
           <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
           </i-switch>
         </div>
+
         <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
@@ -878,11 +881,23 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.comHeight = 160
-        this.normalHeight = 200
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 280
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 280
+        }else{
+          this.comHeight = 160
+          this.normalHeight = 160
+        }
       } else {
-        this.comHeight = 380
-        this.normalHeight = 400
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 710
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 710
+        }else{
+          this.comHeight = 350
+          this.normalHeight = 350
+        }
       }
     },
     initWebSocket() { //初始化weosocket
@@ -905,12 +920,12 @@ export default {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
       if(this.combineList.length && !this.infos.length){
-        this.comHeight = 400
+        this.comHeight = 250
       }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 350
+        this.normalHeight = 250
       }else{
-        this.comHeight = 240
-        this.normalHeight = 240
+        this.comHeight = 160
+        this.normalHeight = 160
       }
     },
     editData(msg) {
@@ -1100,7 +1115,7 @@ export default {
 
 .order-wrap {
   border: 1px solid #009688;
-  height: 100px;
+  height: 55px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;

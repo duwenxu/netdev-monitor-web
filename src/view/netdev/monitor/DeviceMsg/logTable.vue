@@ -7,7 +7,7 @@
               {{info.title}}
             </span>
       </div>
-      <div class="scroll-container table-container">
+      <div class="scroll-container table-container" v-if="list.length">
         <table class="mytable">
           <tr v-for="(info, index) in list" :key="index" :id="index">
             <td style="width: 20%" align="center">{{info.logTime}}</td>
@@ -16,24 +16,25 @@
             <td style="width: 10%" align="center">{{info.logCmdMark}}</td>
             <td style="width: 15%"  align="center">
               <Tooltip max-width="1000" :content="info.logOperObjName">
-                <div class="width_len">{{info.logOperObjName}}</div>
+                <div class="width_len" style=" max-width: 90px;">{{info.logOperObjName}}</div>
               </Tooltip>
 <!--              {{info.logOperObjName}}-->
             </td>
             <td style="width: 22%;"  align="center">
               <Tooltip max-width="1000" :content="info.logOperContent">
-                <div class="width_len">{{info.logOperContent}}</div>
+                <div class="width_len" style=" max-width: 120px;">{{info.logOperContent}}</div>
               </Tooltip>
             </td>
 
             <td style="width: 13%"   align="center">
               <Tooltip max-width="200" :content="info.orignData">
-                <div class="width_len">{{info.orignData}}</div>
+                <div class="width_len" style=" max-width: 80px;">{{info.orignData}}</div>
               </Tooltip>
             </td>
           </tr>
         </table>
       </div>
+        <div v-else style="width: 100%;padding: 20px;text-align: center">暂无数据</div>
     </div>
   </div>
 </template>
@@ -44,11 +45,11 @@ export default {
   props:{
     columns:{
       type:Array,
-      default:[]
+      default: () => []
     },
     list:{
       type:Array,
-      default:[]
+      default: () => []
     },
   },
   mounted() {
@@ -58,15 +59,14 @@ export default {
 </script>
 <style scoped>
 .width_len{
-
   margin-top: 10px;
-  max-width: 120px;
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .bottom_wrapper {
-  height: 200px;
+  height: 160px;
   width: 100%;
 }
 
@@ -107,23 +107,6 @@ export default {
   width: 100%;
 }
 
-.table-body::-webkit-scrollbar {
-  width: 4px;
-  height: 8px;
-}
-
-.table-body::-webkit-scrollbar-track {
-  background: #1D1F2E;
-}
-
-.table-body::-webkit-scrollbar-thumb {
-  background: #415dbe;
-  border-radius: 4px;
-}
-
-.table-body::-webkit-scrollbar-corner {
-  background: #415dbe;
-}
 
 
 </style>

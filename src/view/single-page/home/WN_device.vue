@@ -14,9 +14,9 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
+    <Modal  :closable="false" :styles="{marginTop:'-90px'}"  v-model="paramModal"  @on-ok="confirm" @on-cancel="confirm"
            width="850" :mask-closable="false">
-      <DeviceMain></DeviceMain>
+      <DeviceMain v-if="paramModalShow"></DeviceMain>
     </Modal>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
       devNo: null,
       dom: null,
       paramModal: false,
+      paramModalShow: false,
       equipments: [
         {
           devNo: '2',
@@ -305,8 +306,8 @@ export default {
   },
   methods: {
     confirm() {
-      this.paramModal = false
       this.$xy.vector.$emit("closeModal")
+      this.paramModal = false
     },
 
     // initTime() {
@@ -2069,8 +2070,14 @@ export default {
       });
       dom.on('click', function (info) {
         if (info.data.devNo) {
-          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
           that.paramModal = true
+          that.paramModalShow = false
+          that.$nextTick(() => {
+            that.paramModalShow = true
+            that.$nextTick(() => {
+              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+            })
+          })
         }
       });
       dom.setOption(option);
@@ -2078,8 +2085,15 @@ export default {
     },
     openParam(info) {
       if (info.devNo) {
-        this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
         this.paramModal = true
+        this.paramModalShow = false
+        this.$nextTick(() => {
+          this.paramModalShow = true
+          this.$nextTick(() => {
+            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+          })
+
+        })
       }
     }
   }
