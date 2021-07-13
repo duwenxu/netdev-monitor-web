@@ -14,15 +14,14 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <div ref="test">
+
       <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
              width="80%" :mask-closable="false">
 <!--        <div slot="header"><span>参数信息</span>-->
 <!--          <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
 <!--        </div>-->
-        <DeviceMain v-show="paramModal"></DeviceMain>
+        <DeviceMain v-if="paramModalShow"></DeviceMain>
       </Modal>
-    </div>
   </div>
 
 </template>
@@ -39,7 +38,7 @@ export default {
     return {
       devNo: null,
       // dom: null,
-      addSubOrgModalVif: false,
+      paramModalShow: false,
       paramModal: false,
       equipments: [
         {
@@ -368,7 +367,6 @@ export default {
       // }
       this.$xy.vector.$emit("closeModal")
       this.paramModal = false
-      this.$refs.test.remove()
     },
     initTime() {
       this.timer = setInterval(this.scrollAnimate, 100);
@@ -2817,7 +2815,13 @@ export default {
       dom.on('click', function (info) {
         if (info.data.devNo) {
           that.paramModal = true
-          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+          that.paramModalShow = false
+          that.$nextTick(() => {
+            that.paramModalShow = true
+            that.$nextTick(() => {
+              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+            })
+          })
         }
       });
       dom.setOption(option);
