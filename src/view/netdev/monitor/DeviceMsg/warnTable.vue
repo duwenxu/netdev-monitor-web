@@ -57,7 +57,7 @@ export default {
 }
 .bottom_wrapper table {
   border-collapse: collapse;
-  height: 160px;
+  height: 120px;
   width: 100%;
 }
 .mytable td {
