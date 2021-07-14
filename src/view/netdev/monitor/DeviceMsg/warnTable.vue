@@ -9,11 +9,11 @@
       </div>
       <div class="scroll-container table-container">
         <table class="mytable">
-          <tr v-for="(info, index) in list" :key="index" :id="index">
+          <tr v-for="(info, index) in list" :key="index" :id="index" :style="{color:info.alertDesc.indexOf('故障')>-1?'red':''}">
             <td style="width: 15%" align="center">{{info.alertLevelName}}</td>
             <td style="width: 15%" align="center">{{info.alertNum}}</td>
             <td style="width: 20%" align="center">{{info.alertTime}}</td>
-            <td style="width: 50%" class="width_len"  align="center"><span :style="{color:info.alertDesc.indexOf('故障')>-1?'red':''}">{{info.alertDesc}}</span></td>
+            <td style="width: 50%" class="width_len"  align="center">{{info.alertDesc}}</td>
           </tr>
         </table>
       </div>
