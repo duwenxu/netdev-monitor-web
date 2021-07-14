@@ -1,39 +1,39 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-      <div style="margin-bottom: 5px">命令区</div>
+<!--      <div style="margin-bottom: 5px">命令区</div>-->
+
       <div  style="display: flex;margin-left: 20px;">
+        <span style="margin-top: 8px;margin-right: 20px">命令区</span>
         <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
           <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
           </i-switch>
         </div>
-        <Button v-for="(info,index) in orderDatas" @click="save(info)"
+
+        <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length">
+    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in combineList">
-        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
+    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
       <common :infos="infos"></common>
     </div>
   </div>
 </template>
-
 <script>
-
 import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
-
 export default {
   components: {common},
   props: {
@@ -41,14 +41,14 @@ export default {
       type: Number
     }
   },
+
   data() {
     return {
-        orderSwitch:true,
-      orderHeight: 360,
-      normalHeight: 450,
+      orderSwitch:true,
+      comHeight: 160,
+      normalHeight: 350,
       devNo: null,
       paramSocket: null,
-      logSocket: null,
       infos: [],
       orderDatas: [],
       combineList: [],
@@ -60,25 +60,18 @@ export default {
     }
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
     this.$xy.vector.$on('closeModal', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
-
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
     this.$xy.vector.$off('closeModal', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
-
-  },
-  destroyed() {
-    clearInterval(this.timer)
-
   },
   mounted() {
-      // console.log(this.$route)
     if (this.$route.name != 'home') {
       this.initWebSocket()
     }
@@ -88,7 +81,14 @@ export default {
     this.paramSocket = null
     next()
   },
+  destroyed() {
+      this.infos = []
+      this.orderDatas = []
+      this.combineList =[]
+      this.selectObj = {}
+  },
   methods: {
+
     //1.5m天线切换开关
     async  switchChange(data){
         let {result, success, message} = await switchCheck({channel:data?'A':'B'})
@@ -881,11 +881,23 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.orderHeight = 360
-        this.normalHeight = 450
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 250
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 250
+        }else{
+          this.comHeight = 160
+          this.normalHeight = 160
+        }
       } else {
-        this.orderHeight = 580
-        this.normalHeight = 680
+        if(this.combineList.length && !this.infos.length){
+          this.comHeight = 430
+        }else if(!this.combineList.length && this.infos.length){
+          this.normalHeight = 430
+        }else{
+          this.comHeight = 210
+          this.normalHeight = 210
+        }
       }
     },
     initWebSocket() { //初始化weosocket
@@ -907,6 +919,14 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
+      if(this.combineList.length && !this.infos.length){
+        this.comHeight = 250
+      }else if(!this.combineList.length && this.infos.length){
+        this.normalHeight = 250
+      }else{
+        this.comHeight = 160
+        this.normalHeight = 160
+      }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
@@ -956,13 +976,11 @@ export default {
             }
           }
         }
-
-
       })
       this.orderDatas = oderArr || []
       this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText)
-    },
+      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
+         },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
@@ -1022,7 +1040,23 @@ export default {
       }
       }
     },
-    async save(info) {
+    save(info){
+      this.$Modal.confirm({
+        title: '确认执行当前命令吗?',
+        content: '确认后将无法取消！',
+        onOk: () => {
+          this.saveOrder(info)
+        },
+        onCancel: () => {
+          this.$Notice.warning({
+            title: '取消',
+            desc: '已取消！',
+            duration: 3
+          })
+        }
+      })
+    },
+    async saveOrder(info) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -1034,14 +1068,8 @@ export default {
       if (success) {
         this.$Notice.success({
           title: '成功',
-          desc: message,
+          desc: '修改成功！',
           duration: 1
-        })
-      } else {
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
         })
       }
     }
@@ -1087,7 +1115,7 @@ export default {
 
 .order-wrap {
   border: 1px solid #009688;
-  height: 100px;
+  height: 55px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -1096,7 +1124,7 @@ export default {
 
 .sub-wrap {
   border: 1px solid #009688;
-  height: 280px;
+  height: 240px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -1105,7 +1133,7 @@ export default {
 
 .param-wrap {
   border: 1px solid #009688;
-  height: 450px;
+  height: 250px;
   margin-bottom: 10px;
   overflow: auto;
   border-radius: 5px;

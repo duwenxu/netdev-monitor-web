@@ -18,7 +18,7 @@
             </div>
             </Col>
         </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+        <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
         </Modal>
     </div>
@@ -231,7 +231,7 @@
                     name:'设备类型',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备类型'
+                    placeholder:'设备类型'
                   },
                     {
                         type:2,
@@ -239,7 +239,7 @@
                         name:'设备状态',
                         value:'',
                         data:[],
-                        placeholder:'请输入设备状态'
+                        placeholder:'设备状态'
                     },
                   {
                     type:1,
@@ -247,7 +247,7 @@
                     name:'设备名称',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备名称'
+                    placeholder:'设备名称'
                   },
                   {
                     type:2,
@@ -255,7 +255,7 @@
                     name:'设备所属公司',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备所属公司'
+                    placeholder:'设备所属公司'
                   },
                 ],
                 search: {
@@ -264,7 +264,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -435,6 +435,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

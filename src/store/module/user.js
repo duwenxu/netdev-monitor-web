@@ -94,7 +94,7 @@ export default {
           password
         }).then(res => {
           const data = res.result.userInfo;
-          sessionStorage.setItem('userInfo',JSON.stringify(data))
+          localStorage.setItem('userInfo',JSON.stringify(data))
           commit('setToken', res.result.token)
           commit('setUserName', data.userName)
           resolve(data)
@@ -111,13 +111,15 @@ export default {
         commit('setHasGetInfo', false)
         commit('setHasGetRouter', false)
         sessionStorage.clear()
+        localStorage.clear()
         resolve()
       })
     },
     // 获取用户相关信息
     getUserInfo ({ state, commit }) {
-      if(sessionStorage.userInfo){
-        let obj = JSON.parse(sessionStorage.userInfo)
+
+      if(localStorage.userInfo){
+        let obj = JSON.parse(localStorage.userInfo)
         // commit('setAvator', obj.avator)
         commit('setUserName', obj.userName)
         commit('setUserId', obj.userId)

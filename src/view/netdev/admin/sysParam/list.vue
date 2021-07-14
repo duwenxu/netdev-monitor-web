@@ -1,10 +1,10 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Col :xs="24" :sm="24" :md="24" :lg="20">
+      <Col :xs="24" :sm="24" :md="24" :lg="22">
         <search :search-data='searchData'></search>
       </Col>
-      <Col :xs="24" :sm="24" :md="24" :lg="4">
+      <Col :xs="24" :sm="24" :md="24" :lg="2">
         <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
@@ -17,7 +17,7 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-param></operate-param>
     </Modal>
   </div>
@@ -154,7 +154,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -268,6 +268,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>
