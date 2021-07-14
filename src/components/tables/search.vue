@@ -11,7 +11,7 @@
         </Select>
       </template>
       <template v-if='data.type==3'>
-        <DatePicker :placeholder="data.placeholder" v-model="data.value" :style="{width: data.long == 2?'200px':'300px'}" :type="data.long == 2?'date':'datetimerange'" style="margin-right: 10px"></DatePicker>
+        <DatePicker :placeholder="data.placeholder" v-model="data.value" :style="{width: data.long == 2?'200px':'320px'}" :type="data.long == 2?'date':'datetimerange'" style="margin-right: 10px"></DatePicker>
       </template>
       <template v-if='index==searchData.length-1'>
         <Button @click="init" style="background-color: #fea230;border: 0px;color: #ffffff;">搜索</Button>

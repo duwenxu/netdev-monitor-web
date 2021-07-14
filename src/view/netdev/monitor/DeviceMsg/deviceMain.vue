@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="deviceMain">
     <Tabs :animated="false" @on-click="goto" v-model="navName">
       <TabPane v-for="(tab,index) in tabs" :key="index" :label="tab.nav" :name="tab.name">
-        <component :is="tab.componentName"></component>
+        <component  :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
       <div class="fix-btn">
@@ -11,14 +11,12 @@
           告<Br/>警
         </div>
       </div>
-      <div class="fix-btn-warn">
+      <div class="fix-btn-warn"  @click="changeInfo(2)">
         <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
-        <div style="margin-top:5px;" @click="changeInfo(2)">日<Br/>志</div>
+        <div style="margin-top:5px;">日<Br/>志</div>
       </div>
-      <div :style="{height:220+'px',overflow:'auto'}">
-        <Table v-if="showLog" disabled-hover :columns="logColumns" :data="logs"></Table>
-        <Table v-if="showAlert" disabled-hover :columns="alertColumns" :data="alertInfos"></Table>
-      </div>
+        <log-table v-if="showLog" :columns="logColumns" :list="logs"></log-table>
+        <warn-table v-if="showAlert" :columns="alertColumns" :list="alertInfos"></warn-table>
   </div>
 </template>
 <script>
@@ -26,11 +24,16 @@ import {queryPageInfo, queryCtrlInfo} from "@/api/monitor/DeviceParam"
 import Operate from "./operate"
 import ctrlParams from "./ctrlParams"
 import shipOperate from "../specialComponents/shipOperate"
+import logTable from "./logTable"
+import warnTable from "./warnTable"
+import leaveMixin from "./mixin";
 
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 const mStores = {
   Operate,
   ctrlParams,
+  logTable,
+  warnTable,
   shipOperate
 }
 context.keys().forEach(key => {
@@ -43,12 +46,12 @@ context.keys().forEach(key => {
 })
 export default {
   components: mStores,
-
+  mixins: [leaveMixin],
   data() {
     return {
       devNo: null,
-      showLog: false,
-      showAlert: true,
+      showLog: true,
+      showAlert: false,
       wsurl: 'ws://' + this.$xy.SOCKET_URL + '/ws',
       ctrl_socket: null,
       logSocket: null,
@@ -64,62 +67,65 @@ export default {
       logColumns: [
         {
           title: '日志时间',
-          width: 200,
+          width:20,
           key: 'logTime',
         },
         {
-          title: '访问类型名称',
-          width: 120,
+          title: '访问类型',
+          width:10,
           key: 'logAccessTypeName',
         },
         {
-          title: '操作类型名称',
-          width: 120,
+          title: '操作类型',
+          width:10,
           key: 'logOperTypeName',
         },
         {
           title: '命令标识符',
-          width: 120,
+          width:10,
           key: 'logCmdMark',
         },
         {
-          title: '操作对象名称',
-          width: 200,
+          title: '操作对象',
+          width:15,
+          // width: 100,
           key: 'logOperObjName',
+          tooltip: true,
         },
         {
-          title: '操作内容',
+          title: '内容',
           key: 'logOperContent',
-
+          width:22,
           tooltip: true,
         },
         {
           title: '原始数据',
-
+          width:13,
           key: 'orignData',
+          tooltip: true,
         },
       ],
       logs: [],
       alertColumns: [
         {
             title: '告警级别',
-            width: 110,
+            width: 15,
             key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
-            width: 110,
+            width: 15,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-            width: 200,
+            width: 20,
         },
         {
           title: '告警描述',
           key: 'alertDesc',
-          tooltip: true,
+          width: 50,
         },
       ],
       alertInfos: [],
@@ -127,6 +133,15 @@ export default {
       viewLog:true
 
     }
+  },
+  destroyed() {
+    this.tabs = []
+    this.logs = []
+    this.alertInfos =[]
+    this.orderDatas = []
+    this.ctrl_socket = null
+    this.logSocket = null
+    this.warnSocket = null
   },
   created: function () {
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
@@ -137,22 +152,30 @@ export default {
     this.$xy.vector.$off('closeModal', this.closeModal)
   },
   mounted() {
+    this.logs = []
+    this.alertInfos =[]
+    this.orderDatas = []
+    // this.ctrl_socket = null
+    // this.logSocket = null
+    // this.warnSocket = null
     if (this.$route.name != 'home') {
       this.getTabsCtrl()
       this.logWs()
     }
   },
-  beforeRouteLeave(to, from, next) {
-    if (this.ctrl_socket) {
-      this.ctrl_socket.close()
-      this.ctrl_socket = null
-    }
-    this.warnSocket.close()
-    this.warnSocket = null
-    this.logSocket.close()
-    this.logSocket = null
-    next()
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (this.ctrl_socket) {
+  //     this.ctrl_socket.close()
+  //     this.ctrl_socket = null
+  //   }
+  //   this.warnSocket.close()
+  //   this.warnSocket = null
+  //   this.logSocket.close()
+  //   this.logSocket = null
+  //   // this.$destroy()
+  //   console.log('-----------destory----------')
+  //   // next()
+  // },
   methods: {
     getDevNo(data) {
       this.viewLog = false
@@ -161,6 +184,10 @@ export default {
       this.logWs()
     },
     closeModal(){
+      this.tabs = []
+      this.logs = []
+      this.alertInfos =[]
+      this.orderDatas = []
       if (this.ctrl_socket) {
         this.ctrl_socket.close()
         this.ctrl_socket = null
@@ -169,16 +196,17 @@ export default {
       this.warnSocket = null
       this.logSocket.close()
       this.logSocket = null
+
     },
     goto: function (name) {
       this.navName = name
     },
     //切换日志告警信息
-    changeInfo(value) {
-      //告警
+    changeInfo(value) {    //告警
       if (value == 1) {
         this.showLog = false
         this.showAlert = !this.showAlert
+        // this.$xy.vector.$emit('changesize', obj)
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
@@ -187,7 +215,7 @@ export default {
         showLog: this.showLog,
         showAlert: this.showAlert
       }
-      this.$xy.vector.$emit('changeSize', obj)
+      this.$xy.vector.$emit('changesize', obj)
     },
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
@@ -198,7 +226,6 @@ export default {
           if(fIndex == -1){
             this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
           }
-
         }else{
           this.tabs  = [
             {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
@@ -268,6 +295,7 @@ export default {
     },
     getLogMsg(frame) {
       let msg = JSON.parse(frame.data)
+      this.logs = []
       this.logs = msg
     },
     warnSend() {
@@ -276,7 +304,12 @@ export default {
     },
     getWarnLog(frame) {
       let msg = JSON.parse(frame.data)
-      this.alertInfos = msg
+      if(msg.length){
+        this.showAlert = true
+        this.showLog = false
+        this.alertInfos = []
+        this.alertInfos = msg
+      }
     },
   }
 }

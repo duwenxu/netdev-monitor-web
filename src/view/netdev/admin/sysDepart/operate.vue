@@ -2,22 +2,22 @@
   <div style="height:100%;padding: 10px 10px">
     <Form ref="sysDepart" :model="sysDepart" :rules="rulePro" :label-width="150">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="部门名称" prop="paraCode">
             <Input v-model.trim="sysDepart.departName" placeholder="请输入部门名称"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="部门代号" prop="userChname">
             <Input v-model.trim="sysDepart.departCode" placeholder="请输入部门代号"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="备注" prop="userEmail">
             <Input type="textarea"  v-model.trim="sysDepart.remark1" placeholder="请输入备注信息"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit('sysDepart')">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

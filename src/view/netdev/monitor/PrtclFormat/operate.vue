@@ -183,3 +183,9 @@
         }
     }
 </script>
+<style scoped>
+.content-box{
+  height: 400px;
+  overflow-y:auto ;
+}
+</style>

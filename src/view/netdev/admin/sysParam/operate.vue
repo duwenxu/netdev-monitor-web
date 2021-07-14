@@ -1,45 +1,45 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
-    <Form ref="sysParam" :model="sysParam" :rules="rulePro" :label-width="150">
+    <Form ref="sysParam" :model="sysParam" :rules="rulePro" :label-width="100">
       <Row>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="参数代码" prop="paraCode">
             <Input v-model.trim="sysParam.paraCode" placeholder="请输入参数代码"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="参数名称" prop="paraName">
             <Input v-model.trim="sysParam.paraName" placeholder="请输入参数名称"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="参数父代码" prop="paraParentId">
             <Input v-model.trim="sysParam.paraParentId" placeholder="请输入参数父代码"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="是否有效" prop="roleStatus">
             <Select v-model="sysParam.isValidate" clearable  placeholder="请选择角色状态">
               <Option  v-for='choose in validateList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
             </Select>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="备注一" prop="remark1">
             <Input type="textarea" v-model.trim="sysParam.remark1" placeholder="请输入备注一"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="备注二" prop="remark2">
             <Input type="textarea" v-model.trim="sysParam.remark2" placeholder="请输入备注二"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="8">
+        <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="备注三" prop="remark3">
             <Input type="textarea" v-model.trim="sysParam.remark3" placeholder="请输入备注三"></Input>
           </FormItem>
         </Col>
-        <Col :xs="20" :sm="16" :md="16" :lg="15">
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
           <FormItem>
             <Button type="primary" @click="handleSubmit('sysParam')">保存</Button>
             <Button type="default" @click="cancel()" style="margin-left: 8px">关闭</Button>

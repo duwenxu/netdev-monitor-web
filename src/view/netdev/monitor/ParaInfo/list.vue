@@ -17,7 +17,7 @@
             </div>
             </Col>
         </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+        <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
         </Modal>
     </div>
@@ -317,7 +317,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -450,6 +450,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

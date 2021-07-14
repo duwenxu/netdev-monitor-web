@@ -2,9 +2,6 @@
   <div class="content-box">
     <Row>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-        <Button icon="ios-repeat" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success"
-                @click="updateCache()">刷新缓存
-        </Button>
         <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增
         </Button>
         <search :search-data='searchData'></search>
@@ -19,25 +16,24 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
 
-    <Modal v-model="transModal" width="90%"  footer-hide :mask-closable="false">
-      <trans left-name="未绑定参数" right-name="绑定参数"></trans>
+    <Modal v-model="transModal" width="800" title="绑定设备" footer-hide :mask-closable="false">
+      <trans left-name="未绑定设备" right-name="绑定设备"></trans>
     </Modal>
   </div>
 </template>
 
 <script>
   import {
-    queryInterfacePageList,
-    deleteInterface,
-    getUnlinkedParams,
-    getLinkedParams,
-    editInterface,
-    updateCache
-  } from '@/api/monitor/Interface'
+    queryTruckInfoPageList,
+    deleteTruckInfo,
+    getUnlinkedDevs,
+    getLinkedDevs,
+    editTruckInfo
+  } from '@/api/monitor/TruckInfo'
   import search from '@/components/tables/search'
   import operateRow from './operate'
   import trans from '@/components/tables/trans'
@@ -55,48 +51,24 @@
         name: '',
         columns1: [
           {
-            title: '接口名称',
-            key: 'itfName',
+            title: '卫通车名称',
+            key: 'truckName',
             minWidth: 200,
           },
           {
-            title: '设备类型',
-            key: 'devType_paraName',
+            title: '卫通车类型',
+            key: 'truckType_paraName',
             minWidth: 190,
           },
           {
-            title: '解析协议',
-            key: 'fmtId',
-            render: (h, params) => {
-              return h('span', this.handlerPrtFomat(params.row.fmtId));
-            },
-            minWidth: 260,
-          },
-          {
-            title: '接口编码',
-            key: 'itfCode',
-            minWidth: 100,
-          },
-
-          {
-            title: '接口类型',
-            key: 'itfType_paraName',
-            minWidth: 120,
-          },
-          {
-            title: '接口命令标识',
-            key: 'itfCmdMark',
-            minWidth: 120,
-          },
-          {
-            title: '接口状态',
-            key: 'itfStatus_paraName',
-            minWidth: 120,
-          },
-          {
-            title: '页面路径',
-            key: 'itfPagePath',
+            title: '卫通车所属机构',
+            key: 'truckDept',
             minWidth: 200,
+          },
+          {
+            title: '卫通车状态',
+            key: 'truckStatus_paraName',
+            minWidth: 100,
           },
           {
             title: '操作',
@@ -129,33 +101,15 @@
                     type: 'success'
                   },
                   attrs: {
-                    title: '选择参数'
+                    title: '选择设备'
                   },
                   style: {
                     marginRight: '5px',
-                    display: rows.row.itfType == "0027004" || rows.row.itfType == '0027005' ? 'none':'inline-block'
+                    display: true
                   },
                   on: {
                     click: () => {
-                      this.editParam(rows.row.itfId)
-                    }
-                  }
-                }),
-                h('Button', {
-                  props: {
-                    icon: 'md-settings',
-                    type: 'primary'
-                  },
-                  attrs: {
-                    title: '子接口'
-                  },
-                  style: {
-                    marginRight: '5px',
-                    display: rows.row.itfType === "0027004" || rows.row.itfType == '0027005' ? 'inline-block' : 'none'
-                  },
-                  on: {
-                    click: () => {
-                      this.subItfFrameList(rows.row)
+                      this.editParam(rows.row.truckId)
                     }
                   }
                 }),
@@ -169,7 +123,7 @@
                   },
                   on: {
                     click: () => {
-                      this.delete(rows.row.itfId)//id需要修改
+                      this.delete(rows.row.truckId)//id需要修改
                     }
                   }
                 })
@@ -181,11 +135,11 @@
         searchData: [//搜索框根据需要自定义添加
           {
             type: 2,
-            key: 'devType',
-            name: '设备类型',
+            key: 'truckType',
+            name: '卫通车类型',
             value: '',
             data: [],
-            placeholder: '设备类型'
+            placeholder: '卫通车类型'
           }
         ],
         search: {
@@ -193,7 +147,7 @@
         },
         page: {
           current: 1,
-          size: 10
+          size: 8
         },
         otherPage: {
           total: 0,
@@ -242,7 +196,7 @@
       async doQuery() {
         let searchAll = this.page
         searchAll = Object.assign(searchAll, this.search)
-        let {result, success, message} = await queryInterfacePageList(searchAll)
+        let {result, success, message} = await queryTruckInfoPageList(searchAll)
         if (success) {
           this.infos = result.records
           this.page.current = result.current ? result.current : result.current + 1
@@ -285,7 +239,7 @@
         })
       },
       async deleteData(id) {
-        let {data, code, msg} = await deleteInterface(id)
+        let {data, code, msg} = await deleteTruckInfo(id)
         let notice = this.$Notice;
         if (code == 200) {
           notice.success({
@@ -302,10 +256,10 @@
           })
         }
       },
-      operate(Interface) {
-        this.name = Interface == null ? '添加设备接口' : '编辑设备接口'
+      operate(TruckInfo) {
+        this.name = TruckInfo == null ? '添加设备接口' : '编辑设备接口'
         this.operateModal = true
-        this.$xy.vector.$emit('operateRow', Interface)
+        this.$xy.vector.$emit('operateRow', TruckInfo)
       },
       //编辑弹出窗口关闭按钮触发方法
       closeModal() {
@@ -321,20 +275,20 @@
       async editParam(id) {
         this.transModal = true;
         this.eventInfos.itfId = id;
-        this.getUnLinkedParam(id);
-        this.getLinkedParam(id);
+        this.getUnLinkedDev(id);
+        this.getLinkedDev(id);
       },
       //查询未绑定参数
-      async getUnLinkedParam(id) {
-        let {result, success, msg} = await getUnlinkedParams(id);
+      async getUnLinkedDev(id) {
+        let {result, success, msg} = await getUnlinkedDevs(id);
         if (success) {
           this.leftInfos = result;
           this.$xy.vector.$emit('initLeft', {leftInfos: this.leftInfos})
         }
       },
       //查询绑定参数
-      async getLinkedParam(id) {
-        let {result, success, msg} = await getLinkedParams(id);
+      async getLinkedDev(id) {
+        let {result, success, msg} = await getLinkedDevs(id);
         if (success) {
           this.rightInfos = result;
           this.$xy.vector.$emit('initRight', {rightInfos: this.rightInfos})
@@ -354,7 +308,7 @@
           itfId: this.eventInfos.itfId,
           itfDataFormat: params
         };
-        let {result, success, message} = await editInterface(devInter);
+        let {result, success, message} = await editTruckInfo(devInter);
         if (success) {
           this.transModal = false;
           this.$Notice.success({
@@ -389,30 +343,11 @@
         }
         return ''
       },
-      //更新缓存
-      async updateCache() {
-        let {data, code, msg} = await updateCache()
-        let notice = this.$Notice;
-        if (code == 200) {
-          notice.success({
-            title: '成功',
-            desc: '刷新成功！',
-            duration: 3
-          })
-          this.doQuery();
-        } else {
-          notice.error({
-            title: '失败',
-            desc: msg,
-            duration: 3
-          })
-        }
-      },
       //子接口查看
       subItfFrameList(obj) {
         this.$router.push(
           {
-            path: '/monitor/subInterface',
+            path: '/monitor/subTruckInfo',
             query: {
               itfId: obj.itfId,
               devType: obj.devType

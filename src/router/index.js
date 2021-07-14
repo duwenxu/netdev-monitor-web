@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '@/store'
-import {setToken, getToken, canTurnTo, setTitle} from '@/libs/util'
+import {setToken, getToken, canTurnTo} from '@/libs/util'
 import config from '@/config'
 
 const {homeName} = config

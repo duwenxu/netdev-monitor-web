@@ -2,6 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 import {getToken} from '@/libs/util'
 // import { Spin } from 'view-design'
+import { Notice } from 'view-design'
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -73,7 +74,12 @@ class HttpRequest {
             error.msg = '请求超时'
             break
           case 500:
-            error.msg = '服务器开小差了~'
+          Notice.error({
+            title:'失败',
+            desc:error.response.data.message,
+            duration:3
+          })
+            // error.msg = '服务器开小差了~'
             // router.replace({
             //   path: '/error',
             //   query: {

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import {queryParamByParentId} from '@/api/admin/sysParam';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 
 const Setting = {}
@@ -18,7 +18,7 @@ Setting.SOCKET_URL = '/track_socket'
     if (res.success) {
       for(let i in res.result){
         let map = res.result[i];
-        params.push({id:map.paraCode,name:map.paraName,value:map.paraCode,remark1:map.remark1,remark2:map.remark2,remark3:map.remark3});
+        params.push({id:map.paraCode,name:map.paraName,value:map.paraCode,remark1:map.remark1,remark2:map.remark2,remark3:map.remark3,status:map.isValidate});
       }
     }
   })

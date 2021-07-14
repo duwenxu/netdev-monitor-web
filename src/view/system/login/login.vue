@@ -46,9 +46,7 @@
         </Row>
         <Row style="margin-left: 70px">
           <Col :xs="24" :sm="24" :lg="24" :md="24">
-
             <button class="btn_class" type="primary" @click="login">登录</button>
-
           </Col>
         </Row>
 
@@ -140,7 +138,7 @@
 </script>
 
 
-<style>
+<style scoped>
   * {
     margin: 0;
   }

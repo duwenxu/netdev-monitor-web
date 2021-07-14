@@ -8,7 +8,7 @@
             <Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="exportData">导出</Button>
           </Col>
           <Col :xs="24" :sm="24" :md="24" :lg="24">
-            <Table  :columns="columns1" :data="infos" ref="alterTable"></Table>
+            <Table :columns="columns1" :data="infos" ref="alterTable"></Table>
             <div class="text-right page">
                 <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
                       :page-size-opts='otherPage.pageSize'
@@ -36,61 +36,65 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
+
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
+
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
+
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
+                              width:100,
                             },
                             {
                                 title: '告警时间',
                                 key: 'alertTime',
-                                width: 180
+                                width: 170
                             },
                             {
                                 title: '站号',
                                 key: 'alertStationNo',
                             },
                             {
-                                title: '告警级别',
+                                title: '级别',
                                 key: 'alertLevel_paraName',
                             },
                             {
-                                title: '告警描述',
+                                title: '描述',
                                 key: 'alertDesc',
-                                width: 400
+                              tooltip: true,
                             },
                 ],
                 infos: [],
                 searchData: [//搜索框根据需要自定义添加
+                    {
+                        type: 2,
+                        key: 'devType',
+                        name: '设备类型',
+                        value: '',
+                        data:[] ,
+                        placeholder: '设备类型'
+                    },
                     {
                         type: 3,
                         key: ['startTime', 'endTime'],
                         name: '时间',
                         value: '',
                         long: 1,
-                        placeholder: '请选择时间范围',
-                    },
-                    {
-                        type: 1,
-                        key: 'devNo',
-                        name: '设备序号',
-                        value: '',
-                        data:[] ,
-                        placeholder: '设备序号'
+                        placeholder: '时间范围',
                     },
                 ],
                 search: {
                     startTime:'',
                     endTime:'',
-                    devNo:'',
+                    devType:'',
                 },
                 page: {
                     current: 1,
@@ -112,6 +116,7 @@
         },
         mounted() {
             this.init();
+            this.initSelect()
         },
         methods: {
             rowClassName(row, index) {
@@ -153,8 +158,8 @@
             },
             //搜索框填充数据方法
             handleClick(data, item) {
-                if (data.key == 'devNo') {
-                    this.search.devNo = data.value
+                if (data.key == 'devType') {
+                    this.search.devType = data.value
                 }
                 if (data.key == 'startTime') {
                     this.search.startTime = data.value
@@ -185,6 +190,13 @@
                     this.$Message.info("表格数据不能为空！")
                 }
             },
+            initSelect() {
+                this.$xy.getParamGroup('0020').then(res => {
+                    this.searchData[0].data = res.filter(value => {
+                        return value.status == '0001001'
+                    })
+                })
+            },
         }
     }
 </script>
@@ -195,6 +207,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

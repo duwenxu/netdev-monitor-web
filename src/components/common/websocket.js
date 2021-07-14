@@ -2,7 +2,7 @@ let mixin = {
   data () {
     return {
       reconnect: {
-        timer: '',
+        timer: null,
         currentCount: 0,
         allCount: 50,
         step: 3000,
