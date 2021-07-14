@@ -264,7 +264,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,

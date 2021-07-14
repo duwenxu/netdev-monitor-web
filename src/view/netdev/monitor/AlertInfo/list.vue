@@ -36,22 +36,23 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-
+                              width:120,
                             },
                             {
                                 title: '设备编号',
                                 key: 'devNo',
-
+                              width:100,
                             },
                             {
                                 title: '参数编号',
                                 key: 'ndpaNo',
+                              width:100,
 
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
-                              width:100,
+                                width:100,
                             },
                             {
                                 title: '告警时间',
@@ -98,7 +99,7 @@
                 },
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
