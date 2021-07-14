@@ -882,21 +882,21 @@ export default {
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
         if(this.combineList.length && !this.infos.length){
-          this.comHeight = 280
+          this.comHeight = 250
         }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 280
+          this.normalHeight = 250
         }else{
           this.comHeight = 160
           this.normalHeight = 160
         }
       } else {
         if(this.combineList.length && !this.infos.length){
-          this.comHeight = 710
+          this.comHeight = 430
         }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 710
+          this.normalHeight = 430
         }else{
-          this.comHeight = 350
-          this.normalHeight = 350
+          this.comHeight = 210
+          this.normalHeight = 210
         }
       }
     },
