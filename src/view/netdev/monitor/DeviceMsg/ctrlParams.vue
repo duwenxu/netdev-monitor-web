@@ -139,7 +139,7 @@ export default {
 
   },
   mounted() {
-    let obj = JSON.parse(sessionStorage.userInfo)
+    let obj = JSON.parse(localStorage.userInfo)
     if(obj.userName == 'admin'){
       this.accessView = true
     }
