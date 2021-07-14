@@ -15,7 +15,7 @@
       </div>
     </div>
 
-      <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
+      <Modal :closable="false" :styles="{marginTop:'-60px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
              width="80%" :mask-closable="false">
 <!--        <div slot="header"><span>参数信息</span>-->
 <!--          <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
@@ -362,11 +362,9 @@ export default {
   },
   methods: {
     confirm() {
-      // if(this.dom){
-      //   this.dom.off('click')
-      // }
       this.$xy.vector.$emit("closeModal")
       this.paramModal = false
+      this.paramModalShow = false
     },
     initTime() {
       this.timer = setInterval(this.scrollAnimate, 100);

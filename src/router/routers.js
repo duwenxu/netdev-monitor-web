@@ -27,12 +27,12 @@ export default [
     },
     component: () => import('@/view/system/login/login.vue')
   },
-  {
-    //全局刷新
-    path: '/back',
-    name: 'back',
-    component: () => import('@/view/single-page/white.vue')
-  },
+  // {
+  //   //全局刷新
+  //   path: '/back',
+  //   name: 'back',
+  //   component: () => import('@/view/single-page/white.vue')
+  // },
   /*{
     name: '/index/large',
     path: '/ghome',
