@@ -13,7 +13,7 @@
             <td style="width: 15%" align="center">{{info.alertLevelName}}</td>
             <td style="width: 15%" align="center">{{info.alertNum}}</td>
             <td style="width: 20%" align="center">{{info.alertTime}}</td>
-            <td style="width: 50%" class="width_len"  align="center">{{info.alertDesc}}</td>
+            <td style="width: 50%" class="width_len"  align="center"><span :style="{color:info.alertDesc.indexOf('故障')>-1?'red':''}">{{info.alertDesc}}</span></td>
           </tr>
         </table>
       </div>
@@ -57,7 +57,7 @@ export default {
 }
 .bottom_wrapper table {
   border-collapse: collapse;
-  height: 400px;
+  height: 160px;
   width: 100%;
 }
 .mytable td {
@@ -71,7 +71,7 @@ export default {
 .table-head {
   padding-right: 4px;
   color: #000;
-  height: 5vh;
+  height: 4vh;
 }
 
 .table-body {

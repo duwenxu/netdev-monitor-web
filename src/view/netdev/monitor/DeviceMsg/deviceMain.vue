@@ -206,7 +206,7 @@ export default {
       if (value == 1) {
         this.showLog = false
         this.showAlert = !this.showAlert
-        this.$xy.vector.$emit('changesize', obj)
+        // this.$xy.vector.$emit('changesize', obj)
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
