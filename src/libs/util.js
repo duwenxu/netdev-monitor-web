@@ -20,6 +20,9 @@ export const getToken = () => {
     return false
   }
 }
+export const removeToken = () => {//token过期时间
+  Cookies.remove(TOKEN_KEY, {expires: cookieExpires || 10})//token过期时间1天
+}
 
 
 export const hasChild = (item) => {
