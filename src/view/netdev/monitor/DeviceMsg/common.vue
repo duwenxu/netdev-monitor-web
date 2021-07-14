@@ -146,7 +146,7 @@ export default {
     }
   },
   mounted() {
-    let obj = JSON.parse(sessionStorage.userInfo)
+    let obj = JSON.parse(localStorage.userInfo)
     if(obj.userName == 'admin'){
       this.accessView = true
     }
@@ -189,7 +189,6 @@ export default {
       if (info.paraVal !== null && info.paraVal !== '') {
         this.$set(info, 'selected', true)
         this.$set(info, 'inputVal', info.oldVal)
-        console.log(info)
       } else {
         this.$Message.error('无数据时无法更改，请稍后再试。')
       }
