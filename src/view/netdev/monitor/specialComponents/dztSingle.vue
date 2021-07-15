@@ -1,9 +1,16 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
   <Row>
-    <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
-      <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
-    </Col>
+    <template v-if="infos.length">
+      <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
+        <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+          <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
+        </template>
+      </Col>
+    </template>
+   <template v-else>
+     <span>暂无数据</span>
+   </template>
   </Row>
 </div>
 </template>
@@ -13,33 +20,41 @@ export default {
   name: "test",
   data(){
     return{
-      normalHeight:450,
+      devNo:'',
+      normalHeight:250,
       pageObj:{},
-      infos:[]
+      infos:[],
+      page_socket:null
     }
   },
   mounted() {
 
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('pageInfo', this.getInfo)
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.changeSize)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('pageInfo', this.getInfo)
+  },
+  beforeRouteLeave(to, from, next) {
+    this.page_socket.close()
+    this.page_socket = null
+    next()
   },
   methods:{
     sizeInfo(data){
       if(data.showAlert || data.showLog){
-        this.normalHeight = 450
+        this.normalHeight = 250
       }else{
-        this.normalHeight = 680
+        this.normalHeight = 400
       }
     },
     getInfo(data){
+      this.devNo = data.devNo
       data.forEach(item=>{
-        if(item.itfPagePath == 'test'){
+        if(item.itfPagePath == 'dztSingle'){
           this.pageObj = item
           this.getWs()
         }
@@ -54,7 +69,7 @@ export default {
       this.page_socket.onmessage = this.getPageData
     },
     pageSend() {
-      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo': this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
+      let obj = JSON.stringify({'interfaceMark': "DevPageInfos", 'devNo':this.devNo?this.devNo: this.$route.name,"cmdMark":this.pageObj.itfCmdMark})
       this.page_socket.send(obj)
     },
     getPageData(frame){
@@ -77,7 +92,7 @@ export default {
   border: 1px solid #009688;
   margin-bottom: 10px;
   overflow: auto;
-  height: 450px;
+  height: 250px;
   border-radius: 5px;
   padding: 10px
 }

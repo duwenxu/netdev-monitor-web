@@ -1,9 +1,13 @@
 <template>
     <div class="content-box">
         <Row>
-            <search :search-data='searchData'></search>
+            <Col :xs="24" :sm="24" :md="24" :lg="20">
+              <search :search-data='searchData'></search>
+            </Col>
             <!--<Button icon="ios-download-outline" style="float:right;margin-bottom: 10px;margin-left: 10px;border: 0px" type="success" @click="downFile">下载</Button>-->
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 490px" type="primary" @click="operate()">新增</Button>
+            <Col :xs="24" :sm="24" :md="24" :lg="4">
+              <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -14,7 +18,7 @@
             </div>
             </Col>
         </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+        <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
         </Modal>
     </div>
@@ -53,7 +57,8 @@
                             {
                                 title: '设备状态',
                                 key: 'devStatus_paraName',
-                                width: 100
+                                width: 100,
+                                sortType:'asc'
                             },
                             {
                               title: '设备使用状态',
@@ -86,6 +91,11 @@
                                 width: 100
                             },
                             {
+                              title: '是否连接远程服务',
+                              key: 'devIsLink_paraName',
+                              width: 100
+                            },
+                            {
                                 title: '上级设备编号',
                                 key: 'devParentNo',
                                 width: 120
@@ -107,32 +117,32 @@
                             },
                             {
                               title: '备注一描述',
-                              key: 'ndpaRemark1Desc',
+                              key: 'devRemark1Desc',
                               width: 120
                             },
                             {
                               title: '备注一数据',
-                              key: 'ndpaRemark1Data',
+                              key: 'devRemark1Data',
                               width: 120
                             },
                             {
                               title: '备注二描述',
-                              key: 'ndpaRemark2Desc',
+                              key: 'devRemark2Desc',
                               width: 120
                             },
                             {
                               title: '备注二数据',
-                              key: 'ndpaRemark2Data',
+                              key: 'devRemark2Data',
                               width: 120
                             },
                             {
                               title: '备注三描述',
-                              key: 'ndpaRemark3Desc',
+                              key: 'devRemark3Desc',
                               width: 120
                             },
                             {
                               title: '备注三数据',
-                              key: 'ndpaRemark3Data',
+                              key: 'devRemark3Data',
                               width: 120
                             },
                             {
@@ -221,15 +231,23 @@
                     name:'设备类型',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备类型'
+                    placeholder:'设备类型'
                   },
+                    {
+                        type:2,
+                        key:'devStatus',
+                        name:'设备状态',
+                        value:'',
+                        data:[],
+                        placeholder:'设备状态'
+                    },
                   {
                     type:1,
                     key:'devName',
                     name:'设备名称',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备名称'
+                    placeholder:'设备名称'
                   },
                   {
                     type:2,
@@ -237,7 +255,7 @@
                     name:'设备所属公司',
                     value:'',
                     data:[],
-                    placeholder:'请输入设备所属公司'
+                    placeholder:'设备所属公司'
                   },
                 ],
                 search: {
@@ -246,7 +264,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -364,7 +382,7 @@
                     }else{
                         notice.error({
                             title: '失败',
-                            desc: '下载设备模型定义文件发生异常！',
+                            desc: '参数类型配置异常，请检查！',
                             duration: 3
                         })
                     }
@@ -394,14 +412,18 @@
             }
           },
           initSelect() {
-            this.$xy.getParamGroup('0020').then(res => {
-              this.searchData[0].data = res
-              this.init()
-            })
-            this.$xy.getParamGroup('0010').then(res =>{
-              this.searchData[2].data = res
-              this.init()
-            })
+              this.$xy.getParamGroup('0020').then(res => {
+                  this.searchData[0].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0028').then(res => {
+                  this.searchData[1].data = res
+                  this.init()
+              })
+              this.$xy.getParamGroup('0010').then(res => {
+                  this.searchData[3].data = res
+                  this.init()
+              })
           },
         }
     }
@@ -413,6 +435,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

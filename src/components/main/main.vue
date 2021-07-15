@@ -8,14 +8,14 @@
           <template v-if="theme === 'light'">
             <div v-show="!collapsed" class="max-logo">
               <img src="@/assets/images/logo/39_light.png" key="max-logo"/>
-              <span>网络设备监控</span>
+              <span>卫通集中监控</span>
             </div>
             <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39_light.png" key="min-logo"/>
           </template>
           <template v-else-if="theme === 'dark'">
             <div v-show="!collapsed" class="max-logo">
               <img src="@/assets/images/logo/39.png" key="max-logo"/>
-              <span>网络设备监控</span>
+              <span>卫通集中监控</span>
             </div>
             <img v-show="collapsed" class="min-logo" src="@/assets/images/logo/39.png" key="min-logo"/>
           </template>
@@ -48,14 +48,18 @@
           </div>
           <Content class="main-view-wrapper ">
             <div class="dark-page-border" :class="{'content': !noShowBgRouteList.includes($route.name)}">
-              <template v-if="$route.meta.noalive">
+
+<!--              <keep-alive :include="cacheList">-->
                 <router-view :key="key"/>
-              </template>
-              <template v-else>
-                <keep-alive :include="cacheList">
-                  <router-view/>
-                </keep-alive>
-              </template>
+<!--              </keep-alive>-->
+<!--              <template v-if="$route.meta.noalive">-->
+<!--                <router-view :key="key"/>-->
+<!--              </template>-->
+<!--              <template v-else>-->
+<!--                <keep-alive :include="cacheList">-->
+<!--                  <router-view/>-->
+<!--                </keep-alive>-->
+<!--              </template>-->
             </div>
             <ABackTop :height="100" :bottom="80" :right="50" container=".main-view-wrapper"></ABackTop>
           </Content>
@@ -95,7 +99,7 @@
     data() {
       return {
         noShowBgRouteList: [
-          // 'home'
+          'home'
         ],
         menuWidth: 260,
         themesStatus: '',
@@ -174,13 +178,12 @@
         return this.$store.state.app.hasReadErrorPage
       }
     },
-
     methods: {
       ...mapMutations([
         'setBreadCrumb',
         'setTagNavList',
         'addTag',
-        'setLocal',
+        // 'setLocal',
         'saveSpace',
         'setHomeRoute',
         'setTheme',
@@ -212,14 +215,16 @@
         this.$router.push({
           name,
           params,
-          query
+            query:{
+             t:Date.now(),
+         },
         })
         this.tagNavList.forEach(v => {
           if (route == v.name) {
             tag = true
           }
         })
-        if (this.tagNavList.length >= 14) {
+        if (this.tagNavList.length >= 8) {
           if (!tag) {
             this.tagNavList.splice(1, 1)
           }
@@ -255,7 +260,7 @@
         const that = this
         that.screenWidth = document.body.clientWidth
         if (that.screenWidth <= 991 || that.screenWidth <= 1199 ) {
-          that.menuWidth = 214
+          that.menuWidth = 180
           that.setMediaWidthType(0)
         } else if (that.screenWidth <= 1919 || that.screenWidth >= 1920) {
           that.menuWidth = 260
@@ -304,7 +309,7 @@
       })
       this.setBreadCrumb(this.$route)
       // 设置初始语言
-      this.setLocal(this.$i18n.locale)
+      // this.setLocal(this.$i18n.locale)
       // 如果当前打开页面不在标签栏中，跳到homeName页
       if (!this.tagNavList.find(item => item.name === this.$route.name)) {
         this.$router.push({

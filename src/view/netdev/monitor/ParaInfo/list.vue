@@ -1,8 +1,12 @@
 <template>
     <div class="content-box">
         <Row>
-            <search :search-data='searchData'></search>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            <Col :xs="24" :sm="24" :md="24" :lg="20">
+              <search :search-data='searchData'></search>
+            </Col>
+            <Col :xs="24" :sm="24" :md="24" :lg="4">
+              <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+            </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24">
             <Table  :columns="columns1" :data="infos"></Table>
             <div class="text-right page">
@@ -13,7 +17,7 @@
             </div>
             </Col>
         </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+        <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
         </Modal>
     </div>
@@ -92,13 +96,23 @@
                                 width: 100
                             },
                             {
-                                title: '最大值',
-                                key: 'ndpaValMax',
+                                title: '最大值1',
+                                key: 'ndpaValMax1',
                                 width: 100
                             },
                             {
-                                title: '最小值',
-                                key: 'ndpaValMin',
+                                title: '最小值1',
+                                key: 'ndpaValMin1',
+                                width: 100
+                            },
+                            {
+                                title: '最大值2',
+                                key: 'ndpaValMax2',
+                                width: 100
+                            },
+                            {
+                                title: '最小值2',
+                                key: 'ndpaValMin2',
                                 width: 100
                             },
                             {
@@ -126,6 +140,11 @@
                                 title: '供54所访问',
                                 key: 'ndpaOutterStatus_paraName',
                                 width: 150
+                            },
+                            {
+                              title: '上报OID',
+                              key: 'ndpaRptOid',
+                              width: 100
                             },
                             // {
                             //     title: '数据映射规则',
@@ -158,6 +177,14 @@
                               title: '复杂级别',
                               key: 'ndpaCmplexLevel_paraName',
                               width: 100
+                            },
+                            {
+                              title: '是否在拓扑图显示',
+                              key: 'ndpaIsTopology',
+                              width: 150,
+                              render:(h,params) =>{
+                                 return h('span',params.row.ndpaIsTopology == true ? '是':'否');
+                              }
                             },
                             {
                               title: '缺省值',
@@ -290,7 +317,7 @@
                 current: 1,
                 page: {
                     current: 1,
-                    size: 10
+                    size: 8
                 },
                 otherPage: {
                     total: 0,
@@ -337,6 +364,10 @@
               let {result, success, message} = await queryParaInfoPageList(searchAll)
               if (success) {
                 this.infos = result.records
+                //将是否展示在拓扑图数据值转换   否则不好处理
+                this.infos.forEach(value => {
+                    value.ndpaIsTopology = value.ndpaIsTopology == true ? '1' : '0';
+                })
                 this.current = result.current ? result.current : result.current + 1
                 this.otherPage.total = result.total
               }else {
@@ -404,6 +435,7 @@
                   path: '/monitor/subParaInfo',
                   query: {
                     ndpaNo: obj.ndpaNo,
+                    devType: obj.devType
                   }
                 }
               )
@@ -418,6 +450,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

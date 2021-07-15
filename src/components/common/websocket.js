@@ -2,7 +2,7 @@ let mixin = {
   data () {
     return {
       reconnect: {
-        timer: '',
+        timer: null,
         currentCount: 0,
         allCount: 50,
         step: 3000,
@@ -33,9 +33,9 @@ let mixin = {
       }
     },
     connectWs () {
-      let socket_url =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // this.ws = new WebSocket(`ws://${this.$xy.SOCKET_URL}/ws`)
-      this.ws = new WebSocket(socket_url)
+      // let socket_url =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
+      // this.ws = new WebSocket(socket_url)
+      this.ws = new WebSocket(`ws://${this.$xy.SOCKET_URL}/ws`)
       this.ws.onopen = (evt) => {
         this.connectTag = true;
         this.clearWsStatus()

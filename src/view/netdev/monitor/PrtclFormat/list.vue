@@ -1,19 +1,25 @@
 <template>
     <div class="content-box">
-        <Row>
-            <search :search-data='searchData'></search>
-            <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 800px" type="primary" @click="operate()">新增</Button>
-            <Col :xs="24" :sm="24" :md="24" :lg="24">
-            <Table  :columns="columns1" :data="infos"></Table>
-            <div class="text-right page">
-                <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
-                      :page-size-opts='otherPage.pageSize'
-                      show-elevator @on-change='changePage'
-                      @on-page-size-change='skipPage'></Page>
-            </div>
-            </Col>
-        </Row>
-        <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+      <Row>
+        <Col :xs="24" :sm="24" :md="24" :lg="20">
+          <search :search-data='searchData'></search>
+        </Col>
+        <Col :xs="24" :sm="24" :md="24" :lg="4">
+          <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 800px" type="primary"
+                  @click="operate()">新增
+          </Button>
+        </Col>
+        <Col :xs="24" :sm="24" :md="24" :lg="24">
+          <Table :columns="columns1" :data="infos"></Table>
+          <div class="text-right page">
+            <Page :current.sync="page.current" :total="otherPage.total" :page-size='page.size'
+                  :page-size-opts='otherPage.pageSize'
+                  show-elevator @on-change='changePage'
+                  @on-page-size-change='skipPage'></Page>
+          </div>
+        </Col>
+      </Row>
+        <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
             <operate-row></operate-row>
         </Modal>
     </div>
@@ -42,7 +48,7 @@
             {
               title: '协议名称',
               key: 'fmtName',
-              width: 220
+              width: 200
             },
             {
               title: '设备类型',
@@ -52,22 +58,22 @@
             {
               title: '查询关键字',
               key: 'fmtSkey',
-              width: 110
+              width: 120
             },
             {
               title: '控制关键字',
               key: 'fmtCkey',
-              width: 110
+              width: 120
             },
             {
               title: '控制响应关键字',
               key: 'fmtCckey',
-              width: 135
+              width: 140
             },
             {
               title: '查询响应关键字',
               key: 'fmtSckey',
-              width: 135
+              width: 140
             },
             {
               title: '查询响应条数',
@@ -146,7 +152,7 @@
               name: '协议名称',
               value: '',
               data: [],
-              placeholder: '请输入协议名称'
+              placeholder: '协议名称'
             },
             {
               type: 2,
@@ -154,14 +160,14 @@
               name: '设备类型',
               value: '',
               data: [],
-              placeholder: '请输入设备类型'
+              placeholder: '设备类型'
             }
           ],
           search: {},
           current: 1,
           page: {
             current: 1,
-            size: 10
+            size: 8
           },
           otherPage: {
             total: 0,
@@ -281,6 +287,6 @@
     }
 
     .page {
-        margin-top: 20px;
+      margin-top: 5px;
     }
 </style>

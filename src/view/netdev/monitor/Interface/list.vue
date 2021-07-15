@@ -19,11 +19,11 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="90%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
 
-    <Modal v-model="transModal" width="800" title="绑定参数" footer-hide :mask-closable="false">
+    <Modal v-model="transModal" width="90%"  footer-hide :mask-closable="false">
       <trans left-name="未绑定参数" right-name="绑定参数"></trans>
     </Modal>
   </div>
@@ -133,6 +133,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: rows.row.itfType == "0027004" || rows.row.itfType == '0027005' ? 'none':'inline-block'
                   },
                   on: {
                     click: () => {
@@ -192,7 +193,7 @@
         },
         page: {
           current: 1,
-          size: 10
+          size: 8
         },
         otherPage: {
           total: 0,
@@ -395,7 +396,7 @@
         if (code == 200) {
           notice.success({
             title: '成功',
-            desc: '删除成功！',
+            desc: '刷新成功！',
             duration: 3
           })
           this.doQuery();
@@ -429,6 +430,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>

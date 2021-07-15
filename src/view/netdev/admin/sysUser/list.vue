@@ -1,10 +1,12 @@
 <template>
   <div style="height:100%;padding: 10px 10px">
     <Row>
-      <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">
-        新增
-      </Button>
-      <search :search-data='searchData'></search>
+      <Col :xs="24" :sm="24" :md="24" :lg="20">
+        <search :search-data='searchData'></search>
+      </Col>
+      <Col :xs="24" :sm="24" :md="24" :lg="4">
+        <Button v-if='defultPage' icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate()">新增</Button>
+      </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
         <Table  :columns="columns1" :data="infos"></Table>
         <div class="text-right page">
@@ -15,10 +17,10 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
-    <Modal v-model="detailModal" width="1200" :title="detailName" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="detailModal" width="80%" :title="detailName" footer-hide :mask-closable="false" :closable="false">
       <detail-row></detail-row>
     </Modal>
   </div>
@@ -52,11 +54,6 @@
           {
             title: '用户姓名',
             key: 'userChname',
-            minWidth: 100
-          },
-          {
-            title: '用户类型',
-            key: 'userType_paraName',
             minWidth: 100
           },
           {
@@ -161,7 +158,7 @@
         current: 1,
         page: {
           current: 1,
-          size: 10
+          size: 8
         },
         otherPage: {
           total: 0,
@@ -175,7 +172,7 @@
       this.$xy.vector.$on('sendReq', this.sendReq)
     },
     beforeDestroy: function () {
-      this.$xy.vector.$on('closeDetail', this.closeDetail)
+      this.$xy.vector.$off('closeDetail', this.closeDetail)
       this.$xy.vector.$off('closeModal', this.closeModal)
       this.$xy.vector.$off('sendReq', this.sendReq)
     },
@@ -286,6 +283,6 @@
   }
 
   .page {
-    margin-top: 20px;
+    margin-top: 5px;
   }
 </style>

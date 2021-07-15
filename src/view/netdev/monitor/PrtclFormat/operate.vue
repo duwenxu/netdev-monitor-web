@@ -57,7 +57,7 @@
 <!--                        </Col>-->
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="控制响应类型" prop="fmtCcType">
-                            <Select clearable placeholder="请输入控制响应类型" v-model="PrtclFormat.fmtCcType">
+                            <Select clearable placeholder="请选择控制响应类型" v-model="PrtclFormat.fmtCcType">
                               <Option :key="choose.id" :value='choose.value' v-for='choose in fmtCcTypeList'>{{choose.name}}
                               </Option>
                             </Select>
@@ -183,3 +183,9 @@
         }
     }
 </script>
+<style scoped>
+.content-box{
+  height: 400px;
+  overflow-y:auto ;
+}
+</style>
