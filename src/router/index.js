@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '@/store'
-import {setToken, getToken, canTurnTo,removeToken} from '@/libs/util'
+import {setToken, getToken, canTurnTo, removeToken} from '@/libs/util'
 import config from '@/config'
 
 const {homeName} = config
@@ -14,7 +14,7 @@ const createRouter = () => new Router({
 })
 const router = createRouter()
 const LOGIN_PAGE_NAME = 'login'
-const LARGE_HOME='/index/large'
+const LARGE_HOME = '/index/large'
 
 const turnTo = (to, access, next) => {
   if (canTurnTo(to.name, access, store.state.app.routers.concat(routes))) next()
@@ -22,9 +22,9 @@ const turnTo = (to, access, next) => {
 }
 
 router.beforeEach((to, from, next) => {
- // next()
+  // next()
   const token = getToken()
-  if (!token && to.name !== LOGIN_PAGE_NAME && to.name!== LARGE_HOME) {
+  if (!token && to.name !== LOGIN_PAGE_NAME && to.name !== LARGE_HOME) {
     // console.log('login--------------------')
     // 未登录且要跳转的页面不是登录页与大屏展示页
     next({
@@ -34,6 +34,12 @@ router.beforeEach((to, from, next) => {
     // console.log('未登陆且要跳转的页面是登录页--------------------')
     // 未登陆且要跳转的页面是登录页
     next()// 跳转
+  } else if (token && !('userInfo' in localStorage)) {
+    // console.log('+++++++++++++++++++')
+    removeToken()
+    next({
+      name: LOGIN_PAGE_NAME //跳转到登录页
+    })
   } else if (token && to.name === LOGIN_PAGE_NAME) {
     // console.log('已登录且要跳转的页面是登录页--------------------')
     // 已登录且要跳转的页面是登录页
