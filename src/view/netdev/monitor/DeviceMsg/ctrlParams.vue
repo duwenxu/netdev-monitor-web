@@ -1,12 +1,12 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
       <Col :xs="24" :md="24" v-for="(item,index) in infos"  :key="index" >
-        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
+        <div v-if="item.ndpaIsImportant" style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
         <div v-for="temp in item.subInterList">
-          <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
+          <div v-if="temp.ndpaIsImportant" style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
           <div v-if="temp.subParaList.length" class="box">
-            <div v-for="(info,index) in temp.subParaList" class="node">
-<!--              <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.ndpaIsTopology)">-->
+            <div v-for="(info,index) in temp.subParaList" class="node" v-if="info.ndpaIsImportant">
+<!--              <template  v-if="($route.name == 'home' && info.ndpaIsImportant) || ($route.name != 'home' && info.ndpaIsImportant)">-->
                 <template v-if="info.parahowMode == '0024001'">
                   <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                     <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
@@ -105,7 +105,7 @@
             </div>
           </div>
            <div v-else style="margin-left: 40px"> 暂无数据</div>
-            <Button v-if="temp.subParaList.length && accessView" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
+            <Button v-if="temp.subParaList.length && accessView && temp.ndpaIsImportant" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
             <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
         </div>
       </Col>

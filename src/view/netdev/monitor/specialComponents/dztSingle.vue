@@ -3,7 +3,7 @@
   <Row>
     <template v-if="infos.length">
       <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
-        <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+        <template v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'">
           <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
         </template>
       </Col>
