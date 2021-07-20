@@ -9,7 +9,7 @@
                         </Col>
                         <Col :xs="20" :sm="16" :md="16" :lg="8">
                         <FormItem label="设备类型" prop="devType">
-                          <Select clearable placeholder="请选择设备类型" @on-change="refreshDevSubTypeList" v-model="BaseInfo.devType">
+                          <Select clearable placeholder="请选择设备类型"  v-model="BaseInfo.devType">
                             <Option :key="choose.id" :value='choose.value' v-for='choose in devTypeList'>{{choose.name}}
                             </Option>
                           </Select>
@@ -244,6 +244,7 @@
           this.getDevDeployTypeList();
           this.getDevUseStatusList();
           this.initDevIsLinkList();
+          this.initDevSubTypeList();
         },
         methods: {
             operateRow (obj) {
@@ -323,17 +324,22 @@
               this.devIsLinkList = res
             })
           },
+          async initDevSubTypeList () {
+              this.$xy.getParamGroup('0201').then(res => {
+                  this.devSubTypeList = res
+              })
+          },
           async refreshDevSubTypeList (devType){
             this.devSubTypeList = []
             let result = await queryParam(devType)
             if (result.success && result.code===200){
               let res = result.result;
-              if (res.remark3!=null && res.remark3.length>=4){
-                let subTypeCode = res.remark3.substring(0,4);
-                this.$xy.getParamGroup(subTypeCode).then(res => {
-                  this.devSubTypeList = res
-                })
-              }
+              // if (res.remark3!=null && res.remark3.length>=4){
+              //   let subTypeCode = res.remark3.substring(0,4);
+              //   this.$xy.getParamGroup(subTypeCode).then(res => {
+              //     this.devSubTypeList = res
+              //   })
+              // }
             }
           }
         }
