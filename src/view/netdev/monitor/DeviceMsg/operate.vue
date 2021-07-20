@@ -15,14 +15,38 @@
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
-      <div v-for="info in combineList">
-        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+    <!--    基本参数-->
+    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
+      <common :infos="closeInfos"></common>
+      <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
+        <Divider dashed class="cloud-divider">
+          <span @click="openParam = !openParam" style="cursor: pointer">
+             <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openParam ? "收起" :"查看参数"}}
+          </span>
+        </Divider>
+      </div>
+      <common v-if="openParam" :infos="openInfos"></common>
+    </div>
+
+    <!--    父框子-->
+    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
+      <div v-for="info in closeCombineList">
+        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
-    </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
-      <common :infos="infos"></common>
+      <Divider v-if="openCombineList.length" dashed class="cloud-divider">
+          <span @click="openSub = !openSub" style="cursor: pointer">
+             <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openSub ? "收起" :"查看参数"}}
+          </span>
+      </Divider>
+      <div v-if="openSub" v-for="info in openCombineList">
+        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <common :infos="info.subParaList"></common>
+      </div>
+
+
     </div>
   </div>
 </template>
@@ -44,14 +68,18 @@ export default {
 
   data() {
     return {
+      openSub:false,
+      openParam:false,
       orderSwitch:true,
       comHeight: 450,
       normalHeight: 450,
       devNo: null,
       paramSocket: null,
-      infos: [],
+      openInfos: [],//展开
+      closeInfos:[],//未展开
       orderDatas: [],
-      combineList: [],
+      openCombineList: [],//展开
+      closeCombineList: [],//未展开
       paramType: ['0019002'],
       timer: null,
       saveVal: false,
@@ -118,7 +146,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsb",
@@ -148,7 +176,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -178,7 +206,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -208,7 +236,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -238,7 +266,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -268,7 +296,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -298,7 +326,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -328,7 +356,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -358,7 +386,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -388,7 +416,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -418,7 +446,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -448,7 +476,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdst",
@@ -478,7 +506,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -508,7 +536,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdse",
@@ -538,7 +566,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdso",
@@ -568,7 +596,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsgz",
@@ -598,7 +626,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsj",
@@ -627,7 +655,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -660,7 +688,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -690,7 +718,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -720,7 +748,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -750,7 +778,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -781,7 +809,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -814,7 +842,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -844,7 +872,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -921,14 +949,14 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
-      if(this.combineList.length && !this.infos.length){
-        this.comHeight = 450
-      }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 450
-      }else{
-        this.comHeight = 240
-        this.normalHeight = 240
-      }
+      // if(this.combineList.length && !this.infos.length){
+      //   this.comHeight = 450
+      // }else if(!this.combineList.length && this.infos.length){
+      //   this.normalHeight = 450
+      // }else{
+      //   this.comHeight = 240
+      //   this.normalHeight = 240
+      // }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
@@ -980,8 +1008,10 @@ export default {
         }
       })
       this.orderDatas = oderArr || []
-      this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
+      this.openCombineList = parentArr.filter(value=>!value.ndpaIsImportant)
+      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant)
+      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && !value.ndpaIsImportant)
+      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant)
          },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
