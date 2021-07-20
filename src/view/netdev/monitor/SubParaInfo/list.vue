@@ -209,11 +209,11 @@
                         width: 100
                     },
                     {
-                        title: '是否在拓扑图显示',
-                        key: 'ndpaIsTopology',
+                        title: '是否重要',
+                        key: 'ndpaIsImportant',
                         width: 150,
                         render: (h, params) => {
-                            return h('span', params.row.ndpaIsTopology == true ? '是' : '否');
+                            return h('span', params.row.ndpaIsImportant == true ? '是' : '否');
                         }
                     },
                     {
@@ -359,7 +359,7 @@
                     this.infos = result.records
                     //将是否展示在拓扑图数据值转换   否则不好处理
                     this.infos.forEach(value => {
-                        value.ndpaIsTopology = value.ndpaIsTopology == true ? '1' : '0';
+                        value.ndpaIsImportant = value.ndpaIsImportant == true ? '1' : '0';
                     })
                     this.current = result.current ? result.current : result.current + 1
                     this.otherPage.total = result.total

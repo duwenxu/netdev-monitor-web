@@ -166,8 +166,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="是否在拓扑图显示" prop="ndpaIsTopology" >
-            <Select v-model="ParaInfo.ndpaIsTopology" clearable   placeholder="请选择是否在拓扑图显示">
+          <FormItem label="是否重要" prop="ndpaIsImportant" >
+            <Select v-model="ParaInfo.ndpaIsImportant" clearable   placeholder="请选择是否重要">
               <Option  v-for='choose in isTopoList' :value='choose.id' :key="choose.id">{{choose.code}}</Option>
             </Select>
           </FormItem>
