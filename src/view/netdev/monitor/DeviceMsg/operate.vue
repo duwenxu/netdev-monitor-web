@@ -18,15 +18,41 @@
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
-      <div v-for="info in combineList">
-        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+
+<!--    基本参数-->
+    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
+      <common :infos="closeInfos"></common>
+      <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
+        <Divider dashed class="cloud-divider">
+          <span @click="openParam = !openParam" style="cursor: pointer">
+             <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openParam ? "收起" :"查看参数"}}
+          </span>
+        </Divider>
+      </div>
+      <common v-if="openParam" :infos="openInfos"></common>
+    </div>
+
+<!--    父框子-->
+    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
+      <div v-for="info in closeCombineList">
+        <div v-if="info.ndpaIsImportant == 2" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
+      <Divider v-if="openCombineList.length" dashed class="cloud-divider">
+          <span @click="openSub = !openSub" style="cursor: pointer">
+             <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openSub ? "收起" :"查看参数"}}
+          </span>
+      </Divider>
+      <div v-if="openSub" v-for="info in openCombineList">
+        <div v-if="info.ndpaIsImportant==1" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <common :infos="info.subParaList"></common>
+      </div>
+
+
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
-      <common :infos="infos"></common>
-    </div>
+
   </div>
 </template>
 <script>
@@ -44,14 +70,18 @@ export default {
 
   data() {
     return {
+      openSub:false,
+      openParam:false,
       orderSwitch:true,
-      comHeight: 160,
-      normalHeight: 350,
+      comHeight: 120,
+      normalHeight: 320,
       devNo: null,
       paramSocket: null,
-      infos: [],
+      openInfos: [],//展开
+      closeInfos:[],//未展开
       orderDatas: [],
-      combineList: [],
+      openCombineList: [],//展开
+      closeCombineList: [],//未展开
       paramType: ['0019002'],
       timer: null,
       saveVal: false,
@@ -82,9 +112,11 @@ export default {
     next()
   },
   destroyed() {
-      this.infos = []
+      this.openInfos = []
+      this.closeInfos = []
       this.orderDatas = []
-      this.combineList =[]
+      this.openCombineList =[]
+      this.closeCombineList =[]
       this.selectObj = {}
   },
   methods: {
@@ -116,7 +148,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsb",
@@ -146,7 +178,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -176,7 +208,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -206,7 +238,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -236,7 +268,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -266,7 +298,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -296,7 +328,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -326,7 +358,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -356,7 +388,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -386,7 +418,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -416,7 +448,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -446,7 +478,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdst",
@@ -476,7 +508,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -506,7 +538,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdse",
@@ -536,7 +568,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdso",
@@ -566,7 +598,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsgz",
@@ -596,7 +628,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsj",
@@ -625,7 +657,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -658,7 +690,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -688,7 +720,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -718,7 +750,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -748,7 +780,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -779,7 +811,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -812,7 +844,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -842,7 +874,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -881,29 +913,31 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 250
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 250
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 320
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 320
         }else{
-          this.comHeight = 160
-          this.normalHeight = 160
+          this.comHeight = 120
+          this.normalHeight = 120
         }
       } else {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 430
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 430
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 460
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 460
         }else{
-          this.comHeight = 210
-          this.normalHeight = 210
+          this.comHeight = 230
+          this.normalHeight = 230
         }
       }
     },
     initWebSocket() { //初始化weosocket
-      this.infos = []
+      this.closeInfos = []
+      this.openInfos = []
       this.orderDatas =  []
-      this.combineList =  []
+      this.closeCombineList =  []
+      this.openCombineList =  []
       // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
@@ -919,14 +953,6 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
-      if(this.combineList.length && !this.infos.length){
-        this.comHeight = 250
-      }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 250
-      }else{
-        this.comHeight = 160
-        this.normalHeight = 160
-      }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
@@ -978,9 +1004,11 @@ export default {
         }
       })
       this.orderDatas = oderArr || []
-      this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
-         },
+      this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
+      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 2)
+      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 2)
+    },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)

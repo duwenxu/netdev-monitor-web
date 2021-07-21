@@ -66,7 +66,7 @@ export default {
   text-overflow: ellipsis;
 }
 .bottom_wrapper {
-  height: 160px;
+  height: 120px;
   width: 100%;
 }
 
@@ -79,7 +79,7 @@ export default {
 
 .bottom_wrapper table {
   border-collapse: collapse;
-  height: 400px;
+  height: 120px;
   width: 100%;
 }
 
@@ -99,7 +99,7 @@ export default {
 
 .table-body {
   width: 100%;
-  height: 240px;
+  height: 200px;
   overflow-y: scroll;
 }
 
