@@ -14,11 +14,11 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
 
-    <Modal v-model="transModal" width="800" title="绑定参数" footer-hide :mask-closable="false">
+    <Modal v-model="transModal" width="80%"  footer-hide :mask-closable="false">
       <trans left-name="未绑定参数" right-name="绑定参数"></trans>
     </Modal>
   </div>
@@ -43,18 +43,19 @@
                             {
                                 title: '设备类型',
                                 key: 'devType_paraName',
-                                width: 180
+                                width: 130
                             },
                             {
                                 title: '解析协议',
                                 key: 'fmtId',
-                                width: 220,
+                                width: 210,
                                 render:(h,params) =>{
                                     return h('span',this.handlerPrtFomat(params.row.fmtId));
                                 },
                             },
                             {
                                 title: '接口编码',
+                              width: 100,
                                 key: 'itfCode',
                             },
                             {
@@ -65,24 +66,29 @@
                             {
                                 title: '接口类型',
                                 key: 'itfType_paraName',
+                              width: 100
                             },
                             {
                                 title: '接口命令标识',
                                 key: 'itfCmdMark',
+                              width: 160
                             },
                             {
                                 title: '接口状态',
                                 key: 'itfStatus_paraName',
+                              width: 100
                             },
                             {
                                 title: '页面路径',
                                 key: 'itfPagePath',
+                              width: 150
                             },
                             {
                                 title: '操作',
                                 key: 'action',
-                                width: 200,
-                                align: 'center',
+                              width:160,
+                              fixed: 'right',
+                              align: 'center',
                                 render: (h, rows) => {
                                     return h('div', [
                                         h('Button', {

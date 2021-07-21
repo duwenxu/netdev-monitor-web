@@ -1,173 +1,114 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
-
-      <Col :xs="24" :md="24" v-for="item in infos">
-        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
+      <Col :xs="24" :md="24" v-for="(item,index) in infos"  :key="index" >
+        <div v-if="item.ndpaIsImportant" style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
         <div v-for="temp in item.subInterList">
-          <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
-
-
-              <Row v-if="temp.subParaList.length">
-                <template v-for="(info,index) in temp.subParaList">
-                  <Col :xs="24" :lg="8">
-                    <Row>
-                      <Col :xs="24" :lg="24">
-                      <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
-                      <template v-if="info.parahowMode == '0024001'">
-                        <template v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
-                          <Row>
-                            <Col :xs="12" :lg="info.paraName.length<=10?11:12">
-                              <div style="text-align: right">
-                                <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
-                              </div>
-                            </Col>
-                            <Col :xs="12" :lg="info.paraName.length<=10?13:12">
-<!--                                  <span>{{(info.transViewFmt !== null) ? info.transViewFmt : '暂无数据'}}&nbsp;&nbsp;</span>-->
-                              <template v-if="info.splitArr.length">
-                                <template v-for="item in info.splitArr">
-                                 <span>{{item.param}}
-                                    <template v-if="item.subList.length">
-                                      <template v-for="cell in item.subList">
-                                     <span v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}}</span>
-                                   </template>
-                                   </template>
-                                     <template v-else>
-                                       <span   style="color: #009688">{{item.paraVal}}</span>
-                                     </template>
-                                 </span>
-                                </template>
-                              </template>
-                             <template v-else>
-                               <span style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+          <div v-if="temp.ndpaIsImportant" style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
+          <div v-if="temp.subParaList.length" class="box">
+            <div v-for="(info,index) in temp.subParaList" class="node" v-if="info.ndpaIsImportant">
+<!--              <template  v-if="($route.name == 'home' && info.ndpaIsImportant) || ($route.name != 'home' && info.ndpaIsImportant)">-->
+                <template v-if="info.parahowMode == '0024001'">
+                  <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
+                    <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                    <template v-if="info.splitArr.length">
+                      <!--                   显示组合参数值为绿色-->
+                      <template v-for="item in info.splitArr">
+                       <span style="cursor: pointer;" >{{item.param}}
+                         <template v-if="item.subList.length">
+                            <template v-for="cell in item.subList">
+                                     <span  v-if="cell.code == item.oldVal" style="color: #009688">{{cell.name}} </span>
                              </template>
-                            </Col>
-                              <Col :xs="24" :lg="24" v-if="info.selected">
-                                <Row>
-                                  <template v-for="temp in info.splitArr">
-                                    <Col :xs="info.splitArr.length<=2?12:6" :lg="info.splitArr.length<=2?12:6">
-                                      <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
-                                        <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
-                                        </Option>
-                                        <span slot="prefix">{{ temp.param }}</span>
-                                      </Select>
-                                      <template v-else>
-                                        <Poptip v-if="temp.paraValMin1 || temp.paraValMax1" trigger="focus" transfer>
-                                          <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
-                                            <span slot="prefix">{{ temp.param }}</span>
-                                          </Input>
-                                          <div slot="content">
-                                            <span v-if="temp.paraValMin1 || temp.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ temp.paraValMin1 }}~上限:{{ temp.paraValMax1 }}</span><Br/>
-                                            <span v-if="temp.paraValMin2 || temp.paraValMax2">或下限:{{ temp.paraValMin2 }}~上限:{{ temp.paraValMax2 }}</span>
-<!--                                            下限:{{ temp.paraValMin }}~上限:{{ temp.paraValMax }}-->
-                                          </div>
-                                        </Poptip>
-                                        <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)">
-                                          <span slot="prefix">{{ temp.param }}</span>
-                                        </Input>
-                                        <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
-                                      </template>
-                                    </Col>
-                                  </template>
-                                </Row>
-                              </Col>
-                            <Col :xs="24" :lg="24">&nbsp;</Col>
-                          </Row>
-                        </template>
+                         </template>
+                           <span v-else  style="color: #009688">{{item.paraVal}}</span>
+                       </span>
+                      </template>
+                    </template>
+                    <span  v-else style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
+                    <!--             组合参数分割-->
+                    <div class="combine-class"  v-if="info.selected">
+                      <template v-for="temp in info.splitArr">
+                        <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validCombine(info,$event,temp)">
+                          <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
+                          </Option>
+                          <span slot="prefix">{{ temp.param }}</span>
+                        </Select>
                         <template v-else>
-                          <Row>
-                            <Col :xs="11" :lg="11">
-                              <div style="text-align: right">
-                                <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
-                              </div>
-                            </Col>
-                            <Col :xs="13" :lg="13">
-                                      <span style="color:#009688;">{{(info.oldVal != null && info.oldVal) ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
-                                        <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
-                            </Col>
-                            <template v-if="info.selected">
-                              <Row>
-                              <Col :xs="16" :lg="16" push="8" style="display: flex">
-                                <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
-                                  <template v-if="info.paraValMin1 || info.paraValMax1">
-                                    <Poptip trigger="focus" transfer>
-                                      <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                                   :step='info.paraValStep' @on-blur="textValid(info)" style="width: 200px"></InputNumber>
-                                      <Input v-if="!info.paraValStep" v-model.trim="info.paraVal" style="width: 200px"
-                                             :placeholder="info.paraName" @on-blur="textValid(info)" number>
-                                        <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
-                                      </Input>
-                                      <div slot="content">
-                                        <span v-if="info.paraValMin1 || info.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ info.paraValMin1 }}~上限:{{ info.paraValMax1 }}</span><Br/>
-                                        <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{ info.paraValMin2 }}~上限:{{ info.paraValMax2 }}</span>
-<!--                                        下限:{{ info.paraValMin }}~上限:{{ info.paraValMax }}-->
-                                      </div>
-                                    </Poptip>
-                                  </template>
-                                  <template v-else>
-                                    <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number> <span
-                                      v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
-                                  </template>
-                                </template>
-                                <template v-else>
-                                  <Input v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)">
-                                    <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
-                                  </Input>
-                                </template>
-                              </Col>
-                              <Col :xs="16" :lg="16" push="4">
-                                <span v-if="info.errorMsg" style="color: red;font-size: 12px">{{ info.errorMsg }}</span>
-                              </Col>
-                              </Row>
-                            </template>
-                            <Col :xs="24" :lg="24">&nbsp;</Col>
-                          </Row>
+                          <Poptip v-if="temp.paraValMin1 || temp.paraValMax1" trigger="focus" transfer>
+                            <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number  @on-change="splitValue(info,temp)">
+                              <span slot="prefix">{{ temp.param }}</span>
+                            </Input>
+                            <div slot="content">
+                              <span v-if="temp.paraValMin1 || temp.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ temp.paraValMin1 }}~上限:{{ temp.paraValMax1 }}</span><Br/>
+                              <span v-if="temp.paraValMin2 || temp.paraValMax2">或下限:{{ temp.paraValMin2 }}~上限:{{ temp.paraValMax2 }}</span>
+                            </div>
+                          </Poptip>
+                          <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)"  @on-change="splitValue(info,temp)">
+                            <span slot="prefix">{{ temp.param }}</span>
+                          </Input>
+                          <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
                         </template>
                       </template>
-                      <template v-else>
-                        <Row>
-                          <Col :xs="11" :lg="11">
-                            <div style="text-align: right">
-                              <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
-                            </div>
-                          </Col>
-                          <Col :xs="13" :lg="13">
-                            <template v-if="info.oldVal">
-                              <div v-for="(item,i) in info.spinnerInfoList">
-                                <span style="cursor: pointer;color:#009688;" v-if="info.oldVal == item.code">{{ item.name }}</span>
-                              </div>
-                            </template>
-                            <template v-else>
-                              <span style="color: #009688">暂无数据</span>
-                            </template>
-                          </Col>
-                          <Col :xs="16" :lg="16" push="4" v-if="info.selected"  style="display: flex;">
-                            <Select v-if="info.selected" v-model="info.paraVal" :placeholder="info.paraName">
-                              <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
-                              </Option>
-                            </Select>
-                          </Col>
-                          <Col :xs="24" :lg="24">&nbsp;</Col>
-                        </Row>
-                      </template>
-                      </template>
-                      </Col>
-                    </Row>
-                  </Col>
-                </template>
-              </Row>
-              <template v-else>
-                <Col :xs="24" :lg="24">
-                  <div style="margin-left: 40px"> 暂无数据</div>
-                </Col>
-              </template>
-              <Col :xs="24" :lg="24">
-                <Button v-if="temp.subParaList.length && accessView" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
-                <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
-              </Col>
 
+                    </div>
+                  </div>
+                  <div v-else>
+
+                    <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                    <span style="cursor: pointer;color:#009688">{{(info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据'}}&nbsp;&nbsp;
+                      <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
+                    <template v-if="info.selected">
+                      <div style="display: flex">
+                          <template v-if="(info.paraValMin1 || info.paraValMax1) && (info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2)">
+                            <Poptip trigger="focus" transfer>
+                              <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
+                                           :step='info.paraValStep' @on-blur="textValid(info)" style="width: 100%"></InputNumber>
+                              <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
+                                     :placeholder="info.paraName" @on-blur="textValid(info)"   number>
+                                <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                              </Input>
+                              <div slot="content">
+                                <span v-if="info.paraValMin1 || info.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{ info.paraValMin1 }}~上限:{{ info.paraValMax1 }}</span><Br/>
+                                <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{ info.paraValMin2 }}~上限:{{ info.paraValMax2 }}</span>
+                              </div>
+                            </Poptip>
+                          </template>
+                          <template v-else>
+                            <Input v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2" v-model.trim="info.paraVal" :placeholder="info.paraName" number>
+                              <span  v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                            </Input>
+                            <Input v-else v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)"/>
+                          </template>
+
+<!--                          <Input v-else v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)"  >-->
+<!--                            <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>-->
+<!--                          </Input>-->
+
+                      </div>
+                      <span v-if="info.errorMsg" style="color: red;font-size: 12px">{{ info.errorMsg }}</span>
+                    </template>
+                  </div>
+                </template>
+                <template v-else>
+                  <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
+                  <template v-if="info.oldVal !== '' && info.oldVal !== null">
+                    <span  v-for="(item,i) in info.spinnerInfoList"  style="cursor: pointer;color: #009688" v-if="info.oldVal == item.code">{{ item.name }}</span>
+                  </template>
+                    <span v-else  style="cursor: pointer;color: #009688">暂无数据</span>
+                  <div  v-if="info.selected"   style="display: flex">
+                    <Select  v-model="info.paraVal" :placeholder="info.paraName">
+                      <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
+                      </Option>
+                    </Select>
+                  </div>
+                </template>
+<!--              </template>-->
+            </div>
+          </div>
+           <div v-else style="margin-left: 40px"> 暂无数据</div>
+            <Button v-if="temp.subParaList.length && accessView && temp.ndpaIsImportant" type="primary" @click="changeMode(temp)"  style="margin-left:30px;" size="small">{{temp.selected?'取消':'编辑'}}</Button>
+            <Button v-if="temp.selected" type="success" @click="handleSubmit(temp)"  size="small" style="margin-left:2px;">保存</Button>
         </div>
       </Col>
-
   </div>
 </template>
 
@@ -190,15 +131,15 @@ export default {
   },
   created: function () {
     this.$xy.vector.$on('ctrlTag', this.getMsg)
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('ctrlTag', this.getMsg)
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
 
   },
   mounted() {
-    let obj = JSON.parse(sessionStorage.userInfo)
+    let obj = JSON.parse(localStorage.userInfo)
     if(obj.userName == 'admin'){
       this.accessView = true
     }
@@ -408,12 +349,6 @@ export default {
                 duration: 1
               })
         this.changeMode(temp)
-      }else{
-            this.$Notice.error({
-              title: '失败',
-              desc: message,
-              duration: 3
-            })
       }
     }
   }
@@ -421,5 +356,36 @@ export default {
 </script>
 
 <style scoped>
+.box{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-between;
+  width: 100%;
+}
+.node{
+  margin-bottom: 10px;
+  width: 30%;
+  margin-left: 40px;
 
+}
+</style>
+
+<style lang="less">
+.param-wrap{
+  .ivu-poptip{
+    width: 100%;
+    .ivu-poptip-rel{
+      width: 100%;
+    }
+  }
+
+}
+.combine-class{
+  .ivu-input-prefix{
+    width: 20%;
+  }
+  .ivu-input-with-prefix {
+    padding-left: 22%;
+  }
+}
 </style>

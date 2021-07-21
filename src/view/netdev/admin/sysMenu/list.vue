@@ -8,12 +8,10 @@
         <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px" type="primary" @click="operate(0,null)">新增</Button>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="24">
-       <template>
           <Table row-key="menuId" :load-data="handleLoadData" :columns="columns1" :data="infos" ></Table>
-        </template>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1000" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="85%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
   </div>

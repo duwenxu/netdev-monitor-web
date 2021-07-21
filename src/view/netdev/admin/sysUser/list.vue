@@ -17,10 +17,10 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%" :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
-    <Modal v-model="detailModal" width="1200" :title="detailName" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="detailModal" width="80%" :title="detailName" footer-hide :mask-closable="false" :closable="false">
       <detail-row></detail-row>
     </Modal>
   </div>
@@ -172,7 +172,7 @@
       this.$xy.vector.$on('sendReq', this.sendReq)
     },
     beforeDestroy: function () {
-      this.$xy.vector.$on('closeDetail', this.closeDetail)
+      this.$xy.vector.$off('closeDetail', this.closeDetail)
       this.$xy.vector.$off('closeModal', this.closeModal)
       this.$xy.vector.$off('sendReq', this.sendReq)
     },

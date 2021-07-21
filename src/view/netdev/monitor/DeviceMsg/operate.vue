@@ -1,39 +1,65 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-      <div style="margin-bottom: 5px">命令区</div>
+<!--      <div style="margin-bottom: 5px">命令区</div>-->
+
       <div  style="display: flex;margin-left: 20px;">
+        <span style="margin-top: 8px;margin-right: 20px">命令区</span>
         <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
           <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
           </i-switch>
         </div>
-        <Button v-for="(info,index) in orderDatas" @click="save(info)"
+
+        <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
       </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length">
-      <div v-for="info in combineList">
-        <div style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+
+<!--    基本参数-->
+    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
+      <common :infos="closeInfos"></common>
+      <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
+        <Divider dashed class="cloud-divider">
+          <span @click="openParam = !openParam" style="cursor: pointer">
+             <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openParam ? "收起" :"查看参数"}}
+          </span>
+        </Divider>
+      </div>
+      <common v-if="openParam" :infos="openInfos"></common>
+    </div>
+
+<!--    父框子-->
+    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
+      <div v-for="info in closeCombineList">
+        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
+      <Divider v-if="openCombineList.length" dashed class="cloud-divider">
+          <span @click="openSub = !openSub" style="cursor: pointer">
+             <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openSub ? "收起" :"查看参数"}}
+          </span>
+      </Divider>
+      <div v-if="openSub" v-for="info in openCombineList">
+        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <common :infos="info.subParaList"></common>
+      </div>
+
+
     </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:orderDatas.length?orderHeight+'px':normalHeight+'px'}">
-      <common :infos="infos"></common>
-    </div>
+
   </div>
 </template>
-
 <script>
-
 import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
-
 export default {
   components: {common},
   props: {
@@ -41,17 +67,21 @@ export default {
       type: Number
     }
   },
+
   data() {
     return {
-        orderSwitch:true,
-      orderHeight: 160,
-      normalHeight: 250,
+      openSub:false,
+      openParam:false,
+      orderSwitch:true,
+      comHeight: 120,
+      normalHeight: 320,
       devNo: null,
       paramSocket: null,
-      logSocket: null,
-      infos: [],
+      openInfos: [],//展开
+      closeInfos:[],//未展开
       orderDatas: [],
-      combineList: [],
+      openCombineList: [],//展开
+      closeCombineList: [],//未展开
       paramType: ['0019002'],
       timer: null,
       saveVal: false,
@@ -60,25 +90,18 @@ export default {
     }
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
     this.$xy.vector.$on('closeModal', this.closeModal)
     this.$xy.vector.$on('selectStatus', this.selectStatus)
-
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.sizeInfo)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
     this.$xy.vector.$off('closeModal', this.closeModal)
     this.$xy.vector.$off('selectStatus', this.selectStatus)
-
-  },
-  destroyed() {
-    clearInterval(this.timer)
-
   },
   mounted() {
-      // console.log(this.$route)
     if (this.$route.name != 'home') {
       this.initWebSocket()
     }
@@ -88,7 +111,16 @@ export default {
     this.paramSocket = null
     next()
   },
+  destroyed() {
+      this.openInfos = []
+      this.closeInfos = []
+      this.orderDatas = []
+      this.openCombineList =[]
+      this.closeCombineList =[]
+      this.selectObj = {}
+  },
   methods: {
+
     //1.5m天线切换开关
     async  switchChange(data){
         let {result, success, message} = await switchCheck({channel:data?'A':'B'})
@@ -116,7 +148,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsb",
@@ -146,7 +178,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -176,7 +208,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -206,7 +238,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -236,7 +268,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -266,7 +298,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -296,7 +328,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -326,7 +358,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -356,7 +388,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -386,7 +418,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -416,7 +448,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -446,7 +478,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdst",
@@ -476,7 +508,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -506,7 +538,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdse",
@@ -536,7 +568,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdso",
@@ -566,7 +598,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsgz",
@@ -596,7 +628,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsj",
@@ -625,7 +657,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -658,7 +690,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -688,7 +720,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -718,7 +750,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -748,7 +780,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -779,7 +811,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -812,7 +844,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -842,7 +874,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -881,17 +913,31 @@ export default {
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        this.orderHeight = 160
-        this.normalHeight = 250
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 320
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 320
+        }else{
+          this.comHeight = 120
+          this.normalHeight = 120
+        }
       } else {
-        this.orderHeight = 380
-        this.normalHeight = 400
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 460
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 460
+        }else{
+          this.comHeight = 230
+          this.normalHeight = 230
+        }
       }
     },
     initWebSocket() { //初始化weosocket
-      this.infos = []
+      this.closeInfos = []
+      this.openInfos = []
       this.orderDatas =  []
-      this.combineList =  []
+      this.closeCombineList =  []
+      this.openCombineList =  []
       // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
       const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
       /*-----------------设备参数--------------*/
@@ -958,9 +1004,11 @@ export default {
         }
       })
       this.orderDatas = oderArr || []
-      this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
-         },
+      this.openCombineList = parentArr.filter(value=>!value.ndpaIsImportant)
+      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant)
+      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && !value.ndpaIsImportant)
+      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant)
+    },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
@@ -1020,7 +1068,23 @@ export default {
       }
       }
     },
-    async save(info) {
+    save(info){
+      this.$Modal.confirm({
+        title: '确认执行当前命令吗?',
+        content: '确认后将无法取消！',
+        onOk: () => {
+          this.saveOrder(info)
+        },
+        onCancel: () => {
+          this.$Notice.warning({
+            title: '取消',
+            desc: '已取消！',
+            duration: 3
+          })
+        }
+      })
+    },
+    async saveOrder(info) {
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
@@ -1032,14 +1096,8 @@ export default {
       if (success) {
         this.$Notice.success({
           title: '成功',
-          desc: message,
+          desc: '修改成功！',
           duration: 1
-        })
-      } else {
-        this.$Notice.error({
-          title: '失败',
-          desc: message,
-          duration: 3
         })
       }
     }
@@ -1085,7 +1143,7 @@ export default {
 
 .order-wrap {
   border: 1px solid #009688;
-  height: 100px;
+  height: 55px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -1094,7 +1152,7 @@ export default {
 
 .sub-wrap {
   border: 1px solid #009688;
-  height: 280px;
+  height: 240px;
   border-radius: 5px;
   padding: 10px;
   overflow: auto;

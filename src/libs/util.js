@@ -20,6 +20,9 @@ export const getToken = () => {
     return false
   }
 }
+export const removeToken = () => {//token过期时间
+  Cookies.remove(TOKEN_KEY, {expires: cookieExpires || 10})//token过期时间1天
+}
 
 
 export const hasChild = (item) => {
@@ -42,7 +45,7 @@ export const treeDevice = (data) => {
     data[item].meta.devType = data[item].devType
     data[item].meta.title = data[item].devName
     data[item].meta.icon = "ios-body"
-    data[item].meta.noalive = true
+    // data[item].meta.noalive = true
     data[item].meta.hideInMenu = false
     data[item].meta.notCache = true
     if ('subMap' in data[item]) {
@@ -66,7 +69,7 @@ export const treeDevice = (data) => {
     path: '/devices',
     name: 'devices',
     meta: {
-      noalive:true,
+      // noalive:true,
       icon: 'ios-browsers',
       title: '设备',
       hideInBread: true,

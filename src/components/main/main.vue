@@ -48,14 +48,18 @@
           </div>
           <Content class="main-view-wrapper ">
             <div class="dark-page-border" :class="{'content': !noShowBgRouteList.includes($route.name)}">
-              <template v-if="$route.meta.noalive">
+
+<!--              <keep-alive :include="cacheList">-->
                 <router-view :key="key"/>
-              </template>
-              <template v-else>
-                <keep-alive :include="cacheList">
-                  <router-view/>
-                </keep-alive>
-              </template>
+<!--              </keep-alive>-->
+<!--              <template v-if="$route.meta.noalive">-->
+<!--                <router-view :key="key"/>-->
+<!--              </template>-->
+<!--              <template v-else>-->
+<!--                <keep-alive :include="cacheList">-->
+<!--                  <router-view/>-->
+<!--                </keep-alive>-->
+<!--              </template>-->
             </div>
             <ABackTop :height="100" :bottom="80" :right="50" container=".main-view-wrapper"></ABackTop>
           </Content>
@@ -174,18 +178,12 @@
         return this.$store.state.app.hasReadErrorPage
       }
     },
-    created: function () {
-      this.$xy.vector.$on('siderTriggher', this.handleCollapsedChange)
-    },
-    beforeDestroy: function () {
-      this.$xy.vector.$off('siderTriggher', this.handleCollapsedChange)
-    },
     methods: {
       ...mapMutations([
         'setBreadCrumb',
         'setTagNavList',
         'addTag',
-        'setLocal',
+        // 'setLocal',
         'saveSpace',
         'setHomeRoute',
         'setTheme',
@@ -217,14 +215,16 @@
         this.$router.push({
           name,
           params,
-          query
+            query:{
+             t:Date.now(),
+         },
         })
         this.tagNavList.forEach(v => {
           if (route == v.name) {
             tag = true
           }
         })
-        if (this.tagNavList.length >= 14) {
+        if (this.tagNavList.length >= 8) {
           if (!tag) {
             this.tagNavList.splice(1, 1)
           }
@@ -309,7 +309,7 @@
       })
       this.setBreadCrumb(this.$route)
       // 设置初始语言
-      this.setLocal(this.$i18n.locale)
+      // this.setLocal(this.$i18n.locale)
       // 如果当前打开页面不在标签栏中，跳到homeName页
       if (!this.tagNavList.find(item => item.name === this.$route.name)) {
         this.$router.push({

@@ -5,7 +5,7 @@
         <search :search-data='searchData'></search>
       </Col>
       <Col :xs="24" :sm="24" :md="24" :lg="4">
-        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 800px" type="primary"
+        <Button icon="md-add" style="float:right;margin-bottom: 10px;border: 0px;margin-left: 0px" type="primary"
                 @click="operate()">新增
         </Button>
       </Col>
@@ -19,7 +19,7 @@
         </div>
       </Col>
     </Row>
-    <Modal v-model="operateModal" width="1200" :title="name" footer-hide :mask-closable="false" :closable="false">
+    <Modal v-model="operateModal" width="80%"  :title="name" footer-hide :mask-closable="false" :closable="false">
       <operate-row></operate-row>
     </Modal>
   </div>
@@ -107,7 +107,7 @@
                     {
                         type: 1,
                         key: 'wpName',
-                        name: '值班人',
+                        name: '',
                         value: '',
                         data: [],
                         placeholder: '请输入计划值班人员'

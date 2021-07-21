@@ -47,11 +47,12 @@
                                 title: '参数编号',
                                 key: 'ndpaNo',
                               width:100,
+
                             },
                             {
                                 title: '告警个数',
                                 key: 'alertNum',
-                              width:100,
+                                width:100,
                             },
                             {
                                 title: '告警时间',

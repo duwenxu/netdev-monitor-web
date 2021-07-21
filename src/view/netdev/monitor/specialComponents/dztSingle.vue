@@ -2,8 +2,8 @@
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
   <Row>
     <template v-if="infos.length">
-      <Col :xs="8" :md="8" v-for="info in infos" style="padding: 8px">
-        <template v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'">
+      <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
+        <template v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'">
           <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
         </template>
       </Col>
@@ -31,11 +31,11 @@ export default {
 
   },
   created: function () {
-    this.$xy.vector.$on('changeSize', this.sizeInfo)
+    this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('pageInfo', this.getInfo)
   },
   beforeDestroy: function () {
-    this.$xy.vector.$off('changeSize', this.changeSize)
+    this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('pageInfo', this.getInfo)
   },
   beforeRouteLeave(to, from, next) {
@@ -92,7 +92,7 @@ export default {
   border: 1px solid #009688;
   margin-bottom: 10px;
   overflow: auto;
-  height: 450px;
+  height: 250px;
   border-radius: 5px;
   padding: 10px
 }
