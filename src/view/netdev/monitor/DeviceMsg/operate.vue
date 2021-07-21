@@ -956,7 +956,8 @@ export default {
     },
     editData(msg) {
       let oderArr = [], parentArr = []
-      msg.forEach(v => {
+      let data = msg.filter(v=>v.ndpaIsImportant !=2)
+      data.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
@@ -1006,8 +1007,8 @@ export default {
       this.orderDatas = oderArr || []
       this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 0)
       this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
-      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
-      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+      this.openInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
+      this.closeInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
