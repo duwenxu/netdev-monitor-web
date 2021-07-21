@@ -1,7 +1,7 @@
 <template>
  <div>
    <div v-if="infos.length" class="box">
-     <div v-for="(info,index) in infos" class="node">
+     <div v-for="(info,index) in infos" class="node"  v-if="info.ndpaIsImportant !=2">
 <!--       <template  v-if="($route.name == 'home' && info.ndpaIsImportant) || ($route.name != 'home' && info.ndpaIsImportant)">-->
          <template v-if="info.parahowMode == '0024001'">
            <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
