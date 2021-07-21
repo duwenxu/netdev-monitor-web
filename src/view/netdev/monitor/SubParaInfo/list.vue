@@ -213,7 +213,7 @@
                         key: 'ndpaIsImportant',
                         width: 150,
                         render: (h, params) => {
-                            return h('span', params.row.ndpaIsImportant == true ? '是' : '否');
+                            return h('span', this.changeIsImportant(params.row.ndpaIsImportant));
                         }
                     },
                     {
@@ -358,9 +358,9 @@
                 if (success) {
                     this.infos = result.records
                     //将是否展示在拓扑图数据值转换   否则不好处理
-                    this.infos.forEach(value => {
+                    /*this.infos.forEach(value => {
                         value.ndpaIsImportant = value.ndpaIsImportant == true ? '1' : '0';
-                    })
+                    })*/
                     this.current = result.current ? result.current : result.current + 1
                     this.otherPage.total = result.total
                 } else {
@@ -422,6 +422,16 @@
                 this.operateModal = true
                 this.$xy.vector.$emit('operateRow', ParaInfo)
             },
+            //是否重要转换
+            changeIsImportant(value){
+                if(value == 0){
+                    return "不重要";
+                }else if(value == 1){
+                    return "重要";
+                }else{
+                    return "隐藏";
+                }
+            }
         }
     }
 </script>
