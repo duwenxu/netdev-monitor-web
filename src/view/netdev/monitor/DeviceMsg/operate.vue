@@ -36,7 +36,7 @@
 <!--    父框子-->
     <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in closeCombineList">
-        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="info.ndpaIsImportant == 2" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
       <Divider v-if="openCombineList.length" dashed class="cloud-divider">
@@ -46,7 +46,7 @@
           </span>
       </Divider>
       <div v-if="openSub" v-for="info in openCombineList">
-        <div v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="info.ndpaIsImportant==1" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
 
@@ -1004,10 +1004,10 @@ export default {
         }
       })
       this.orderDatas = oderArr || []
-      this.openCombineList = parentArr.filter(value=>!value.ndpaIsImportant)
-      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant)
-      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && !value.ndpaIsImportant)
-      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant)
+      this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
+      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 2)
+      this.openInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+      this.closeInfos = msg.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 2)
     },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
