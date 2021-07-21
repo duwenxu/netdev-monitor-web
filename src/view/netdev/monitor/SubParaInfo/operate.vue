@@ -257,8 +257,9 @@
         ndpaLinkTypeList:[],
         remark2DataList:[],
         paraCodecList:[],
-        isTopoList:[{'id':'0','code':'否'},
-              {'id':'1','code':'是'}],  //是否在拓扑图显示
+        isTopoList:[{'id':'0','code':'不重要'},
+                    {'id':'1','code':'重要'},
+                    {'id':'2','code':'隐藏'}],  //是否在拓扑图显示
         rulePro: {
           fmtId: [
             {required: false}
