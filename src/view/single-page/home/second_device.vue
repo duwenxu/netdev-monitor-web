@@ -728,9 +728,6 @@ export default {
     masterStatus(equipment) {
       let arr = [20, 22, 27, 28, 29, 30, 31,85]
       if (arr.indexOf(Number(equipment.devNo)) == -1) {
-        if(equipment.devNo == '49'){
-          console.log(equipment)
-        }
         return {
           top: this.masterPosition[equipment.devNo].top,
           marginLeft: this.masterPosition[equipment.devNo].left,
