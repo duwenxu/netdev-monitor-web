@@ -587,6 +587,7 @@ export default {
 
     getWSData(WSdata) {
       if (WSdata.length) {
+        //主为0主框 主为1备框   主0备1 主0备0 --》主框     主1备1  主1备0  --》备框
         let arr = ['30','31','20','11','13','40','2']
         this.equipments.forEach(device => {
          WSdata.forEach(item => {
