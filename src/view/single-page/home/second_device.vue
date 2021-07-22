@@ -1,6 +1,6 @@
 <template>
   <!-- 二类车-->
-  <div style="padding-top:10px">
+  <div style="padding-top:20px">
     <template v-for="equipment in equipments">
       <div class="device_status" :style="equipment.pos">
         <span :style="judgeDeviceStatus(equipment)"
@@ -39,6 +39,34 @@ export default {
       paramModalShow: false,
       paramModal: false,
       equipments: [
+        {
+          devNo: '85',
+          name: 'LNA电源监控',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+          pos: {
+            top: '158px',
+            marginLeft: '205px',
+            width: '12px',
+            height: '12px',
+          }
+        },
+        {
+          devNo: '85',
+          name: 'LNA电源监控',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+          pos: {
+            top: '360px',
+            marginLeft: '205px',
+            width: '12px',
+            height: '12px',
+          }
+        },
         {
           devNo: '20',
           name: '2.4m天线ACU',
@@ -673,7 +701,7 @@ export default {
       return info
     },
     masterStatus(equipment) {
-      let arr = [20, 22, 27, 28, 29, 30, 31]
+      let arr = [20, 22, 27, 28, 29, 30, 31,85]
       if (arr.indexOf(Number(equipment.devNo)) == -1) {
         if(equipment.devNo == '49'){
           console.log(equipment)
@@ -840,12 +868,13 @@ export default {
           color: 'rgba(184,181,181)'
         },
         {
+          devNo:'85',
           x: '190',
           y: '340',
-          nodeName: 'Ka LNA ',
+          nodeName: 'KaLNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [40, 60],
+          size: [50, 60],
           color: '#e9cdf6'
         },
 
@@ -1061,16 +1090,15 @@ export default {
         },
 
         {
+          devNo:'85',
           x: '190',
           y: '140',
-          nodeName: 'Ku LNA  ',
+          nodeName: 'KuLNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [40, 60],
+          size: [50, 65],
           color: '#e9cdf6'
         },
-
-
         {
           x: '380',
           y: '50',
