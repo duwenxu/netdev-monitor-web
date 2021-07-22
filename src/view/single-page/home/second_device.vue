@@ -684,6 +684,12 @@ export default {
     },
     judgeDeviceStatus(device) {
       let info = {}
+      if ((device.devNo == '49-1' || device.devNo == '33-1') && device.masterOrSlave == '0' && device.isAlarm == '1') {
+        device.isAlarm = 0
+      }
+      if ((device.devNo == '49' ||device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
+        device.isAlarm = 0
+      }
       if (device.isInterrupt === '0') {//是否中断 否0
         if (device.workStatus === '0') {//如果工作状态正常 0
           if (device.isAlarm === '1') {//告警为1  则告警
@@ -695,8 +701,27 @@ export default {
         } else {//不正常 则直接故障
           info = {background: '#ff1400'}
         }
+
+        if (device.devNo == '49' ||device.devNo == '33') {
+          if (device.masterOrSlave == '1') {
+            info = {background: '#009688'}
+          }
+        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+          if (device.masterOrSlave == '0') {
+            info = {background: '#009688'}
+          }
+        }
       } else {//中断 是 1
         info = {background: '#ff1400'}
+        if (device.devNo == '49' ||device.devNo == '33') {
+          if (device.masterOrSlave == '1') {
+            info = {background: '#009688'}
+          }
+        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+          if (device.masterOrSlave == '0') {
+            info = {background: '#009688'}
+          }
+        }
       }
       return info
     },
@@ -2459,7 +2484,6 @@ export default {
         }
       });
       dom.on('click', function (info) {
-        console.log(info.data)
         if (info.data.devNo) {
           that.paramModal = true
           that.paramModalShow = false
@@ -2482,7 +2506,6 @@ export default {
           this.$nextTick(() => {
             this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
           })
-
         })
       }
     }
