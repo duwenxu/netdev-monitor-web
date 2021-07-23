@@ -642,7 +642,7 @@ export default {
     getWSData(WSdata) {
       if (WSdata.length) {
         //33，49
-        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '60', '51', '27', '28', '22','49','33']
+        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22','49','33']
         //71，72/74，75/63，64/55,56/51,52/33,33-1/49，49-1
         this.equipments.forEach(device => {
           WSdata.forEach(item => {
@@ -659,6 +659,9 @@ export default {
               this.setWSDate(item, device)
             }
             if (item.devNo == '55' && device.devNo == '56') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '59' && device.devNo == '60') {
               this.setWSDate(item, device)
             }
             if (item.devNo == '33' && device.devNo == '33-1') {
@@ -1319,102 +1322,6 @@ export default {
           nodeName: '维修仓',
           size: 0
         },
-   //---------------------- 各个交换机位置-----------------------------------------------------
-   //      {
-   //        mark:'ka发射机',
-   //        x: '200',
-   //        y: '490',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
-   //        size: [60, 40]
-   //      },
-   //      {
-   //        mark:'kac',
-   //        x: '320',
-   //        y: '400',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'comtech',
-   //        x: '210',
-   //        y: '300',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'lc上',
-   //        x: '370',
-   //        y: '500',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'lku',
-   //        x: '362',
-   //        y: '200',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'kul',
-   //        x: '362',
-   //        y: '102',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'天线控制',
-   //        x: '520',
-   //        y: '90',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'L波段4*4下行',
-   //        x: '490',
-   //        y: '200',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'L波段4*4上行',
-   //        x: '590',
-   //        y: '480',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'2300上',
-   //        x: '740',
-   //        y: '430',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        mark:'2300下',
-   //        x: '740',
-   //        y: '310',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
-   //        size: [50, 30]
-   //      },
-   //      {
-   //        x: '440',
-   //        y: '280',
-   //        nodeName: '',
-   //        img: 'image://' + require('@/assets/images/home/trans_line_up.png'),
-   //        size: [50, 30]
-   //      },
       ]
       var charts = {
         nodes: [],
@@ -2144,18 +2051,44 @@ export default {
           {
             mark: 'lc交换机',
             name: '交换机',
-            coords: [[340, 495], [390, 495]],
+            coords: [[355, 495], [405, 495]],
           },
           {
             mark: 'lku交换机',
             name: '交换机',
-            coords: [[340, 195], [390, 195]],
+            coords: [[335, 195], [385, 195]],
           },
           {
             mark: 'kul交换机',
             name: '交换机',
-            coords: [[340, 95], [390, 95]],
+            coords: [[335, 95], [385, 95]],
           },
+          {
+            mark: '4*4上',
+            name: '交换机',
+            coords: [[560, 470], [610, 470]],
+          },
+          {
+            mark: '4*4下',
+            name: '交换机',
+            coords: [[470, 200], [520, 200]],
+          },
+          {
+            mark: '2300上',
+            name: '交换机',
+            coords: [[715, 450], [765, 450]],
+          },
+          {
+            mark: '2300下',
+            name: '交换机',
+            coords: [[715, 310], [765, 310]],
+          },
+          {
+            mark: '天线控制单元',
+            name: '交换机',
+            coords: [[495, 80], [545, 80]],
+          },
+
         ],
       }
       for (var j = 0; j < nodes.length; j++) {
