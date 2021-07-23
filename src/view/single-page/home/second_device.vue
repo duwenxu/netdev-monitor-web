@@ -1,14 +1,16 @@
 <template>
   <!-- 二类车-->
-  <div>
+  <div style="padding-top:20px">
     <template v-for="equipment in equipments">
       <div class="device_status" :style="equipment.pos">
         <span :style="judgeDeviceStatus(equipment)"
-              :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
+              :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
+        </span>
       </div>
-      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
+      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)">
+      </div>
     </template>
-    <div style="border:1px solid red" ref="dom" class="charts"></div>
+    <div ref="dom" class="charts"></div>
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
         <span :class="[item.shape]"
@@ -17,7 +19,7 @@
     </div>
     <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
            width="850" :mask-closable="false">
-      <DeviceMain></DeviceMain>
+      <DeviceMain v-if="paramModalShow"></DeviceMain>
     </Modal>
   </div>
 </template>
@@ -25,7 +27,6 @@
 <script>
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
-import {mapState} from "vuex";
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
@@ -34,9 +35,38 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      dom: null,
+      // dom: null,
+      paramModalShow: false,
       paramModal: false,
       equipments: [
+        {
+          devNo: '85',
+          name: 'LNA电源监控',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+          pos: {
+            top: '158px',
+            marginLeft: '205px',
+            width: '12px',
+            height: '12px',
+          }
+        },
+        {
+          devNo: '85',
+          name: 'LNA电源监控',
+          isInterrupt: '0',
+          workStatus: '0',
+          isAlarm: 0,
+          isUseStandby: false,
+          pos: {
+            top: '360px',
+            marginLeft: '205px',
+            width: '12px',
+            height: '12px',
+          }
+        },
         {
           devNo: '20',
           name: '2.4m天线ACU',
@@ -45,10 +75,10 @@ export default {
           isAlarm: 0,
           isUseStandby: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '426px',
+            marginLeft: '466px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -59,10 +89,10 @@ export default {
           isAlarm: 0,
           isUseStandby: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '352px',
+            marginLeft: '700px',
+            width: '12px',
+            height: '12px',
           }
 
         },
@@ -75,10 +105,10 @@ export default {
           isUseStandby: false,
           masterOrSlave: '',
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '170px',
+            marginLeft: '535px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -90,10 +120,10 @@ export default {
           isUseStandby: false,
           masterOrSlave: '',
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '270px',
+            marginLeft: '535px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -105,10 +135,10 @@ export default {
           isUseStandby: false,
           masterOrSlave: '',
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '81px',
+            marginLeft: '216px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -120,10 +150,10 @@ export default {
           isUseStandby: false,
           masterOrSlave: '',
           pos: {
-            top: '175px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '158px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -135,10 +165,10 @@ export default {
           isUseStandby: false,
           masterOrSlave: '',
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '291px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -149,11 +179,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '295px',
+            marginLeft: '192px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -163,12 +194,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
+          isMaster: false,
           masterOrSlave: '',
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '348px',
+            marginLeft: '192px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -179,11 +211,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '180px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -194,15 +227,14 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '230px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
-
-
         {
           devNo: '51',
           name: 'lku上变频器1',
@@ -211,11 +243,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '262px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -226,11 +259,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '315px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -241,11 +275,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '348px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -256,11 +291,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '402px',
+            marginLeft: '327px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -271,11 +307,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '27px',
+            marginLeft: '444px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -286,11 +323,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '79px',
+            marginLeft: '444px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -301,11 +339,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '130px',
+            marginLeft: '444px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -316,11 +355,12 @@ export default {
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '185px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '182px',
+            marginLeft: '444px',
+            width: '12px',
+            height: '12px',
           }
         },
 
@@ -331,12 +371,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0',
+          masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '106px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '70px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -346,12 +387,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1',
+          masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '154px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '132px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -361,12 +403,13 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '0',
+          masterOrSlave: '',
+          isMaster: true,
           pos: {
-            top: '217px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '205px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
         {
@@ -376,204 +419,203 @@ export default {
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
-          masterOrSlave: '1',
+          masterOrSlave: '',
+          isMaster: false,
           pos: {
-            top: '275px',
-            marginLeft: '695px',
-            width: '10px',
-            height: '10px',
+            top: '267px',
+            marginLeft: '694px',
+            width: '12px',
+            height: '12px',
           }
         },
-
-
-
       ],
       masterPosition: {
-        '20': {
-          mark: '2.4米天线ACU',
-          border: '2px solid green',
-          width: '122px',
-          height: '32px',
-          top: '125px',
-          left: '405px',
-        },
-        '22': {
-          mark: '频谱监测',
-          border: '2px solid green',
-          width: '53px',
-          height: '32px',
-          top: '380px',
-          left: '200px',
-        },
-        '27': {
-          mark: '4*4 1',
-          border: '2px solid green',
-          width: '53px',
-          height: '32px',
-          top: '380px',
-          left: '200px',
-        },
-        '28': {
-          mark: '4*4 2',
-          border: '2px solid green',
-          width: '53px',
-          height: '32px',
-          top: '380px',
-          left: '200px',
-        },
-        '29': {
-          mark: 'ka100w发射机',
-          border: '2px solid green',
-          width: '53px',
-          height: '32px',
-          top: '380px',
-          left: '200px',
-        },
-        '30': {
-          mark: '1:1 转换开关(00)',
-          border: '2px solid purple',
-          width: '53px',
-          height: '82px',
-          top: '285px',
-          left: '445px',
-        },
-        '31': {
-          mark: '1:1 转换开关(01)',
-          border: '2px solid green',
-          width: '53px',
-          height: '82px',
-          top: '250px',
-          left: '425px',
-        },
+        // '20': {
+        //   mark: '2.4米天线ACU',
+        //   border: '3px solid green',
+        //   width: '122px',
+        //   height: '32px',
+        //   top: '125px',
+        //   left: '405px',
+        // },
+        // '22': {
+        //   mark: '频谱监测',
+        //   border: '3px solid green',
+        //   width: '53px',
+        //   height: '32px',
+        //   top: '380px',
+        //   left: '200px',
+        // },
+        // '27': {
+        //   mark: '4*4 1',
+        //   border: '3px solid green',
+        //   width: '53px',
+        //   height: '32px',
+        //   top: '380px',
+        //   left: '200px',
+        // },
+        // '28': {
+        //   mark: '4*4 2',
+        //   border: '3px solid green',
+        //   width: '53px',
+        //   height: '32px',
+        //   top: '380px',
+        //   left: '200px',
+        // },
+        // '29': {
+        //   mark: 'ka100w发射机',
+        //   border: '3px solid green',
+        //   width: '53px',
+        //   height: '32px',
+        //   top: '380px',
+        //   left: '200px',
+        // },
+        // '30': {
+        //   mark: '1:1 转换开关(00)',
+        //   border: '2px solid purple',
+        //   width: '102px',
+        //   height: '22px',
+        //   top: '285px',
+        //   left: '445px',
+        // },
+        // '31': {
+        //   mark: '1:1 转换开关(01)',
+        //   border: '3px solid green',
+        //   width: '102px',
+        //   height: '22px',
+        //   top: '250px',
+        //   left: '425px',
+        // },
         '33': {
           mark: 'Comtech功率放大器 ku400w',
-          border: '2px solid red',
-          width: '53px',
+          border: '3px solid green',
+          width: '55px',
           height: '32px',
-          top: '268px',
-          left: '288px',
+          top: '290px',
+          left: '169px',
         },
         '33-1': {
           mark: 'Comtech功率放大器 ku400w',
-          border: '2px solid red',
-          width: '53px',
+          border: '3px solid green',
+          width: '55px',
           height: '32px',
-          top: '218px',
-          left: '288px',
+          top: '342px',
+          left: '169px',
         },
         '49': {
           mark: 'Ka/C下变频器',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '180px',
+          left: '288px',
         },
         '49-1': {
           mark: 'Ka/C下变频器',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '320px',
-          left: '200px',
+          top: '232px',
+          left: '288px',
         },
         '51': {
           mark: 'lku上变频器1',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '265px',
+          left: '288px',
         },
         '52': {
           mark: 'lku上变频器2',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '318px',
+          left: '288px',
         },
         '55': {
           mark: 'kul下变频器1',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '352px',
+          left: '288px',
         },
         '56': {
           mark: 'kul下变频器2',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '405px',
+          left: '288px',
         },
+
         '59': {
           mark: 'lc上变频器1',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '27px',
+          left: '405px',
         },
         '60': {
           mark: 'lc上变频器2',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '53px',
           height: '32px',
-          top: '380px',
-          left: '200px',
+          top: '80px',
+          left: '405px',
         },
         '63': {
           mark: 'cl下1',
-          border: '2px solid green',
-          width: '102px',
-          height: '22px',
-          top: '125px',
+          border: '3px solid green',
+          width: '53px',
+          height: '32px',
+          top: '131px',
           left: '405px',
         },
         '64': {
           mark: 'cl下2',
-          border: '2px solid green',
-          width: '102px',
-          height: '22px',
-          top: '247px',
+          border: '3px solid green',
+          width: '53px',
+          height: '32px',
+          top: '185px',
           left: '405px',
         },
+
         '71': {
           mark: '调制A上',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '102px',
           height: '22px',
-          top: '108px',
+          top: '77px',
           left: '607px',
         },
         '72': {
           mark: '调制B上',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '102px',
           height: '22px',
-          top: '166px',
+          top: '139px',
           left: '607px',
         },
         '74': {
           mark: '调制A下',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '102px',
           height: '22px',
-          top: '235px',
+          top: '211px',
           left: '607px',
         },
         '75': {
           mark: '调制B下',
-          border: '2px solid green',
+          border: '3px solid green',
           width: '102px',
           height: '22px',
-          top: '293px',
+          top: '274px',
           left: '607px',
         },
-
       },
       legendType: [
         {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
@@ -586,29 +628,49 @@ export default {
     }
   },
   beforeDestroy() {
-    off(window, 'resize', this.resize)
+    let dom = echarts.getInstanceByDom(this.$refs.dom)
+    if (dom) {
+      dom.clear()
+      echarts.dispose(dom)
+    }
   },
   mounted() {
-    this.dom = echarts.init(this.$refs.dom);
     this.init()
   },
   methods: {
-    resize() {
-      this.dom.resize()
-    },
+
     getWSData(WSdata) {
       if (WSdata.length) {
+        //33，49
+        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '60', '51', '27', '28', '22','49','33']
+        //71，72/74，75/63，64/55,56/51,52/33,33-1/49，49-1
         this.equipments.forEach(device => {
-          let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
-          if (dIndex > -1) {
-            WSdata.forEach(item => {
-              if (item.devNo == device.devNo) {
-                this.setWSDate(item, device)
-              }
-            })
-          } else {
-            this.$set(device, 'noData', true)
-          }
+          WSdata.forEach(item => {
+            if (item.devNo == '71' && device.devNo == '72') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '74' && device.devNo == '75') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '63' && device.devNo == '64') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '51' && device.devNo == '52') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '55' && device.devNo == '56') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '33' && device.devNo == '33-1') {
+              this.setWSDate(item, device)
+            }
+            if (item.devNo == '49' && device.devNo == '49-1') {
+              this.setWSDate(item, device)
+            }
+            if (arr.indexOf(item.devNo)>-1 && item.devNo == device.devNo) {
+              this.setWSDate(item, device)
+            }
+          })
         })
       }
     },
@@ -622,6 +684,12 @@ export default {
     },
     judgeDeviceStatus(device) {
       let info = {}
+      if ((device.devNo == '49-1' || device.devNo == '33-1') && device.masterOrSlave == '0' && device.isAlarm == '1') {
+        device.isAlarm = 0
+      }
+      if ((device.devNo == '49' ||device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
+        device.isAlarm = 0
+      }
       if (device.isInterrupt === '0') {//是否中断 否0
         if (device.workStatus === '0') {//如果工作状态正常 0
           if (device.isAlarm === '1') {//告警为1  则告警
@@ -633,31 +701,51 @@ export default {
         } else {//不正常 则直接故障
           info = {background: '#ff1400'}
         }
+
+        if (device.devNo == '49' ||device.devNo == '33') {
+          if (device.masterOrSlave == '1') {
+            info = {background: '#009688'}
+          }
+        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+          if (device.masterOrSlave == '0') {
+            info = {background: '#009688'}
+          }
+        }
       } else {//中断 是 1
         info = {background: '#ff1400'}
-      }
-      if (device.noData) {//推送的数据中不存在当前设备状态
-        info = {background: 'black'}
+        if (device.devNo == '49' ||device.devNo == '33') {
+          if (device.masterOrSlave == '1') {
+            info = {background: '#009688'}
+          }
+        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+          if (device.masterOrSlave == '0') {
+            info = {background: '#009688'}
+          }
+        }
       }
       return info
     },
     masterStatus(equipment) {
-      // if(equipment.devNo !=30 && equipment.devNo !=31){
-      return {
-        top: this.masterPosition[equipment.devNo].top,
-        marginLeft: this.masterPosition[equipment.devNo].left,
-        width: this.masterPosition[equipment.devNo].width,
-        height: this.masterPosition[equipment.devNo].height,
-        border: this.masterPosition[equipment.devNo].border,
-        // border: equipment.masterOrSlave == '0' && (equipment.devNo != '32' && equipment.devNo != '16' && equipment.devNo !=30 && equipment.devNo !=31) ? this.masterPosition[equipment.devNo].border : '5px solid rgba(0,0,0,0)',
+      let arr = [20, 22, 27, 28, 29, 30, 31,85]
+      if (arr.indexOf(Number(equipment.devNo)) == -1) {
+        return {
+          top: this.masterPosition[equipment.devNo].top,
+          marginLeft: this.masterPosition[equipment.devNo].left,
+          width: this.masterPosition[equipment.devNo].width,
+          height: this.masterPosition[equipment.devNo].height,
+          // border: this.masterPosition[equipment.devNo].border,
+          border: ((equipment.isMaster && equipment.masterOrSlave == '0') || (!equipment.isMaster && equipment.masterOrSlave == '1')) ? this.masterPosition[equipment.devNo].border : '3px solid rgba(0,0,0,0)',
+        }
       }
-      // // }
     },
     confirm() {
-      this.paramModal = false
       this.$xy.vector.$emit("closeModal")
+      this.paramModalShow = false
+      this.paramModal = false
+
     },
     init() {
+      let dom = echarts.init(this.$refs.dom);
       var nodes = [
         {
           x: '30',
@@ -683,11 +771,12 @@ export default {
           color: 'rgb(228,225,192)'
         },
         {
-          x: '180',
+          devNo: '29',
+          x: '190',
           y: '460',
-          nodeName: 'ka发射机',
+          nodeName: 'ka发射机  ',
           img: 'rect',
-          size: [50, 30],
+          size: [65, 30],
           color: '#e9cdf6'
         },
 
@@ -718,7 +807,7 @@ export default {
           color: '#c4e889'
         },
         {
-          devNo:'61',
+          devNo: '61',
           x: '390',
           y: '460',
           nodeName: '',
@@ -728,7 +817,7 @@ export default {
           border: 'black'
         },
         {
-          devNo:'61',
+          devNo: '61',
           x: '470',
           y: '460',
           nodeName: '',
@@ -773,7 +862,7 @@ export default {
           color: '#c4e889'
         },
         {
-          devNo:'65',
+          devNo: '65',
           x: '390',
           y: '340',
           nodeName: '',
@@ -783,7 +872,7 @@ export default {
           border: 'black'
         },
         {
-          devNo:'65',
+          devNo: '65',
           x: '470',
           y: '340',
           nodeName: '',
@@ -801,12 +890,13 @@ export default {
           color: 'rgba(184,181,181)'
         },
         {
+          devNo:'85',
           x: '190',
           y: '340',
-          nodeName: 'Ka LNA ',
+          nodeName: 'KaLNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [40, 60],
+          size: [50, 60],
           color: '#e9cdf6'
         },
 
@@ -866,7 +956,7 @@ export default {
         {
           x: '190',
           y: '270',
-          nodeName: 'Ku \n  400W    ',
+          nodeName: 'Comtech\n',
           img: 'rect',
           size: [50, 30],
           color: '#b1f83c'
@@ -908,7 +998,7 @@ export default {
         {
           x: '190',
           y: '210',
-          nodeName: 'Ku  \n  400W    ',
+          nodeName: 'Comtech\n',
           img: 'rect',
           size: [50, 30],
           color: 'rgba(184,181,181)'
@@ -939,7 +1029,7 @@ export default {
           color: '#c4e889'
         },
         {
-          devNo:'53',
+          devNo: '53',
           x: '270',
           y: '240',
           nodeName: '',
@@ -949,7 +1039,7 @@ export default {
           border: 'black'
         },
         {
-          devNo:'53',
+          devNo: '53',
           x: '350',
           y: '240',
           nodeName: '',
@@ -993,7 +1083,7 @@ export default {
           color: '#c4e889'
         },
         {
-          devNo:'57',
+          devNo: '57',
           x: '270',
           y: '140',
           nodeName: '',
@@ -1003,7 +1093,7 @@ export default {
           border: 'black'
         },
         {
-          devNo:'57',
+          devNo: '57',
           x: '350',
           y: '140',
           nodeName: '',
@@ -1022,16 +1112,15 @@ export default {
         },
 
         {
+          devNo:'85',
           x: '190',
           y: '140',
-          nodeName: 'Ku LNA  ',
+          nodeName: 'KuLNA   ',
           img: 'triangle',
           symbolRotate: -90,
-          size: [40, 60],
+          size: [50, 65],
           color: '#e9cdf6'
         },
-
-
         {
           x: '380',
           y: '50',
@@ -1041,6 +1130,7 @@ export default {
           color: 'rgb(202,196,185)'
         },
         {
+          devNo: '20',
           x: '470',
           y: '50',
           nodeName: '\n天线\n控制\n单元\n(ACU)',
@@ -1049,6 +1139,7 @@ export default {
           color: 'rgb(202,196,185)'
         },
         {
+          devNo: '27',
           x: '540',
           y: '400',
           nodeName: 'L波段\n中频\n矩阵\n(上行)',
@@ -1057,6 +1148,7 @@ export default {
           color: '#e9cdf6'
         },
         {
+          devNo: '28',
           x: '540',
           y: '220',
           nodeName: 'L波段\n中频\n矩阵\n(下行)',
@@ -1085,6 +1177,7 @@ export default {
           category: 2
         },
         {
+          devNo: '30',
           x: '660',
           y: '390',
           nodeName: '1:1转换单元  ',
@@ -1123,6 +1216,7 @@ export default {
           category: 2
         },
         {
+          devNo: '31',
           x: '660',
           y: '260',
           nodeName: '1:1转换单元  ',
@@ -1143,6 +1237,7 @@ export default {
 
 
         {
+          devNo: '22',
           x: '660',
           y: '160',
           nodeName: '频谱监测接收设备   ',
@@ -1994,6 +2089,7 @@ export default {
         var x = parseInt(nodes[j].x)
         var y = parseInt(nodes[j].y)
         var node = {
+          devNo:nodes[j].devNo,
           showTag: nodes[j].id,
           nodeName: nodes[j].nodeName,
           value: [x, y],
@@ -2092,16 +2188,16 @@ export default {
               },
               data: [
                 {
-                  mark: 'ku iwta右上',
+                  mark: 'comtech右上',
                   symbolRotate: '90',
                   symbolSize: 5,
                   symbol: 'arrow',
                   name: '',
-                  x: 220,
+                  x: 225,
                   y: 240
                 },
                 {
-                  mark: 'ku iwta左上',
+                  mark: 'comtech左上',
                   symbolRotate: '180',
                   symbolSize: 5,
                   symbol: 'arrow',
@@ -2110,7 +2206,7 @@ export default {
                   y: 260
                 },
                 {
-                  mark: 'ku iwta左下',
+                  mark: 'comtech左下',
                   symbolSize: 5,
                   symbol: 'arrow',
                   name: '',
@@ -2159,7 +2255,7 @@ export default {
                   symbolSize: 5,
                   symbol: 'arrow',
                   name: '',
-                  x: 314,
+                  x: 315,
                   y: 255
                 },
 
@@ -2283,7 +2379,7 @@ export default {
                   symbolSize: 5,
                   symbol: 'arrow',
                   name: '',
-                  x: 408,
+                  x: 406,
                   y: 142
                 },
                 {
@@ -2373,17 +2469,42 @@ export default {
           },
         ]
       }
-      var that = this
-      this.dom.on('mouseover', function (e) {
+      dom.off('click')
+      dom.off('mouseover')
+      let that = this
+      dom.on('mouseover', function (e) {
         if (e.data.showTag == 1) {
-          that.dom.dispatchAction({
+          dom.dispatchAction({
             type: 'downplay',
             seriesIndex: e.seriesIndex
           })
         }
       });
-      this.dom.setOption(option);
-      on(window, 'resize', this.resize)
+      dom.on('click', function (info) {
+        if (info.data.devNo) {
+          that.paramModal = true
+          that.paramModalShow = false
+          that.$nextTick(() => {
+            that.paramModalShow = true
+            that.$nextTick(() => {
+              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+            })
+          })
+        }
+      });
+      dom.setOption(option);
+    },
+    openParam(info) {
+      if (info.devNo) {
+        this.paramModal = true
+        this.paramModalShow = false
+        this.$nextTick(() => {
+          this.paramModalShow = true
+          this.$nextTick(() => {
+            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+          })
+        })
+      }
     }
   }
 }
@@ -2392,6 +2513,7 @@ export default {
 .charts {
   height: 518px;
   width: 830px;
+  margin-top: -15px;
 }
 </style>
 <style lang="less" scoped>
@@ -2473,29 +2595,29 @@ export default {
 
 .device_title {
   cursor: pointer;
-  margin-top: -21px;
+  margin-top: -19px;
   z-index: 999;
   position: relative;
 
   span {
     display: inline-block;
     background: #009688;
-    height: 10px;
-    width: 10px;
+    height: 14px;
+    width: 14px;
     border-radius: 50%;
   }
 }
 
 .device_status {
-  margin-top: -21px;
+  margin-top: -19px;
   z-index: 100;
   position: relative;
 
   span {
     display: inline-block;
     background: #009688;
-    height: 10px;
-    width: 10px;
+    height: 12px;
+    width: 12px;
     border-radius: 50%;
   }
 }

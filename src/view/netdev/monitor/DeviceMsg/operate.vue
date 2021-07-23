@@ -5,8 +5,8 @@
 
       <div  style="display: flex;margin-left: 20px;">
         <span style="margin-top: 8px;margin-right: 20px">命令区</span>
-        <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
-          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
+        <div v-if="$route.meta.devType == '0020023'"  style="width: 20%">
+          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
           </i-switch>
@@ -18,8 +18,7 @@
         </Button>
       </div>
     </div>
-
-<!--    基本参数-->
+<!-- 基本参数-->
     <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
       <common :infos="closeInfos"></common>
       <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
@@ -32,7 +31,6 @@
       </div>
       <common v-if="openParam" :infos="openInfos"></common>
     </div>
-
 <!--    父框子-->
     <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in closeCombineList">
@@ -49,10 +47,7 @@
         <div v-if="info.ndpaIsImportant==0" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
-
-
     </div>
-
   </div>
 </template>
 <script>
@@ -73,8 +68,8 @@ export default {
       openSub:false,
       openParam:false,
       orderSwitch:true,
-      comHeight: 120,
-      normalHeight: 320,
+      comHeight: 160,
+      normalHeight: 160,
       devNo: null,
       paramSocket: null,
       openInfos: [],//展开
@@ -86,7 +81,8 @@ export default {
       timer: null,
       saveVal: false,
       timeIndex: 0,
-      selectObj: {}
+      selectObj: {},
+      isStop:false,
     }
   },
   created: function () {
@@ -914,12 +910,12 @@ export default {
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
         if(this.closeCombineList.length && !this.closeInfos.length){
-          this.comHeight = 320
+          this.comHeight = 310
         }else if(!this.closeCombineList.length && this.closeInfos.length){
-          this.normalHeight = 320
+          this.normalHeight = 310
         }else{
-          this.comHeight = 120
-          this.normalHeight = 120
+          this.comHeight = 150
+          this.normalHeight = 150
         }
       } else {
         if(this.closeCombineList.length && !this.closeInfos.length){
@@ -953,6 +949,18 @@ export default {
     getParamMsg(frame) {
       let msg = JSON.parse(frame.data)
       this.editData(msg)
+
+      if(!this.isStop){
+        this.isStop = true
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 310
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 310
+        }else{
+          this.comHeight = 150
+          this.normalHeight = 150
+        }
+      }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
@@ -1123,16 +1131,16 @@ export default {
      }
    }
    .ivu-switch{
-     height: 40px;
-     line-height: 40px;
+     height: 30px;
+     line-height: 30px;
    }
    .ivu-switch-inner {
-     font-size: 28px;
+     font-size: 24px;
    }
    .ivu-switch:after {
      content: '';
-     width: 32px;
-     height: 32px;
+     width: 24px;
+     height: 24px;
      border-radius: 18px;
      background-color: #fff;
      position: absolute;
