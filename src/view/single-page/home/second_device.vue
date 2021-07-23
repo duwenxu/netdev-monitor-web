@@ -642,7 +642,7 @@ export default {
     getWSData(WSdata) {
       if (WSdata.length) {
         //33，49
-        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22','49','33']
+        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22', '49', '33']
         //71，72/74，75/63，64/55,56/51,52/33,33-1/49，49-1
         this.equipments.forEach(device => {
           WSdata.forEach(item => {
@@ -670,7 +670,7 @@ export default {
             if (item.devNo == '49' && device.devNo == '49-1') {
               this.setWSDate(item, device)
             }
-            if (arr.indexOf(item.devNo)>-1 && item.devNo == device.devNo) {
+            if (arr.indexOf(item.devNo) > -1 && item.devNo == device.devNo) {
               this.setWSDate(item, device)
             }
           })
@@ -690,7 +690,7 @@ export default {
       if ((device.devNo == '49-1' || device.devNo == '33-1') && device.masterOrSlave == '0' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
-      if ((device.devNo == '49' ||device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
+      if ((device.devNo == '49' || device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
       if (device.isInterrupt === '0') {//是否中断 否0
@@ -705,22 +705,22 @@ export default {
           info = {background: '#ff1400'}
         }
 
-        if (device.devNo == '49' ||device.devNo == '33') {
+        if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
           }
-        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+        } else if (device.devNo == '49-1' || device.devNo == '33-1') {
           if (device.masterOrSlave == '0') {
             info = {background: '#009688'}
           }
         }
       } else {//中断 是 1
         info = {background: '#ff1400'}
-        if (device.devNo == '49' ||device.devNo == '33') {
+        if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
           }
-        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+        } else if (device.devNo == '49-1' || device.devNo == '33-1') {
           if (device.masterOrSlave == '0') {
             info = {background: '#009688'}
           }
@@ -729,7 +729,7 @@ export default {
       return info
     },
     masterStatus(equipment) {
-      let arr = [20, 22, 27, 28, 29, 30, 31,85]
+      let arr = [20, 22, 27, 28, 29, 30, 31, 85]
       if (arr.indexOf(Number(equipment.devNo)) == -1) {
         return {
           top: this.masterPosition[equipment.devNo].top,
@@ -893,7 +893,7 @@ export default {
           color: 'rgba(184,181,181)'
         },
         {
-          devNo:'85',
+          devNo: '85',
           x: '190',
           y: '340',
           nodeName: 'KaLNA   ',
@@ -1115,7 +1115,7 @@ export default {
         },
 
         {
-          devNo:'85',
+          devNo: '85',
           x: '190',
           y: '140',
           nodeName: 'KuLNA   ',
@@ -2003,7 +2003,7 @@ export default {
           },
         ],
         //交换机
-        transLines:[
+        transLines: [
           {
             mark: 'ka交换机',
             name: '交换机',
@@ -2048,7 +2048,7 @@ export default {
             coords: [[420, 275], [420, 290]],
           },
         ],
-        ereftlLines:[
+        ereftlLines: [
           {
             mark: 'lc交换机',
             name: '交换机',
@@ -2096,7 +2096,7 @@ export default {
         var x = parseInt(nodes[j].x)
         var y = parseInt(nodes[j].y)
         var node = {
-          devNo:nodes[j].devNo,
+          devNo: nodes[j].devNo,
           showTag: nodes[j].id,
           nodeName: nodes[j].nodeName,
           value: [x, y],
@@ -2138,33 +2138,33 @@ export default {
         },
         series: [
           {
-          type: 'graph',
-          z: 6,
-          coordinateSystem: 'cartesian2d',
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              //offset: [0,-60],//居上 20
-              textStyle: {
-                fontSize: 12,
-                color: 'black',
-
-              }
-            }
-          },
-          itemStyle: {
-            normal: {
-              label: {
+            type: 'graph',
+            z: 6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              normal: {
                 show: true,
-                formatter: function (item) {
-                  return item.data.nodeName
+                position: 'inside',
+                //offset: [0,-60],//居上 20
+                textStyle: {
+                  fontSize: 12,
+                  color: 'black',
+
                 }
               }
-            }
+            },
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  formatter: function (item) {
+                    return item.data.nodeName
+                  }
+                }
+              }
+            },
+            data: charts.nodes,
           },
-          data: charts.nodes,
-        },
           {
             type: "lines",
             symbol: ['circle', 'arrow'],
@@ -2416,7 +2416,7 @@ export default {
           {
             type: 'lines',
             symbol: ['none', 'none'],
-            z:4,
+            z: 4,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -2471,8 +2471,8 @@ export default {
           {
             type: 'lines',
             symbol: ['none', 'arrow'],
-            z:2,
-            symbolSize:6,
+            z: 2,
+            symbolSize: 6,
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
@@ -2489,8 +2489,8 @@ export default {
           {
             type: 'lines',
             symbol: ['arrow', 'arrow'],
-            z:1,
-            symbolSize:6,
+            z: 1,
+            symbolSize: 6,
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
@@ -2519,7 +2519,7 @@ export default {
       });
       dom.on('click', function (info) {
         if (info.data.devNo) {
-          var no = info.data.devNo == '33-1'?'33':(info.data.devNo == '49-1'?49:info.data.devNo)
+          var no = info.data.devNo == '33-1' ? '33' : (info.data.devNo == '49-1' ? 49 : info.data.devNo)
           that.paramModal = true
           that.paramModalShow = false
           that.$nextTick(() => {
@@ -2534,13 +2534,21 @@ export default {
     },
     openParam(info) {
       if (info.devNo) {
-        var no = info.devNo == '33-1'?'33':(info.devNo == '49-1'?49:info.devNo)
-        this.paramModal = true
+        let no = info.devNo == '33-1' ? '33' : (info.devNo == '49-1' ? '49' : info.devNo)
+        let obj = {
+          devNo: no
+        }
+       if(info.devNo == '33'){
+         obj.value = true
+       }else{
+         obj.value = false
+       }
+          this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true
           this.$nextTick(() => {
-            this.$xy.vector.$emit("deviceNumber", no)
+            this.$xy.vector.$emit("deviceNumber", obj)
           })
         })
       }
