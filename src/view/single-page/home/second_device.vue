@@ -1124,9 +1124,9 @@ export default {
         {
           x: '380',
           y: '50',
-          nodeName: '\n天线\n驱动\n单元\n(ADU)',
+          nodeName: '天线\n驱动\n单元\n(ADU)',
           img: 'rect',
-          size: [50, 80],
+          size: [50, 60],
           color: 'rgb(202,196,185)'
         },
         {
@@ -1319,91 +1319,102 @@ export default {
           nodeName: '维修仓',
           size: 0
         },
-
-        {
-          x: '480',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '480',
-          y: '740',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '760',
-          y: '1000',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '870',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1280',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1280',
-          y: '400',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1550',
-          y: '1140',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1550',
-          y: '860',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '900',
-          y: '570',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '900',
-          y: '370',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1000',
-          y: '750',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line_up.png'),
-          size: [75, 45]
-        },
-        {
-          x: '1000',
-          y: '100',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
+   //---------------------- 各个交换机位置-----------------------------------------------------
+   //      {
+   //        mark:'ka发射机',
+   //        x: '200',
+   //        y: '490',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
+   //        size: [60, 40]
+   //      },
+   //      {
+   //        mark:'kac',
+   //        x: '320',
+   //        y: '400',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'comtech',
+   //        x: '210',
+   //        y: '300',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line_down.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'lc上',
+   //        x: '370',
+   //        y: '500',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'lku',
+   //        x: '362',
+   //        y: '200',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'kul',
+   //        x: '362',
+   //        y: '102',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'天线控制',
+   //        x: '520',
+   //        y: '90',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'L波段4*4下行',
+   //        x: '490',
+   //        y: '200',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'L波段4*4上行',
+   //        x: '590',
+   //        y: '480',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'2300上',
+   //        x: '740',
+   //        y: '430',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        mark:'2300下',
+   //        x: '740',
+   //        y: '310',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line.png'),
+   //        size: [50, 30]
+   //      },
+   //      {
+   //        x: '440',
+   //        y: '280',
+   //        nodeName: '',
+   //        img: 'image://' + require('@/assets/images/home/trans_line_up.png'),
+   //        size: [50, 30]
+   //      },
       ]
       var charts = {
         nodes: [],
@@ -2083,7 +2094,69 @@ export default {
               color: '#143fdc '
             }
           },
-        ]
+        ],
+        transLines:[
+          {
+            mark: 'ka交换机',
+            name: '交换机',
+            coords: [[210, 500], [225, 500]],
+          },
+          {
+            mark: 'ka交换机',
+            name: '',
+            coords: [[190, 495], [190, 480]],
+          },
+
+          {
+            mark: 'comtech交换机',
+            name: '交换机',
+            coords: [[220, 310], [235, 310]],
+          },
+          {
+            mark: 'comtech交换机',
+            name: '',
+            coords: [[200, 305], [200, 290]],
+          },
+
+          {
+            mark: 'kac交换机',
+            name: '交换机',
+            coords: [[330, 410], [345, 410]],
+          },
+          {
+            mark: 'kac交换机',
+            name: '',
+            coords: [[310, 405], [310, 390]],
+          },
+
+          {
+            mark: 'cl交换机',
+            name: '交换机',
+            coords: [[440, 270], [455, 270]],
+          },
+          {
+            mark: 'cl交换机',
+            name: '',
+            coords: [[420, 275], [420, 290]],
+          },
+        ],
+        ereftlLines:[
+          {
+            mark: 'lc交换机',
+            name: '交换机',
+            coords: [[340, 495], [390, 495]],
+          },
+          {
+            mark: 'lku交换机',
+            name: '交换机',
+            coords: [[340, 195], [390, 195]],
+          },
+          {
+            mark: 'kul交换机',
+            name: '交换机',
+            coords: [[340, 95], [390, 95]],
+          },
+        ],
       }
       for (var j = 0; j < nodes.length; j++) {
         var x = parseInt(nodes[j].x)
@@ -2129,9 +2202,10 @@ export default {
           show: false,
           type: 'value'
         },
-        series: [{
+        series: [
+          {
           type: 'graph',
-          z: 4,
+          z: 6,
           coordinateSystem: 'cartesian2d',
           label: {
             normal: {
@@ -2159,8 +2233,8 @@ export default {
         },
           {
             type: "lines",
-            symbol: ['none', 'none'],
-            z: 2,
+            symbol: ['circle', 'arrow'],
+            z: 5,
             symbolSize: 10,
             polyline: true,
             coordinateSystem: "cartesian2d",
@@ -2173,13 +2247,6 @@ export default {
               width: 1,
               opacity: 1,
               curveness: 0
-            },
-            effect: {
-              show: false,
-              trailLength: 0.1,
-              symbol: 'arrow',
-              color: '#87e2ef',
-              symbolSize: 4
             },
             //箭头
             markPoint: {
@@ -2415,7 +2482,7 @@ export default {
           {
             type: 'lines',
             symbol: ['none', 'none'],
-            z: 3,
+            z:4,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -2443,7 +2510,7 @@ export default {
             type: 'lines',
             symbol: ['none', 'none'],
             polyline: true,
-            z: 1,
+            z: 3,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -2466,6 +2533,42 @@ export default {
               symbolSize: 4
             },
             data: charts.linesData
+          },
+          {
+            type: 'lines',
+            symbol: ['none', 'arrow'],
+            z:2,
+            symbolSize:6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              show: true,
+              position: 'start',
+            },
+            lineStyle: {
+              color: 'green',
+              width: 2,
+              opacity: 1,
+              curveness: 0
+            },
+            data: charts.transLines
+          },
+          {
+            type: 'lines',
+            symbol: ['arrow', 'arrow'],
+            z:1,
+            symbolSize:6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              color: 'green',
+              width: 2,
+              opacity: 1,
+              curveness: 0
+            },
+            data: charts.ereftlLines
           },
         ]
       }
