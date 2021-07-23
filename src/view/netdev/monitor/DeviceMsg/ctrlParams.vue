@@ -364,9 +364,8 @@ export default {
 }
 .node{
   margin-bottom: 10px;
-  width: 30%;
-  margin-left: 40px;
-
+  width: 46%;
+  margin-left: 20px;
 }
 </style>
 

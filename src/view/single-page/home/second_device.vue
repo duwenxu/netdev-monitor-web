@@ -2002,6 +2002,7 @@ export default {
             }
           },
         ],
+        //交换机
         transLines:[
           {
             mark: 'ka交换机',
@@ -2518,12 +2519,13 @@ export default {
       });
       dom.on('click', function (info) {
         if (info.data.devNo) {
+          var no = info.data.devNo == '33-1'?'33':(info.data.devNo == '49-1'?49:info.data.devNo)
           that.paramModal = true
           that.paramModalShow = false
           that.$nextTick(() => {
             that.paramModalShow = true
             that.$nextTick(() => {
-              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+              that.$xy.vector.$emit("deviceNumber", no)
             })
           })
         }
@@ -2532,12 +2534,13 @@ export default {
     },
     openParam(info) {
       if (info.devNo) {
+        var no = info.devNo == '33-1'?'33':(info.devNo == '49-1'?49:info.devNo)
         this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true
           this.$nextTick(() => {
-            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+            this.$xy.vector.$emit("deviceNumber", no)
           })
         })
       }
