@@ -179,7 +179,7 @@ export default {
   methods: {
     getDevNo(data) {
       this.viewLog = false
-      this.devNo = data
+      this.devNo = data.devNo
       this.getTabsCtrl()
       this.logWs()
     },

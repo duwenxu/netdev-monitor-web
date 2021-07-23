@@ -5,7 +5,7 @@
 
       <div  style="display: flex;margin-left: 20px;">
         <span style="margin-top: 8px;margin-right: 20px">命令区</span>
-        <div v-if="$route.meta.devType == '0020023'"  style="width: 20%">
+        <div v-if="$route.meta.devType == '0020023' || isShow"  style="width: 20%">
           <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       openSub:false,
+      isShow:false,
       openParam:false,
       orderSwitch:true,
       comHeight: 160,
@@ -904,7 +905,12 @@ export default {
       this.paramSocket = null
     },
     getDevNo(data) {
-      this.devNo = data
+      this.devNo = data.devNo
+      this.isShow = data.value !== ''
+      this.$nextTick(()=>{
+        this.orderSwitch = data.value
+      })
+
       this.initWebSocket()
     },
     sizeInfo(data) {
