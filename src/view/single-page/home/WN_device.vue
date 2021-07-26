@@ -38,7 +38,7 @@ export default {
         {
           devNo: '2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -54,7 +54,7 @@ export default {
         {
           devNo: '2-2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -70,7 +70,7 @@ export default {
         {
           devNo: '11',
           name: 'A调制解调器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -86,7 +86,7 @@ export default {
         {
           devNo: '12',
           name: 'A调制解调器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -102,7 +102,7 @@ export default {
         {
           devNo: '13',
           name: 'B调制解调器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -118,7 +118,7 @@ export default {
         {
           devNo: '14',
           name: 'B调制解调器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -134,7 +134,7 @@ export default {
         {
           devNo: '30',
           name: '1:1转换单元(上调制)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -149,7 +149,7 @@ export default {
         {
           devNo: '31',
           name: '1:1转换单元(下调制)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -164,7 +164,7 @@ export default {
         {
           devNo: '20',
           name: '2.4m天线ACU',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -179,7 +179,7 @@ export default {
         {
           devNo: '40',
           name: '下变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -195,7 +195,7 @@ export default {
         {
           devNo: '41',
           name: '下变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -870,7 +870,7 @@ export default {
         {
           x: '450',
           y: '430',
-          devNo: 11,
+          devNo: '11',
           isMajor: true,
           type: 1,//主机
           nodeName: '650调制解调器    ',
@@ -893,7 +893,7 @@ export default {
         {
           x: '450',
           y: '370',
-          devNo: 12,
+          devNo: '12',
           isMajor: true,
           type: 0,//备机
           nodeName: '650调制解调器    ',
@@ -915,7 +915,7 @@ export default {
         {
           x: '450',
           y: '305',
-          devNo: 13,
+          devNo: '13',
           isMajor: true,
           type: 1,//主机
           nodeName: '650调制解调器    ',
@@ -937,7 +937,7 @@ export default {
         {
           x: '450',
           y: '245',
-          devNo: 14,
+          devNo: '14',
           type: 0,//备机
           isMajor: true,
           nodeName: '650调制解调器    ',
@@ -968,7 +968,7 @@ export default {
         {
           x: '450',
           y: '50',
-          devNo: 20,
+          devNo: '20',
           isMajor: true,
           nodeName: '\n\n天线控制\n单元\n(ACU)',
           img: 'rect',
@@ -2337,7 +2337,7 @@ export default {
           that.$nextTick(() => {
             that.paramModalShow = true
             that.$nextTick(() => {
-              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+              that.$xy.vector.$emit("deviceNumber", {devNo:info.data.devNo,value:false})
             })
           })
         }
@@ -2346,15 +2346,15 @@ export default {
       // on(window, 'resize', this.resize)
     },
     openParam(info) {
+      let no = info.devNo == '2-2' ? '2' : info.devNo
       if (info.devNo) {
         this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true
           this.$nextTick(() => {
-            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+            this.$xy.vector.$emit("deviceNumber", {devNo:no,value:false})
           })
-
         })
       }
     }
