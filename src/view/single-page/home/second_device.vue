@@ -27,12 +27,12 @@
 <script>
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
-// import mixin from "../../../components/common/websocket";
+import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {
   components: {DeviceMain},
-  // mixins: [mixin],
+  mixins: [mixin],
   data() {
     return {
       // dom: null,
@@ -42,7 +42,7 @@ export default {
         {
           devNo: '85',
           name: 'LNA电源监控',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -56,7 +56,7 @@ export default {
         {
           devNo: '85',
           name: 'LNA电源监控',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -70,7 +70,7 @@ export default {
         {
           devNo: '20',
           name: '2.4m天线ACU',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -84,7 +84,7 @@ export default {
         {
           devNo: '22',
           name: '频谱监测',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -99,7 +99,7 @@ export default {
         {
           devNo: '27',
           name: 'L频段4X4上行开关矩阵',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -114,7 +114,7 @@ export default {
         {
           devNo: '28',
           name: 'L频段4X4下行开关矩阵',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -129,7 +129,7 @@ export default {
         {
           devNo: '29',
           name: 'Ka频段100W发射机',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -144,7 +144,7 @@ export default {
         {
           devNo: '30',
           name: '1:1转换单元(00)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -159,7 +159,7 @@ export default {
         {
           devNo: '31',
           name: '1:1转换单元(01)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -174,7 +174,7 @@ export default {
         {
           devNo: '33',
           name: 'Comtech1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -190,7 +190,7 @@ export default {
         {
           devNo: '33-1',
           name: 'Comtech2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -206,7 +206,7 @@ export default {
         {
           devNo: '49',
           name: 'kac下变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -222,7 +222,7 @@ export default {
         {
           devNo: '49-1',
           name: 'kac下变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -238,7 +238,7 @@ export default {
         {
           devNo: '51',
           name: 'lku上变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -254,7 +254,7 @@ export default {
         {
           devNo: '52',
           name: 'lku上变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -270,7 +270,7 @@ export default {
         {
           devNo: '55',
           name: 'kul下变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -286,7 +286,7 @@ export default {
         {
           devNo: '56',
           name: 'kul下变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -302,7 +302,7 @@ export default {
         {
           devNo: '59',
           name: 'lc上变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -318,7 +318,7 @@ export default {
         {
           devNo: '60',
           name: 'lc上变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -334,7 +334,7 @@ export default {
         {
           devNo: '63',
           name: 'cl下变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -350,7 +350,7 @@ export default {
         {
           devNo: '64',
           name: 'cl下变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -367,7 +367,7 @@ export default {
         {
           devNo: '71',
           name: '2300调制解调器A',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -383,7 +383,7 @@ export default {
         {
           devNo: '72',
           name: '2300调制解调器B',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -399,7 +399,7 @@ export default {
         {
           devNo: '74',
           name: '2300调制解调器A',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -415,7 +415,7 @@ export default {
         {
           devNo: '75',
           name: '2300调制解调器B',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -635,591 +635,591 @@ export default {
     }
   },
   mounted() {
-    this.initTime()
+    // this.initTime()
     this.init()
   },
   methods: {
 
 
-    initTime() {
-      this.timer = setInterval(this.scrollAnimate, 2000);
-    },
-    scrollAnimate() {
-      setTimeout(() => {
-        let data = [{
-          "devDeployType": "0031001",
-          "devNo": "49",
-          "devTypeCode": "27",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "50",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "51",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "52",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "53",
-          "devTypeCode": "5",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "10",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "54",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "11",
-          "devTypeCode": "7",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "55",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "12",
-          "devTypeCode": "7",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "56",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "13",
-          "devTypeCode": "7",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "57",
-          "devTypeCode": "5",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "14",
-          "devTypeCode": "7",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "58",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "15",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "59",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "16",
-          "devTypeCode": "9",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "17",
-          "devTypeCode": "9",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "18",
-          "devTypeCode": "10",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "2",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "3",
-          "devTypeCode": "2",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "1",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "4",
-          "devTypeCode": "2",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "1",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "9",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "60",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "61",
-          "devTypeCode": "5",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "62",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "63",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "20",
-          "devTypeCode": "1",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031003",
-          "devNo": "64",
-          "devTypeCode": "4",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "21",
-          "devTypeCode": "12",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "65",
-          "devTypeCode": "5",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "22",
-          "devTypeCode": "13",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "23",
-          "devTypeCode": "15",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "24",
-          "devTypeCode": "16",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "25",
-          "devTypeCode": "17",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "26",
-          "devTypeCode": "14",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "27",
-          "devTypeCode": "30",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "28",
-          "devTypeCode": "31",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "29",
-          "devTypeCode": "28",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "70",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "71",
-          "devTypeCode": "11",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "72",
-          "devTypeCode": "11",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031004",
-          "devNo": "73",
-          "devTypeCode": "",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "30",
-          "devTypeCode": "8",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "74",
-          "devTypeCode": "11",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "31",
-          "devTypeCode": "8",
-          "isAlarm": "0",
-          "isInterrupt": "0",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "75",
-          "devTypeCode": "11",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "1",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "32",
-          "devTypeCode": "20",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "33",
-          "devTypeCode": "21",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "34",
-          "devTypeCode": "22",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "35",
-          "devTypeCode": "23",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "36",
-          "devTypeCode": "24",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "37",
-          "devTypeCode": "25",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031001",
-          "devNo": "38",
-          "devTypeCode": "26",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "85",
-          "devTypeCode": "29",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }, {
-          "devDeployType": "0031002",
-          "devNo": "86",
-          "devTypeCode": "32",
-          "isAlarm": "0",
-          "isInterrupt": "1",
-          "isUseStandby": "0",
-          "masterOrSlave": "0",
-          "stationId": null,
-          "workStatus": "0"
-        }]
-        this.getWSData(data)
-      }, 1000)
-    },
+    // initTime() {
+    //   this.timer = setInterval(this.scrollAnimate, 2000);
+    // },
+    // scrollAnimate() {
+    //   setTimeout(() => {
+    //     let data = [{
+    //       "devDeployType": "0031001",
+    //       "devNo": "49",
+    //       "devTypeCode": "27",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "50",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "51",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "52",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "53",
+    //       "devTypeCode": "5",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "10",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "54",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "11",
+    //       "devTypeCode": "7",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "55",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "12",
+    //       "devTypeCode": "7",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "56",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "13",
+    //       "devTypeCode": "7",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "57",
+    //       "devTypeCode": "5",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "14",
+    //       "devTypeCode": "7",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "58",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "15",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "59",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "16",
+    //       "devTypeCode": "9",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "17",
+    //       "devTypeCode": "9",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "18",
+    //       "devTypeCode": "10",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "2",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "3",
+    //       "devTypeCode": "2",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "1",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "4",
+    //       "devTypeCode": "2",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "1",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "9",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "60",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "61",
+    //       "devTypeCode": "5",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "62",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "63",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "20",
+    //       "devTypeCode": "1",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031003",
+    //       "devNo": "64",
+    //       "devTypeCode": "4",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "21",
+    //       "devTypeCode": "12",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "65",
+    //       "devTypeCode": "5",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "22",
+    //       "devTypeCode": "13",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "0",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "23",
+    //       "devTypeCode": "15",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "24",
+    //       "devTypeCode": "16",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "25",
+    //       "devTypeCode": "17",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "26",
+    //       "devTypeCode": "14",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "27",
+    //       "devTypeCode": "30",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "28",
+    //       "devTypeCode": "31",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "29",
+    //       "devTypeCode": "28",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "70",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "71",
+    //       "devTypeCode": "11",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "72",
+    //       "devTypeCode": "11",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031004",
+    //       "devNo": "73",
+    //       "devTypeCode": "",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "30",
+    //       "devTypeCode": "8",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "0",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "74",
+    //       "devTypeCode": "11",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "31",
+    //       "devTypeCode": "8",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "0",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "75",
+    //       "devTypeCode": "11",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "1",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "32",
+    //       "devTypeCode": "20",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "33",
+    //       "devTypeCode": "21",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "34",
+    //       "devTypeCode": "22",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "35",
+    //       "devTypeCode": "23",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "36",
+    //       "devTypeCode": "24",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "37",
+    //       "devTypeCode": "25",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031001",
+    //       "devNo": "38",
+    //       "devTypeCode": "26",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "85",
+    //       "devTypeCode": "29",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }, {
+    //       "devDeployType": "0031002",
+    //       "devNo": "86",
+    //       "devTypeCode": "32",
+    //       "isAlarm": "0",
+    //       "isInterrupt": "1",
+    //       "isUseStandby": "0",
+    //       "masterOrSlave": "0",
+    //       "stationId": null,
+    //       "workStatus": "0"
+    //     }]
+    //     this.getWSData(data)
+    //   }, 1000)
+    // },
 
 
     getWSData(WSdata) {
@@ -1287,7 +1287,6 @@ export default {
         } else {//不正常 则直接故障
           info = {background: '#ff1400'}
         }
-
         if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
@@ -1298,17 +1297,7 @@ export default {
           }
         }
       } else {//中断 是 1
-
         info = {background: '#ff1400'}
-        if (device.devNo == '49' || device.devNo == '33') {
-          if (device.masterOrSlave == '1') {
-            info = {background: '#009688'}
-          }
-        } else if (device.devNo == '49-1' || device.devNo == '33-1') {
-          if (device.masterOrSlave == '0') {
-            info = {background: '#009688'}
-          }
-        }
       }
       return info
     },
