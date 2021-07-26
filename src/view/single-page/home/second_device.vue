@@ -27,12 +27,12 @@
 <script>
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
-import mixin from "../../../components/common/websocket";
+// import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {
   components: {DeviceMain},
-  mixins: [mixin],
+  // mixins: [mixin],
   data() {
     return {
       // dom: null,
@@ -635,14 +635,597 @@ export default {
     }
   },
   mounted() {
+    this.initTime()
     this.init()
   },
   methods: {
 
+
+    initTime() {
+      this.timer = setInterval(this.scrollAnimate, 2000);
+    },
+    scrollAnimate() {
+      setTimeout(() => {
+        let data = [{
+          "devDeployType": "0031001",
+          "devNo": "49",
+          "devTypeCode": "27",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "50",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "51",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "52",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "53",
+          "devTypeCode": "5",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "10",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "54",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "11",
+          "devTypeCode": "7",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "55",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "12",
+          "devTypeCode": "7",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "56",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "13",
+          "devTypeCode": "7",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "57",
+          "devTypeCode": "5",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "14",
+          "devTypeCode": "7",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "58",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "15",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "59",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "16",
+          "devTypeCode": "9",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "17",
+          "devTypeCode": "9",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "18",
+          "devTypeCode": "10",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "2",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "3",
+          "devTypeCode": "2",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "1",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "4",
+          "devTypeCode": "2",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "1",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "9",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "60",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "61",
+          "devTypeCode": "5",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "62",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "63",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "20",
+          "devTypeCode": "1",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031003",
+          "devNo": "64",
+          "devTypeCode": "4",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "21",
+          "devTypeCode": "12",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "65",
+          "devTypeCode": "5",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "22",
+          "devTypeCode": "13",
+          "isAlarm": "0",
+          "isInterrupt": "0",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "23",
+          "devTypeCode": "15",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "24",
+          "devTypeCode": "16",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "25",
+          "devTypeCode": "17",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "26",
+          "devTypeCode": "14",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "27",
+          "devTypeCode": "30",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "28",
+          "devTypeCode": "31",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "29",
+          "devTypeCode": "28",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "70",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "71",
+          "devTypeCode": "11",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "72",
+          "devTypeCode": "11",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031004",
+          "devNo": "73",
+          "devTypeCode": "",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "30",
+          "devTypeCode": "8",
+          "isAlarm": "0",
+          "isInterrupt": "0",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "74",
+          "devTypeCode": "11",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "31",
+          "devTypeCode": "8",
+          "isAlarm": "0",
+          "isInterrupt": "0",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "75",
+          "devTypeCode": "11",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "1",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "32",
+          "devTypeCode": "20",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "33",
+          "devTypeCode": "21",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "34",
+          "devTypeCode": "22",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "35",
+          "devTypeCode": "23",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "36",
+          "devTypeCode": "24",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "37",
+          "devTypeCode": "25",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031001",
+          "devNo": "38",
+          "devTypeCode": "26",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "85",
+          "devTypeCode": "29",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }, {
+          "devDeployType": "0031002",
+          "devNo": "86",
+          "devTypeCode": "32",
+          "isAlarm": "0",
+          "isInterrupt": "1",
+          "isUseStandby": "0",
+          "masterOrSlave": "0",
+          "stationId": null,
+          "workStatus": "0"
+        }]
+        this.getWSData(data)
+      }, 1000)
+    },
+
+
     getWSData(WSdata) {
       if (WSdata.length) {
         //33，49
-        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22', '49', '33']
+        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22', '49', '33','85','29']
         //71，72/74，75/63，64/55,56/51,52/33,33-1/49，49-1
         this.equipments.forEach(device => {
           WSdata.forEach(item => {
@@ -715,6 +1298,7 @@ export default {
           }
         }
       } else {//中断 是 1
+
         info = {background: '#ff1400'}
         if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
@@ -2519,13 +3103,12 @@ export default {
       });
       dom.on('click', function (info) {
         if (info.data.devNo) {
-          var no = info.data.devNo == '33-1' ? '33' : (info.data.devNo == '49-1' ? 49 : info.data.devNo)
           that.paramModal = true
           that.paramModalShow = false
           that.$nextTick(() => {
             that.paramModalShow = true
             that.$nextTick(() => {
-              that.$xy.vector.$emit("deviceNumber", no)
+              that.$xy.vector.$emit("deviceNumber", {devNo: info.data.devNo,value:false})
             })
           })
         }
@@ -2538,12 +3121,12 @@ export default {
         let obj = {
           devNo: no
         }
-       if(info.devNo == '33'){
-         obj.value = true
-       }else{
-         obj.value = false
-       }
-          this.paramModal = true
+        if (info.devNo == '33') {
+          obj.value = true
+        } else {
+          obj.value = false
+        }
+        this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true

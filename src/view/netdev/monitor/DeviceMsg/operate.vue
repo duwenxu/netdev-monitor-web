@@ -905,8 +905,9 @@ export default {
       this.paramSocket = null
     },
     getDevNo(data) {
+      console.log(data.value)
       this.devNo = data.devNo
-      this.isShow = data.value !== ''
+      this.isShow = data.value
       this.$nextTick(()=>{
         this.orderSwitch = data.value
       })
