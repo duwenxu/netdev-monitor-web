@@ -642,7 +642,7 @@ export default {
     getWSData(WSdata) {
       if (WSdata.length) {
         //33，49
-        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '60', '51', '27', '28', '22','49','33']
+        let arr = ['30', '31', '20', '71', '74', '63', '66', '55', '59', '51', '27', '28', '22', '49', '33']
         //71，72/74，75/63，64/55,56/51,52/33,33-1/49，49-1
         this.equipments.forEach(device => {
           WSdata.forEach(item => {
@@ -661,13 +661,16 @@ export default {
             if (item.devNo == '55' && device.devNo == '56') {
               this.setWSDate(item, device)
             }
+            if (item.devNo == '59' && device.devNo == '60') {
+              this.setWSDate(item, device)
+            }
             if (item.devNo == '33' && device.devNo == '33-1') {
               this.setWSDate(item, device)
             }
             if (item.devNo == '49' && device.devNo == '49-1') {
               this.setWSDate(item, device)
             }
-            if (arr.indexOf(item.devNo)>-1 && item.devNo == device.devNo) {
+            if (arr.indexOf(item.devNo) > -1 && item.devNo == device.devNo) {
               this.setWSDate(item, device)
             }
           })
@@ -687,7 +690,7 @@ export default {
       if ((device.devNo == '49-1' || device.devNo == '33-1') && device.masterOrSlave == '0' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
-      if ((device.devNo == '49' ||device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
+      if ((device.devNo == '49' || device.devNo == '33') && device.masterOrSlave == '1' && device.isAlarm == '1') {
         device.isAlarm = 0
       }
       if (device.isInterrupt === '0') {//是否中断 否0
@@ -702,22 +705,22 @@ export default {
           info = {background: '#ff1400'}
         }
 
-        if (device.devNo == '49' ||device.devNo == '33') {
+        if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
           }
-        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+        } else if (device.devNo == '49-1' || device.devNo == '33-1') {
           if (device.masterOrSlave == '0') {
             info = {background: '#009688'}
           }
         }
       } else {//中断 是 1
         info = {background: '#ff1400'}
-        if (device.devNo == '49' ||device.devNo == '33') {
+        if (device.devNo == '49' || device.devNo == '33') {
           if (device.masterOrSlave == '1') {
             info = {background: '#009688'}
           }
-        } else if (device.devNo == '49-1' ||device.devNo == '33-1') {
+        } else if (device.devNo == '49-1' || device.devNo == '33-1') {
           if (device.masterOrSlave == '0') {
             info = {background: '#009688'}
           }
@@ -726,7 +729,7 @@ export default {
       return info
     },
     masterStatus(equipment) {
-      let arr = [20, 22, 27, 28, 29, 30, 31,85]
+      let arr = [20, 22, 27, 28, 29, 30, 31, 85]
       if (arr.indexOf(Number(equipment.devNo)) == -1) {
         return {
           top: this.masterPosition[equipment.devNo].top,
@@ -890,7 +893,7 @@ export default {
           color: 'rgba(184,181,181)'
         },
         {
-          devNo:'85',
+          devNo: '85',
           x: '190',
           y: '340',
           nodeName: 'KaLNA   ',
@@ -1112,7 +1115,7 @@ export default {
         },
 
         {
-          devNo:'85',
+          devNo: '85',
           x: '190',
           y: '140',
           nodeName: 'KuLNA   ',
@@ -1124,9 +1127,9 @@ export default {
         {
           x: '380',
           y: '50',
-          nodeName: '\n天线\n驱动\n单元\n(ADU)',
+          nodeName: '天线\n驱动\n单元\n(ADU)',
           img: 'rect',
-          size: [50, 80],
+          size: [50, 60],
           color: 'rgb(202,196,185)'
         },
         {
@@ -1318,91 +1321,6 @@ export default {
           y: '680',
           nodeName: '维修仓',
           size: 0
-        },
-
-        {
-          x: '480',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '480',
-          y: '740',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '760',
-          y: '1000',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans-line-down.png'),
-          size: [75, 45]
-        },
-        {
-          x: '870',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1280',
-          y: '1200',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1280',
-          y: '400',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1550',
-          y: '1140',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1550',
-          y: '860',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '900',
-          y: '570',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '900',
-          y: '370',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
-        },
-        {
-          x: '1000',
-          y: '750',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line_up.png'),
-          size: [75, 45]
-        },
-        {
-          x: '1000',
-          y: '100',
-          nodeName: '',
-          img: 'image://' + require('@/assets/images/home/trans_line.png'),
-          size: [80, 30]
         },
       ]
       var charts = {
@@ -2083,13 +2001,102 @@ export default {
               color: '#143fdc '
             }
           },
-        ]
+        ],
+        //交换机
+        transLines: [
+          {
+            mark: 'ka交换机',
+            name: '交换机',
+            coords: [[210, 500], [225, 500]],
+          },
+          {
+            mark: 'ka交换机',
+            name: '',
+            coords: [[190, 495], [190, 480]],
+          },
+
+          {
+            mark: 'comtech交换机',
+            name: '交换机',
+            coords: [[220, 310], [235, 310]],
+          },
+          {
+            mark: 'comtech交换机',
+            name: '',
+            coords: [[200, 305], [200, 290]],
+          },
+
+          {
+            mark: 'kac交换机',
+            name: '交换机',
+            coords: [[330, 410], [345, 410]],
+          },
+          {
+            mark: 'kac交换机',
+            name: '',
+            coords: [[310, 405], [310, 390]],
+          },
+
+          {
+            mark: 'cl交换机',
+            name: '交换机',
+            coords: [[440, 270], [455, 270]],
+          },
+          {
+            mark: 'cl交换机',
+            name: '',
+            coords: [[420, 275], [420, 290]],
+          },
+        ],
+        ereftlLines: [
+          {
+            mark: 'lc交换机',
+            name: '交换机',
+            coords: [[355, 495], [405, 495]],
+          },
+          {
+            mark: 'lku交换机',
+            name: '交换机',
+            coords: [[335, 195], [385, 195]],
+          },
+          {
+            mark: 'kul交换机',
+            name: '交换机',
+            coords: [[335, 95], [385, 95]],
+          },
+          {
+            mark: '4*4上',
+            name: '交换机',
+            coords: [[560, 470], [610, 470]],
+          },
+          {
+            mark: '4*4下',
+            name: '交换机',
+            coords: [[470, 200], [520, 200]],
+          },
+          {
+            mark: '2300上',
+            name: '交换机',
+            coords: [[715, 450], [765, 450]],
+          },
+          {
+            mark: '2300下',
+            name: '交换机',
+            coords: [[715, 310], [765, 310]],
+          },
+          {
+            mark: '天线控制单元',
+            name: '交换机',
+            coords: [[495, 80], [545, 80]],
+          },
+
+        ],
       }
       for (var j = 0; j < nodes.length; j++) {
         var x = parseInt(nodes[j].x)
         var y = parseInt(nodes[j].y)
         var node = {
-          devNo:nodes[j].devNo,
+          devNo: nodes[j].devNo,
           showTag: nodes[j].id,
           nodeName: nodes[j].nodeName,
           value: [x, y],
@@ -2129,38 +2136,39 @@ export default {
           show: false,
           type: 'value'
         },
-        series: [{
-          type: 'graph',
-          z: 4,
-          coordinateSystem: 'cartesian2d',
-          label: {
-            normal: {
-              show: true,
-              position: 'inside',
-              //offset: [0,-60],//居上 20
-              textStyle: {
-                fontSize: 12,
-                color: 'black',
-
-              }
-            }
-          },
-          itemStyle: {
-            normal: {
-              label: {
+        series: [
+          {
+            type: 'graph',
+            z: 6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              normal: {
                 show: true,
-                formatter: function (item) {
-                  return item.data.nodeName
+                position: 'inside',
+                //offset: [0,-60],//居上 20
+                textStyle: {
+                  fontSize: 12,
+                  color: 'black',
+
                 }
               }
-            }
+            },
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  formatter: function (item) {
+                    return item.data.nodeName
+                  }
+                }
+              }
+            },
+            data: charts.nodes,
           },
-          data: charts.nodes,
-        },
           {
             type: "lines",
-            symbol: ['none', 'none'],
-            z: 2,
+            symbol: ['circle', 'arrow'],
+            z: 5,
             symbolSize: 10,
             polyline: true,
             coordinateSystem: "cartesian2d",
@@ -2173,13 +2181,6 @@ export default {
               width: 1,
               opacity: 1,
               curveness: 0
-            },
-            effect: {
-              show: false,
-              trailLength: 0.1,
-              symbol: 'arrow',
-              color: '#87e2ef',
-              symbolSize: 4
             },
             //箭头
             markPoint: {
@@ -2415,7 +2416,7 @@ export default {
           {
             type: 'lines',
             symbol: ['none', 'none'],
-            z: 3,
+            z: 4,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -2443,7 +2444,7 @@ export default {
             type: 'lines',
             symbol: ['none', 'none'],
             polyline: true,
-            z: 1,
+            z: 3,
             symbolSize: 10,
             coordinateSystem: 'cartesian2d',
             label: {
@@ -2467,6 +2468,42 @@ export default {
             },
             data: charts.linesData
           },
+          {
+            type: 'lines',
+            symbol: ['none', 'arrow'],
+            z: 2,
+            symbolSize: 6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              show: true,
+              position: 'start',
+            },
+            lineStyle: {
+              color: 'green',
+              width: 2,
+              opacity: 1,
+              curveness: 0
+            },
+            data: charts.transLines
+          },
+          {
+            type: 'lines',
+            symbol: ['arrow', 'arrow'],
+            z: 1,
+            symbolSize: 6,
+            coordinateSystem: 'cartesian2d',
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              color: 'green',
+              width: 2,
+              opacity: 1,
+              curveness: 0
+            },
+            data: charts.ereftlLines
+          },
         ]
       }
       dom.off('click')
@@ -2482,12 +2519,13 @@ export default {
       });
       dom.on('click', function (info) {
         if (info.data.devNo) {
+          var no = info.data.devNo == '33-1' ? '33' : (info.data.devNo == '49-1' ? 49 : info.data.devNo)
           that.paramModal = true
           that.paramModalShow = false
           that.$nextTick(() => {
             that.paramModalShow = true
             that.$nextTick(() => {
-              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+              that.$xy.vector.$emit("deviceNumber", no)
             })
           })
         }
@@ -2496,12 +2534,21 @@ export default {
     },
     openParam(info) {
       if (info.devNo) {
-        this.paramModal = true
+        let no = info.devNo == '33-1' ? '33' : (info.devNo == '49-1' ? '49' : info.devNo)
+        let obj = {
+          devNo: no
+        }
+       if(info.devNo == '33'){
+         obj.value = true
+       }else{
+         obj.value = false
+       }
+          this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true
           this.$nextTick(() => {
-            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+            this.$xy.vector.$emit("deviceNumber", obj)
           })
         })
       }
