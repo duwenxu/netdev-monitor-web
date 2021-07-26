@@ -648,15 +648,6 @@ export default {
         }
       } else {//中断 是 1
         info = {background: '#ff1400'}
-        if (device.devNo == '2') {
-          if (device.masterOrSlave == '1') {
-            info = {background: '#009688'}
-          }
-        } else if (device.devNo == '2-2') {
-          if (device.masterOrSlave == '0') {
-            info = {background: '#009688'}
-          }
-        }
       }
       return info
     },
