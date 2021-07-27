@@ -3107,13 +3107,19 @@ export default {
     openParam(info) {
       if (info.devNo) {
         let no = info.devNo == '33-1' ? '33' : (info.devNo == '49-1' ? '49' : info.devNo)
-        let obj = {
-          devNo: no
-        }
-        if (info.devNo == '33') {
-          obj.value = true
-        } else {
-          obj.value = false
+        let obj = {devNo: no}
+        switch (info.devNo){
+          case '33':
+            obj.value = true
+            obj.show = true
+            break;
+           case '33-1':
+             obj.value = true
+             obj.show = false
+             break;
+          default:
+            obj.value = false
+            break;
         }
         this.paramModal = true
         this.paramModalShow = false
