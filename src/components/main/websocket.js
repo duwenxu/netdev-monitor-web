@@ -35,9 +35,8 @@ let mixin = {
       }
     },
     connectWs () {
-      // let socket_url =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // this.ws = new WebSocket(socket_url)
-      this.ws = new WebSocket(`ws://${this.$xy.SOCKET_URL}/ws`)
+      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
+      this.ws = new WebSocket(wsurl)
       this.ws.onopen = (evt) => {
         this.connectTag = true;
         this.clearWsStatus()
