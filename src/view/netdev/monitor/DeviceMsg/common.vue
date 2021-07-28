@@ -2,7 +2,6 @@
  <div>
    <div v-if="infos.length" class="box">
      <div v-for="(info,index) in infos" class="node"  v-if="info.ndpaIsImportant !=2">
-<!--       <template  v-if="($route.name == 'home' && info.ndpaIsImportant) || ($route.name != 'home' && info.ndpaIsImportant)">-->
          <template v-if="info.parahowMode == '0024001'">
            <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                  <span style="color: red;"  v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -119,17 +118,21 @@
              </Button>
            </div>
          </template>
-<!--       </template>-->
+
      </div>
    </div>
   <div v-else>
     <span>暂无数据</span>
   </div>
+   <Modal title="当前卫星信息" v-model="showModal" @on-ok="handleSubmit(1)">
+     <div style="white-space: pre-line" v-html="content"></div>
+   </Modal>
  </div>
 </template>
 
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
+import {querySpacePresetById} from "@/api/monitor/NtdvSpacePreset";
 export default {
   name: "common",
   props: {
@@ -139,6 +142,9 @@ export default {
   },
   data(){
     return{
+      showModal:false,
+      content:'',
+      planetInfo:{},
       lgCol:8,
       validTag: false,
       paramType: ['0019002'],
@@ -153,7 +159,35 @@ export default {
   },
   methods:{
     setValues(info){
+      console.log(info)
+      if(info.paraCmdMark === 'optSate' && info.devType === '0020001'){
+          this.showConfirmModal(info)
+      }
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.inputVal})
+    },
+    showConfirmModal(info){
+      this.$Modal.confirm({
+        title: '确认选择当前卫星吗?',
+        content: '确认后将无法取消！',
+        onOk: () => {
+          this.getTypeAndValue(info)
+        },
+        onCancel: () => {
+          this.$Notice.warning({
+            title: '取消',
+            desc: '已取消！',
+            duration: 3
+          })
+        }
+      })
+    },
+  async getTypeAndValue(info){
+      let {success,result,error} = await querySpacePresetById(info.inputVal)
+       if(success){
+          this.showModal = true
+          this.content = result
+          this.planetInfo = info
+       }
     },
     splitValue(info,temp){
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
@@ -280,11 +314,10 @@ export default {
     },
     handleSubmit(info) {
       if (!this.validTag) {
-        this.save(info)
+      info ===1?this.save(this.planetInfo):this.save(info)
       }
     },
     async save(info) {
-
       let obj = {
         devNo: info.devNo,
         paraCmdMark: info.paraCmdMark,
