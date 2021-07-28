@@ -124,9 +124,6 @@
   <div v-else>
     <span>暂无数据</span>
   </div>
-   <Modal title="当前卫星信息" v-model="showModal" @on-ok="handleSubmit(1)">
-     <div style="white-space: pre-line" v-html="content"></div>
-   </Modal>
  </div>
 </template>
 
@@ -159,18 +156,21 @@ export default {
   },
   methods:{
     setValues(info){
-      console.log(info)
-      if(info.paraCmdMark === 'optSate' && info.devType === '0020001'){
-          this.showConfirmModal(info)
-      }
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.inputVal})
     },
-    showConfirmModal(info){
+
+  async getTypeAndValue(info){
+      let {success,result,error} = await querySpacePresetById(info.inputVal)
+       if(success){
+         this.showConfirmModal(success,result,error,info)
+       }
+    },
+    showConfirmModal(success,result,error,info){
       this.$Modal.confirm({
         title: '确认选择当前卫星吗?',
-        content: '确认后将无法取消！',
+        content: success?result:error,
         onOk: () => {
-          this.getTypeAndValue(info)
+          this.save(info)
         },
         onCancel: () => {
           this.$Notice.warning({
@@ -180,14 +180,6 @@ export default {
           })
         }
       })
-    },
-  async getTypeAndValue(info){
-      let {success,result,error} = await querySpacePresetById(info.inputVal)
-       if(success){
-          this.showModal = true
-          this.content = result
-          this.planetInfo = info
-       }
     },
     splitValue(info,temp){
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
@@ -314,7 +306,11 @@ export default {
     },
     handleSubmit(info) {
       if (!this.validTag) {
-      info ===1?this.save(this.planetInfo):this.save(info)
+        if(info.paraCmdMark === 'optSate' && info.devType === '0020001'){
+          this.getTypeAndValue(info)
+        }else{
+          this.save(info)
+        }
       }
     },
     async save(info) {
