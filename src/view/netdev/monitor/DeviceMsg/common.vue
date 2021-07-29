@@ -126,7 +126,7 @@
   </div>
    <Modal v-model="showModal" footer-hide>
      <div slot="header">
-       <Icon size="24" style="color: #ffbf00" type="md-warning" />卫星
+       <Icon size="24" style="color: #ffbf00" type="md-alert" />确定选择当前卫星进行一键对星命令吗？
      </div>
      <Form ref="planetData" :model="planetData">
            <FormItem :label="info.name+'：'" :label-width="100" v-for="info in planets">
@@ -148,10 +148,10 @@
            </FormItem>
        <FormItem style="float: right">
          <Button type="primary" @click="savePlanetInfo()" style="margin-right: 10px">确认</Button>
-         <Button type="primary" @click="cancelPlanet()" >取消</Button>
+         <Button @click="cancelPlanet()" >取消</Button>
        </FormItem>
      </Form>
-     <div style="color:red;font-size: 16px"><Icon size="20" type="ios-warning-outline"/>此操作一经确认，无法取消！</div>
+     <div style="color:red;font-size: 12px"><Icon size="20" type="ios-warning-outline"/>此操作一经确认，无法取消！</div>
    </Modal>
  </div>
 </template>
@@ -181,6 +181,7 @@ export default {
       validTag: false,
       paramType: ['0019002'],
       accessView:false,
+      currentParam:{},
     }
   },
   mounted() {
@@ -208,6 +209,8 @@ export default {
           desc: '保存成功！',
           duration: 1
         })
+        this.showModal=false
+        this.close(this.currentParam)
       }
     },
     showConfirmModal(success,result,error,info){
@@ -219,6 +222,7 @@ export default {
         }
         this.planetData = result
         this.showModal = true
+        this.currentParam = info
       }
     },
     cancelPlanet(){
