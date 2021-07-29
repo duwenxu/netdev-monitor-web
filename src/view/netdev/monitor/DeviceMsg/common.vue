@@ -124,7 +124,10 @@
   <div v-else>
     <span>暂无数据</span>
   </div>
-   <Modal title="当前卫星信息" v-model="showModal" footer-hide>
+   <Modal v-model="showModal" footer-hide>
+     <div slot="header">
+       <Icon size="24" style="color: #ffbf00" type="md-warning" />卫星
+     </div>
      <Form ref="planetData" :model="planetData">
            <FormItem :label="info.name+'：'" :label-width="100" v-for="info in planets">
              <Row>
