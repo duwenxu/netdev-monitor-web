@@ -124,9 +124,12 @@
   <div v-else>
     <span>暂无数据</span>
   </div>
+   <Modal title="当前卫星信息" v-model="showModal">
+
+
+   </Modal>
  </div>
 </template>
-
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {querySpacePresetById} from "@/api/monitor/NtdvSpacePreset";
