@@ -167,8 +167,13 @@ export default {
     },
     showConfirmModal(success,result,error,info){
       this.$Modal.confirm({
-        title: '确认选择当前卫星吗?',
-        content: success?result:error,
+        title: '确认选择当前卫星执行一键对星命令吗?',
+        content: success?'卫星名称：'+result.spName+'<br>'+
+                         '卫星代号：'+result.spCode+'<br>'+
+                         '卫星经度：'+result.spLongitude+'<br>'+
+                         '信标频率：'+result.spBeaconFrequency+'<br>'+
+                         '极化方向：'+result.spPolarization+'<br>'+
+                         '<p style="color:red;font-size: 1px">此操作一经确认，无法取消！':error,
         onOk: () => {
           this.save(info)
         },
