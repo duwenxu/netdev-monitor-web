@@ -124,15 +124,37 @@
   <div v-else>
     <span>暂无数据</span>
   </div>
-   <Modal title="当前卫星信息" v-model="showModal">
-
-
+   <Modal title="当前卫星信息" v-model="showModal" footer-hide>
+     <Form ref="planetData" :model="planetData">
+           <FormItem :label="info.name+'：'" :label-width="100" v-for="info in planets">
+             <Row>
+             <Col :xs="20" :sm="20" :md="20" :lg="20">
+               <span v-if="!info.show" style="cursor: pointer" @click="editInputValue(info)">{{planetData[info.value]}}</span>
+               <Input v-if="info.show" v-model.trim="planetData[info.value]" :placeholder="info.name"></Input>
+             </Col>
+             <Col :xs="4" :sm="4" :md="4" :lg="4">
+               <Button v-if="info.show" type="primary" @click="setValueToText(info)" size="small"
+                       style="margin-right:1px;margin-top: 4px">
+                 <Icon type="md-checkmark" size="15"></Icon>
+               </Button>
+               <Button v-if="info.show" type="default" @click="closeInput(info)" size="small" style="margin-top: 4px">
+                 <Icon type="md-close" size="15"></Icon>
+               </Button>
+             </Col>
+             </Row>
+           </FormItem>
+       <FormItem style="float: right">
+         <Button type="primary" @click="savePlanetInfo()" style="margin-right: 10px">确认</Button>
+         <Button type="primary" @click="cancelPlanet()" >取消</Button>
+       </FormItem>
+     </Form>
+     <div style="color:red;font-size: 16px"><Icon size="20" type="ios-warning-outline"/>此操作一经确认，无法取消！</div>
    </Modal>
  </div>
 </template>
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
-import {querySpacePresetById} from "@/api/monitor/NtdvSpacePreset";
+import {querySpacePresetById,savePlanetData} from "@/api/monitor/NtdvSpacePreset";
 export default {
   name: "common",
   props: {
@@ -142,9 +164,16 @@ export default {
   },
   data(){
     return{
+      planets:[
+        {name:'卫星名称',value:'spName',show:false},
+        {name:'卫星经度',value:'spLongitude',show:false},
+        {name:'信标频率',value:'spBeaconFrequency',show:false},
+        {name:'极化方向',value:'spPolarization',show:false},
+      ],
+      planetData:{},
+      planetInfo:{},
       showModal:false,
       content:'',
-      planetInfo:{},
       lgCol:8,
       validTag: false,
       paramType: ['0019002'],
@@ -161,34 +190,47 @@ export default {
     setValues(info){
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:info.inputVal})
     },
-
-  async getTypeAndValue(info){
+    async getTypeAndValue(info){
       let {success,result,error} = await querySpacePresetById(info.inputVal)
        if(success){
          this.showConfirmModal(success,result,error,info)
        }
     },
-    showConfirmModal(success,result,error,info){
-      this.$Modal.confirm({
-        title: '确认选择当前卫星执行一键对星命令吗?',
-        content: success?'卫星名称：'+result.spName+'<br>'+
-                         '卫星代号：'+result.spCode+'<br>'+
-                         '卫星经度：'+result.spLongitude+'<br>'+
-                         '信标频率：'+result.spBeaconFrequency+'<br>'+
-                         '极化方向：'+result.spPolarization+'<br>'+
-                         '<p style="color:red;font-size: 1px">此操作一经确认，无法取消！':error,
-        onOk: () => {
-          this.save(info)
-        },
-        onCancel: () => {
-          this.$Notice.warning({
-            title: '取消',
-            desc: '已取消！',
-            duration: 3
-          })
-        }
-      })
+    async savePlanetInfo(){
+      let obj = Object.assign(this.planetData,this.planetInfo)
+      let {success,result,error} = await savePlanetData(obj)
+      if(success){
+        this.$Notice.success({
+          title: '成功',
+          desc: '保存成功！',
+          duration: 1
+        })
+      }
     },
+    showConfirmModal(success,result,error,info){
+      if(success){
+        this.planetInfo = {
+          devNo:info.devNo,
+          paraNo:info.paraNo,
+          paraCmdMark:info.paraCmdMark
+        }
+        this.planetData = result
+        this.showModal = true
+      }
+    },
+    cancelPlanet(){
+      this.showModal = false
+    },
+    editInputValue(info){
+      this.$set(info,'show',!info.show)
+    },
+    setValueToText(info){
+       info.show = false
+    },
+    closeInput(info){
+       info.show = false
+    },
+
     splitValue(info,temp){
       this.$xy.vector.$emit('selectStatus', {paraId:info.paraId,status:info.selected,oldVal:temp.inputVal,name:temp.name,splitArr:info.splitArr})
     },
