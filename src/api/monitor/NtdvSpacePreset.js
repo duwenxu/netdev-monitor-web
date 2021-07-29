@@ -58,3 +58,16 @@ export const deleteSpacePreset = id => {
 
 
 
+/**
+ * 保存参数
+ */
+export const savePlanetData = info => {
+    return axios.request({
+        url: xy.Setting.SPACE_URL + '/SpacePreset/ntdv-space-preset/keyStarByPolar',
+        method: 'post',
+         data: qs.stringify(info)
+    })
+}
+
+
+
