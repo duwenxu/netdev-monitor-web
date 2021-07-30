@@ -10,6 +10,8 @@ let proto = document.location.protocol
 
 Setting.isLocal = true//是否开发环境
 if(Setting.isLocal){
+  // Setting.SPACE_URL = 'http://172.21.2.184:8080'
+  // Setting.SOCKET_URL = '172.21.2.184:8888/ws'
   Setting.SPACE_URL = 'http://172.21.5.226:8080'
   Setting.SOCKET_URL = '172.21.5.226:8888/ws'
 }else{

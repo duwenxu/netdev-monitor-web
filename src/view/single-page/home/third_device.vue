@@ -14,15 +14,9 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <div ref="test">
-      <Modal :closable="false" :styles="{marginTop:'-90px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"
-             width="80%" :mask-closable="false">
-<!--        <div slot="header"><span>参数信息</span>-->
-<!--          <Button style="float: right" size="small" @click="confirm">关闭</Button>-->
-<!--        </div>-->
-        <DeviceMain v-show="paramModal"></DeviceMain>
-      </Modal>
-    </div>
+    <Modal :closable="false" :styles="{marginTop:'-60px'}" v-model="paramModal" @on-ok="confirm" @on-cancel="confirm"   width="80%" :mask-closable="false">
+      <DeviceMain v-if="paramModalShow"></DeviceMain>
+    </Modal>
   </div>
 
 </template>
@@ -30,16 +24,13 @@
 import * as echarts from 'echarts'
 import mixin from "../../../components/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
-
-let dom = null
 export default {
   components: {DeviceMain},
   mixins: [mixin],
   data() {
     return {
       devNo: null,
-      // dom: null,
-      addSubOrgModalVif: false,
+      paramModalShow: false,
       paramModal: false,
       equipments: [
         {
@@ -343,32 +334,26 @@ export default {
         {shape: 'circle', color: '#009688', description: '正常'},
         {shape: 'circle', color: '#ff1400', description: '故障'},
         {shape: 'circle', color: '#ffbe08', description: '告警'}
-      ],
+      ]
     }
   },
   beforeDestroy() {
-    if (this.dom) {
-      this.dom.clear()
-      this.dom = null
+    let dom = echarts.getInstanceByDom(this.$refs.dom)
+    if (dom) {
+      dom.clear()
+      echarts.dispose(dom)
     }
     this.equipments = []
-
-    // off(window, 'resize', this.resize)
   },
   mounted() {
     // this.initTime()
-
-    this.dom = echarts.init(this.$refs.dom);
     this.init()
   },
   methods: {
     confirm() {
-      // if(this.dom){
-      //   this.dom.off('click')
-      // }
       this.$xy.vector.$emit("closeModal")
       this.paramModal = false
-      this.$refs.test.remove()
+      this.paramModalShow = false
     },
     initTime() {
       this.timer = setInterval(this.scrollAnimate, 100);
@@ -555,16 +540,11 @@ export default {
     getWSData(WSdata) {
       if (WSdata.length) {
         this.equipments.forEach(device => {
-          let dIndex = WSdata.findIndex(value => value.devNo == device.devNo)
-          if (dIndex > -1) {
-            WSdata.forEach(item => {
-              if (item.devNo == device.devNo) {
-                this.setWSDate(item, device)
-              }
-            })
-          } else {
-            this.$set(device, 'noData', true)
-          }
+          WSdata.forEach(item => {
+            if (item.devNo == device.devNo) {
+              this.setWSDate(item, device)
+            }
+          })
         })
       }
     },
@@ -609,6 +589,7 @@ export default {
       }
     },
     init() {
+      let dom = echarts.init(this.$refs.dom);
       let nodes = [
         {
           x: '34',
@@ -1465,7 +1446,7 @@ export default {
             name: '',
             coords: [[230, 500], [75, 500]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1476,7 +1457,7 @@ export default {
             name: '',
             coords: [[370, 630], [525, 630]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1487,7 +1468,7 @@ export default {
             name: '',
             coords: [[370, 580], [525, 580]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1498,7 +1479,7 @@ export default {
             name: '',
             coords: [[525, 730], [370, 730]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1509,7 +1490,7 @@ export default {
             name: '',
             coords: [[525, 670], [370, 670]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1521,7 +1502,7 @@ export default {
             name: '',
             coords: [[580, 605], [610, 605]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1532,7 +1513,7 @@ export default {
             name: '',
             coords: [[580, 590], [610, 590]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1543,7 +1524,7 @@ export default {
             name: '',
             coords: [[580, 575], [610, 575]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1554,7 +1535,7 @@ export default {
             name: '',
             coords: [[580, 560], [610, 560]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1565,7 +1546,7 @@ export default {
             name: '',
             coords: [[580, 545], [610, 545]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1576,7 +1557,7 @@ export default {
             name: '',
             coords: [[580, 530], [610, 530]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1588,7 +1569,7 @@ export default {
             name: '',
             coords: [[610, 745], [580, 745]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1599,7 +1580,7 @@ export default {
             name: '',
             coords: [[610, 730], [580, 730]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1610,7 +1591,7 @@ export default {
             name: '',
             coords: [[610, 715], [580, 715]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1621,7 +1602,7 @@ export default {
             name: '',
             coords: [[610, 700], [580, 700]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1632,7 +1613,7 @@ export default {
             name: '',
             coords: [[610, 685], [580, 685]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1643,7 +1624,7 @@ export default {
             name: '',
             coords: [[610, 670], [580, 670]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1654,7 +1635,7 @@ export default {
             name: '',
             coords: [[715, 735], [680, 735]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1665,7 +1646,7 @@ export default {
             name: '',
             coords: [[680, 725], [715, 725]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1678,7 +1659,7 @@ export default {
             name: '',
             coords: [[715, 695], [680, 695]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1689,7 +1670,7 @@ export default {
             name: '',
             coords: [[680, 685], [715, 685]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1701,7 +1682,7 @@ export default {
             name: '',
             coords: [[715, 655], [680, 655]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1712,7 +1693,7 @@ export default {
             name: '',
             coords: [[680, 645], [715, 645]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1725,7 +1706,7 @@ export default {
             name: '',
             coords: [[715, 615], [680, 615]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1736,7 +1717,7 @@ export default {
             name: '',
             coords: [[680, 605], [715, 605]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1749,7 +1730,7 @@ export default {
             name: '',
             coords: [[715, 575], [680, 575]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1760,7 +1741,7 @@ export default {
             name: '',
             coords: [[680, 565], [715, 565]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1771,7 +1752,7 @@ export default {
             name: '',
             coords: [[715, 535], [680, 535]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1782,7 +1763,7 @@ export default {
             name: '',
             coords: [[680, 525], [715, 525]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1795,7 +1776,7 @@ export default {
             name: '',
             coords: [[860, 730], [1000, 730]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1806,7 +1787,7 @@ export default {
             name: '',
             coords: [[1000, 730], [860, 730]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1818,7 +1799,7 @@ export default {
             name: '',
             coords: [[860, 690], [1000, 690]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1829,7 +1810,7 @@ export default {
             name: '',
             coords: [[1000, 690], [860, 690]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1841,7 +1822,7 @@ export default {
             name: '',
             coords: [[860, 650], [1000, 650]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1852,7 +1833,7 @@ export default {
             name: '',
             coords: [[1000, 650], [860, 650]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1864,7 +1845,7 @@ export default {
             name: '',
             coords: [[860, 610], [1000, 610]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1875,7 +1856,7 @@ export default {
             name: '',
             coords: [[1000, 610], [860, 610]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1887,7 +1868,7 @@ export default {
             name: '',
             coords: [[860, 570], [1000, 570]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1898,7 +1879,7 @@ export default {
             name: '',
             coords: [[1000, 570], [860, 570]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1910,7 +1891,7 @@ export default {
             name: '',
             coords: [[860, 530], [1000, 530]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1921,7 +1902,7 @@ export default {
             name: '',
             coords: [[1000, 530], [860, 530]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -1932,7 +1913,7 @@ export default {
             name: '',
             coords: [[100, 440], [800, 440]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1943,7 +1924,7 @@ export default {
             name: '',
             coords: [[800, 440], [100, 440]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1954,7 +1935,7 @@ export default {
             name: '',
             coords: [[850, 440], [980, 440]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1965,7 +1946,7 @@ export default {
             name: '',
             coords: [[980, 440], [850, 440]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1976,7 +1957,7 @@ export default {
             name: '',
             coords: [[100, 390], [800, 390]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1987,7 +1968,7 @@ export default {
             name: '',
             coords: [[850, 390], [980, 390]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -1998,7 +1979,7 @@ export default {
             name: '',
             coords: [[980, 390], [850, 390]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2010,7 +1991,7 @@ export default {
             name: '',
             coords: [[105, 340], [488, 340]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2021,7 +2002,7 @@ export default {
             name: '',
             coords: [[488, 340], [105, 340]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2032,7 +2013,7 @@ export default {
             name: '',
             coords: [[610, 340], [980, 340]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2043,7 +2024,7 @@ export default {
             name: '',
             coords: [[980, 340], [610, 340]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2055,7 +2036,7 @@ export default {
             name: '',
             coords: [[100, 200], [300, 200]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2066,7 +2047,7 @@ export default {
             name: '',
             coords: [[300, 200], [100, 200]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2078,7 +2059,7 @@ export default {
             name: '',
             coords: [[330, 280], [490, 280]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2089,7 +2070,7 @@ export default {
             name: '',
             coords: [[490, 280], [330, 280]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2100,7 +2081,7 @@ export default {
             name: '',
             coords: [[610, 280], [980, 280]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2111,7 +2092,7 @@ export default {
             name: '',
             coords: [[980, 280], [610, 280]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2122,7 +2103,7 @@ export default {
             name: '',
             coords: [[330, 230], [490, 230]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2134,7 +2115,7 @@ export default {
             name: '',
             coords: [[490, 230], [330, 230]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2145,7 +2126,7 @@ export default {
             name: '',
             coords: [[610, 230], [980, 230]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2156,7 +2137,7 @@ export default {
             name: '',
             coords: [[980, 230], [610, 230]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2168,7 +2149,7 @@ export default {
             name: '',
             coords: [[330, 180], [490, 180]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2179,7 +2160,7 @@ export default {
             name: '',
             coords: [[490, 180], [330, 180]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2190,7 +2171,7 @@ export default {
             name: '',
             coords: [[610, 180], [980, 180]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2201,7 +2182,7 @@ export default {
             name: '',
             coords: [[980, 180], [610, 180]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2213,7 +2194,7 @@ export default {
             name: '',
             coords: [[330, 130], [490, 130]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2224,7 +2205,7 @@ export default {
             name: '',
             coords: [[490, 130], [330, 130]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2235,7 +2216,7 @@ export default {
             name: '',
             coords: [[610, 130], [980, 130]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2246,7 +2227,7 @@ export default {
             name: '',
             coords: [[980, 130], [610, 130]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2257,7 +2238,7 @@ export default {
             name: '',
             coords: [[100, 70], [490, 70]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2268,7 +2249,7 @@ export default {
             name: '',
             coords: [[490, 70], [100, 70]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2279,7 +2260,7 @@ export default {
             name: '',
             coords: [[610, 70], [980, 70]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2290,7 +2271,7 @@ export default {
             name: '',
             coords: [[980, 70], [610, 70]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2301,7 +2282,7 @@ export default {
             name: '',
             coords: [[100, 10], [490, 10]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2312,7 +2293,7 @@ export default {
             name: '',
             coords: [[490, 10], [100, 10]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2323,7 +2304,7 @@ export default {
             name: '',
             coords: [[610, 10], [980, 10]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2334,7 +2315,7 @@ export default {
             name: '',
             coords: [[980, 10], [610, 10]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
@@ -2346,7 +2327,7 @@ export default {
             name: '',
             coords: [[1010, 500], [1100, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2357,7 +2338,7 @@ export default {
             name: '',
             coords: [[1100, 500], [1010, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2369,7 +2350,7 @@ export default {
             name: '',
             coords: [[1140, 500], [1200, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2380,7 +2361,7 @@ export default {
             name: '',
             coords: [[1200, 500], [1140, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2392,7 +2373,7 @@ export default {
             name: '',
             coords: [[1240, 500], [1320, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2403,7 +2384,7 @@ export default {
             name: '',
             coords: [[1320, 500], [1240, 500]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2414,7 +2395,7 @@ export default {
             name: '',
             coords: [[1010, 200], [1320, 200]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2425,7 +2406,7 @@ export default {
             name: '',
             coords: [[1320, 200], [1010, 200]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2437,7 +2418,7 @@ export default {
             name: '',
             coords: [[1010, 150], [1320, 150]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2448,7 +2429,7 @@ export default {
             name: '',
             coords: [[1320, 150], [1010, 150]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2460,7 +2441,7 @@ export default {
             name: '',
             coords: [[1250, 700], [1300, 700]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2471,7 +2452,7 @@ export default {
             name: '',
             coords: [[1300, 700], [1250, 700]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2483,7 +2464,7 @@ export default {
             name: '',
             coords: [[1250, 680], [1300, 680]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2494,7 +2475,7 @@ export default {
             name: '',
             coords: [[1300, 680], [1250, 680]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2506,7 +2487,7 @@ export default {
             name: '',
             coords: [[1250, 590], [1300, 590]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2517,7 +2498,7 @@ export default {
             name: '',
             coords: [[1300, 590], [1250, 590]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2529,7 +2510,7 @@ export default {
             name: '',
             coords: [[1350, 650], [1440, 650]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2540,7 +2521,7 @@ export default {
             name: '',
             coords: [[1440, 650], [1350, 650]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2552,7 +2533,7 @@ export default {
             name: '',
             coords: [[1350, 580], [1440, 580]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2563,7 +2544,7 @@ export default {
             name: '',
             coords: [[1440, 580], [1350, 580]],
             lineStyle: {
-            color: '#456bde'
+              color: '#456bde'
             },
             effect: {
               color: '#456bde'
@@ -2576,7 +2557,7 @@ export default {
             name: '',
             coords: [[1350, 440], [1440, 440]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2587,7 +2568,7 @@ export default {
             name: '',
             coords: [[1440, 440], [1350, 440]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2599,7 +2580,7 @@ export default {
             name: '',
             coords: [[1350, 370], [1440, 370]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2610,7 +2591,7 @@ export default {
             name: '',
             coords: [[1440, 370], [1350, 370]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2622,7 +2603,7 @@ export default {
             name: '',
             coords: [[1350, 300], [1440, 300]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2633,7 +2614,7 @@ export default {
             name: '',
             coords: [[1440, 300], [1350, 300]],
             lineStyle: {
-            color: '#e6c835'
+              color: '#e6c835'
             },
             effect: {
               color: '#e6c835'
@@ -2647,7 +2628,7 @@ export default {
             name: '',
             coords: [[10, 640], [10, 580], [230, 580]],
             lineStyle: {
-            color: 'rgb(203,44,44)'
+              color: 'rgb(203,44,44)'
             },
             effect: {
               color: 'rgb(203,44,44)'
@@ -2670,14 +2651,13 @@ export default {
             name: '',
             coords: [[1010, 250], [1120, 250], [1120, 460]],
             lineStyle: {
-            color: 'black'
+              color: 'black'
             },
             effect: {
               color: 'black'
             }
           },]
       }
-
       let len = nodes.length
       for (let j = 0; j < len; j++) {
         let x = parseInt(nodes[j].x)
@@ -2696,7 +2676,7 @@ export default {
           category: nodes[j].category,
           symbolRotate: nodes[j].symbolRotate ? nodes[j].symbolRotate : '',
           itemStyle: {
-              color: nodes[j].color ? nodes[j].color : '#12b5d0',
+            color: nodes[j].color ? nodes[j].color : '#12b5d0',
           },
           emphasis: {}
         }
@@ -2811,34 +2791,30 @@ export default {
           },
         ]
       }
-      this.dom.off('click')
+      dom.off('click')
       let that = this
-      this.dom.on('click', function (info) {
+      dom.on('click', function (info) {
         if (info.data.devNo) {
           that.paramModal = true
-          that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+          that.paramModalShow = false
+          that.$nextTick(() => {
+            that.paramModalShow = true
+            that.$nextTick(() => {
+              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+            })
+          })
         }
       });
-      this.dom.setOption(option);
-    },
-    openParam(info) {
-      if (info.devNo) {
-        this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
-        this.show = true
-        this.paramModal = true
-      }
+      dom.setOption(option);
     }
   }
 }
 </script>
 <style>
 .charts {
-
   height: 800px;
   width: 1620px;
-
 }
-
 </style>
 <style lang="less" scoped>
 /* 设置动画前颜色 */

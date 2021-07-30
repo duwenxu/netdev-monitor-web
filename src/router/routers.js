@@ -82,7 +82,7 @@ export default [
         //一类船载拓扑图
         // component: () => import('@/view/single-page/home/ship_device.vue')
         //一类车载（*done）
-        // component: () => import('@/view/single-page/home/WN_device.vue')
+        // component: () => import('@/view/single-page/home/first_device.vue')
         //二类型车__1（*comtech不知是否单独控制外done）
         component: () => import('@/view/single-page/home/second_device.vue')
         //三类车载(除acu外done)
@@ -90,7 +90,7 @@ export default [
         // 四类车载（*）
         // component: () => import('@/view/single-page/home/forth_device.vue')
         //地面站
-        // component: () => import('@/view/single-page/home/highland_device.vue')
+        // component: () => import('@/view/single-page/home/land_device.vue')
 
         //最早版本
         // component: () => import('@/view/netdev/deviceStatus/status1.vue')

@@ -1,9 +1,6 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-<!--      <div style="margin-bottom: 5px">命令区</div>-->
-
-      <div  style="display: flex;margin-left: 20px;">
         <span style="margin-top: 8px;margin-right: 20px">命令区</span>
         <div v-if="$route.meta.devType == '0020023' || isShow"  style="width: 20%">
           <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
@@ -11,18 +8,16 @@
             <span slot="close">B</span>
           </i-switch>
         </div>
-
         <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
-      </div>
     </div>
 <!-- 基本参数-->
     <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
       <common :infos="closeInfos"></common>
       <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
-        <Divider dashed class="cloud-divider">
+        <Divider dashed v-if="openInfos.length">
           <span @click="openParam = !openParam" style="cursor: pointer">
              <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
           {{openParam ? "收起" :"查看参数"}}
@@ -31,13 +26,13 @@
       </div>
       <common v-if="openParam" :infos="openInfos"></common>
     </div>
-<!--    父框子-->
+<!-- 父框子-->
     <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
       <div v-for="info in closeCombineList">
         <div v-if="info.ndpaIsImportant == 1" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
-      <Divider v-if="openCombineList.length" dashed class="cloud-divider">
+      <Divider v-if="openCombineList.length" dashed>
           <span @click="openSub = !openSub" style="cursor: pointer">
              <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
           {{openSub ? "收起" :"查看参数"}}
@@ -57,46 +52,42 @@ import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
 export default {
   components: {common},
-  props: {
-    paramSize: {
-      type: Number
-    }
-  },
-
   data() {
     return {
-      openSub:false,
-      isShow:false,
-      openParam:false,
-      orderSwitch:true,
-      comHeight: 160,
-      normalHeight: 160,
-      devNo: null,
-      paramSocket: null,
+      paramType: ['0019002'],
       openInfos: [],//展开
       closeInfos:[],//未展开
-      orderDatas: [],
       openCombineList: [],//展开
       closeCombineList: [],//未展开
-      paramType: ['0019002'],
-      timer: null,
-      saveVal: false,
-      timeIndex: 0,
-      selectObj: {},
+      orderDatas: [],//命令
+      openParam:false,//common divider展开
+      openSub:false,//sub divider展开
+      isShow:false,//是否显示comtechAB
+      isReceive:true,//是否接收ws msg
+      orderSwitch:true,
+      devNo: null,
+      paramSocket: null,
+
+      comHeight: 160,
+      normalHeight: 160,
+
       isStop:false,
+
+      timer: null,//模拟数据
+      timeIndex: 0,//模拟数据
     }
   },
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
     this.$xy.vector.$on('closeModal', this.closeModal)
-    this.$xy.vector.$on('selectStatus', this.selectStatus)
+    this.$xy.vector.$on('receiveMsg', this.receiveMsg)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
     this.$xy.vector.$off('closeModal', this.closeModal)
-    this.$xy.vector.$off('selectStatus', this.selectStatus)
+    this.$xy.vector.$off('receiveMsg', this.receiveMsg)
   },
   mounted() {
     if (this.$route.name != 'home') {
@@ -114,27 +105,8 @@ export default {
       this.orderDatas = []
       this.openCombineList =[]
       this.closeCombineList =[]
-      this.selectObj = {}
   },
   methods: {
-
-    //1.5m天线切换开关
-    async  switchChange(data){
-        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
-        if(success){
-
-        }
-      },
-    selectStatus(data) {
-      this.selectObj = {
-        paraId: data.paraId,
-        status: data.status,
-        oldVal: data.oldVal,
-        name: data.name,
-        splitArr: data.splitArr,
-        close: data.close
-      }
-    },
     // initTime() {
     //   this.timer = setInterval(this.scrollAnimate, 2000);
     // },
@@ -900,6 +872,21 @@ export default {
     //     this.getParamMsg(data)
     //   }, 1000)
     // },
+
+    //1.5m天线切换开关
+    async  switchChange(data){
+        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
+        if(success){
+          this.$Notice.success({
+            title: '成功',
+            desc: '切换成功！',
+            duration: 1
+          })
+        }
+      },
+    receiveMsg(data) {
+       this.isReceive = data.receiveMsg
+    },
     closeModal() {
       this.paramSocket.close()
       this.paramSocket = null
@@ -934,11 +921,6 @@ export default {
       }
     },
     initWebSocket() { //初始化weosocket
-      this.closeInfos = []
-      this.openInfos = []
-      this.orderDatas =  []
-      this.closeCombineList =  []
-      this.openCombineList =  []
       let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
       this.ws = new WebSocket(wsurl)
       /*-----------------设备参数--------------*/
@@ -952,18 +934,19 @@ export default {
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
-      let msg = JSON.parse(frame.data)
-      this.editData(msg)
-
-      if(!this.isStop){
-        this.isStop = true
-        if(this.closeCombineList.length && !this.closeInfos.length){
-          this.comHeight = 310
-        }else if(!this.closeCombineList.length && this.closeInfos.length){
-          this.normalHeight = 310
-        }else{
-          this.comHeight = 150
-          this.normalHeight = 150
+      if(this.isReceive){
+        let msg = JSON.parse(frame.data)
+        this.editData(msg)
+        if(!this.isStop){
+          this.isStop = true
+          if(this.closeCombineList.length && !this.closeInfos.length){
+            this.comHeight = 310
+          }else if(!this.closeCombineList.length && this.closeInfos.length){
+            this.normalHeight = 310
+          }else{
+            this.comHeight = 150
+            this.normalHeight = 150
+          }
         }
       }
     },
@@ -1000,22 +983,6 @@ export default {
             }
           }
         }
-        if (!this.selectObj.close) {
-          if (v.paraId == this.selectObj.paraId) {
-            if (!v.splitArr) {
-              v.selected = this.selectObj.status
-              v.inputVal = this.selectObj.oldVal
-            } else {
-              v.selected = this.selectObj.status
-              this.selectObj.splitArr.forEach(n => {
-                if (n.name == this.selectObj.name) {
-                  this.$set(n, 'inputVal', this.selectObj.oldVal)
-                }
-              })
-              v.splitArr = this.selectObj.splitArr
-            }
-          }
-        }
       })
       this.orderDatas = oderArr || []
       this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 0)
@@ -1031,8 +998,8 @@ export default {
     },
     commonFmt(v) {
       if(v.paraViewFmt){
-      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
+      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
@@ -1062,12 +1029,9 @@ export default {
           if (v.subParaList[index].spinnerInfoList) {
             let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
             return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
-          } else {
-            return match = resultChar[index]
           }
-        } else {
-          return match = resultChar[index]
         }
+        return match = resultChar[index]
       })
       if (v.subParaList.length) {
         v.subParaList.forEach(n => {
@@ -1106,7 +1070,7 @@ export default {
         paraId: info.paraId,
         paraVal: info.paraVal,
       }
-      let {result, success, message} = await editParamValue(obj)
+      let {success} = await editParamValue(obj)
       if (success) {
         this.$Notice.success({
           title: '成功',
@@ -1118,7 +1082,6 @@ export default {
   }
 }
 </script>
-
 <style lang="less">
  .device-param {
    .ivu-switch-large.ivu-switch-checked:after{
@@ -1156,6 +1119,7 @@ export default {
  }
 
 .order-wrap {
+  display: flex;
   border: 1px solid #009688;
   height: 55px;
   border-radius: 5px;
