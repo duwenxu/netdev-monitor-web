@@ -922,7 +922,6 @@ export default {
     },
     initWebSocket() { //初始化weosocket
       let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
-      this.ws = new WebSocket(wsurl)
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
