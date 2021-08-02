@@ -1,31 +1,47 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-<!--      <div style="margin-bottom: 5px">命令区</div>-->
-
-      <div  style="display: flex;margin-left: 20px;">
         <span style="margin-top: 8px;margin-right: 20px">命令区</span>
-        <div v-if="$route.meta.devType == '0020023'"  style="width: 30%">
-          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-top: 6px;margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
+        <div v-if="$route.meta.devType == '0020023' || isShow"  style="width: 20%">
+          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
             <span slot="open">A</span>
             <span slot="close">B</span>
           </i-switch>
         </div>
-
         <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
                 style="margin-right: 5px;background: #009688;color: white">
           {{ info.paraName }}
         </Button>
-      </div>
     </div>
-    <div class="sub-wrap" v-if="combineList.length" :style="{height:comHeight+'px'}">
-      <div v-for="info in combineList">
-        <div v-if="($route.name == 'home' && info.ndpaIsTopology) || $route.name != 'home'" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+<!-- 基本参数-->
+    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
+      <common :infos="closeInfos"></common>
+      <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
+        <Divider dashed v-if="openInfos.length">
+          <span @click="openParam = !openParam" style="cursor: pointer">
+             <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openParam ? "收起" :"查看参数"}}
+          </span>
+        </Divider>
+      </div>
+      <common v-if="openParam" :infos="openInfos"></common>
+    </div>
+<!-- 父框子-->
+    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
+      <div v-for="info in closeCombineList">
+        <div v-if="info.ndpaIsImportant == 1" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
-    </div>
-    <div v-if="!combineList.length || (infos.length && combineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
-      <common :infos="infos"></common>
+      <Divider v-if="openCombineList.length" dashed>
+          <span @click="openSub = !openSub" style="cursor: pointer">
+             <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
+          {{openSub ? "收起" :"查看参数"}}
+          </span>
+      </Divider>
+      <div v-if="openSub" v-for="info in openCombineList">
+        <div v-if="info.ndpaIsImportant==0" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <common :infos="info.subParaList"></common>
+      </div>
     </div>
   </div>
 </template>
@@ -36,40 +52,42 @@ import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
 export default {
   components: {common},
-  props: {
-    paramSize: {
-      type: Number
-    }
-  },
-
   data() {
     return {
+      paramType: ['0019002'],
+      openInfos: [],//展开
+      closeInfos:[],//未展开
+      openCombineList: [],//展开
+      closeCombineList: [],//未展开
+      orderDatas: [],//命令
+      openParam:false,//common divider展开
+      openSub:false,//sub divider展开
+      isShow:false,//是否显示comtechAB
+      isReceive:true,//是否接收ws msg
       orderSwitch:true,
-      comHeight: 160,
-      normalHeight: 350,
       devNo: null,
       paramSocket: null,
-      infos: [],
-      orderDatas: [],
-      combineList: [],
-      paramType: ['0019002'],
-      timer: null,
-      saveVal: false,
-      timeIndex: 0,
-      selectObj: {}
+
+      comHeight: 160,
+      normalHeight: 160,
+
+      isStop:false,
+
+      timer: null,//模拟数据
+      timeIndex: 0,//模拟数据
     }
   },
   created: function () {
     this.$xy.vector.$on('changesize', this.sizeInfo)
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
     this.$xy.vector.$on('closeModal', this.closeModal)
-    this.$xy.vector.$on('selectStatus', this.selectStatus)
+    this.$xy.vector.$on('receiveMsg', this.receiveMsg)
   },
   beforeDestroy: function () {
     this.$xy.vector.$off('changesize', this.sizeInfo)
     this.$xy.vector.$off('deviceNumber', this.getDevNo)
     this.$xy.vector.$off('closeModal', this.closeModal)
-    this.$xy.vector.$off('selectStatus', this.selectStatus)
+    this.$xy.vector.$off('receiveMsg', this.receiveMsg)
   },
   mounted() {
     if (this.$route.name != 'home') {
@@ -82,30 +100,13 @@ export default {
     next()
   },
   destroyed() {
-      this.infos = []
+      this.openInfos = []
+      this.closeInfos = []
       this.orderDatas = []
-      this.combineList =[]
-      this.selectObj = {}
+      this.openCombineList =[]
+      this.closeCombineList =[]
   },
   methods: {
-
-    //1.5m天线切换开关
-    async  switchChange(data){
-        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
-        if(success){
-
-        }
-      },
-    selectStatus(data) {
-      this.selectObj = {
-        paraId: data.paraId,
-        status: data.status,
-        oldVal: data.oldVal,
-        name: data.name,
-        splitArr: data.splitArr,
-        close: data.close
-      }
-    },
     // initTime() {
     //   this.timer = setInterval(this.scrollAnimate, 2000);
     // },
@@ -116,7 +117,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsb",
@@ -146,7 +147,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -176,7 +177,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -206,7 +207,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -236,7 +237,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -266,7 +267,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -296,7 +297,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -326,7 +327,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -356,7 +357,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -386,7 +387,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -416,7 +417,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -446,7 +447,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003002",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdst",
@@ -476,7 +477,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -506,7 +507,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdse",
@@ -536,7 +537,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdso",
@@ -566,7 +567,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsgz",
@@ -596,7 +597,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "",
     //       "paraCmdMark": "cmdsj",
@@ -625,7 +626,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -658,7 +659,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "",
     //         "paraCmdMark": "",
@@ -688,7 +689,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -718,7 +719,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -748,7 +749,7 @@ export default {
     //         "devNo": "20",
     //         "devType": "0020001",
     //         "devTypeCode": null,
-    //         "ndpaIsTopology": true,
+    //         "ndpaIsImportant": true,
     //         "ndpaOutterStatus": "0003002",
     //         "paraByteLen": "4",
     //         "paraCmdMark": "",
@@ -779,7 +780,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "1",
     //       "paraCmdMark": "",
@@ -812,7 +813,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -842,7 +843,7 @@ export default {
     //       "devNo": "20",
     //       "devType": "0020001",
     //       "devTypeCode": null,
-    //       "ndpaIsTopology": true,
+    //       "ndpaIsImportant": true,
     //       "ndpaOutterStatus": "0003001",
     //       "paraByteLen": "4",
     //       "paraCmdMark": "",
@@ -871,41 +872,56 @@ export default {
     //     this.getParamMsg(data)
     //   }, 1000)
     // },
+
+    //1.5m天线切换开关
+    async  switchChange(data){
+        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
+        if(success){
+          this.$Notice.success({
+            title: '成功',
+            desc: '切换成功！',
+            duration: 1
+          })
+        }
+      },
+    receiveMsg(data) {
+       this.isReceive = data.receiveMsg
+    },
     closeModal() {
       this.paramSocket.close()
       this.paramSocket = null
     },
     getDevNo(data) {
-      this.devNo = data
+      this.devNo = data.devNo
+      this.isShow = data.value
+      this.$nextTick(()=>{
+        this.orderSwitch = data.show
+      })
       this.initWebSocket()
     },
     sizeInfo(data) {
       if (data.showAlert || data.showLog) {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 250
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 250
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 310
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 310
         }else{
-          this.comHeight = 160
-          this.normalHeight = 160
+          this.comHeight = 150
+          this.normalHeight = 150
         }
       } else {
-        if(this.combineList.length && !this.infos.length){
-          this.comHeight = 430
-        }else if(!this.combineList.length && this.infos.length){
-          this.normalHeight = 430
+        if(this.closeCombineList.length && !this.closeInfos.length){
+          this.comHeight = 460
+        }else if(!this.closeCombineList.length && this.closeInfos.length){
+          this.normalHeight = 460
         }else{
-          this.comHeight = 210
-          this.normalHeight = 210
+          this.comHeight = 230
+          this.normalHeight = 230
         }
       }
     },
     initWebSocket() { //初始化weosocket
-      this.infos = []
-      this.orderDatas =  []
-      this.combineList =  []
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
@@ -917,20 +933,26 @@ export default {
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
-      let msg = JSON.parse(frame.data)
-      this.editData(msg)
-      if(this.combineList.length && !this.infos.length){
-        this.comHeight = 250
-      }else if(!this.combineList.length && this.infos.length){
-        this.normalHeight = 250
-      }else{
-        this.comHeight = 160
-        this.normalHeight = 160
+      if(this.isReceive){
+        let msg = JSON.parse(frame.data)
+        this.editData(msg)
+        if(!this.isStop){
+          this.isStop = true
+          if(this.closeCombineList.length && !this.closeInfos.length){
+            this.comHeight = 310
+          }else if(!this.closeCombineList.length && this.closeInfos.length){
+            this.normalHeight = 310
+          }else{
+            this.comHeight = 150
+            this.normalHeight = 150
+          }
+        }
       }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
-      msg.forEach(v => {
+      let data = msg.filter(v=>v.ndpaIsImportant !=2)
+      data.forEach(v => {
         v.selected = false
         v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
@@ -960,27 +982,13 @@ export default {
             }
           }
         }
-        if (!this.selectObj.close) {
-          if (v.paraId == this.selectObj.paraId) {
-            if (!v.splitArr) {
-              v.selected = this.selectObj.status
-              v.inputVal = this.selectObj.oldVal
-            } else {
-              v.selected = this.selectObj.status
-              this.selectObj.splitArr.forEach(n => {
-                if (n.name == this.selectObj.name) {
-                  this.$set(n, 'inputVal', this.selectObj.oldVal)
-                }
-              })
-              v.splitArr = this.selectObj.splitArr
-            }
-          }
-        }
       })
       this.orderDatas = oderArr || []
-      this.combineList = parentArr || []
-      this.infos = msg.filter(value=>!value.showInText && value.accessRight != '0022005')
-         },
+      this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 0)
+      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
+      this.openInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
+      this.closeInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+    },
     commonFunc(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
@@ -989,8 +997,8 @@ export default {
     },
     commonFmt(v) {
       if(v.paraViewFmt){
-      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       v.splitArr = []
+      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
       let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
       let index = -1
@@ -1020,12 +1028,9 @@ export default {
           if (v.subParaList[index].spinnerInfoList) {
             let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
             return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
-          } else {
-            return match = resultChar[index]
           }
-        } else {
-          return match = resultChar[index]
         }
+        return match = resultChar[index]
       })
       if (v.subParaList.length) {
         v.subParaList.forEach(n => {
@@ -1064,7 +1069,7 @@ export default {
         paraId: info.paraId,
         paraVal: info.paraVal,
       }
-      let {result, success, message} = await editParamValue(obj)
+      let {success} = await editParamValue(obj)
       if (success) {
         this.$Notice.success({
           title: '成功',
@@ -1076,7 +1081,6 @@ export default {
   }
 }
 </script>
-
 <style lang="less">
  .device-param {
    .ivu-switch-large.ivu-switch-checked:after{
@@ -1094,16 +1098,16 @@ export default {
      }
    }
    .ivu-switch{
-     height: 40px;
-     line-height: 40px;
+     height: 30px;
+     line-height: 30px;
    }
    .ivu-switch-inner {
-     font-size: 28px;
+     font-size: 24px;
    }
    .ivu-switch:after {
      content: '';
-     width: 32px;
-     height: 32px;
+     width: 24px;
+     height: 24px;
      border-radius: 18px;
      background-color: #fff;
      position: absolute;
@@ -1114,6 +1118,7 @@ export default {
  }
 
 .order-wrap {
+  display: flex;
   border: 1px solid #009688;
   height: 55px;
   border-radius: 5px;

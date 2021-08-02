@@ -14,7 +14,7 @@
               :style="{background: item.color, borderColor: item.borderColor}"></span>{{ item.description }}
       </div>
     </div>
-    <Modal  :closable="false" :styles="{marginTop:'-90px'}"  v-model="paramModal"  @on-ok="confirm" @on-cancel="confirm"
+    <Modal  :closable="false" :styles="{marginTop:'-80px'}"  v-model="paramModal"  @on-ok="confirm" @on-cancel="confirm"
            width="850" :mask-closable="false">
       <DeviceMain v-if="paramModalShow"></DeviceMain>
     </Modal>
@@ -38,7 +38,7 @@ export default {
         {
           devNo: '2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -46,7 +46,7 @@ export default {
           isMaster:true,
           pos:{
             top: '245px',
-            marginLeft: '244px',
+            marginLeft: '250px',
             width:'10px',
             height:'10px',
           }
@@ -54,15 +54,15 @@ export default {
         {
           devNo: '2-2',
           name: 'Ku 1:1热备份开关切换控制器',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
           masterOrSlave: '',
           isMaster:false,
           pos:{
-            top: '284px',
-            marginLeft: '244px',
+            top: '285px',
+            marginLeft: '250px',
             width:'10px',
             height:'10px',
           }
@@ -70,7 +70,7 @@ export default {
         {
           devNo: '11',
           name: 'A调制解调器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -86,7 +86,7 @@ export default {
         {
           devNo: '12',
           name: 'A调制解调器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -102,7 +102,7 @@ export default {
         {
           devNo: '13',
           name: 'B调制解调器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -118,7 +118,7 @@ export default {
         {
           devNo: '14',
           name: 'B调制解调器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -134,7 +134,7 @@ export default {
         {
           devNo: '30',
           name: '1:1转换单元(上调制)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -149,7 +149,7 @@ export default {
         {
           devNo: '31',
           name: '1:1转换单元(下调制)',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -164,7 +164,7 @@ export default {
         {
           devNo: '20',
           name: '2.4m天线ACU',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: 0,
           isUseStandby: false,
@@ -179,7 +179,7 @@ export default {
         {
           devNo: '40',
           name: '下变频器1',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -187,7 +187,7 @@ export default {
           isMaster:true,
           pos:{
             top: '342px',
-            marginLeft: '248px',
+            marginLeft: '250px',
             width:'10px',
             height:'10px',
           }
@@ -195,7 +195,7 @@ export default {
         {
           devNo: '41',
           name: '下变频器2',
-          isInterrupt: '0',
+          isInterrupt: '1',
           workStatus: '0',
           isAlarm: '0',
           isUseStandby: false,
@@ -203,7 +203,7 @@ export default {
           isMaster:false,
           pos:{
             top: '381px',
-            marginLeft: '248px',
+            marginLeft: '250px',
             width:'10px',
             height:'10px',
           }
@@ -212,14 +212,14 @@ export default {
       masterPosition: {
         '2': {
           border: '3px solid green',
-          width: '62px',
+          width: '64px',
           height: '24px',
           top: '243px',
           left: '200px',
         },
         '2-2': {
           border: '3px solid green',
-          width: '62px',
+          width: '64px',
           height: '24px',
           top: '283px',
           left: '200px',
@@ -268,14 +268,14 @@ export default {
         },
         '40': {
           border: '3px solid green',
-          width: '62px',
+          width: '64px',
           height: '24px',
           top: '341px',
           left: '200px',
         },
         '41': {
           border: '3px solid green',
-          width: '62px',
+          width: '64px',
           height: '24px',
           top: '380px',
           left: '200px',
@@ -283,8 +283,8 @@ export default {
       },
       legendType: [
         {shape: 'square', color: 'rgba(0,0,0,0)', borderColor: '#009688', description: '运行'},
-        {shape: 'square', color: 'rgba(0,150,136,0.2)', description: '主机'},
-        {shape: 'square', color: '#ccc', description: '备机'},
+        {shape: 'square', color: '#b1f83c', description: '主机'},
+        {shape: 'square', color: 'rgba(184,181,181)', description: '备机'},
         {shape: 'circle', color: '#009688', description: '正常'},
         {shape: 'circle', color: '#ff1400', description: '故障'},
         {shape: 'circle', color: '#ffbe08', description: '告警'}
@@ -587,6 +587,7 @@ export default {
 
     getWSData(WSdata) {
       if (WSdata.length) {
+        //主为0主框 主为1备框   主0备1 主0备0 --》主框     主1备1  主1备0  --》备框
         let arr = ['30','31','20','11','13','40','2']
         this.equipments.forEach(device => {
          WSdata.forEach(item => {
@@ -647,15 +648,6 @@ export default {
         }
       } else {//中断 是 1
         info = {background: '#ff1400'}
-        if (device.devNo == '2') {
-          if (device.masterOrSlave == '1') {
-            info = {background: '#009688'}
-          }
-        } else if (device.devNo == '2-2') {
-          if (device.masterOrSlave == '0') {
-            info = {background: '#009688'}
-          }
-        }
       }
       return info
     },
@@ -686,13 +678,12 @@ export default {
         {
           mark: '舱外',
           x: '115',
-          y: '305',
+          y: '310',
           nodeName: '舱外\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
-          color: 'white',
-          border: 'dotted',
+          color: 'rgba(0,0,0,0)',
           id: 1,
-          size: [90, 375],
+          size: [20, 20],
         },
 
         {
@@ -701,7 +692,7 @@ export default {
           nodeName: 'ka\n发射\n\n\n\n\n\n\nKa\n接收',
           img: 'rect',
           size: [30, 170],
-          color: '#c4e889'
+          color: '#d8e87f'
         },
         {
           x: '95',
@@ -709,7 +700,7 @@ export default {
           nodeName: 'ku\n发射\n\n\n\n\n\n\nKu\n接收',
           img: 'rect',
           size: [30, 170],
-          color: '#c4e889'
+          color: '#d8e87f'
         },
         {
           x: '145',
@@ -718,94 +709,144 @@ export default {
           img: 'triangle',
           symbolRotate: -90,
           size: [25, 30],
-          color: '#c4e889'
+          color: '#d8e87f'
         },
 //---------------维修舱
         {
           mark: '维修舱',
           x: '220',
-          y: '305',
+          y: '310',
           nodeName: '维修舱\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
-          color: 'white',
-          border: 'dotted',
+          color: 'rgba(0,0,0,0)',
           id: 1,
-          size: [120, 375],
+          size: [20, 20],
         },
-
-        {
-          x: '225',
-          y: '260',
-          nodeName: '',
-          id: 1,
-          img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
-          size: [100, 70]
-        },
-
+        //-------------------down_功放KU---------
+          {
+              x: '225',
+              y: '280',
+              nodeName: 'Ku1:1热备份\n开关切换控制器\n\n\n\n\n\n',
+              id: 1,
+              img: 'rect',
+              size: [80, 120],
+              color: 'rgba(227,221,152,0.8)'
+          },
         {
           x: '225',
           y: '282',
-          devNo: 2,
-          type: 1,//主机
-          isMajor: true,
-          nodeName: 'Ku buc       ',
+          nodeName: 'Ku功放主   ',
           img: 'rect',
-          size: [62, 20],
-          color: 'rgba(0,150,136,0.2)'
+          size: [60, 22],
+          color: '#b1f83c'
         },
         {
-          x: '225',
-          y: '238',
-          devNo: 2,
-          type: 0,//备机
-          isMajor: true,
-          nodeName: 'Ku buc      ',
-          img: 'rect',
-          size: [62, 20],
-          color: 'rgba(184,181,181,0.7)'
-        },
-        {
-          x: '225',
-          y: '160',
+          x: '212',
+          y: '260',
           nodeName: '',
-          id: 1,
-          img: 'image://' + require('@/assets/images/home/up_trans_no.png'),
-          size: [100, 70]
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
         },
         {
-          x: '225',
-          y: '180',
-          devNo: 40,
-          isMajor: true,
-          type: 1,//主机
-          nodeName: '下变频器     ',
+          x: '238',
+          y: '260',
+          nodeName: '',
           img: 'rect',
-          size: [62, 20],
-          color: 'rgba(0,150,136,0.2)'
+          size: [10, 5],
+          color: '#c4e889'
         },
         {
-          x: '225',
-          y: '138',
-          devNo: 41,
-          isMajor: true,
-          type: 0,//备机
-          nodeName: '下变频器      ',
+          x: '178',
+          y: '260',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '272',
+          y: '260',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '225',//310  120
+          y: '238',//270  220
+          nodeName: 'Ku功放备   ',
           img: 'rect',
-          size: [62, 20],
-          color: 'rgba(184,181,181,0.7)'
+          size: [60, 22],
+          color: 'rgba(184,181,181)'
         },
 
+
+        // //-------------------up_cl下---------
+        {
+          x: '225',
+          y: '181',
+          nodeName: '变频器1   ',
+          img: 'rect',
+          size: [60, 22],
+          color: '#b1f83c'
+        },
+        {
+          x: '212',
+          y: '160',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          x: '238',
+          y: '160',
+          nodeName: '',
+          img: 'rect',
+          size: [10, 5],
+          color: '#c4e889'
+        },
+        {
+          devNo:'42',
+          x: '178',
+          y: '160',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          devNo:'42',
+          x: '272',
+          y: '160',
+          nodeName: '',
+          img: 'circle',
+          size: [10, 10],
+          color: 'rgba(0,0,0,0)',
+          border: 'black'
+        },
+        {
+          x: '225',
+          y: '137',
+          nodeName: '变频器2   ',
+          img: 'rect',
+          size: [60, 22],
+          color: 'rgba(184,181,181)'
+        },
 //---------------工作舱
         {
           mark: '工作舱',
           x: '555',
-          y: '250',
+          y: '255',
           nodeName: '工作舱\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n',
           img: 'rect',
-          color: 'white',
-          border: 'dotted',
+          color: 'rgba(0,0,0,0)',
           id: 1,
-          size: [540, 485],
+          size: [20, 20],
         },
         {
           x: '330',
@@ -819,7 +860,7 @@ export default {
         {
           x: '450',
           y: '405',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          nodeName: '650调制解调器(1)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [100, 110],
@@ -829,14 +870,14 @@ export default {
         {
           x: '450',
           y: '430',
-          devNo: 11,
+          devNo: '11',
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器A    ',
           img: 'rect',
           size: [90, 20],
-          color: 'rgba(0,150,136,0.2)',
-          category: 2,
+          color: '#b9fc4a',
+
           // border:'solid',
           // borderColor:'green'
         },
@@ -852,20 +893,20 @@ export default {
         {
           x: '450',
           y: '370',
-          devNo: 12,
+          devNo: '12',
           isMajor: true,
           type: 0,//备机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器B    ',
           img: 'rect',
           size: [90, 20],
-          color: 'rgba(184,181,181,0.7)',
+          color: 'rgba(184,181,181)',
           category: 2
         },
 
         {
           x: '450',
           y: '280',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          nodeName: '650调制解调器(2)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [100, 110],
@@ -874,13 +915,13 @@ export default {
         {
           x: '450',
           y: '305',
-          devNo: 13,
+          devNo: '13',
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器A    ',
           img: 'rect',
           size: [90, 20],
-          color: 'rgba(0,150,136,0.2)',
+          color: '#b9fc4a',
           category: 2
         },
 
@@ -896,13 +937,13 @@ export default {
         {
           x: '450',
           y: '245',
-          devNo: 14,
+          devNo: '14',
           type: 0,//备机
           isMajor: true,
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器B    ',
           img: 'rect',
           size: [90, 20],
-          color: 'rgba(184,181,181,0.7)',
+          color: 'rgba(184,181,181)',
           category: 2
         },
 
@@ -927,9 +968,9 @@ export default {
         {
           x: '450',
           y: '50',
-          devNo: 20,
+          devNo: '20',
           isMajor: true,
-          nodeName: '\n\n天线控制\n单元\n(ACU)',
+          nodeName: '\n\n2.4米\n天线控制\n单元\n(ACU)',
           img: 'rect',
           size: [60, 60],
           color: 'rgba(227,221,152,0.8)',
@@ -1936,6 +1977,101 @@ export default {
           },
 
 
+        ],
+        inverterLines:[
+          {
+            mark: 'ku功放右上',
+            name: '',
+            coords: [[273, 260], [273, 283], [256, 283]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: 'ku功放左上',
+            name: '',
+            coords: [[177, 260], [177, 283], [195, 283]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: 'ku功放右下',
+            name: '',
+            coords: [[242, 260], [270, 260], [270, 240],[256,240]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: 'ku功放左下',
+            name: '',
+            coords: [[208, 260], [180, 260], [180, 240],[195,240]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+
+
+
+          {
+            mark: '变频器右上',
+            name: '',
+            coords: [[273, 160], [273, 183], [256, 183]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: '变频器左上',
+            name: '',
+            coords: [[177, 160], [177, 183], [195, 183]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: '变频器右下',
+            name: '',
+            coords: [[242, 160], [270, 160], [270, 138],[256,138]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: '变频器左下',
+            name: '',
+            coords: [[208, 160], [180, 160], [180, 138],[195,138]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+        ],
+        dottedLines:[
+          {
+            mark: '舱外',
+            name: '',
+            coords: [[60, 500], [290, 500],[290,110],[60,110],[60,500]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: '舱外',
+            name: '',
+            coords: [[162, 500], [162, 110]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
+          {
+            mark: '工作仓',
+            name: '',
+            coords: [[290, 500], [830, 500],[830,15],[290,15],[290,113]],
+            lineStyle: {
+              color: '#020202'
+            }
+          },
         ]
       }
       // this.dom.off('click')
@@ -1965,8 +2101,8 @@ export default {
         if (nodes[j].border) {
           node.itemStyle.normal.borderType = nodes[j].border
           node.itemStyle.normal.borderDashOffset = nodes[j].offset
-          node.itemStyle.normal.borderColor = nodes[j].borderColor ? nodes[j].borderColor : 'grey'
-          node.itemStyle.normal.borderWidth = '2'
+          node.itemStyle.normal.borderColor = nodes[j].border ? nodes[j].border : 'grey'
+          node.itemStyle.normal.borderWidth = '1'
         }
 
         charts.nodes.push(node)
@@ -1987,7 +2123,28 @@ export default {
           type: 'value'
         },
         series: [
-
+          {
+            type: "lines",
+            symbol: ['none', 'none'],
+            z: 1,
+            symbolSize: 10,
+            polyline: true,
+            coordinateSystem: "cartesian2d",
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              type: [5, 10],
+              dashOffset: 5,
+              color: 'green',
+              width: 1.5,
+              opacity: 1,
+              curveness: 0
+            },
+            data: charts.dottedLines
+          },
+          //功放线条箭头
           {
             type: "lines",
             symbol: ['none', 'none'],
@@ -2006,18 +2163,123 @@ export default {
               curveness: 0
             },
             effect: {
+              show: false,
+              trailLength: 0.1,
+              symbol: 'arrow',
+              color: '#87e2ef',
+              symbolSize: 4
+            },
+            //箭头
+            markPoint:{
+              itemStyle:{
+                color:'black'
+              },
+              data: [
+                {
+                  mark:'ku功放右上',
+                  symbolRotate:'90',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 263,
+                  y: 226.5
+                },
+                {
+                  mark:'ku功放右下',
+                  symbolRotate:'90',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 263,
+                  y: 268.5
+                },
+                {
+                  mark:'ku功放左上',
+                  symbolRotate:'180',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 184,
+                  y: 242
+                },
+                {
+                  mark:'ku iwta左下',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 186.5,
+                  y: 255
+                },
+                {
+                  mark:'变频器右上',
+                  symbolRotate:'180',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 278,
+                  y: 340
+                },
+                {
+                  mark:'变频器左上',
+                  symbolRotate:'270',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 200,
+                  y: 324
+                },
+                {
+                  mark:'变频器左下',
+                  symbolRotate:'270',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 200,
+                  y: 368
+                },
+                {
+                  mark:'变频器右下',
+                  symbolSize:5,
+                  symbol:'arrow',
+                  name: '',
+                  x: 275,
+                  y: 354
+                },
+
+              ]
+            },
+            data: charts.inverterLines
+          },
+          {
+            type: "lines",
+            symbol: ['none', 'none'],
+            z: 3,
+            symbolSize: 10,
+            polyline: true,
+            coordinateSystem: "cartesian2d",
+            label: {
+              show: true,
+              position: 'middle',
+            },
+            lineStyle: {
+              color: 'green',
+              width: 1,
+              opacity: 1,
+              curveness: 0
+            },
+            effect: {
               show: true,
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 6
+              symbolSize: 4
             },
             data: charts.polyLines
           },
           {
             type: "lines",
             symbol: ['none', 'none'],
-            z: 3,
+            z: 4,
             symbolSize: 10,
             coordinateSystem: "cartesian2d",
             label: {
@@ -2035,13 +2297,13 @@ export default {
               trailLength: 0.1,
               symbol: 'arrow',
               color: '#87e2ef',
-              symbolSize: 6
+              symbolSize: 4
             },
             data: charts.linesData
           },
           {
             type: 'graph',
-            z: 1,
+            z:5,
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
@@ -2075,7 +2337,7 @@ export default {
           that.$nextTick(() => {
             that.paramModalShow = true
             that.$nextTick(() => {
-              that.$xy.vector.$emit("deviceNumber", info.data.devNo)
+              that.$xy.vector.$emit("deviceNumber", {devNo:info.data.devNo,value:false})
             })
           })
         }
@@ -2084,15 +2346,15 @@ export default {
       // on(window, 'resize', this.resize)
     },
     openParam(info) {
+      let no = info.devNo == '2-2' ? '2' : info.devNo
       if (info.devNo) {
         this.paramModal = true
         this.paramModalShow = false
         this.$nextTick(() => {
           this.paramModalShow = true
           this.$nextTick(() => {
-            this.$xy.vector.$emit("deviceNumber", info.devNo == '2-2' ? '2' : info.devNo)
+            this.$xy.vector.$emit("deviceNumber", {devNo:no,value:false})
           })
-
         })
       }
     }

@@ -1,12 +1,11 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
       <Col :xs="24" :md="24" v-for="(item,index) in infos"  :key="index" >
-        <div style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
+        <div  style="color: #009688;font-size: 16px;margin-bottom: 10px">{{ item.itfName }}</div>
         <div v-for="temp in item.subInterList">
-          <div style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
+          <div  style="color: #009688;margin-bottom: 10px;margin-left: 30px">{{ temp.itfName }}</div>
           <div v-if="temp.subParaList.length" class="box">
-            <div v-for="(info,index) in temp.subParaList" class="node">
-              <template  v-if="($route.name == 'home' && info.ndpaIsTopology) || ($route.name != 'home' && info.ndpaIsTopology)">
+            <div v-for="(info,index) in temp.subParaList" class="node" v-if="info.ndpaIsImportant != 2">
                 <template v-if="info.parahowMode == '0024001'">
                   <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt" >
                     <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
@@ -101,7 +100,7 @@
                     </Select>
                   </div>
                 </template>
-              </template>
+<!--              </template>-->
             </div>
           </div>
            <div v-else style="margin-left: 40px"> 暂无数据</div>
@@ -364,9 +363,8 @@ export default {
 }
 .node{
   margin-bottom: 10px;
-  width: 30%;
-  margin-left: 40px;
-
+  width: 46%;
+  margin-left: 20px;
 }
 </style>
 

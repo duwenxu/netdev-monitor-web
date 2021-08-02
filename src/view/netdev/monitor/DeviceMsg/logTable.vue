@@ -18,7 +18,6 @@
               <Tooltip max-width="1000" :content="info.logOperObjName">
                 <div class="width_len" style=" max-width: 90px;">{{info.logOperObjName}}</div>
               </Tooltip>
-<!--              {{info.logOperObjName}}-->
             </td>
             <td style="width: 22%;"  align="center">
               <Tooltip max-width="1000" :content="info.logOperContent">
@@ -51,62 +50,34 @@ export default {
       type:Array,
       default: () => []
     },
-  },
-  mounted() {
-
   }
 }
 </script>
 <style scoped>
 .width_len{
   margin-top: 10px;
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .bottom_wrapper {
-  height: 160px;
+  height: 120px;
   width: 100%;
 }
-
 .bottom_wrapper th {
   border: 1px solid #e6e6e6;
   line-height: 4vh;
   color: #666666;
   font-size: 16px;
 }
-
 .bottom_wrapper table {
   border-collapse: collapse;
-  height: 400px;
+  height: 120px;
   width: 100%;
 }
-
 .mytable td {
   padding: 5px;
   border: 1px solid #e6e6e6;
   font-size: 14px;
-
-
 }
-
-.table-head {
-  padding-right: 4px;
-  color: #000;
-  height: 5vh;
-}
-
-.table-body {
-  width: 100%;
-  height: 240px;
-  overflow-y: scroll;
-}
-
-.table-head table, .table-body table {
-  width: 100%;
-}
-
-
-
 </style>
