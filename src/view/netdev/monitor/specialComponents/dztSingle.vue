@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "test",
+  name: "dztSingle",
   data(){
     return{
       devNo:'',
