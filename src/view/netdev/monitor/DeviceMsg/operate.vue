@@ -952,7 +952,6 @@ export default {
       let data = msg.filter(v=>v.ndpaIsImportant !=2)
       data.forEach(v => {
         v.selected = false
-        v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
         v.errorMsg = ''
         if (v.accessRight == '0022005') {
@@ -981,7 +980,7 @@ export default {
           }
         }
       })
-      this.orderDatas = oderArr || []
+      this.orderDatas = oderArr
       this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 0)
       this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
       this.openInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
@@ -998,7 +997,7 @@ export default {
       v.splitArr = []
       v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
       let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-      let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
+        console.log(resultChar)
       let index = -1
       let saveOffset = 0
       v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
@@ -1009,7 +1008,6 @@ export default {
           param: v.copyFmt.substring(pos, offset),
           paraVal: resultChar[index],
           name: param,
-          inputVal: stageChar[index],
           oldVal: JSON.parse(JSON.stringify(resultChar[index])),
           errorMsg: '',
           paraValMax1: null,
@@ -1024,7 +1022,7 @@ export default {
         saveOffset = offset
         if (v.subParaList.length) {
           if (v.subParaList[index].spinnerInfoList) {
-            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
+            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal)
             return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
           }
         }

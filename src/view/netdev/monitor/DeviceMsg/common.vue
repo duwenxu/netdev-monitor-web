@@ -8,7 +8,7 @@
                   v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
             <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
             <template v-if="info.splitArr.length">
-              <!--                   显示组合参数值为绿色-->
+              <!-- 显示组合参数值为绿色-->
               <template v-for="item in info.splitArr">
                     <span style="cursor: pointer;" @click="clickParamValue(info)">{{ item.param }}
                          <span v-if="item.subList.length">
@@ -22,14 +22,14 @@
             <!--             组合参数分割-->
             <div class="combine-class"  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <template v-for="temp in info.splitArr">
-                <Select v-if="temp.subList.length" v-model="temp.inputVal" @on-change="validCombine(info,$event)">
+                <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
                   <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                   </Option>
                   <span slot="prefix">{{ temp.param }}</span>
                 </Select>
                 <template v-else>
                   <Poptip v-if="temp.paraValMin1 || temp.paraValMax1" trigger="focus" transfer>
-                    <Input v-model.trim="temp.inputVal" @on-blur="textValid(temp)" number>
+                    <Input v-model.trim="temp.paraVal" @on-blur="textValid(temp)" number>
                       <span slot="prefix">{{ temp.param }}</span>
                     </Input>
                     <div slot="content">
@@ -41,7 +41,7 @@
                         }}~上限:{{ temp.paraValMax2 }}</span>
                     </div>
                   </Poptip>
-                  <Input v-else v-model.trim="temp.inputVal" @on-blur="textValid(temp)"
+                  <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)"
                          >
                     <span slot="prefix">{{ temp.param }}</span>
                   </Input>
@@ -69,10 +69,10 @@
                 <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
                   <template v-if="info.paraValMin1 || info.paraValMax1">
                     <Poptip trigger="focus" transfer>
-                      <InputNumber v-if="info.paraValStep" v-model="info.inputVal"
+                      <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
                                    :step='info.paraValStep' @on-blur="textValid(info)"
                                    style="width: 100%"></InputNumber>
-                      <Input v-if="!info.paraValStep" v-model.trim="info.inputVal"
+                      <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
                              :placeholder="info.paraName" @on-blur="textValid(info)"
                              number>
                         <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
@@ -88,12 +88,12 @@
                     </Poptip>
                   </template>
                   <template v-else>
-                    <Input v-model.trim="info.inputVal" :placeholder="info.paraName" number>
+                    <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number>
                       <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
                   </template>
                 </template>
                 <template v-else>
-                  <Input v-model.trim="info.inputVal" :placeholder="info.paraName" @on-blur="textValid(info)">
+                  <Input v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)">
                     <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
                   </Input>
                 </template>
@@ -121,7 +121,7 @@
           </template>
           <div v-if="accessView && info.selected && (info.accessRight == '0022003' || info.accessRight == '0022001')"
                style="display: flex">
-            <Select v-model="info.inputVal" :placeholder="info.paraName">
+            <Select v-model="info.paraVal" :placeholder="info.paraName">
               <Option v-for="(item,i) in info.spinnerInfoList" :value="item.code" :key="i">{{ item.name }}
               </Option>
             </Select>
@@ -151,7 +151,7 @@
           <Row>
             <Col :xs="18" :sm="18" :md="18" :lg="18">
               <span v-if="!info.show" style="cursor: pointer"
-                    @click="editInputValue(info)">
+                    @click="editparaValue(info)">
                 <span v-if="info.type===1">
                   <span v-for="item in chooseList" v-if="item.value === planetData[info.value]">
                     {{item.name}}
@@ -168,11 +168,11 @@
               </Select>
             </Col>
             <Col :xs="6" :sm="6" :md="6" :lg="6">
-              <Button v-if="info.show" type="primary" @click="setValueToText(info)" size="small"
+              <Button v-if="info.show" type="primary" @click="operate(info)" size="small"
                       style="margin-right:2px;margin-top: 4px">
                 <Icon type="md-checkmark" size="15"></Icon>
               </Button>
-              <Button v-if="info.show" type="default" @click="closeInput(info)" size="small" style="margin-top: 4px">
+              <Button v-if="info.show" type="default" @click="operate(info)" size="small" style="margin-top: 4px">
                 <Icon type="md-close" size="15"></Icon>
               </Button>
             </Col>
@@ -236,7 +236,7 @@ export default {
       })
     },
     async getTypeAndValue(info) {
-      let {success, result} = await querySpacePresetById(info.inputVal)
+      let {success, result} = await querySpacePresetById(info.paraVal)
       if (success) {
         this.showConfirmModal(success, result, info)
       }
@@ -270,14 +270,11 @@ export default {
         this.close(this.currentParam)
       }
     },
-    editInputValue(info) {
+    editparaValue(info) {
       if (info.type == 3) return
       this.$set(info, 'show', !info.show)
     },
-    setValueToText(info) {
-      info.show = false
-    },
-    closeInput(info) {
+    operate(info) {
       info.show = false
     },
   //---------基础参数------
@@ -305,7 +302,6 @@ export default {
         }
         if (info.paraVal !== null && info.paraVal !== '') {
           this.$set(info, 'selected', true)
-          this.$set(info, 'inputVal', info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2?Number(info.oldVal):info.oldVal)
         } else {
           this.$Message.error('无数据时无法更改，请稍后再试。')
         }
@@ -335,10 +331,10 @@ export default {
     },
     /*-----------------验证--------------*/
     textValid(info) {
-      if (info.inputVal) {
+      if (info.paraVal) {
         if (info.paraSimpleDatatype == 1) {
           if (info.paraStrLen) {
-            if (info.inputVal.length > info.paraStrLen) {
+            if (info.paraVal.length > info.paraStrLen) {
               this.validTag = true
               this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
             } else {
@@ -349,11 +345,11 @@ export default {
           }
         } else {
           let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
-          if (reg.test(info.inputVal)) {
+          if (reg.test(info.paraVal)) {
             if (info.paraValMax1 && info.paraValMin1) {
               if (info.paraValMin2 && info.paraValMax2) {
-                if ((Number(info.inputVal) > Number(info.paraValMax1) || Number(info.inputVal) < Number(info.paraValMin1)) &&
-                  (Number(info.inputVal) > Number(info.paraValMax2) || Number(info.inputVal) < Number(info.paraValMin2))
+                if ((Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) &&
+                  (Number(info.paraVal) > Number(info.paraValMax2) || Number(info.paraVal) < Number(info.paraValMin2))
                 ) {
                   this.validTag = true
                   this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
@@ -361,7 +357,7 @@ export default {
                  this.resetErrorMsg(info)
                 }
               } else {
-                if (Number(info.inputVal) > Number(info.paraValMax1) || Number(info.inputVal) < Number(info.paraValMin1)) {
+                if (Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) {
                   this.validTag = true
                   this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
                 } else {
@@ -401,11 +397,11 @@ export default {
         let index = -1
         let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
           index++
-          return match = '[' + info.splitArr[index].inputVal + ']'
+          return match = '[' + info.splitArr[index].paraVal + ']'
         })
         obj.paraVal = finallStr
       } else {
-        obj.paraVal = info.inputVal
+        obj.paraVal = info.paraVal
       }
       if (obj.paraVal !== '') {
         let {success, error} = await editParamValue(obj)
@@ -419,7 +415,6 @@ export default {
         }
       } else {
         this.$set(info, 'paraVal', info.oldVal)
-        this.$set(info, 'inputVal', info.oldVal)
         this.$set(info, 'selected', false)
       }
     }

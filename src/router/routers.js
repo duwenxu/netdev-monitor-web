@@ -51,9 +51,9 @@ export default [
         //一类车载（*done）
         // component: () => import('@/view/single-page/home/topographicMap/first_device.vue')
         //二类型车__1（*comtech不知是否单独控制外done）
-        component: () => import('@/view/single-page/home/topographicMap/second_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/second_device.vue')
         //三类车载(除acu外done)
-        // component: () => import('@/view/single-page/home/topographicMap/third_device.vue')
+        component: () => import('@/view/single-page/home/topographicMap/third_device.vue')
         // 四类车载（*）
         // component: () => import('@/view/single-page/home/topographicMap/forth_device.vue')
         //地面站
