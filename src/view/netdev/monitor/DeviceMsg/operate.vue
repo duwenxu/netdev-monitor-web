@@ -905,13 +905,11 @@ export default {
       this.paramSocket = null
     },
     getDevNo(data) {
-      console.log(data.value)
       this.devNo = data.devNo
       this.isShow = data.value
       this.$nextTick(()=>{
-        this.orderSwitch = data.value
+        this.orderSwitch = data.show
       })
-
       this.initWebSocket()
     },
     sizeInfo(data) {
@@ -941,8 +939,8 @@ export default {
       this.orderDatas =  []
       this.closeCombineList =  []
       this.openCombineList =  []
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      const wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
+      this.ws = new WebSocket(wsurl)
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg

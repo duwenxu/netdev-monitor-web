@@ -723,6 +723,15 @@ export default {
           size: [20, 20],
         },
         //-------------------down_功放KU---------
+          {
+              x: '225',
+              y: '280',
+              nodeName: 'Ku1:1热备份\n开关切换控制器\n\n\n\n\n\n',
+              id: 1,
+              img: 'rect',
+              size: [80, 120],
+              color: 'rgba(227,221,152,0.8)'
+          },
         {
           x: '225',
           y: '282',
@@ -851,7 +860,7 @@ export default {
         {
           x: '450',
           y: '405',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          nodeName: '650调制解调器(1)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [100, 110],
@@ -864,7 +873,7 @@ export default {
           devNo: '11',
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器A    ',
           img: 'rect',
           size: [90, 20],
           color: '#b9fc4a',
@@ -887,7 +896,7 @@ export default {
           devNo: '12',
           isMajor: true,
           type: 0,//备机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器B    ',
           img: 'rect',
           size: [90, 20],
           color: 'rgba(184,181,181)',
@@ -897,7 +906,7 @@ export default {
         {
           x: '450',
           y: '280',
-          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          nodeName: '650调制解调器(2)\n\n\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
           size: [100, 110],
@@ -909,7 +918,7 @@ export default {
           devNo: '13',
           isMajor: true,
           type: 1,//主机
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器A    ',
           img: 'rect',
           size: [90, 20],
           color: '#b9fc4a',
@@ -931,7 +940,7 @@ export default {
           devNo: '14',
           type: 0,//备机
           isMajor: true,
-          nodeName: '650调制解调器    ',
+          nodeName: '调制解调器B    ',
           img: 'rect',
           size: [90, 20],
           color: 'rgba(184,181,181)',
@@ -961,7 +970,7 @@ export default {
           y: '50',
           devNo: '20',
           isMajor: true,
-          nodeName: '\n\n天线控制\n单元\n(ACU)',
+          nodeName: '\n\n2.4米\n天线控制\n单元\n(ACU)',
           img: 'rect',
           size: [60, 60],
           color: 'rgba(227,221,152,0.8)',
