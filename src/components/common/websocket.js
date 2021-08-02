@@ -11,8 +11,7 @@ let mixin = {
       ws: null,
       dataTag: false,
       connectTag: false,
-
-      WSPages: ['home'],
+      WSPages: ['home']
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -55,7 +54,6 @@ let mixin = {
       }
     },
     dealData (info) {
-      // this.$xy.vector.$emit("WS_Info", info)
       this.getWSData(info)
     },
     sendData(){
@@ -71,7 +69,7 @@ let mixin = {
     },
     onClose (event) {
       this.connectTag = false
-      if (this.$route.name === 'home' || this.$route.name === 'status') {
+      if (this.$route.name === 'home') {
         if (this.reconnect.currentCount < this.reconnect.allCount) {
           this.reconnect.timer = setTimeout(() => {
             this.reconnect.currentCount++

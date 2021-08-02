@@ -18,7 +18,7 @@
 </template>
 <script>
 import nodeChart from "@/view/single-page/home/nodeChart";
-import mixin from "../../../components/common/websocket";
+import mixin from "_c/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 
 export default {
@@ -340,8 +340,8 @@ export default {
           nodeName: 'Ku1:1热备份\n开关切换控制器\n\n\n\n\n\n',
           id: 1,
           img: 'rect',
-          size: [80, 120],
-          color: 'rgba(227,221,152,0.8)'
+          size: [100, 120],
+          color: 'rgba(227,221,152,0.1)'
         },
         {
           x: '225',

@@ -26,7 +26,7 @@
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
 import {mapState} from "vuex";
-import mixin from "../../../components/common/websocket";
+import mixin from "_c/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {

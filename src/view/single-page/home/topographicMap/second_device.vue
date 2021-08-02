@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import mixin from "../../../components/common/websocket";
-import nodeChart from "./nodeChart";
+import mixin from "_c/common/websocket";
+import nodeChart from "../nodeChart";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 export default {
   components: {DeviceMain, nodeChart},

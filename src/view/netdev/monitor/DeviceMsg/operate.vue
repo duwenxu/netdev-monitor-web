@@ -95,16 +95,14 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
+    this.openInfos = []
+    this.closeInfos = []
+    this.orderDatas = []
+    this.openCombineList =[]
+    this.closeCombineList =[]
     this.paramSocket.close()
     this.paramSocket = null
     next()
-  },
-  destroyed() {
-      this.openInfos = []
-      this.closeInfos = []
-      this.orderDatas = []
-      this.openCombineList =[]
-      this.closeCombineList =[]
   },
   methods: {
     // initTime() {

@@ -305,7 +305,7 @@ export default {
         }
         if (info.paraVal !== null && info.paraVal !== '') {
           this.$set(info, 'selected', true)
-          this.$set(info, 'inputVal', info.oldVal)
+          this.$set(info, 'inputVal', info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2?Number(info.oldVal):info.oldVal)
         } else {
           this.$Message.error('无数据时无法更改，请稍后再试。')
         }

@@ -27,39 +27,6 @@ export default [
     },
     component: () => import('@/view/system/login/login.vue')
   },
-  // {
-  //   //全局刷新
-  //   path: '/back',
-  //   name: 'back',
-  //   component: () => import('@/view/single-page/white.vue')
-  // },
-  /*{
-    name: '/index/large',
-    path: '/ghome',
-    meta: {
-      title: '大屏',
-      hideInMenu: false
-    },
-    component: () => import('@/view/single-page/home/largehome.vue')
-  },
-  {
-    name: '/index/ghigh',
-    path: '/ghigh',
-    meta: {
-      title: '大屏新版TC',
-      hideInMenu: false
-    },
-    component: () => import('@/view/single-page/home/ghigh.vue')
-  },
-  {
-    name: '/index/xaghigh',
-    path: '/xaghigh',
-    meta: {
-      title: '大屏新版XA',
-      hideInMenu: false
-    },
-    component: () => import('@/view/single-page/home/xaghigh.vue')
-  },*/
   {
     path: '/home',
     name: '_home',
@@ -80,17 +47,17 @@ export default [
           icon: 'md-home'
         },
         //一类船载拓扑图
-        // component: () => import('@/view/single-page/home/ship_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/ship_device.vue')
         //一类车载（*done）
-        // component: () => import('@/view/single-page/home/first_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/first_device.vue')
         //二类型车__1（*comtech不知是否单独控制外done）
-        component: () => import('@/view/single-page/home/second_device.vue')
+        component: () => import('@/view/single-page/home/topographicMap/second_device.vue')
         //三类车载(除acu外done)
-        // component: () => import('@/view/single-page/home/third_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/third_device.vue')
         // 四类车载（*）
-        // component: () => import('@/view/single-page/home/forth_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/forth_device.vue')
         //地面站
-        // component: () => import('@/view/single-page/home/land_device.vue')
+        // component: () => import('@/view/single-page/home/topographicMap/land_device.vue')
 
         //最早版本
         // component: () => import('@/view/netdev/deviceStatus/status1.vue')

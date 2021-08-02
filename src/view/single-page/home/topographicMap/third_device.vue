@@ -17,7 +17,7 @@
 
 </template>
 <script>
-import mixin from "../../../components/common/websocket";
+import mixin from "_c/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 import nodeChart from "@/view/single-page/home/nodeChart";
 
@@ -2399,14 +2399,6 @@ export default {
           }
         },]
     }
-  },
-  beforeDestroy() {
-    let dom = echarts.getInstanceByDom(this.$refs.dom)
-    if (dom) {
-      dom.clear()
-      echarts.dispose(dom)
-    }
-    this.equipments = []
   },
   mounted() {
     // this.initTime()
