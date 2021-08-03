@@ -515,18 +515,15 @@ export const setTitle = (routeItem, vm) => {
  根据传入分隔符分割字符串
  */
 export const splitCharacter = (splitStr, str) => {
-  var codes = [];
-  splitStr.replace(/\{(.+?)\}/g, function (match, param, offset, string) {
+  let codes = []
+  splitStr.replace(/\{(.+?)\}/g, function (match, param) {
     codes.push(param)
   })
-  var infoChar = codes[0];
-  for (var i = 1; i < codes.length; i++) {
-    str = str.split(codes[i]).join(infoChar);
+  let infoChar = codes[0],len = codes.length
+  for (let i = 1; i < len; i++) {
+    str = str.split(codes[i]).join(infoChar)//替换分隔符为同一个
   }
-  str = str.split(infoChar);
-  let result = str.filter(v => {
-    return v
-  });
+  let result = str.split(infoChar).filter(v => v)
   return result;
 }
 

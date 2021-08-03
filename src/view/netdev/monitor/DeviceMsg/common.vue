@@ -22,7 +22,7 @@
             <!--             组合参数分割-->
             <div class="combine-class"  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <template v-for="temp in info.splitArr">
-                <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validCombine(info,$event)">
+                <Select v-if="temp.subList.length" v-model="temp.paraVal">
                   <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                   </Option>
                   <span slot="prefix">{{ temp.param }}</span>
@@ -244,11 +244,9 @@ export default {
     showConfirmModal(success, result, info) {
       if (success) {
         this.getPlanetDropList()
-        this.planetInfo = {
-          devNo: info.devNo,
-          paraNo: info.paraNo,
-          paraCmdMark: info.paraCmdMark
-        }
+        this.$set(result,'devNo',info.devNo)
+        this.$set(result,'paraNo',info.paraNo)
+        this.$set(result,'paraCmdMark',info.paraCmdMark)
         this.planetData = result
         this.currentParam = info
         this.showModal = true
@@ -258,8 +256,7 @@ export default {
       this.showModal = false
     },
     async savePlanetInfo() {
-      let obj = Object.assign(this.planetData, this.planetInfo)
-      let {success} = await savePlanetData(obj)
+      let {success} = await savePlanetData(this.planetData)
       if (success) {
         this.$Notice.success({
           title: '成功',
@@ -278,28 +275,10 @@ export default {
       info.show = false
     },
   //---------基础参数------
-    commonSetParamVal(val,obj){
-      let data = ['paraValMax1','paraValMin1','paraValMax2','paraValMin2','paraValStep','paraSimpleDatatype','paraStrLen']
-      data.forEach(item=>{
-        this.$set(val, item, Number(obj[item]))
-      })
-    },
     clickParamValue(info) {
       if (this.accessView) {
         this.receiveMsg = !this.receiveMsg
         this.validTag = false//每次点击前将验证状态初始化
-        if (info.subParaList.length) {
-          info.subParaList.forEach(val => {
-            info.splitArr.forEach(item=>{
-              if(val.subParaLinkVal == item.paraVal && val.subParaLinkCode == item.name && val.paraCode == item.name){
-                this.commonSetParamVal(item,val)
-                if (item.paraSimpleDatatype == 0 || item.paraSimpleDatatype == 2) {
-                  this.$set(item, 'paraVal', Number(item.paraVal))
-                }
-              }
-            })
-          })
-        }
         if (info.paraVal !== null && info.paraVal !== '') {
           this.$set(info, 'selected', true)
         } else {
@@ -319,15 +298,6 @@ export default {
         })
       }
       this.$set(info, 'selected', false)
-    },
-    validCombine(info, data) {
-      info.subParaList.forEach(val => {
-        info.splitArr.forEach(item => {
-          if (data == val.subParaLinkVal && val.paraCode == item.name) {
-            this.commonSetParamVal(item,val)
-          }
-        })
-      })
     },
     /*-----------------验证--------------*/
     textValid(info) {
@@ -393,9 +363,9 @@ export default {
         paraNo: info.paraNo,
         paraId: info.paraId
       }
-      if (info.paraSpellFmt) {
+      if (info.paraSpellFmt) {//x[a]-y[b]-z[c]
         let index = -1
-        let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
+        let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match,param) {
           index++
           return match = '[' + info.splitArr[index].paraVal + ']'
         })
@@ -404,7 +374,7 @@ export default {
         obj.paraVal = info.paraVal
       }
       if (obj.paraVal !== '') {
-        let {success, error} = await editParamValue(obj)
+        let {success} = await editParamValue(obj)
         if (success) {
           this.$Notice.success({
             title: '成功',
@@ -429,13 +399,11 @@ export default {
   justify-content: space-between;
   width: 100%;
 }
-
 .node {
   margin-bottom: 10px;
   width: 46%;
   margin-left: 20px;
 }
-
 </style>
 <style lang="less">
 .combine-class {
