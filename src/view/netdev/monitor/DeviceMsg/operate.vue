@@ -16,7 +16,7 @@
     </div>
     <!-- 基本参数-->
     <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap"
-         :style="{height:normalHeight + 'px'}">
+         :style="{height:setPanelHeight(closeInfos.length,closeCombineList.length)}">
       <common :infos="closeInfos"></common>
       <Divider dashed v-if="openInfos.length">
           <span @click="openParam = !openParam" style="cursor: pointer">
@@ -27,7 +27,8 @@
       <common v-if="openParam" :infos="openInfos"></common>
     </div>
     <!-- 父框子-->
-    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:normalHeight + 'px'}">
+    <div class="sub-wrap" v-if="closeCombineList.length"
+         :style="{height:setPanelHeight(closeInfos.length,closeCombineList.length)}">
       <div v-for="info in closeCombineList">
         <div v-if="info.ndpaIsImportant == 1" class="text">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
@@ -56,9 +57,9 @@ export default {
   data() {
     return {
       paramType: ['0019002'],
-      openInfos: [],//展开
+      openInfos: [],//基本参数展开
       closeInfos: [],//未展开
-      openCombineList: [],//展开
+      openCombineList: [],//父子参数展开
       closeCombineList: [],//未展开
       orderDatas: [],//命令
       openParam: false,//common divider展开
@@ -69,7 +70,7 @@ export default {
       devNo: null,
       paramSocket: null,
       showAlert: false,
-      showLog: false,
+      showLog: true,
       normalHeight: 310,
       timer: null,//模拟数据
       timeIndex: 0,//模拟数据
@@ -91,7 +92,6 @@ export default {
     if (this.$route.name != 'home') {
       this.initWebSocket()
     }
-    this.setPanelHeight(true, true)
   },
   beforeRouteLeave(to, from, next) {
     this.openInfos = []
@@ -869,16 +869,16 @@ export default {
     //     this.getParamMsg(data)
     //   }, 1000)
     // },
-    setPanelHeight(bool1, bool2) {
-      this.normalHeight = 310
-      let infoLen = this.closeInfos.length
-      let combineLen = this.closeCombineList.length
-      if (bool1 || bool2) {
-        if (infoLen && combineLen) this.normalHeight = 150
+    setPanelHeight(infoLen, combineLen) {
+      let panelHeight = 310
+      let bool = this.showLog || this.showAlert
+      if (bool) {
+        if (infoLen && combineLen) panelHeight = 150
       } else {
-        this.normalHeight = 460
-        if (infoLen && combineLen) this.normalHeight = 230
+        panelHeight = 460
+        if (infoLen && combineLen) panelHeight = 230
       }
+      return panelHeight + 'px'
     },
     //1.5m天线切换开关
     async switchChange(data) {
@@ -907,7 +907,8 @@ export default {
       this.initWebSocket()
     },
     sizeInfo(data) {
-      this.setPanelHeight(data.showAlert, data.showLog)
+      this.$set(this, 'showLog', data.showLog)
+      this.$set(this, 'showAlert', data.showAlert)
     },
     initWebSocket() { //初始化weosocket
       let wsurl = this.$xy.isLocal ? 'ws://' + this.$xy.SOCKET_URL : document.documentURI.split("#")[0].replace("http://", "ws://") + this.$xy.SOCKET_URL
@@ -1011,12 +1012,10 @@ export default {
           return match = resultChar[index]
         })
         if (v.subParaList.length) {
-          v.subParaList.forEach(n => {
-            v.splitArr.forEach(x => {
-              if (n.paraCode == x.name) {
-                if (n.spinnerInfoList) {
-                  x.subList = n.spinnerInfoList
-                }
+          v.subParaList.forEach(item => {
+            v.splitArr.forEach(cell => {
+              if ((item.paraCode == cell.name) && item.spinnerInfoList) {
+                cell.subList = item.spinnerInfoList
               }
             })
           })

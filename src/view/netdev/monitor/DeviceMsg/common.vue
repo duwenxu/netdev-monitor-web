@@ -2,7 +2,9 @@
   <div>
     <div v-if="infos.length" class="box">
       <div v-for="(info,index) in infos" class="node" v-if="info.ndpaIsImportant !=2">
+<!--        输入框 步进-->
         <template v-if="info.parahowMode == '0024001'">
+                          <!-- ------   复杂参数-->
           <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
             <span style="color: red;"
                   v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -57,6 +59,7 @@
               </Button>
             </div>
           </div>
+          <!-- ------   基本参数-->
           <div v-else>
             <span style="color: red;"
                   v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -66,9 +69,10 @@
                             <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
             <template v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <div style="display: flex">
+<!-- --------------数值型-->
                 <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
-                  <template v-if="info.paraValMin1 || info.paraValMax1">
-                    <Poptip trigger="focus" transfer>
+<!----------------存在最大最小值弹框提示-->
+                    <Poptip v-if="info.paraValMin1 || info.paraValMax1" trigger="focus" transfer>
                       <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
                                    :step='info.paraValStep' @on-blur="textValid(info)"
                                    style="width: 100%"></InputNumber>
@@ -86,12 +90,12 @@
                           }}~上限:{{ info.paraValMax2 }}</span>
                       </div>
                     </Poptip>
-                  </template>
-                  <template v-else>
-                    <Input v-model.trim="info.paraVal" :placeholder="info.paraName" number>
-                      <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span></Input>
-                  </template>
+                  <!----------------不存在-->
+                    <Input  v-else v-model.trim="info.paraVal" :placeholder="info.paraName" number>
+                      <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                    </Input>
                 </template>
+                <!-- --------------非数值型-->
                 <template v-else>
                   <Input v-model.trim="info.paraVal" :placeholder="info.paraName" @on-blur="textValid(info)">
                     <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
@@ -108,6 +112,7 @@
             </template>
           </div>
         </template>
+<!--        下拉框-->
         <template v-else>
           <span style="color: red;"
                 v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -365,7 +370,7 @@ export default {
       }
       if (info.paraSpellFmt) {//x[a]-y[b]-z[c]
         let index = -1
-        let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match,param) {
+        let finallStr = info.paraSpellFmt.replace(/\[(.+?)\]/g, function (match) {
           index++
           return match = '[' + info.splitArr[index].paraVal + ']'
         })
