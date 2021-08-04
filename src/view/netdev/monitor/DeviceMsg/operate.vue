@@ -1,45 +1,46 @@
 <template>
   <div class="device-param">
     <div class="order-wrap" v-if="orderDatas.length">
-        <span style="margin-top: 8px;margin-right: 20px">命令区</span>
-        <div v-if="$route.meta.devType == '0020023' || isShow"  style="width: 20%">
-          <i-switch true-color="#13ce66" false-color="#13ce66" size="large"  style="margin-right: 10px" v-model="orderSwitch" @on-change="switchChange">
-            <span slot="open">A</span>
-            <span slot="close">B</span>
-          </i-switch>
-        </div>
-        <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
-                style="margin-right: 5px;background: #009688;color: white">
-          {{ info.paraName }}
-        </Button>
+      <span style="margin-top: 8px;margin-right: 20px">命令区</span>
+      <div v-if="$route.meta.devType == '0020023' || isShow" style="width: 20%">
+        <i-switch true-color="#13ce66" false-color="#13ce66" size="large" style="margin-right: 10px"
+                  v-model="orderSwitch" @on-change="switchChange">
+          <span slot="open">A</span>
+          <span slot="close">B</span>
+        </i-switch>
+      </div>
+      <Button v-for="(info,index) in orderDatas" :key="index" @click="save(info)"
+              style="margin-right: 5px;background: #009688;color: white">
+        {{ info.paraName }}
+      </Button>
     </div>
-<!-- 基本参数-->
-    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap" :style="{height:normalHeight+'px'}">
+    <!-- 基本参数-->
+    <div v-if="!closeCombineList.length || (closeInfos.length && closeCombineList.length)" class="param-wrap"
+         :style="{height:setPanelHeight(closeInfos.length,closeCombineList.length)}">
       <common :infos="closeInfos"></common>
-      <div v-if="openInfos.length" class="text-center" style="margin: 10px 0;text-align: center">
-        <Divider dashed v-if="openInfos.length">
+      <Divider dashed v-if="openInfos.length">
           <span @click="openParam = !openParam" style="cursor: pointer">
              <Icon :type="openParam ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
-          {{openParam ? "收起" :"查看参数"}}
+          {{ openParam ? "收起" : "查看参数" }}
           </span>
-        </Divider>
-      </div>
+      </Divider>
       <common v-if="openParam" :infos="openInfos"></common>
     </div>
-<!-- 父框子-->
-    <div class="sub-wrap" v-if="closeCombineList.length" :style="{height:comHeight+'px'}">
+    <!-- 父框子-->
+    <div class="sub-wrap" v-if="closeCombineList.length"
+         :style="{height:setPanelHeight(closeInfos.length,closeCombineList.length)}">
       <div v-for="info in closeCombineList">
-        <div v-if="info.ndpaIsImportant == 1" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="info.ndpaIsImportant == 1" class="text">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
       <Divider v-if="openCombineList.length" dashed>
           <span @click="openSub = !openSub" style="cursor: pointer">
              <Icon :type="openSub ? 'ios-arrow-dropup':'ios-arrow-dropdown'"/>
-          {{openSub ? "收起" :"查看参数"}}
+          {{ openSub ? "收起" : "查看参数" }}
           </span>
       </Divider>
       <div v-if="openSub" v-for="info in openCombineList">
-        <div v-if="info.ndpaIsImportant==0" style="color: #009688;font-size: 14px;margin-bottom: 10px">{{ info.paraName }}</div>
+        <div v-if="info.ndpaIsImportant==0" class="text">{{ info.paraName }}</div>
         <common :infos="info.subParaList"></common>
       </div>
     </div>
@@ -50,29 +51,27 @@ import {splitCharacter} from '@/libs/util'
 import common from './common'
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {switchCheck} from "@/api/monitor/DeviceParam";
+
 export default {
   components: {common},
   data() {
     return {
       paramType: ['0019002'],
-      openInfos: [],//展开
-      closeInfos:[],//未展开
-      openCombineList: [],//展开
+      openInfos: [],//基本参数展开
+      closeInfos: [],//未展开
+      openCombineList: [],//父子参数展开
       closeCombineList: [],//未展开
       orderDatas: [],//命令
-      openParam:false,//common divider展开
-      openSub:false,//sub divider展开
-      isShow:false,//是否显示comtechAB
-      isReceive:true,//是否接收ws msg
-      orderSwitch:true,
+      openParam: false,//common divider展开
+      openSub: false,//sub divider展开
+      isShow: false,//是否显示comtechAB
+      isReceive: true,//是否接收ws msg
+      orderSwitch: true,
       devNo: null,
       paramSocket: null,
-
-      comHeight: 160,
-      normalHeight: 160,
-
-      isStop:false,
-
+      showAlert: false,
+      showLog: true,
+      normalHeight: 310,
       timer: null,//模拟数据
       timeIndex: 0,//模拟数据
     }
@@ -95,16 +94,14 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
+    this.openInfos = []
+    this.closeInfos = []
+    this.orderDatas = []
+    this.openCombineList = []
+    this.closeCombineList = []
     this.paramSocket.close()
     this.paramSocket = null
     next()
-  },
-  destroyed() {
-      this.openInfos = []
-      this.closeInfos = []
-      this.orderDatas = []
-      this.openCombineList =[]
-      this.closeCombineList =[]
   },
   methods: {
     // initTime() {
@@ -872,21 +869,31 @@ export default {
     //     this.getParamMsg(data)
     //   }, 1000)
     // },
-
-    //1.5m天线切换开关
-    async  switchChange(data){
-        let {result, success, message} = await switchCheck({channel:data?'A':'B'})
-        if(success){
-          this.$Notice.success({
-            title: '成功',
-            desc: '切换成功！',
-            duration: 1
-          })
-        }
-      },
-    receiveMsg(data) {
-       this.isReceive = data.receiveMsg
+    setPanelHeight(infoLen, combineLen) {
+      let panelHeight = 310
+      let bool = this.showLog || this.showAlert
+      if (bool) {
+        if (infoLen && combineLen) panelHeight = 150
+      } else {
+        panelHeight = 460
+        if (infoLen && combineLen) panelHeight = 230
+      }
+      return panelHeight + 'px'
     },
+    //1.5m天线切换开关
+    async switchChange(data) {
+      let {result, success, message} = await switchCheck({channel: data ? 'A' : 'B'})
+      if (success) {
+        this.$Notice.success({
+          title: '成功',
+          desc: '切换成功！',
+          duration: 1
+        })
+      }
+    },
+    receiveMsg(data) {
+      this.isReceive = data.receiveMsg
+    },//是否接收数据
     closeModal() {
       this.paramSocket.close()
       this.paramSocket = null
@@ -894,34 +901,17 @@ export default {
     getDevNo(data) {
       this.devNo = data.devNo
       this.isShow = data.value
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.orderSwitch = data.show
       })
       this.initWebSocket()
     },
     sizeInfo(data) {
-      if (data.showAlert || data.showLog) {
-        if(this.closeCombineList.length && !this.closeInfos.length){
-          this.comHeight = 310
-        }else if(!this.closeCombineList.length && this.closeInfos.length){
-          this.normalHeight = 310
-        }else{
-          this.comHeight = 150
-          this.normalHeight = 150
-        }
-      } else {
-        if(this.closeCombineList.length && !this.closeInfos.length){
-          this.comHeight = 460
-        }else if(!this.closeCombineList.length && this.closeInfos.length){
-          this.normalHeight = 460
-        }else{
-          this.comHeight = 230
-          this.normalHeight = 230
-        }
-      }
+      this.$set(this, 'showLog', data.showLog)
+      this.$set(this, 'showAlert', data.showAlert)
     },
     initWebSocket() { //初始化weosocket
-      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
+      let wsurl = this.$xy.isLocal ? 'ws://' + this.$xy.SOCKET_URL : document.documentURI.split("#")[0].replace("http://", "ws://") + this.$xy.SOCKET_URL
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg
@@ -933,30 +923,18 @@ export default {
       this.paramSocket.send(obj)
     },
     getParamMsg(frame) {
-      if(this.isReceive){
+      if (this.isReceive) {
         let msg = JSON.parse(frame.data)
         this.editData(msg)
-        if(!this.isStop){
-          this.isStop = true
-          if(this.closeCombineList.length && !this.closeInfos.length){
-            this.comHeight = 310
-          }else if(!this.closeCombineList.length && this.closeInfos.length){
-            this.normalHeight = 310
-          }else{
-            this.comHeight = 150
-            this.normalHeight = 150
-          }
-        }
       }
     },
     editData(msg) {
       let oderArr = [], parentArr = []
-      let data = msg.filter(v=>v.ndpaIsImportant !=2)
+      let data = msg.filter(v => v.ndpaIsImportant != 2)
       data.forEach(v => {
         v.selected = false
-        v.inputVal = JSON.parse(JSON.stringify(v.paraVal))
+        v.errorMsg = null
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
-        v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
         } else {
@@ -967,7 +945,7 @@ export default {
                 v.showInText = true
                 v.subParaList.forEach(item => {
                   item.oldVal = JSON.parse(JSON.stringify(item.paraVal))
-                  this.commonFunc(item)//转换数字格式，为了验证
+                  this.commonTransFormate(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
               } else {//否则按复杂参数拼装来处理
@@ -977,75 +955,82 @@ export default {
               if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//复杂参数处理，按拼装来处理
                 this.commonFmt(v)
               } else {
-                this.commonFunc(v)//转换数字格式，为了验证
+                this.commonTransFormate(v)//转换数字格式，为了验证
               }
             }
           }
         }
       })
-      this.orderDatas = oderArr || []
-      this.openCombineList = parentArr.filter(value=>value.ndpaIsImportant == 0)
-      this.closeCombineList = parentArr.filter(value=>value.ndpaIsImportant == 1)
-      this.openInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
-      this.closeInfos = data.filter(value=>!value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+      this.orderDatas = oderArr
+      this.openCombineList = parentArr.filter(value => value.ndpaIsImportant == 0)
+      this.closeCombineList = parentArr.filter(value => value.ndpaIsImportant == 1)
+      this.openInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
+      this.closeInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
     },
-    commonFunc(v) {
+    commonTransFormate(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
         v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
+        v.oldVal = (v.paraVal === null || v.paraVal === '') ? null : Number(JSON.parse(JSON.stringify(v.paraVal)))
       }
     },
     commonFmt(v) {
-      if(v.paraViewFmt){
-      v.splitArr = []
-      v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))
-      let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal)
-      let stageChar = JSON.parse(JSON.stringify(splitCharacter(v.paraSpellFmt, v.paraVal)))
-      let index = -1
-      let saveOffset = 0
-      v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset, string) {
-        let len = param.length
-        let pos = index == -1 ? 0 : saveOffset + len + 2
-        index++
-        v.splitArr.push({
-          param: v.copyFmt.substring(pos, offset),
-          paraVal: resultChar[index],
-          name: param,
-          inputVal: stageChar[index],
-          oldVal: JSON.parse(JSON.stringify(resultChar[index])),
-          errorMsg: '',
-          paraValMax1: null,
-          paraValMin1: null,
-          paraValMax2: null,
-          paraValMin2: null,
-          paraValStep: null,
-          paraSimpleDatatype: v.paraSimpleDatatype,
-          paraStrLen: v.paraStrLen,
-          subList:[],
-        })
-        saveOffset = offset
-        if (v.subParaList.length) {
-          if (v.subParaList[index].spinnerInfoList) {
-            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal);
-            return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
-          }
-        }
-        return match = resultChar[index]
-      })
-      if (v.subParaList.length) {
-        v.subParaList.forEach(n => {
-          v.splitArr.forEach(x => {
-            if (n.paraCode == x.name) {
-              if (n.spinnerInfoList) {
-                x.subList = n.spinnerInfoList
-              }
-            }
+      if (v.paraViewFmt) {
+        v.splitArr = []
+        v.copyFmt = JSON.parse(JSON.stringify(v.paraViewFmt))//X[A]-Y[B]-Z[C]
+        let resultChar = splitCharacter(v.paraSpellFmt, v.paraVal) //{X}[A]{Y}[B]{Z}[C]=>[123,234,345]
+        let index = -1
+        let saveOffset = 0
+        //X123Y234Z345
+        v.transViewFmt = v.paraViewFmt.replace(/\[(.+?)\]/g, function (match, param, offset) {
+          let len = param.length
+          let pos = index == -1 ? 0 : saveOffset + len + 2
+          let isNumber = v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2
+          saveOffset = offset
+          index++
+          v.splitArr.push({
+            param: v.copyFmt.substring(pos, offset),
+            paraSimpleDatatype: v.paraSimpleDatatype,
+            oldVal: isNumber ? Number(JSON.parse(JSON.stringify(resultChar[index]))) : JSON.parse(JSON.stringify(resultChar[index])),
+            paraVal: isNumber ? Number(resultChar[index]) : resultChar[index],
+            name: param,
+            errorMsg: null,
+            paraValMax1: null,
+            paraValMin1: null,
+            paraValMax2: null,
+            paraValMin2: null,
+            paraValStep: null,
+            paraStrLen: v.paraStrLen,
+            subList: [],
           })
+          if (v.subParaList.length && v.subParaList[index].spinnerInfoList) {
+              let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal)
+              return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
+          }
+          return match = resultChar[index]
         })
-      }
+        if (v.subParaList.length) {
+          v.subParaList.forEach(item => {
+            v.splitArr.forEach(cell => {
+              if(item.subParaLinkVal == cell.paraVal && item.subParaLinkCode == cell.name){
+                this.commonTransFormate(cell)
+                this.commonSetParamVal(cell,item)
+              }
+              if ((item.paraCode == cell.name) && item.spinnerInfoList) {
+                cell.subList = item.spinnerInfoList
+              }
+            })
+          })
+        }
       }
     },
-    save(info){
+    commonSetParamVal(val,obj){
+      let data = ['paraValMax1','paraValMin1','paraValMax2','paraValMin2','paraStrLen']
+      data.forEach(item=>{
+        this.$set(val, item, Number(obj[item]))
+      })
+    },
+    save(info) {
       this.$Modal.confirm({
         title: '确认执行当前命令吗?',
         content: '确认后将无法取消！',
@@ -1082,40 +1067,52 @@ export default {
 }
 </script>
 <style lang="less">
- .device-param {
-   .ivu-switch-large.ivu-switch-checked:after{
-     left:60px
-   }
-   .ivu-switch-checked{
-     .ivu-switch-inner {
-       left:20px !important;
-     }
-   }
-   .ivu-switch-large {
-     width: 100px;
-     .ivu-switch-inner {
-       left:60px
-     }
-   }
-   .ivu-switch{
-     height: 30px;
-     line-height: 30px;
-   }
-   .ivu-switch-inner {
-     font-size: 24px;
-   }
-   .ivu-switch:after {
-     content: '';
-     width: 24px;
-     height: 24px;
-     border-radius: 18px;
-     background-color: #fff;
-     position: absolute;
-     left: 1px;
-     top: 3px;
+.device-param {
+  .ivu-switch-large.ivu-switch-checked:after {
+    left: 60px
+  }
 
-   }
- }
+  .ivu-switch-checked {
+    .ivu-switch-inner {
+      left: 20px !important;
+    }
+  }
+
+  .ivu-switch-large {
+    width: 100px;
+
+    .ivu-switch-inner {
+      left: 60px
+    }
+  }
+
+  .ivu-switch {
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .ivu-switch-inner {
+    font-size: 24px;
+  }
+
+  .ivu-switch:after {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border-radius: 18px;
+    background-color: #fff;
+    position: absolute;
+    left: 1px;
+    top: 3px;
+
+  }
+
+  .text {
+    color: #009688;
+    font-size: 14px;
+    margin-bottom: 10px
+  }
+}
 
 .order-wrap {
   display: flex;

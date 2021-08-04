@@ -1,17 +1,13 @@
 <template>
   <div class="param-wrap" :style="{height:normalHeight+'px'}">
-  <Row>
-    <template v-if="infos.length">
+  <Row v-if="infos.length">
       <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
-        <template v-if="($route.name == 'home' && info.ndpaIsImportant) || $route.name != 'home'">
+        <template v-if="info.ndpaIsImportant != 3">
           <span class="name-text">{{info.name}}</span>:<span class="value-text">{{info.value}}</span>
         </template>
       </Col>
-    </template>
-   <template v-else>
-     <span>暂无数据</span>
-   </template>
   </Row>
+    <div v-else>暂无数据</div>
 </div>
 </template>
 
@@ -62,7 +58,7 @@ export default {
     },
     getWs() { //初始化weosocket
       let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
-      this.ws = new WebSocket(wsurl)
+      this.page_socket = new WebSocket(wsurl)
       /*-----------------设备参数--------------*/
       this.page_socket = new WebSocket(wsurl)
       this.page_socket.onopen = this.pageSend
@@ -75,14 +71,13 @@ export default {
     getPageData(frame){
       let data = JSON.parse(frame.data)
       let result = []
-     data.forEach(item=>{
+        data.forEach(item=>{
        for(var info in item){
          result.push({name:info,value:item[info]})
        }
      })
       this.infos = result
-    },
-
+    }
   }
 }
 </script>
