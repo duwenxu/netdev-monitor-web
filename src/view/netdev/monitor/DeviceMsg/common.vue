@@ -2,9 +2,9 @@
   <div>
     <div v-if="infos.length" class="box">
       <div v-for="(info,index) in infos" class="node" v-if="info.ndpaIsImportant !=2">
-<!--        输入框 步进-->
+        <!--        输入框 步进-->
         <template v-if="info.parahowMode == '0024001'">
-                          <!-- ------   复杂参数-->
+          <!-- ------   复杂参数-->
           <div v-if="paramType.indexOf(info.paraCmplexLevel) > -1 || info.paraSpellFmt">
             <span style="color: red;"
                   v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -14,7 +14,8 @@
               <template v-for="item in info.splitArr">
                     <span style="cursor: pointer;" @click="clickParamValue(info)">{{ item.param }}
                          <span v-if="item.subList.length">
-                            <span v-for="cell in item.subList" v-if="cell.code == item.oldVal" style="color: #009688">{{ cell.name }} </span>
+                            <span v-for="cell in item.subList" v-if="cell.code == item.oldVal"
+                                  style="color: #009688">{{ cell.name }} </span>
                          </span>
                            <span v-else style="color: #009688">{{ item.paraVal }}</span>
                     </span>
@@ -22,9 +23,10 @@
             </template>
             <span v-else style="color:#009688;">暂无数据&nbsp;&nbsp;</span>
             <!--             组合参数分割-->
-            <div class="combine-class"  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+            <div class="combine-class"
+                 v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <template v-for="temp in info.splitArr">
-                <Select v-if="temp.subList.length" v-model="temp.paraVal">
+                <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validSplitCombine(info,$event,temp)">
                   <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                   </Option>
                   <span slot="prefix">{{ temp.param }}</span>
@@ -43,8 +45,7 @@
                         }}~上限:{{ temp.paraValMax2 }}</span>
                     </div>
                   </Poptip>
-                  <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)"
-                         >
+                  <Input v-else v-model.trim="temp.paraVal" @on-blur="textValid(temp)">
                     <span slot="prefix">{{ temp.param }}</span>
                   </Input>
                   <span v-if="temp.errorMsg" style="color: red;font-size: 12px">{{ temp.errorMsg }}</span>
@@ -65,35 +66,38 @@
                   v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
             <span :style="{letterSpacing:info.paraName.length<=8?2+'px':0+'px'}">{{ info.paraName }}：</span>
             <span style="cursor: pointer;color:#009688"
-                  @click="clickParamValue(info)">{{ (info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据' }}&nbsp;&nbsp;
+                  @click="clickParamValue(info)">{{
+                (info.oldVal !== null && info.oldVal !== '') ? info.oldVal : '暂无数据'
+              }}&nbsp;&nbsp;
                             <span v-if="info.oldVal && info.paraUnit">{{ info.paraUnit }}</span></span>
-            <template v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
+            <template
+              v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <div style="display: flex">
-<!-- --------------数值型-->
+                <!-- --------------数值型-->
                 <template v-if="info.paraSimpleDatatype == 0 || info.paraSimpleDatatype == 2">
-<!----------------存在最大最小值弹框提示-->
-                    <Poptip v-if="info.paraValMin1 || info.paraValMax1" trigger="focus" transfer>
-                      <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
-                                   :step='info.paraValStep' @on-blur="textValid(info)"
-                                   style="width: 100%"></InputNumber>
-                      <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
-                             :placeholder="info.paraName" @on-blur="textValid(info)"
-                             number>
-                        <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
-                      </Input>
-                      <div slot="content">
+                  <!----------------存在最大最小值弹框提示-->
+                  <Poptip v-if="info.paraValMin1 || info.paraValMax1" trigger="focus" transfer>
+                    <InputNumber v-if="info.paraValStep" v-model="info.paraVal"
+                                 :step='info.paraValStep' @on-blur="textValid(info)"
+                                 style="width: 100%"></InputNumber>
+                    <Input v-if="!info.paraValStep" v-model.trim="info.paraVal"
+                           :placeholder="info.paraName" @on-blur="textValid(info)"
+                           number>
+                      <span v-if="info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                    </Input>
+                    <div slot="content">
                         <span v-if="info.paraValMin1 || info.paraValMax1">&nbsp;&nbsp;&nbsp;下限:{{
                             info.paraValMin1
                           }}~上限:{{ info.paraValMax1 }}</span><Br/>
-                        <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{
-                            info.paraValMin2
-                          }}~上限:{{ info.paraValMax2 }}</span>
-                      </div>
-                    </Poptip>
+                      <span v-if="info.paraValMin2 || info.paraValMax2">或下限:{{
+                          info.paraValMin2
+                        }}~上限:{{ info.paraValMax2 }}</span>
+                    </div>
+                  </Poptip>
                   <!----------------不存在-->
-                    <Input  v-else v-model.trim="info.paraVal" :placeholder="info.paraName" number>
-                      <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
-                    </Input>
+                  <Input v-else v-model.trim="info.paraVal" :placeholder="info.paraName" number>
+                    <span v-if="info.paraVal && info.paraUnit" slot="suffix">{{ info.paraUnit }}</span>
+                  </Input>
                 </template>
                 <!-- --------------非数值型-->
                 <template v-else>
@@ -112,7 +116,7 @@
             </template>
           </div>
         </template>
-<!--        下拉框-->
+        <!--        下拉框-->
         <template v-else>
           <span style="color: red;"
                 v-if="accessView && (info.accessRight == '0022003' || info.accessRight == '0022001')">*</span>
@@ -149,9 +153,9 @@
         确定选择当前卫星进行一键对星命令吗？
       </div>
       <Form ref="planetData" :model="planetData" class="planet-wrapper">
-        <FormItem  :label-width="100" v-for="info in planets">
+        <FormItem :label-width="100" v-for="info in planets">
           <span slot="label">
-            <span style="color: red" v-if="info.type !=3">*</span>{{info.name}}：
+            <span style="color: red" v-if="info.type !=3">*</span>{{ info.name }}：
           </span>
           <Row>
             <Col :xs="18" :sm="18" :md="18" :lg="18">
@@ -159,7 +163,7 @@
                     @click="editparaValue(info)">
                 <span v-if="info.type===1">
                   <span v-for="item in chooseList" v-if="item.value === planetData[info.value]">
-                    {{item.name}}
+                    {{ item.name }}
                   </span>
                 </span>
               <span v-else>{{ planetData[info.value] }}</span>
@@ -199,6 +203,7 @@
 <script>
 import {editParamValue} from "@/api/monitor/ParaInfo";
 import {querySpacePresetById, savePlanetData} from "@/api/monitor/NtdvSpacePreset";
+
 export default {
   name: "common",
   props: {
@@ -212,7 +217,7 @@ export default {
       showModal: false,
       validTag: false,
       accessView: false,
-      receiveMsg:true,
+      receiveMsg: true,
       //1下拉框2输入框3不能改
       planets: [
         {name: '卫星名称', value: 'spName', show: false, type: 3},
@@ -234,7 +239,7 @@ export default {
     }
   },
   methods: {
-   // -------paraCmdMark === 'optSate' && devType === '0020001'----------------
+    // -------paraCmdMark === 'optSate' && devType === '0020001'----------------
     getPlanetDropList() {
       this.$xy.getParamGroup('0101').then(res => {
         this.chooseList = res;
@@ -249,9 +254,9 @@ export default {
     showConfirmModal(success, result, info) {
       if (success) {
         this.getPlanetDropList()
-        this.$set(result,'devNo',info.devNo)
-        this.$set(result,'paraNo',info.paraNo)
-        this.$set(result,'paraCmdMark',info.paraCmdMark)
+        this.$set(result, 'devNo', info.devNo)
+        this.$set(result, 'paraNo', info.paraNo)
+        this.$set(result, 'paraCmdMark', info.paraCmdMark)
         this.planetData = result
         this.currentParam = info
         this.showModal = true
@@ -279,7 +284,6 @@ export default {
     operate(info) {
       info.show = false
     },
-  //---------基础参数------
     clickParamValue(info) {
       if (this.accessView) {
         this.receiveMsg = !this.receiveMsg
@@ -291,6 +295,22 @@ export default {
         }
         this.$xy.vector.$emit('receiveMsg', !this.receiveMsg)
       }
+    },
+   setParamVal(val,obj){
+      let data = ['paraValMax1','paraValMin1','paraValMax2',,'paraValMin2','paraSimpleDatatype','paraStrLen']
+      data.forEach(item=>{
+        this.$set(val, item, Number(obj[item]))
+      })
+    },
+    validSplitCombine(info, data) {
+      info.subParaList.forEach(v => {
+        info.splitArr.forEach(x => {
+          if (data == v.subParaLinkVal && v.paraCode == x.name) {
+           this.setParamVal(x,v)
+            this.$set(x, 'paraSimpleDatatype',v.paraSimpleDatatype )
+          }
+        })
+      })
     },
     close(info) {
       if (!info.paraSpellFmt) {
@@ -307,48 +327,50 @@ export default {
     /*-----------------验证--------------*/
     textValid(info) {
       if (info.paraVal) {
-        if (info.paraSimpleDatatype == 1) {
-          if (info.paraStrLen) {
-            if (info.paraVal.length > info.paraStrLen) {
+        switch (info.paraSimpleDatatype) {
+          case '0':
+          case '2'://数字
+            let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')//是否数字
+            if (reg.test(info.paraVal)) {
+              if (info.paraValMax1 && info.paraValMin1) {
+                if (info.paraValMin2 && info.paraValMax2) {
+                  let bool = (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) && (info.paraVal > info.paraValMax2 || info.paraVal < info.paraValMin2)
+                  if (bool) {
+                    this.validTag = true
+                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
+                  } else {
+                    this.resetErrorMsg(info)
+                  }
+                } else {
+                  if (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) {
+                    this.validTag = true
+                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
+                  } else {
+                    this.resetErrorMsg(info)
+                  }
+                }
+              }
+            } else {
               this.validTag = true
-              this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
+              this.$set(info, 'errorMsg', '请输入数字')
+            }
+            break;
+          case '1'://字符串
+            if (info.paraStrLen) {
+              if (info.paraVal.length > info.paraStrLen) {
+                this.validTag = true
+                this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
+              } else {
+                this.resetErrorMsg(info)
+              }
             } else {
               this.resetErrorMsg(info)
             }
-          } else {
-            this.resetErrorMsg(info)
-          }
-        } else {
-          let reg = new RegExp('^[+-]?(0|([1-9]\\d*))(\\.\\d+)?$')
-          if (reg.test(info.paraVal)) {
-            if (info.paraValMax1 && info.paraValMin1) {
-              if (info.paraValMin2 && info.paraValMax2) {
-                if ((Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) &&
-                  (Number(info.paraVal) > Number(info.paraValMax2) || Number(info.paraVal) < Number(info.paraValMin2))
-                ) {
-                  this.validTag = true
-                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
-                } else {
-                 this.resetErrorMsg(info)
-                }
-              } else {
-                if (Number(info.paraVal) > Number(info.paraValMax1) || Number(info.paraVal) < Number(info.paraValMin1)) {
-                  this.validTag = true
-                  this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
-                } else {
-                  this.resetErrorMsg(info)
-                }
-              }
-
-            }
-          } else {
-            this.validTag = true
-            this.$set(info, 'errorMsg', '请输入数字')
-          }
+            break;
         }
       }
     },
-    resetErrorMsg(info){
+    resetErrorMsg(info) {
       this.validTag = false
       this.$set(info, 'errorMsg', '')
     },
@@ -404,6 +426,7 @@ export default {
   justify-content: space-between;
   width: 100%;
 }
+
 .node {
   margin-bottom: 10px;
   width: 46%;

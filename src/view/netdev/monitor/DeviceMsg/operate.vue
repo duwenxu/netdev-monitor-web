@@ -933,8 +933,8 @@ export default {
       let data = msg.filter(v => v.ndpaIsImportant != 2)
       data.forEach(v => {
         v.selected = false
+        v.errorMsg = null
         v.oldVal = JSON.parse(JSON.stringify(v.paraVal))
-        v.errorMsg = ''
         if (v.accessRight == '0022005') {
           oderArr.push(v)
         } else {
@@ -945,7 +945,7 @@ export default {
                 v.showInText = true
                 v.subParaList.forEach(item => {
                   item.oldVal = JSON.parse(JSON.stringify(item.paraVal))
-                  this.commonFunc(item)//转换数字格式，为了验证
+                  this.commonTransFormate(item)//转换数字格式，为了验证
                 })
                 parentArr.push(v)
               } else {//否则按复杂参数拼装来处理
@@ -955,7 +955,7 @@ export default {
               if (this.paramType.indexOf(v.paraCmplexLevel) > -1) {//复杂参数处理，按拼装来处理
                 this.commonFmt(v)
               } else {
-                this.commonFunc(v)//转换数字格式，为了验证
+                this.commonTransFormate(v)//转换数字格式，为了验证
               }
             }
           }
@@ -967,7 +967,7 @@ export default {
       this.openInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
       this.closeInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
     },
-    commonFunc(v) {
+    commonTransFormate(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
         v.paraValStep = Number(v.paraValStep)
         v.paraVal = (v.paraVal === null || v.paraVal === '') ? null : Number(v.paraVal)
@@ -994,7 +994,7 @@ export default {
             oldVal: isNumber ? Number(JSON.parse(JSON.stringify(resultChar[index]))) : JSON.parse(JSON.stringify(resultChar[index])),
             paraVal: isNumber ? Number(resultChar[index]) : resultChar[index],
             name: param,
-            errorMsg: '',
+            errorMsg: null,
             paraValMax1: null,
             paraValMin1: null,
             paraValMax2: null,
@@ -1003,17 +1003,19 @@ export default {
             paraStrLen: v.paraStrLen,
             subList: [],
           })
-          if (v.subParaList.length) {
-            if (v.subParaList[index].spinnerInfoList) {
+          if (v.subParaList.length && v.subParaList[index].spinnerInfoList) {
               let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal)
               return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
-            }
           }
           return match = resultChar[index]
         })
         if (v.subParaList.length) {
           v.subParaList.forEach(item => {
             v.splitArr.forEach(cell => {
+              if(item.subParaLinkVal == cell.paraVal && item.subParaLinkCode == cell.name){
+                this.commonTransFormate(cell)
+                this.commonSetParamVal(cell,item)
+              }
               if ((item.paraCode == cell.name) && item.spinnerInfoList) {
                 cell.subList = item.spinnerInfoList
               }
@@ -1021,6 +1023,12 @@ export default {
           })
         }
       }
+    },
+    commonSetParamVal(val,obj){
+      let data = ['paraValMax1','paraValMin1','paraValMax2','paraValMin2','paraStrLen']
+      data.forEach(item=>{
+        this.$set(val, item, Number(obj[item]))
+      })
     },
     save(info) {
       this.$Modal.confirm({
