@@ -71,7 +71,6 @@ export default {
       paramSocket: null,
       showAlert: false,
       showLog: true,
-      normalHeight: 310,
       timer: null,//模拟数据
       timeIndex: 0,//模拟数据
     }
@@ -869,6 +868,10 @@ export default {
     //     this.getParamMsg(data)
     //   }, 1000)
     // },
+    sizeInfo(data) {
+      this.$set(this, 'showLog', data.showLog)
+      this.$set(this, 'showAlert', data.showAlert)
+    },
     setPanelHeight(infoLen, combineLen) {
       let panelHeight = 310
       let bool = this.showLog || this.showAlert
@@ -906,12 +909,9 @@ export default {
       })
       this.initWebSocket()
     },
-    sizeInfo(data) {
-      this.$set(this, 'showLog', data.showLog)
-      this.$set(this, 'showAlert', data.showAlert)
-    },
+
     initWebSocket() { //初始化weosocket
-      let wsurl = this.$xy.isLocal ? 'ws://' + this.$xy.SOCKET_URL : document.documentURI.split("#")[0].replace("http://", "ws://") + this.$xy.SOCKET_URL
+      let wsurl = this.$xy.SOCKET_URL
       /*-----------------设备参数--------------*/
       this.paramSocket = new WebSocket(wsurl)
       this.paramSocket.onopen = this.paramSendMsg

@@ -1,5 +1,5 @@
 <template>
-  <div class="param-wrap" :style="{height:normalHeight+'px'}">
+  <div class="param-wrap" :style="{height:setPanelHeight(infos.length)}">
   <Row v-if="infos.length">
       <Col :xs="8" :md="8" v-for="(info,index) in infos"   :key="index"  style="padding: 8px">
         <template v-if="info.ndpaIsImportant != 3">
@@ -17,7 +17,8 @@ export default {
   data(){
     return{
       devNo:'',
-      normalHeight:250,
+      showLog:true,
+      showAlert:false,
       pageObj:{},
       infos:[],
       page_socket:null
@@ -41,11 +42,15 @@ export default {
   },
   methods:{
     sizeInfo(data){
-      if(data.showAlert || data.showLog){
-        this.normalHeight = 250
-      }else{
-        this.normalHeight = 400
+      this.$set(this, 'showLog', data.showLog)
+      this.$set(this, 'showAlert', data.showAlert)
+    },
+    setPanelHeight(infoLen){
+      let panelHeight = 400
+      if(this.showAlert || this.showLog){
+         if(infoLen) panelHeight = 250
       }
+      return panelHeight+'px'
     },
     getInfo(data){
       this.devNo = data.devNo
@@ -57,7 +62,7 @@ export default {
       })
     },
     getWs() { //初始化weosocket
-      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
+      let wsurl = this.$xy.SOCKET_URL
       this.page_socket = new WebSocket(wsurl)
       /*-----------------设备参数--------------*/
       this.page_socket = new WebSocket(wsurl)
