@@ -10,13 +10,13 @@ let proto = document.location.protocol
 
 Setting.isLocal = true//是否开发环境
 if(Setting.isLocal){
-  // Setting.SPACE_URL = 'http://172.21.2.184:8080'
-  // Setting.SOCKET_URL = '172.21.2.184:8888/ws'
-  Setting.SPACE_URL = 'http://172.21.5.226:8080'
-  Setting.SOCKET_URL = '172.21.5.226:8888/ws'
+  Setting.SPACE_URL = 'http://172.21.2.184:8080'
+  Setting.SOCKET_URL =  'ws://172.21.2.184:8888/ws'
+  // Setting.SPACE_URL = 'http://172.21.5.226:8080'
+  // Setting.SOCKET_URL = 'ws://172.21.5.226:8888/ws'
 }else{
   Setting.SPACE_URL = '/track'
-  Setting.SOCKET_URL = 'track_socket/ws'
+  Setting.SOCKET_URL = document.documentURI.split("#")[0].replace("http://", "ws://") + 'track_socket/ws'
 }
 
 

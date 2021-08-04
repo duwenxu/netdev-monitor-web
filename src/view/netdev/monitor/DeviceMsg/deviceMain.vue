@@ -212,7 +212,7 @@ export default {
       }
     },
     getCtrlWs() {
-      let wsurl = this.$xy.isLocal ? 'ws://' + this.$xy.SOCKET_URL : document.documentURI.split("#")[0].replace("http://", "ws://") + this.$xy.SOCKET_URL
+      let wsurl = this.$xy.SOCKET_URL
       this.ctrlSocket = new WebSocket(wsurl)
       this.ctrlSocket.onopen = this.ctrlSend
       this.ctrlSocket.onmessage = this.getCtrlData
@@ -229,7 +229,7 @@ export default {
     },
     /*-----------------日志/告警--------------*/
     logWs() {
-      let wsurl = this.$xy.isLocal ? 'ws://' + this.$xy.SOCKET_URL : document.documentURI.split("#")[0].replace("http://", "ws://") + this.$xy.SOCKET_URL
+      let wsurl = this.$xy.SOCKET_URL
       this.logSocket = new WebSocket(wsurl)
       this.logSocket.onopen = this.logSendMsg
       this.logSocket.onmessage = this.getLogMsg

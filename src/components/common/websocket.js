@@ -32,7 +32,7 @@ let mixin = {
       }
     },
     connectWs () {
-      let wsurl = this.$xy.isLocal?'ws://' + this.$xy.SOCKET_URL:document.documentURI.split("#")[0].replace("http://","ws://")+this.$xy.SOCKET_URL
+      let wsurl = this.$xy.SOCKET_URL
       this.ws = new WebSocket(wsurl)
       this.ws.onopen = (evt) => {
         this.connectTag = true;
