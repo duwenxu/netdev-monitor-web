@@ -166,8 +166,8 @@
           </FormItem>
         </Col>
         <Col :xs="20" :sm="16" :md="16" :lg="8">
-          <FormItem label="是否在拓扑图显示" prop="ndpaIsImportant" >
-            <Select v-model="ParaInfo.ndpaIsImportant" clearable   placeholder="请选择是否在拓扑图显示">
+          <FormItem label="是否重要" prop="ndpaIsImportant" >
+            <Select v-model="ParaInfo.ndpaIsImportant" clearable   placeholder="请选择是否重要">
               <Option  v-for='choose in isTopoList' :value='choose.id' :key="choose.id">{{choose.code}}</Option>
             </Select>
           </FormItem>
@@ -247,8 +247,9 @@
         ndpaCmplexLevelList:[],
         paraCodecList:[],
         remark2DataList:[],
-        isTopoList:[{'id':'0','code':'否'},
-                    {'id':'1','code':'是'}],  //是否在拓扑图显示
+        isTopoList:[{'id':0,'code':'不重要'},
+                    {'id':1,'code':'重要'},
+                    {'id':2,'code':'隐藏'}],  //是否在拓扑图显示
         rulePro: {
           fmtId: [
             {required: false}

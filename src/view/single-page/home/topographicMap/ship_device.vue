@@ -1,11 +1,11 @@
 <template>
-  <div style="border: 1px solid red">
-<!--    <template v-for="equipment in equipments">-->
-<!--      <div class="device_status" :style="devicePosition(equipment)">-->
-<!--        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>-->
-<!--      </div>-->
-<!--      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>-->
-<!--    </template>-->
+  <div>
+    <template v-for="equipment in equipments">
+      <div class="device_status" :style="devicePosition(equipment)">
+        <span :style="judgeDeviceStatus(equipment)" :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''"></span>
+      </div>
+      <div class="device_title" :style="masterStatus(equipment)" @click="openParam(equipment)"></div>
+    </template>
     <div ref="dom" class="charts"></div>
     <div class="legend">
       <div class="legend_status" v-for="(item, index) in legendType" :key="index">
@@ -26,7 +26,7 @@
 import * as echarts from 'echarts'
 import {on, off} from '@/libs/tools'
 import {mapState} from "vuex";
-import mixin from "../../../components/common/websocket";
+import mixin from "_c/common/websocket";
 import DeviceMain from "@/view/netdev/monitor/DeviceMsg/deviceMain";
 // echarts.registerTheme('tdTheme');
 export default {
@@ -500,293 +500,633 @@ export default {
     init() {
       let nodes = [
         {
-          x: '490',
-          y: '435',
-          nodeName: '',
-          img: 'rect',
-          color: 'white',
-          size: [1000, 745]
-        },
-        {
-          x: '0',
-          y: '500',
-          nodeName: '',
+          x: '30',
+          y: '730',
+          nodeName: '1.5m天线   \n(含伺服)',
           img: 'image://' + require('@/assets/images/home/antenna.png'),
-          size: [100, 110]
+          size: [170, 160]
         },
         {
-          x: '90',
-          y: '660',
-          nodeName: 'Ka\n发射\n\n\n\n\n\nKa\n接收\n\n\n\n\nKa\n跟踪\n',
+          x: '260',
+          y: '760',
+          nodeName: ' 400W高功放     ',
           img: 'rect',
-          size: [30, 240],
+          size: [130, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '90',
-          y: '410',
-          nodeName: 'Ku\n接收\n\n\n\n\n\n\nKu\n发射\n\n',
+          x: '260',
+          y: '655',
+          nodeName: '低噪声放大器',
           img: 'rect',
-          size: [30, 160],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
-        //--------------天线中心体------------------------
         {
-          x: '200',
-          y: '765',
-          nodeName: 'Ka频段\n100W功放\n\n\nKa频段\n100W功放',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [110, 80],
+          x: '230',
+          y: '610',
+          nodeName: '低噪声放大器',
+          img: 'rect',
+          size: [140, 50],
+          color: '#c4e889',
+          border: 'black',
         },
         {
-          x: '200',
-          y: '660',
-          nodeName: 'KaLNA    \n\n\n\nKaLNA   ',
-          img: 'image://' + require('@/assets/images/home/tranigle_up.png'),
-          size: [110, 80],
+          mark: '方块',
+          x: '370',
+          y: '560',
+          nodeName: '',
+          img: 'rect',
+          size: [40, 40],
+          color: 'rgba(0,0,0,0)',
+          border: 'black',
         },
         {
-          x: '470',
-          y: '765',
-          nodeName: 'C-Ka\n上变频器\n\n\nC-Ka\n上变频器',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '470',
-          y: '660',
-          nodeName: 'Ka-C\n下变频器\n\n\nKa-C\n下变频器',
-          img: 'image://' + require('@/assets/images/home/up_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '200',
-          y: '570',
-          nodeName: 'Ka频段LNA    ',
-          img: 'triangle',
-          symbolRotate: -90,
-          size: [45, 80],
-          color: '#c4e889'
-        },
-        {
-          x: '200',
+          x: '260',
           y: '480',
-          nodeName: 'KuLNA    \n\n\n\nKuLNA   ',
-          img: 'image://' + require('@/assets/images/home/tranigle_up.png'),
-          size: [110, 80],
-        },
-
-        {
-          x: '320',
-          y: '660',
-          nodeName: '耦合器',
-          img: 'rect',
-          size: [50, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '340',
-          y: '570',
           nodeName: '合成网络',
           img: 'rect',
-          size: [60, 30],
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
         {
-          x: '470',
-          y: '570',
-          nodeName: 'Ka-L下变频器',
+          x: '260',
+          y: '320',
+          nodeName: '单脉冲跟踪接收机',
           img: 'rect',
-          size: [100, 30],
+          size: [150, 50],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '260',
+          y: '150',
+          nodeName: '\n天线控制单元',
+          img: 'rect',
+          size: [140, 50],
           color: '#c4e889',
           border: 'black',
         },
 
-
-//-------------------------射频机房----------------------------
         {
-          x: '460',
+          x: '50',
+          y: '500',
+          nodeName: '差支\n\n路低\n\n噪声',
+          img: 'rect',
+          size: [60, 130],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '500',
+          y: '760',
+          id: 1,
+          nodeName: '',
+          img: 'image://' + require('@/assets/images/home/down_trans.png'),
+          size: [200, 120]
+        },
+        {
+          x: '506',
+          y: '809',
+          nodeName: ' 上变频器     ',
+          img: 'rect',
+          size: [105, 40],
+          color: 'rgba(0,150,136,0.2)',
+          border: 'black',
+        },
+        {
+          x: '506',
+          y: '715',
+          nodeName: ' 上变频器     ',
+          img: 'rect',
+          size: [105, 40],
+          color: 'rgba(184,181,181,1)',
+          border: 'black',
+        },
+        {
+          x: '500',
           y: '480',
-          nodeName: 'Ku-L\n下变频器\n\n\nKu-L\n下变频器',
-          img: 'image://' + require('@/assets/images/home/up_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '200',
-          y: '360',
-          nodeName: 'Ku频段\n400W功放\n\n\nKu频段\n400W功放',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '380',
-          y: '360',
-          nodeName: 'L-Ku频段\n上变频器\n\n\nL-Ku频段\n上变频器',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '640',
-          y: '765',
-          nodeName: 'L-C\n上变频器\n\n\nL-C\n上变频器',
-          img: 'image://' + require('@/assets/images/home/down_trans.png'),
-          size: [110, 80],
-        },
-        {
-          x: '225',
-          y: '260',
           nodeName: '',
           id: 1,
-          img: 'image://' + require('@/assets/images/home/down_trans_no.png'),
-          size: [100, 70]
-        },
-        {
-          x: '640',
-          y: '660',
-          nodeName: 'C-L\n下变频器\n\n\nC-L\n下变频器',
           img: 'image://' + require('@/assets/images/home/up_trans.png'),
-          size: [110, 80],
+          size: [200, 120]
         },
         {
-          x: '760',
+          x: '501',
+          y: '525',
+          nodeName: ' 下变频器     ',
+          img: 'rect',
+          size: [105, 40],
+          color: 'rgba(0,150,136,0.2)',
+          border: 'black',
+        },
+        {
+          x: '501',
+          y: '432',
+          nodeName: ' 下变频器     ',
+          img: 'rect',
+          size: [105, 40],
+          color: 'rgba(184,181,181,1)',
+          border: 'black',
+        },
+        {
+          x: '630',
+          y: '270',
+          nodeName: '串口服务器',
+          img: 'rect',
+          size: [120, 50],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '630',
+          y: '150',
+          nodeName: '卫通网管',
+          img: 'rect',
+          size: [120, 40],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '690',
+          y: '600',
+          nodeName: '中\n\n频\n\n分\n\n合\n\n路\n\n单\n\n元',
+          img: 'rect',
+          size: [50, 400],
+          color: '#c4e889',
+          border: 'black',
+        },
+        {
+          x: '870',
+          y: '730',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          id: 1,
+          img: 'rect',
+          size: [160, 160],
+          category: 1,
+          color: 'rgba(227,221,152,0.8)'
+        },
+        {
+          x: '870',
           y: '760',
-          nodeName: 'L频段\n中频光\n传输设备',
+          devNo: 11,
+          isMajor: true,
+          type: 1,//主机
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
-          size: [60, 80],
-          color: '#c4e889',
-          border: 'black',
+          size: [150, 30],
+          color: 'rgba(0,150,136,0.2)',
+          category: 2,
+          // border:'solid',
+          // borderColor:'green'
         },
         {
-          x: '600',
-          y: '480',
-          nodeName: '功分器',
+          x: '870',
+          y: '715',
+          nodeName: '1:1转换单元',
           img: 'rect',
-          size: [60, 30],
-          color: '#c4e889',
-          border: 'black',
+          size: [150, 30],
+          color: 'white',
+          category: 2
         },
         {
-          x: '620',
-          y: '420',
-          nodeName: 'L频段跟踪接收机',
+          x: '870',
+          y: '665',
+          devNo: 12,
+          isMajor: true,
+          type: 0,//备机
+          nodeName: ' 650调制解调器     ',
           img: 'rect',
-          size: [100, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '200',
-          y: '220',
-          nodeName: '六选一开关',
-          img: 'rect',
-          size: [80, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '380',
-          y: '280',
-          nodeName: 'KaLNA切换单元',
-          img: 'rect',
-          size: [100, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '380',
-          y: '230',
-          nodeName: 'KaLNA切换单元',
-          img: 'rect',
-          size: [100, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '340',
-          y: '170',
-          nodeName: '天线驱动单元\n（ADU）',
-          img: 'rect',
-          size: [80, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '380',
-          y: '130',
-          nodeName: '轴角编码单元\n（PDU）',
-          img: 'rect',
-          size: [80, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '420',
-          y: '90',
-          nodeName: '轴角编码单元\n（PCU）',
-          img: 'rect',
-          size: [80, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '200',
-          y: '20',
-          nodeName: '供电',
-          img: 'rect',
-          size: [120, 30],
-          color: '#c4e889',
-          border: 'black',
-        },
-        {
-          x: '540',
-          y: '130',
-          nodeName: '天线控制\n单元\n（ACU）',
-          img: 'rect',
-          size: [60, 150],
-          color: '#c4e889',
-          border: 'black',
+          size: [150, 30],
+          color: 'rgba(184,181,181,1)',
+          category: 2
         },
 
-
-
-
+        {
+          x: '870',
+          y: '500',
+          nodeName: '调制解调器(1:1)\n\n\n\n\n\n\n\n',
+          id: 1,
+          img: 'rect',
+          size: [160, 160],
+          color: 'rgba(227,221,152,0.8)'
+        },
+        {
+          x: '870',
+          y: '530',
+          devNo: 13,
+          isMajor: true,
+          type: 1,//主机
+          nodeName: ' 650调制解调器     ',
+          img: 'rect',
+          size: [150, 30],
+          color: 'rgba(0,150,136,0.2)',
+          category: 2
+        },
+        {
+          x: '870',
+          y: '485',
+          nodeName: '1:1转换单元',
+          img: 'rect',
+          size: [150, 30],
+          color: 'white',
+          category: 2
+        },
+        {
+          x: '870',
+          y: '435',
+          devNo: 14,
+          type: 0,//备机
+          isMajor: true,
+          nodeName: ' 650调制解调器     ',
+          img: 'rect',
+          size: [150, 30],
+          color: 'rgba(184,181,181,1)',
+          category: 2
+        },
       ]
       var charts = {
         nodes: [],
-        dottedLines:[
-          {
-            mark: '天线中心体线框',
-            name: '',
-            coords: [[120, 820], [540, 820],[120, 820], [120, 430],[120, 430], [380, 430],[380, 430], [380, 540],[540,540],[540,820]],
-            lineStyle: {
-              normal: {
-                color: '#c670de'
-              }
-            }
-          },
-
-          // {
-          //   mark: '射频机房',
-          //   name: '',
-          //   coords: [],
-          //   lineStyle: {
-          //     normal: {
-          //       color: '#c670de'
-          //     }
-          //   }
-          // },
-
-        ],
         linesData: [
-
           {
             mark: '设备->低噪声放大器',
             name: '',
             coords: [[70, 655], [185, 655]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '合成网络->单脉冲',
+            name: '',
+            coords: [[260, 450], [260, 340]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '单脉冲->天线控制',
+            name: '',
+            coords: [[260, 290], [260, 180]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '上变频器->设备',
+            name: '',
+            coords: [[410, 760], [90, 760]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '中频->上变频器',
+            name: '',
+            coords: [[660, 760], [600, 760]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '下变频器->中频',
+            name: '',
+            coords: [[595, 480], [660, 480]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '调制解调器 上->中频',
+            name: '',
+            coords: [[780, 725], [720, 725]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '中频-》调制解调器 上->',
+            name: '',
+            coords: [[720, 705], [780, 705]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+
+          {
+            mark: '调制解调器 下->中频',
+            name: '',
+            coords: [[780, 495], [720, 495]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '中频-》调制解调器 下->',
+            name: '',
+            coords: [[720, 475], [780, 475]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '调制解调器 下->竖线',
+            name: '',
+            coords: [[960, 485], [980, 485]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '竖线-》调制解调器 下->',
+            name: '',
+            coords: [[980, 485], [960, 485]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '串口-》卫通网管',
+            name: '',
+            coords: [[630, 240], [630, 170]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '卫通网管-》串口-》',
+            name: '',
+            coords: [[630, 170], [630, 240]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+        ],
+        polyLines: [
+          {
+            mark: '设备->差支路，合成网路',
+            name: '',
+            coords: [[50, 630], [50, 480], [185, 480]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '设备->天线控制',
+            name: '',
+            coords: [[0, 650], [0, 150], [185, 150]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '天线控制-》设备',
+            name: '',
+            coords: [[185, 150], [0, 150], [0, 650]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '低噪声-》下变频器',
+            name: '',
+            coords: [[300, 610], [370, 610], [370, 480],[410,480]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '方块-》合成网络',
+            name: '',
+            coords: [[360, 550], [360, 570], [260, 570],[260,500]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+
+          {
+            mark: '调制解调器 上-》串口',
+            name: '',
+            coords: [[950, 750], [990, 750], [990, 270],[690,270]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '串口=>调制解调器 上',
+            name: '',
+            coords: [[690, 270], [990, 270], [990, 750],[950,750]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '串口=>上变频器',
+            name: '',
+            coords: [[630, 295], [630, 700], [505, 700],[505,750]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '上变频器-》串口=>',
+            name: '',
+            coords: [[505,750],[505, 700], [630, 700], [630, 295]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+          {
+            mark: '串口-》下变频器-》=>',
+            name: '',
+            coords: [[560, 290], [500, 290], [500, 415]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '下变频器-》串口',
+            name: '',
+            coords: [[500, 415], [500, 290], [560, 290]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+
+
+          {
+            mark: '串口-》跟踪接收机',
+            name: '',
+            coords: [[560, 270], [300, 270], [300, 295]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '跟踪接收机-》串口',
+            name: '',
+            coords: [[300, 295], [300, 270], [560, 270]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#143fdc'
+            }
+          },
+
+
+          {
+            mark: '串口-》天线控制',
+            name: '',
+            coords: [[560, 250], [300, 250], [300, 180]],
+            lineStyle: {
+              normal: {
+                color: '#020202'
+              }
+            },
+            effect: {
+              color: '#dc6414'
+            }
+          },
+          {
+            mark: '天线控制-》串口',
+            name: '',
+            coords: [[300, 180], [300,250], [560, 250]],
             lineStyle: {
               normal: {
                 color: '#020202'
@@ -835,7 +1175,7 @@ export default {
       }
       var option = {
         animation: false,
-        grid: {left: '40',right:'15',bottom:'0',top:'0'},
+        grid: {left: '40',right:'15',bottom:'0',top:'80'},
         xAxis: {
           min: 0,
           max: 1000,
@@ -849,37 +1189,6 @@ export default {
           type: 'value'
         },
         series: [
-          {
-            type: "lines",
-            symbol: ['none', 'none'],
-            z: 4,
-            symbolSize: 10,
-            polyline: true,
-            coordinateSystem: "cartesian2d",
-            label: {
-              show: true,
-              position: 'middle',
-            },
-            lineStyle: {
-              type: [5, 10],
-              dashOffset: 5,
-              color: 'green',
-              width: 1.5,
-              opacity: 1,
-              curveness: 0
-            },
-            // effect: {
-            //   show: true,
-            //   trailLength: 0.1,
-            //   symbol: 'arrow',
-            //   color: '#87e2ef',
-            //   symbolSize: 6
-            // },
-            data: charts.dottedLines
-          },
-
-
-
 
           {
             type: "lines",
@@ -938,7 +1247,7 @@ export default {
             coordinateSystem: 'cartesian2d',
             label: {
               show: true,
-              fontSize: 12,
+              fontSize: 16,
               color: 'black',
               position: 'inside',
               formatter: function (item) {
@@ -978,7 +1287,7 @@ export default {
 </script>
 <style>
 .charts {
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   height: 750px;
   width: 1000px;
 
@@ -1065,13 +1374,13 @@ export default {
 
 .device_title {
   cursor: pointer;
-  margin-top: -30px;
+  margin-top: -34px;
   z-index: 999;
   position: relative;
 }
 
 .device_status {
-  margin-top: -30px;
+  margin-top: -34px;
   z-index: 100;
   position: relative;
 

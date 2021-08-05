@@ -11,8 +11,7 @@ let mixin = {
       ws: null,
       dataTag: false,
       connectTag: false,
-
-      WSPages: ['home'],
+      WSPages: ['home']
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -33,9 +32,8 @@ let mixin = {
       }
     },
     connectWs () {
-      // let socket_url =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      // this.ws = new WebSocket(socket_url)
-      this.ws = new WebSocket(`ws://${this.$xy.SOCKET_URL}/ws`)
+      let wsurl = this.$xy.SOCKET_URL
+      this.ws = new WebSocket(wsurl)
       this.ws.onopen = (evt) => {
         this.connectTag = true;
         this.clearWsStatus()
@@ -56,7 +54,6 @@ let mixin = {
       }
     },
     dealData (info) {
-      // this.$xy.vector.$emit("WS_Info", info)
       this.getWSData(info)
     },
     sendData(){
@@ -72,7 +69,7 @@ let mixin = {
     },
     onClose (event) {
       this.connectTag = false
-      if (this.$route.name === 'home' || this.$route.name === 'status') {
+      if (this.$route.name === 'home') {
         if (this.reconnect.currentCount < this.reconnect.allCount) {
           this.reconnect.timer = setTimeout(() => {
             this.reconnect.currentCount++

@@ -28,14 +28,16 @@
         </Col>
         <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="极化方向" prop="spPolarization">
-            <Input clearable placeholder="请输入极化方向" v-model="SpacePreset.spPolarization">
-            </Input>
+            <Select v-model="SpacePreset.spPolarization" clearable placeholder="请选择极化方向">
+              <Option v-for='choose in polarList' :value='choose.value' :key="choose.id">{{choose.name}}</Option>
+            </Select>
           </FormItem>
         </Col>
         <Col :xs="24" :sm="12" :md="12" :lg="12">
           <FormItem label="本振" prop="spLocalOscillator">
-            <Input clearable placeholder="请输入本振" v-model="SpacePreset.spLocalOscillator">
-            </Input>
+              <Select v-model="SpacePreset.spLocalOscillator" clearable placeholder="请选择本振">
+                <Option v-for='choose in localVibList' :value='choose.value' :key="choose.id">{{choose.name}}[{{choose.remark1}}]</Option>
+              </Select>
           </FormItem>
         </Col>
         <Col :xs="24" :sm="12" :md="12" :lg="12">
@@ -120,7 +122,9 @@
                     ],
                     spRemark4: [
                     ]
-                }
+                },
+                polarList:[],   //预置卫星列表
+                localVibList:[],  //本振列表
             }
         },
         created: function () {
@@ -130,7 +134,7 @@
             this.$xy.vector.$off('operateRow', this.operateRow)
         },
         mounted() {
-            this.getWpStatusList()
+            this.getParaList()
         },
         methods: {
             operateRow(obj) {
@@ -175,7 +179,17 @@
                 this.$refs['form'].resetFields()
                 this.$xy.vector.$emit('closeModal')
             },
-
+            //获取系统参数信息
+            getParaList(){
+                //获取极化方向列表
+                this.$xy.getParamGroup('0101').then(res=>{
+                    this.polarList = res;
+                })
+                //获取本振列表
+                this.$xy.getParamGroup('0102').then(res=>{
+                    this.localVibList = res;
+                })
+            },
         }
     }
 </script>

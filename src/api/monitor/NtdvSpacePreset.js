@@ -14,6 +14,16 @@ export const querySpacePresetPageList = info => {
 }
 
 /**
+ * 根据ID查询数据
+ */
+export const querySpacePresetById = id => {
+  return axios.request({
+    url: xy.Setting.SPACE_URL + '/SpacePreset/ntdv-space-preset/' + id,
+    method: 'get'
+  })
+}
+
+/**
  * 添加数据
  */
 export const addSpacePreset = info => {
@@ -43,6 +53,19 @@ export const deleteSpacePreset = id => {
     return axios.request({
         url: xy.Setting.SPACE_URL + '/SpacePreset/ntdv-space-preset/' + id,
         method: 'delete'
+    })
+}
+
+
+
+/**
+ * 保存参数
+ */
+export const savePlanetData = info => {
+    return axios.request({
+        url: xy.Setting.SPACE_URL + '/SpacePreset/ntdv-space-preset/keyStarByPolar',
+        method: 'post',
+         data: qs.stringify(info)
     })
 }
 

@@ -21,7 +21,7 @@ module.exports = {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
-    port: 8086 // 端口
+    port: 8085 // 端口
     // 设置代理
     // proxy: {
     //   '/sys': {

@@ -57,7 +57,7 @@
                     },
                     {
                         title: '本振',
-                        key: 'spLocalOscillator',
+                        key: 'spLocalOscillator_paraName',
                         width: 120
                     },
                     {
@@ -67,7 +67,7 @@
                     },
                     {
                         title: '极化方向',
-                        key: 'spPolarization',
+                        key: 'spPolarization_paraName',
                         width: 140
                     },
                     {
@@ -168,7 +168,6 @@
         },
         mounted() {
             this.init();
-            this.initSelect()
         },
         methods: {
             rowClassName(row, index) {

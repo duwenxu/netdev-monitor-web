@@ -33,14 +33,9 @@ export default {
       type:Array,
       default:[]
     },
-  },
-  mounted() {
-
   }
 }
 </script>
-
-
 <style scoped>
 .width_len{
   max-width: 250px;
@@ -68,20 +63,4 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.table-head {
-  padding-right: 4px;
-  color: #000;
-  height: 4vh;
-}
-
-.table-body {
-  width: 100%;
-  height: 240px;
-  overflow-y: scroll;
-}
-
-.table-head table, .table-body table {
-  width: 100%;
-}
-
 </style>

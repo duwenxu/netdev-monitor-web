@@ -227,20 +227,12 @@
                 searchData: [//搜索框根据需要自定义添加
                   {
                     type:2,
-                    key:'devType',
-                    name:'设备类型',
+                    key:'devStatus',
+                    name:'设备状态',
                     value:'',
                     data:[],
-                    placeholder:'设备类型'
+                    placeholder:'设备状态'
                   },
-                    {
-                        type:2,
-                        key:'devStatus',
-                        name:'设备状态',
-                        value:'',
-                        data:[],
-                        placeholder:'设备状态'
-                    },
                   {
                     type:1,
                     key:'devName',
@@ -251,11 +243,11 @@
                   },
                   {
                     type:2,
-                    key:'devCorp',
-                    name:'设备所属公司',
+                    key:'devType',
+                    name:'设备类型',
                     value:'',
                     data:[],
-                    placeholder:'设备所属公司'
+                    placeholder:'设备类型'
                   },
                 ],
                 search: {
@@ -413,17 +405,17 @@
           },
           initSelect() {
               this.$xy.getParamGroup('0020').then(res => {
-                  this.searchData[0].data = res
+                  this.searchData[2].data = res
                   this.init()
               })
               this.$xy.getParamGroup('0028').then(res => {
-                  this.searchData[1].data = res
+                  this.searchData[0].data = res
                   this.init()
               })
-              this.$xy.getParamGroup('0010').then(res => {
+              /*this.$xy.getParamGroup('0010').then(res => {
                   this.searchData[3].data = res
                   this.init()
-              })
+              })*/
           },
         }
     }

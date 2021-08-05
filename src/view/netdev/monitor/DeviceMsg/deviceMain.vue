@@ -1,22 +1,22 @@
 <template>
-  <div id="deviceMain">
-    <Tabs :animated="false" @on-click="goto" v-model="navName">
+  <div>
+    <Tabs :animated="false" @on-click="goto" v-model="tabName">
       <TabPane v-for="(tab,index) in tabs" :key="index" :label="tab.nav" :name="tab.name">
-        <component  :is="tab.componentName"></component>
+        <component :is="tab.componentName"></component>
       </TabPane>
     </Tabs>
-      <div class="fix-btn">
-        <div style="margin-top:5px;" @click="changeInfo(1)">
-          <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'"/>
-          告<Br/>警
-        </div>
+    <div class="fix-btn">
+      <div style="margin-top:5px;" @click="changeInfo(1)">
+        <Icon class="fix-icon" :type="showAlert?'md-arrow-dropright':'md-arrow-dropleft'"/>
+        告<Br/>警
       </div>
-      <div class="fix-btn-warn"  @click="changeInfo(2)">
-        <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
-        <div style="margin-top:5px;">日<Br/>志</div>
-      </div>
-        <log-table v-if="showLog" :columns="logColumns" :list="logs"></log-table>
-        <warn-table v-if="showAlert" :columns="alertColumns" :list="alertInfos"></warn-table>
+    </div>
+    <div class="fix-btn-warn" @click="changeInfo(2)">
+      <Icon class="fix-icon-warn" :type="showLog?'md-arrow-dropright':'md-arrow-dropleft'"/>
+      <div style="margin-top:5px;">日<Br/>志</div>
+    </div>
+    <log-table v-if="showLog" :columns="logColumns" :list="logs"></log-table>
+    <warn-table v-if="showAlert" :columns="alertColumns" :list="alertInfos"></warn-table>
   </div>
 </template>
 <script>
@@ -26,10 +26,9 @@ import ctrlParams from "./ctrlParams"
 import shipOperate from "../specialComponents/shipOperate"
 import logTable from "./logTable"
 import warnTable from "./warnTable"
-import leaveMixin from "./mixin";
-
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
-const mStores = {
+//directory: 要查找的文件路径/useSubdirectories: 是否查找子目录/regExp: 要匹配文件的正则
+const customComponents = {
   Operate,
   ctrlParams,
   logTable,
@@ -39,55 +38,48 @@ const mStores = {
 context.keys().forEach(key => {
   const name = key.split('.')[1].split('/')[1]
   const fMoudle = context(key).default
-  mStores[name] = {
-    ...fMoudle,
-    namespaced: true
+  customComponents[name] = {
+    ...fMoudle
   }
 })
 export default {
-  components: mStores,
-  mixins: [leaveMixin],
+  components: customComponents,
   data() {
     return {
       devNo: null,
       showLog: true,
       showAlert: false,
-      wsurl: 'ws://' + this.$xy.SOCKET_URL + '/ws',
-      ctrl_socket: null,
+      ctrlSocket: null,
       logSocket: null,
       warnSocket: null,
-      test: '',
-      metaTitle: '任务编辑',
-      navName: '',
-      navIndex: 0,
+      tabName: '',
       tabs: [
-        {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'},
-        // {index: 5, name: 'shipOperate', nav: '测试', componentName: 'shipOperate'}
+        {name: 'Operate', nav: '基本信息', componentName: 'Operate'}
       ],
       logColumns: [
         {
           title: '日志时间',
-          width:20,
+          width: 20,
           key: 'logTime',
         },
         {
           title: '访问类型',
-          width:10,
+          width: 10,
           key: 'logAccessTypeName',
         },
         {
           title: '操作类型',
-          width:10,
+          width: 10,
           key: 'logOperTypeName',
         },
         {
           title: '命令标识符',
-          width:10,
+          width: 10,
           key: 'logCmdMark',
         },
         {
           title: '操作对象',
-          width:15,
+          width: 15,
           // width: 100,
           key: 'logOperObjName',
           tooltip: true,
@@ -95,12 +87,12 @@ export default {
         {
           title: '内容',
           key: 'logOperContent',
-          width:22,
+          width: 22,
           tooltip: true,
         },
         {
           title: '原始数据',
-          width:13,
+          width: 13,
           key: 'orignData',
           tooltip: true,
         },
@@ -108,19 +100,19 @@ export default {
       logs: [],
       alertColumns: [
         {
-            title: '告警级别',
-            width: 15,
-            key: 'alertLevelName',
+          title: '告警级别',
+          width: 15,
+          key: 'alertLevelName',
         },
         {
           title: '告警个数',
           key: 'alertNum',
-            width: 15,
+          width: 15,
         },
         {
           title: '告警时间',
           key: 'alertTime',
-            width: 20,
+          width: 20,
         },
         {
           title: '告警描述',
@@ -129,19 +121,12 @@ export default {
         },
       ],
       alertInfos: [],
-      orderDatas: [],
-      viewLog:true
-
+      orderDatas: []
     }
   },
-  destroyed() {
-    this.tabs = []
-    this.logs = []
-    this.alertInfos =[]
-    this.orderDatas = []
-    this.ctrl_socket = null
-    this.logSocket = null
-    this.warnSocket = null
+  beforeRouteLeave(to, from, next) {
+    this.closeModal()
+    next()
   },
   created: function () {
     this.$xy.vector.$on('deviceNumber', this.getDevNo)
@@ -152,61 +137,41 @@ export default {
     this.$xy.vector.$off('closeModal', this.closeModal)
   },
   mounted() {
-    this.logs = []
-    this.alertInfos =[]
-    this.orderDatas = []
-    // this.ctrl_socket = null
-    // this.logSocket = null
-    // this.warnSocket = null
     if (this.$route.name != 'home') {
       this.getTabsCtrl()
+      this.getTabsPage()
       this.logWs()
     }
   },
-  // beforeRouteLeave(to, from, next) {
-  //   if (this.ctrl_socket) {
-  //     this.ctrl_socket.close()
-  //     this.ctrl_socket = null
-  //   }
-  //   this.warnSocket.close()
-  //   this.warnSocket = null
-  //   this.logSocket.close()
-  //   this.logSocket = null
-  //   // this.$destroy()
-  //   console.log('-----------destory----------')
-  //   // next()
-  // },
   methods: {
     getDevNo(data) {
-      this.viewLog = false
       this.devNo = data.devNo
       this.getTabsCtrl()
+      this.getTabsPage()
       this.logWs()
     },
-    closeModal(){
+    closeModal() {
       this.tabs = []
       this.logs = []
-      this.alertInfos =[]
+      this.alertInfos = []
       this.orderDatas = []
-      if (this.ctrl_socket) {
-        this.ctrl_socket.close()
-        this.ctrl_socket = null
-      }
       this.warnSocket.close()
       this.warnSocket = null
       this.logSocket.close()
       this.logSocket = null
-
+      if (this.ctrlSocket) {
+        this.ctrlSocket.close()
+        this.ctrlSocket = null
+      }
     },
     goto: function (name) {
-      this.navName = name
+      this.tabName = name
     },
     //切换日志告警信息
-    changeInfo(value) {    //告警
+    changeInfo(value) {
       if (value == 1) {
         this.showLog = false
         this.showAlert = !this.showAlert
-        // this.$xy.vector.$emit('changesize', obj)
       } else {
         this.showAlert = false
         this.showLog = !this.showLog
@@ -219,67 +184,51 @@ export default {
     },
     //可以编辑的tab内容--设备控制，若该接口有值则连接ws
     async getTabsCtrl() {
-      let {result, success, message} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success) {
-        if(result.length){
-          let fIndex = this.tabs.findIndex(value => value.name == 'ctrlParams')
-          if(fIndex == -1){
-            this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
-          }
-        }else{
-          this.tabs  = [
-            {index: 0, name: 'Operate', nav: '基本信息', componentName: 'Operate'}
-          ]
-        }
-        this.getTabsPage()
+      let {result, success} = await queryCtrlInfo({devNo: this.devNo ? this.devNo : this.$route.name})
+      if (success && result.length) {
+        this.tabs.push({name: 'ctrlParams', nav: '设备控制', componentName: 'ctrlParams'})
         this.getCtrlWs()
       }
     },
     //纯显示的tab
     async getTabsPage() {
-      let {result, success, message} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
-      if (success) {
-        let data = []
-        if(result.length){
-          result.forEach(item => {
-            if(item.itfPagePath){
-              let fIndex = this.tabs.findIndex(value => value.name == item.itfPagePath)
-              if(fIndex == -1){
-                data.push({name: item.itfPagePath, nav: item.itfName, componentName: item.itfPagePath})
-              }
+      let {result, success} = await queryPageInfo({devNo: this.devNo ? this.devNo : this.$route.name})
+      if (success && result.length) {
+        let data = result.map(val => {
+          if (val.itfPagePath) {
+            return {
+              name: val.itfPagePath,
+              nav: val.itfName,
+              componentName: val.itfPagePath
             }
-          })
-          this.tabs = this.tabs.concat(data)
-          result.devNo = this.devNo ? this.devNo : this.$route.name
-          this.$nextTick(() => {
-            this.$xy.vector.$emit('pageInfo', result)
-          })
-        }else{
-          this.tabs = this.tabs.concat(data)
-        }
+          }
+        })
+        this.tabs = this.tabs.concat(data)
+        result.devNo = this.devNo ? this.devNo : this.$route.name
+        this.$nextTick(() => {
+          this.$xy.vector.$emit('pageInfo', result)
+        })
       }
     },
     getCtrlWs() {
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
-      this.ctrl_socket = new WebSocket(wsurl)
-      this.ctrl_socket.onopen = this.ctrlSend
-      this.ctrl_socket.onmessage = this.getCtrlData
+      let wsurl = this.$xy.SOCKET_URL
+      this.ctrlSocket = new WebSocket(wsurl)
+      this.ctrlSocket.onopen = this.ctrlSend
+      this.ctrlSocket.onmessage = this.getCtrlData
     },
     ctrlSend() {
       let obj = JSON.stringify({
         'interfaceMark': "DevCtrlItfInfos",
         'devNo': this.devNo ? this.devNo : this.$route.name
       })
-      this.ctrl_socket.send(obj)
+      this.ctrlSocket.send(obj)
     },
     getCtrlData(frame) {
       this.$xy.vector.$emit('ctrlTag', frame)
     },
     /*-----------------日志/告警--------------*/
     logWs() {
-      // let wsurl =  document.documentURI.split("#")[0].replace("http://","ws://")+"track_socket/ws"
-      let wsurl = 'ws://' + this.$xy.SOCKET_URL + '/ws'
+      let wsurl = this.$xy.SOCKET_URL
       this.logSocket = new WebSocket(wsurl)
       this.logSocket.onopen = this.logSendMsg
       this.logSocket.onmessage = this.getLogMsg
@@ -304,7 +253,7 @@ export default {
     },
     getWarnLog(frame) {
       let msg = JSON.parse(frame.data)
-      if(msg.length){
+      if (msg.length) {
         this.showAlert = true
         this.showLog = false
         this.alertInfos = []
