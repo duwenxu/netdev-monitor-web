@@ -1,7 +1,7 @@
 <template>
   <div>
-    <template v-for="equipment in equipments">
-      <div class="device_status" :style="equipment.pos">
+    <template >
+      <div v-for="equipment in equipments" class="device_status" :style="equipment.pos">
         <span :style="judgeDeviceStatus(equipment)"
               :class="(equipment.isAlarm == '1' && equipment.isInterrupt == '0' && equipment.workStatus == '0')?'point-flicker':''">
         </span>
@@ -2618,9 +2618,9 @@ export default {
         if (device.workStatus === '0') {//如果工作状态正常 0
           if (device.isAlarm === '1') {//告警为1  则告警
             info = {background: '#eeb24b'}
-          } else {//告警为0  则状态为正常
+            return
+          } //告警为0  则状态为正常
             info = {background: '#009688'}
-          }
         } else {//不正常 则直接故障
           info = {background: '#ff1400'}
         }

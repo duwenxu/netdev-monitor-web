@@ -274,9 +274,9 @@ export default {
         this.$set(val, item, Number(obj[item]))
       })
     },
-    resetErrorMsg(info) {
-      this.validTag = false
-      this.$set(info, 'errorMsg', '')
+    validFunc(info,bool,msg){
+      this.validTag = bool
+      this.$set(info, 'errorMsg', msg)
     },
     textValid(info) {
       if (info.paraVal) {
@@ -289,35 +289,26 @@ export default {
                 if (info.paraValMin2 && info.paraValMax2) {
                   let bool = (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) && (info.paraVal > info.paraValMax2 || info.paraVal < info.paraValMin2)
                   if (bool) {
-                    this.validTag = true
-                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
-                  } else {
-                    this.resetErrorMsg(info)
+                    this.validFunc(info,true,'下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
                   }
+                  this.validFunc(info,false,'')
                 } else {
                   if (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) {
-                    this.validTag = true
-                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
-                  } else {
-                    this.resetErrorMsg(info)
+                    this.validFunc(info,true,'下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
                   }
+                  this.validFunc(info,false,'')
                 }
               }
             } else {
-              this.validTag = true
-              this.$set(info, 'errorMsg', '请输入数字')
+              this.validFunc(info,true,'请输入数字')
             }
             break;
           case '1'://字符串
             if (info.paraStrLen) {
               if (info.paraVal.length > info.paraStrLen) {
-                this.validTag = true
-                this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
-              } else {
-                this.resetErrorMsg(info)
+                this.validFunc(info,true,'长度不能超过' + info.paraStrLen)
               }
-            } else {
-              this.resetErrorMsg(info)
+              this.validFunc(info,false,'')
             }
             break;
         }

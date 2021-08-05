@@ -964,8 +964,12 @@ export default {
       this.orderDatas = oderArr
       this.openCombineList = parentArr.filter(value => value.ndpaIsImportant == 0)
       this.closeCombineList = parentArr.filter(value => value.ndpaIsImportant == 1)
-      this.openInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 0)
-      this.closeInfos = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == 1)
+      this.openInfos = this.filterArray(data, 0)
+      this.closeInfos = this.filterArray(data, 1)
+    },
+    filterArray(data, code) {
+      let filterArr = data.filter(value => !value.showInText && value.accessRight != '0022005' && value.ndpaIsImportant == code)
+      return filterArr
     },
     commonTransFormate(v) {
       if (v.paraSimpleDatatype == 0 || v.paraSimpleDatatype == 2) {
@@ -1004,17 +1008,17 @@ export default {
             subList: [],
           })
           if (v.subParaList.length && v.subParaList[index].spinnerInfoList) {
-              let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal)
-              return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
+            let valIndex = v.subParaList[index].spinnerInfoList.findIndex((value) => value.code == v.subParaList[index].paraVal)
+            return match = valIndex > -1 ? v.subParaList[index].spinnerInfoList[valIndex].name : resultChar[index]
           }
           return match = resultChar[index]
         })
         if (v.subParaList.length) {
           v.subParaList.forEach(item => {
             v.splitArr.forEach(cell => {
-              if(item.subParaLinkVal == cell.paraVal && item.subParaLinkCode == cell.name){
+              if (item.subParaLinkVal == cell.paraVal && item.subParaLinkCode == cell.name) {
                 this.commonTransFormate(cell)
-                this.commonSetParamVal(cell,item)
+                this.commonSetParamVal(cell, item)
               }
               if ((item.paraCode == cell.name) && item.spinnerInfoList) {
                 cell.subList = item.spinnerInfoList
@@ -1024,9 +1028,9 @@ export default {
         }
       }
     },
-    commonSetParamVal(val,obj){
-      let data = ['paraValMax1','paraValMin1','paraValMax2','paraValMin2','paraStrLen']
-      data.forEach(item=>{
+    commonSetParamVal(val, obj) {
+      let data = ['paraValMax1', 'paraValMin1', 'paraValMax2', 'paraValMin2', 'paraStrLen']
+      data.forEach(item => {
         this.$set(val, item, Number(obj[item]))
       })
     },
