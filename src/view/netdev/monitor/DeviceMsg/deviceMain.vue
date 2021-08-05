@@ -26,7 +26,6 @@ import ctrlParams from "./ctrlParams"
 import shipOperate from "../specialComponents/shipOperate"
 import logTable from "./logTable"
 import warnTable from "./warnTable"
-
 const context = require.context("@/view/netdev/monitor/specialComponents", false, /\.vue$/)
 //directory: 要查找的文件路径/useSubdirectories: 是否查找子目录/regExp: 要匹配文件的正则
 const customComponents = {

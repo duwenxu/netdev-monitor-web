@@ -11,7 +11,6 @@
 </template>
 <script>
 import * as echarts from 'echarts'
-
 export default {
   props: {
     //节点

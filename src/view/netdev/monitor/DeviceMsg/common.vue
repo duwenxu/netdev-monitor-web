@@ -26,7 +26,8 @@
             <div class="combine-class"
                  v-if="accessView && info.selected &&  (info.accessRight == '0022003' || info.accessRight == '0022001')">
               <template v-for="temp in info.splitArr">
-                <Select v-if="temp.subList.length" v-model="temp.paraVal" @on-change="validSplitCombine(info,$event,temp)">
+                <Select v-if="temp.subList.length" v-model="temp.paraVal"
+                        @on-change="validSplitCombine(info,$event,temp)">
                   <Option v-for="(item,i) in temp.subList" :value="item.code" :key="i">{{ item.name }}
                   </Option>
                   <span slot="prefix">{{ temp.param }}</span>
@@ -296,9 +297,9 @@ export default {
         this.$xy.vector.$emit('receiveMsg', !this.receiveMsg)
       }
     },
-   setParamVal(val,obj){
-      let data = ['paraValMax1','paraValMin1','paraValMax2',,'paraValMin2','paraSimpleDatatype','paraStrLen']
-      data.forEach(item=>{
+    setParamVal(val, obj) {
+      let data = ['paraValMax1', 'paraValMin1', 'paraValMax2', , 'paraValMin2', 'paraSimpleDatatype', 'paraStrLen']
+      data.forEach(item => {
         this.$set(val, item, Number(obj[item]))
       })
     },
@@ -306,8 +307,8 @@ export default {
       info.subParaList.forEach(v => {
         info.splitArr.forEach(x => {
           if (data == v.subParaLinkVal && v.paraCode == x.name) {
-           this.setParamVal(x,v)
-            this.$set(x, 'paraSimpleDatatype',v.paraSimpleDatatype )
+            this.setParamVal(x, v)
+            this.$set(x, 'paraSimpleDatatype', v.paraSimpleDatatype)
           }
         })
       })
@@ -325,6 +326,10 @@ export default {
       this.$set(info, 'selected', false)
     },
     /*-----------------验证--------------*/
+    validFunc(info, bool, msg) {
+      this.validTag = bool
+      this.$set(info, 'errorMsg', msg)
+    },
     textValid(info) {
       if (info.paraVal) {
         switch (info.paraSimpleDatatype) {
@@ -336,44 +341,35 @@ export default {
                 if (info.paraValMin2 && info.paraValMax2) {
                   let bool = (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) && (info.paraVal > info.paraValMax2 || info.paraVal < info.paraValMin2)
                   if (bool) {
-                    this.validTag = true
-                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
-                  } else {
-                    this.resetErrorMsg(info)
+                    this.validFunc(info, true, '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1 + '或下限:' + info.paraValMin2 + '--上限:' + info.paraValMax2)
+                    return
                   }
+                  this.validFunc(info, false, '')
                 } else {
                   if (info.paraVal > info.paraValMax1 || info.paraVal < info.paraValMin1) {
-                    this.validTag = true
-                    this.$set(info, 'errorMsg', '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
-                  } else {
-                    this.resetErrorMsg(info)
+                    this.validFunc(info, true, '下限:' + info.paraValMin1 + '--上限:' + info.paraValMax1)
+                    return
                   }
+                  this.validFunc(info, false, '')
                 }
               }
             } else {
-              this.validTag = true
-              this.$set(info, 'errorMsg', '请输入数字')
+              this.validFunc(info, true, '请输入数字')
             }
             break;
           case '1'://字符串
             if (info.paraStrLen) {
               if (info.paraVal.length > info.paraStrLen) {
-                this.validTag = true
-                this.$set(info, 'errorMsg', '长度不能超过' + info.paraStrLen)
-              } else {
-                this.resetErrorMsg(info)
+                this.validFunc(info, true, '长度不能超过' + info.paraStrLen)
+                return
               }
-            } else {
-              this.resetErrorMsg(info)
+              this.validFunc(info, false, '')
             }
             break;
         }
       }
     },
-    resetErrorMsg(info) {
-      this.validTag = false
-      this.$set(info, 'errorMsg', '')
-    },
+
     handleSubmit(info) {
       if (!this.validTag) {
         if (info.paraCmdMark === 'optSate' && info.devType === '0020001') {
